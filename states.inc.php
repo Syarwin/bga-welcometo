@@ -8,100 +8,74 @@
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
  * -----
- * 
+ *
  * states.inc.php
  *
  * welcometo game states description
  *
  */
 
+$machinestates = [
+  /*
+   * BGA framework initial state. Do not modify.
+   */
+  ST_GAME_SETUP => [
+    'name' => 'gameSetup',
+    'description' => '',
+    'type' => 'manager',
+    'action' => 'stGameSetup',
+    'transitions' => [
+      '' => ST_NEW_TURN,
+    ],
+  ],
+
+  ST_NEW_TURN => [
+    "name" => "newTurn",
+    "description" => clienttranslate('A new turn is starting'),
+    "type" => "game",
+    "updateGameProgression" => true,
+    "action" => "stNewTurn",
+    "transitions" => [
+      "playerTurn" => ST_PLAYER_TURN,
+//      "checkEndGameConditions" => 8 TODO WEIRD
+    ]
+  ],
+
+  ST_PLAYER_TURN => [
+    "name" => "playerTurn",
+    "description" => clienttranslate('Waiting for other players to end their turn.'),
+    "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
+    "type" => "multipleactiveplayer",
+    "args" => "argPlayerTurn",
+    "possibleactions" => ["registerPlayerTurn"],
+    "transitions" => ["applyTurns" => ST_APPLY_TURNS]
+  ],
+
+  ST_APPLY_TURNS => [
+    "name" => "applyTurns",
+    "description" => clienttranslate('Here is what each player has done during this turn.'),
+    "type" => "game",
+    "action" => "stApplyTurn",
+    "transitions" => [
+      "newTurn" => ST_NEW_TURN,
+      "validatePlans" => ST_VALIDATE_PLANS
+    ]
+  ],
+
+  ST_VALIDATE_PLANS => [
+    "name" => "validatePlans",
+    "description" => clienttranslate('Some players can validate their plans.'),
+    "descriptionmyturn" => clienttranslate('${you} must decide which plan to validate, and which housing estate must be used for it if the plan doesn\'t have an asterisk (not an advanced one).'),
+    "type" => "multipleactiveplayer",
+    "action" => "stValidatePlans",
+    "args" => "argValidatePlans",
+    "possibleactions" => "validatePlans",
+    "transitions" => [
+//      "applyPlansValidation" => ST_APPLY_ TODO : weird
+    ]
+  ],
+
 /*
-   Game state machine is a tool used to facilitate game developpement by doing common stuff that can be set up
-   in a very easy way from this configuration file.
-
-   Please check the BGA Studio presentation about game state to understand this, and associated documentation.
-
-   Summary:
-
-   States types:
-   _ activeplayer: in this type of state, we expect some action from the active player.
-   _ multipleactiveplayer: in this type of state, we expect some action from multiple players (the active players)
-   _ game: this is an intermediary state where we don't expect any actions from players. Your game logic must decide what is the next game state.
-   _ manager: special type for initial and final state
-
-   Arguments of game states:
-   _ name: the name of the GameState, in order you can recognize it on your own code.
-   _ description: the description of the current game state is always displayed in the action status bar on
-                  the top of the game. Most of the time this is useless for game state with "game" type.
-   _ descriptionmyturn: the description of the current game state when it's your turn.
-   _ type: defines the type of game states (activeplayer / multipleactiveplayer / game / manager)
-   _ action: name of the method to call when this game state become the current game state. Usually, the
-             action method is prefixed by "st" (ex: "stMyGameStateName").
-   _ possibleactions: array that specify possible player actions on this step. It allows you to use "checkAction"
-                      method on both client side (Javacript: this.checkAction) and server side (PHP: self::checkAction).
-   _ transitions: the transitions are the possible paths to go from a game state to another. You must name
-                  transitions in order to use transition names in "nextState" PHP method, and use IDs to
-                  specify the next game state for each transition.
-   _ args: name of the method to call to retrieve arguments for this gamestate. Arguments are sent to the
-           client side to be used on "onEnteringState" or to set arguments in the gamestate description.
-   _ updateGameProgression: when specified, the game progression is updated (=> call to your getGameProgression
-                            method).
-*/
-
-//    !! It is not a good idea to modify this file when a game is running !!
-
-
-$machinestates = array(
-
-    // The initial state. Please do not modify.
-    1 => array(
-        "name" => "gameSetup",
-        "description" => "",
-        "type" => "manager",
-        "action" => "stGameSetup",
-        "transitions" => array("" => 2)
-    ),
-
-    // Note: ID=2 => your first state
-
-    2 => array(
-        "name" => "newTurn",
-        "description" => clienttranslate('A new turn is starting'),
-        "type" => "game",
-        "updateGameProgression" => true,
-        "action" => "stNewTurn",
-        "transitions" => array("playerTurn" => 3, "checkEndGameConditions" => 8)
-    ),
-
-    3 => array(
-        "name" => "playerTurn",
-        "description" => clienttranslate('Every active player must play its turn.'),
-        "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
-        "type" => "multipleactiveplayer",
-        "args" => "argPlayerTurn",
-        "possibleactions" => array("registerPlayerTurn"),
-        "transitions" => array("applyTurns" => 5)
-    ),
-
-    5 => array(
-        "name" => "applyTurns",
-        "description" => clienttranslate('Here is what each player has done during this turn.'),
-        "type" => "game",
-        "action" => "stApplyTurn",
-        "transitions" => array("newTurn" => 2, "validatePlans" => 6)
-    ),
-
-    6 => array(
-        "name" => "validatePlans",
-        "description" => clienttranslate('Some players can validate their plans.'),
-        "descriptionmyturn" => clienttranslate('${you} must decide which plan to validate, and which housing estate must be used for it if the plan doesn\'t have an asterisk (not an advanced one).'),
-        "type" => "multipleactiveplayer",
-        "action" => "stValidatePlans",
-        "args" => "argValidatePlans",
-        "possibleactions" => "validatePlans",
-        "transitions" => array("applyPlansValidation" => 7)
-    ),
-
     7 => array(
         "name" => "applyPlansValidation",
         "description" => clienttranslate('Some players can validate their plans.'),
@@ -110,7 +84,9 @@ $machinestates = array(
         "action" => "stApplyPlans",
         "transitions" => array("checkEndGameConditions" => 8)
     ),
+*/
 
+/* TODO : weird
     8 => array(
         "name" => "checkEndGameConditions",
         "description" => clienttranslate('Is it the end?'),
@@ -118,45 +94,25 @@ $machinestates = array(
         "action" => "stCheckEndGameConditions",
         "transitions" => array("newTurn" => 2, "computeScores" => 98)
     ),
-
-    /*
-    Examples:
-    
-    2 => array(
-        "name" => "nextPlayer",
-        "description" => '',
-        "type" => "game",
-        "action" => "stNextPlayer",
-        "updateGameProgression" => true,   
-        "transitions" => array( "endGame" => 99, "nextPlayer" => 10 )
-    ),
-    
-    10 => array(
-        "name" => "playerTurn",
-        "description" => clienttranslate('${actplayer} must play a card or pass'),
-        "descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-        "type" => "activeplayer",
-        "possibleactions" => array( "playCard", "pass" ),
-        "transitions" => array( "playCard" => 2, "pass" => 2 )
-    ), 
-
 */
-    98 => array(
-        "name" => "computeScores",
-        "description" => clienttranslate('Let\'s compute the scores and tie breakes'),
-        "type" => "game",
-        "action" => "stComputeScores",
-        // "args" => "argComputeScore",
-        "transitions" => array("endGame" => 99)
-    ),
-    // Final state.
-    // Please do not modify (and do not overload action/args methods).
-    99 => array(
-        "name" => "gameEnd",
-        "description" => clienttranslate("End of game"),
-        "type" => "manager",
-        "action" => "stGameEnd",
-        "args" => "argGameEnd"
-    )
 
-);
+  ST_COMPUTE_SCORES => [
+    "name" => "computeScores",
+    "description" => clienttranslate('Let\'s compute the scores and tie breakes'),
+    "type" => "game",
+    "action" => "stComputeScores",
+    "transitions" => ["endGame" => ST_GAME_END]
+  ],
+
+
+  /*
+   * BGA framework final state. Do not modify.
+   */
+  ST_GAME_END => [
+    'name' => 'gameEnd',
+    'description' => clienttranslate('End of game'),
+    'type' => 'manager',
+    'action' => 'stGameEnd',
+    'args' => 'argGameEnd'
+  ]
+];
