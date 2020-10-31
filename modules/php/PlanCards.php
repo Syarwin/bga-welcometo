@@ -1,6 +1,5 @@
 <?php
 namespace WTO;
-use welcometo;
 /*
  * Plan Cards
  */
@@ -32,7 +31,7 @@ class PlanCards extends Helpers\Pieces
     ]);
 
     // Advanced variant
-    if(welcometo::isAdvancedGame()){
+    if(Globals::isAdvanced()){
       self::create([
         ['location' => 'deck_1', 'nbr' => 6],
         ['location' => 'deck_2', 'nbr' => 6],

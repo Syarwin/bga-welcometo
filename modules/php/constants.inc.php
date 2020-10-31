@@ -36,6 +36,7 @@ define('PARK', 3);
 define('POOL', 4);
 define('TEMP', 5);
 define('BIS', 6);
+define('SOLO', 7);
 
 
 /*

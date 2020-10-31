@@ -15,13 +15,24 @@
 
 
 @font-face {
-    font-family: "Caveat";
-    src: url("img/font/Caveat-Regular.ttf")
+  font-family: 'Caveat';
+  src: url('img/font/Caveat-Regular.woff2') format('woff2'),
+    url('img/font/Caveat-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-.handwritten {
-    font-size: x-large;
-    font-family: "Caveat";
+@mixin handwritten {
+  font-size: x-large;
+  font-family: "Caveat";
+}
+
+@mixin centered {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 
@@ -44,6 +55,19 @@
 ********* UPPER PART *********
 ******************************
 *****************************/
+    /////////// CITY NAME ////////////
+    .cityname {
+      position:absolute;
+      top: 253px;
+      left: 92px;
+      width: 207px;
+      height: 70px;
+      font-size:32px;
+      word-break: break-all;
+      @include handwritten;
+      @include centered;
+    }
+
 
     /////////// HOUSES ////////////
     .house {
@@ -130,10 +154,80 @@
 ********* LOWER PART *********
 ******************************
 *****************************/
+    /////////// POOLS ////////////
+    .score-pool {
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      background-color: rgba(255,0,255,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+
+      @for $x from 1 through 9 {
+        &[data-x="#{$x - 1}"] {
+          $i:ceil($x / 2);
+          top: nth($scorePools, $i);
+          left: if($x % 2 == 1, 337px, 385px);;
+        }
+      }
+    }
 
 
+    /////////// TEMP ////////////
+    .score-temp {
+      position: absolute;
+      height: 42px;
+      width: 42px;
+      transform:rotate(45deg);
+      background-color: rgba(0,255,255,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+
+      @for $x from 1 through 11 {
+        &[data-x="#{$x - 1}"] {
+          top: map-get(nth($scoreTemps, $x), 'top');
+          left: map-get(nth($scoreTemps, $x), 'left');
+        }
+      }
+    }
 
 
+    /////////// ESTATES ////////////
+    .score-estate {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0,255,0,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+
+      @for $x from 1 through 6 {
+        @for $y from 1 through map-get(nth($scoreEstates, $x), 'n') {
+          &[data-x="#{$x - 1}"][data-y="#{$y - 1}"] {
+            top: map-get(nth($scoreEstates, $x), 'top') + ($y - 1)*44px;
+            left: map-get(nth($scoreEstates, $x), 'left');
+          }
+        }
+      }
+    }
+
+    /////////// BIS ////////////
+    .score-bis {
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      background-color: rgba(0,255,255,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+
+      @for $x from 1 through 9 {
+        &[data-x="#{$x - 1}"] {
+          $i:ceil($x / 2);
+          top: nth($scoreBis, $i);
+          left: if($x % 2 == 1, 1153px, 1208px);;
+        }
+      }
+    }
 
 /****************************
 *****************************

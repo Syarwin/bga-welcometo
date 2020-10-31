@@ -1,5 +1,6 @@
 <?php
 namespace WTO;
+use welcometo;
 
 class Player extends Helpers\DB_Manager
 {
@@ -37,6 +38,27 @@ class Player extends Helpers\DB_Manager
       'no'        => $this->no,
       'name'      => $this->name,
       'color'     => $this->color,
+    ];
+  }
+
+
+  public function argPlayerTurn()
+  {
+    $data = [
+      'turn' => Globals::getCurrentTurn(),
+      'cards' => ConstructionCards::getForPlayer($this->id),
+    ];
+
+    $action = Log::getLastAction('selectCard', $this->id);
+    if(is_null($action)){
+      return array_merge($data, $this->argPlayerChooseCard() );
+    }
+  }
+
+  public function argPlayerChooseCard()
+  {
+    return [
+      'toto'
     ];
   }
 }

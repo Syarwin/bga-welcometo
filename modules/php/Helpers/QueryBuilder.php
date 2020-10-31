@@ -154,6 +154,9 @@ class QueryBuilder extends \APP_DbObject {
     $res = self::getObjectListFromDB($this->sql);
 		$oRes = [];
 		foreach($res as $row){
+      $id = $row['result_associative_index'];
+      unset($row['result_associative_index']);
+
       $val = $row;
       if(is_callable($this->cast)){
         $val = forward_static_call($this->cast, $row);
@@ -161,7 +164,7 @@ class QueryBuilder extends \APP_DbObject {
         $val = $this->cast == "object"? ((object) $row) : new $this->cast($row);
       }
 
-      $oRes[$row['result_associative_index']] = $val;
+      $oRes[$id] = $val;
 		}
 
 		if($returnValueIfOnlyOneRow && count($oRes) <= 1)
@@ -215,11 +218,14 @@ class QueryBuilder extends \APP_DbObject {
     $this->sql .= $this->limit ?? '';
 	}
 
-
+  private function protect($arg)
+  {
+    return is_string($arg)? ("'". mysql_escape_string($arg) . "'") : $arg;
+  }
 
   protected function computeWhereClause($arg)
   {
-    $this->where = is_null($this->where)? " WHERE " : ($this->isOrWhere? " OR " : " AND ");
+    $this->where = is_null($this->where)? " WHERE " : ($this->where . ($this->isOrWhere? " OR " : " AND ") );
 
     if(!is_array($arg))
       $arg = [$arg];
@@ -228,15 +234,15 @@ class QueryBuilder extends \APP_DbObject {
     $n = count($param);
     // Only one param => use primary field
     if ($n == 1) {
-      $this->where .= " `{$this->primary}` = '" . mysql_escape_string($param[0]) ."'";
+      $this->where .= " `{$this->primary}` = " . $this->protect($param[0]);
     }
     // Three params : WHERE $1 OP2 $3
     else if ($n == 3) {
-      $this->where .= "`".trim($param[0]). "` ". $param[1]. " '" . mysql_escape_string($param[2]) ."'";
+      $this->where .= "`".trim($param[0]). "` ". $param[1]. " " .$this->protect($param[2]);
     }
     // Two params : $1 = $2
     else if ($n == 2) {
-      $this->where .= "`".trim($param[0])."` = '" . mysql_escape_string($param[1]) ."'";
+      $this->where .= "`".trim($param[0])."` = " . $this->protect($param[1]);
     }
 
     if(!empty($arg))
@@ -330,6 +336,10 @@ class Collection extends \ArrayObject {
     return array_keys($this->getArrayCopy());
   }
 
+  public function first(){
+    return $this->toArray()[0];
+  }
+
   public function toArray(){
     return array_values($this->getArrayCopy());
   }
@@ -342,4 +352,7 @@ class Collection extends \ArrayObject {
     return array_map($func, $this->toArray());
   }
 
+  public function assocMap($func){
+    return array_map($func, $this->toAssoc());
+  }
 }

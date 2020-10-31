@@ -17,8 +17,13 @@
  *
  */
 
-use WTO\Players;
-use WTO\Stats;
+/*
+$autoloadFuncs = spl_autoload_functions();
+foreach($autoloadFuncs as $unregisterFunc)
+{
+    spl_autoload_unregister($unregisterFunc);
+}
+*/
 
 $swdNamespaceAutoload = function ($class)
 {
@@ -66,18 +71,6 @@ class welcometo extends Table
   }
 
 
-  public static function isExpertGame()
-  {
-      return boolval(self::get()->getGameStateValue("optionExpert"));
-  }
-
-  public static function isAdvancedGame()
-  {
-      return boolval(self::get()->getGameStateValue("optionAdvanced"));
-  }
-
-
-
   /*
    * setupNewGame:
    *  This method is called only once, when a new game is launched.
@@ -93,17 +86,6 @@ class welcometo extends Table
     WTO\ConstructionCards::setupNewGame($players);
 
     self::setGameStateValue('currentTurn', 0);
-
-    /* TODO: setup the initial game situation here
-
-    self::setGameStateInitialValue("min_log", 0);
-    $this->plans->setupPlans(boolval(self::getGameStateValue("advanced_variant")));
-    $isSolo = (count($players) == 1);
-    $this->getConstructionCardsInstance($isSolo)->setupConstructionCards(array_keys($players));
-    WTOUpperSheet::setupUpperSheets($players);
-    WTOLowerSheet::setupLowerSheets($players);
-    */
-
     $this->activeNextPlayer();
   }
 
@@ -139,15 +121,20 @@ class welcometo extends Table
     // Increase turn number
     $n = (int) self::getGamestateValue('currentTurn') + 1;
     self::setGamestateValue("currentTurn", $n);
+    WTO\ConstructionCards::draw();
+    $this->gamestate->nextState("playerTurn");
+  }
 
-
-    $ids = WTO\Players::getAll()->getIds();
-    $this->gamestate->setPlayersMultiactive($ids, "playerTurn");
+  function stPlayerTurn()
+  {
+    $this->gamestate->setAllPlayersMultiactive();
   }
 
   function argPlayerTurn()
   {
-    return [];
+    return [
+      '_private' => WTO\Players::getAll()->assocMap(function($player){ return $player->argPlayerTurn(); })
+    ];
   }
 
 

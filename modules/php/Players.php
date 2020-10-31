@@ -41,7 +41,7 @@ class Players extends Helpers\DB_Manager
   }
 
   public function getAll(){
-    return self::DB()->get();
+    return self::DB()->get(false);
   }
 
   /*
@@ -72,10 +72,6 @@ class Players extends Helpers\DB_Manager
    */
   public function getUiData()
   {
-    $ui = [];
-    foreach (self::getAll() as $player)
-       $ui[$player->getId()] = $player->getUiData();
-
-    return $ui;
+    return self::getAll()->assocMap(function($player){ return $player->getUiData(); });
   }
 }

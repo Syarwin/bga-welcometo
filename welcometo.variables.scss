@@ -79,3 +79,38 @@ $parks:(
     "n" : 5,
   ),
 );
+
+
+$scorePools:(1099px, 1148px, 1198px, 1251px, 1301px);
+
+$scoreTemps:(
+  ("top":1076px, "left":496px),
+  ("top":1076px, "left":558px),
+
+  ("top":1106px, "left":527px),
+
+  ("top":1134px, "left":496px),
+  ("top":1134px, "left":558px),
+
+  ("top":1164px, "left":527px),
+
+  ("top":1192px, "left":496px),
+  ("top":1192px, "left":558px),
+
+  ("top":1222px, "left":527px),
+
+  ("top":1253px, "left":496px),
+  ("top":1253px, "left":558px),
+);
+
+$scoreEstates:(
+  ("top":1168px, "left":687px, "n":1),
+  ("top":1145px, "left":760px, "n":2),
+  ("top":1118px, "left":825px, "n":3),
+  ("top":1094px, "left":894px, "n":4),
+  ("top":1071px, "left":966px, "n":4),
+  ("top":1048px, "left":1033px, "n":4),
+);
+
+
+$scoreBis:(1051px, 1114px, 1177px, 1240px, 1301px);

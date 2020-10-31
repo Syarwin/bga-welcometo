@@ -38,6 +38,7 @@ var jstpl_scoreSheet = `
 
 
 //// TOP PART ////
+var jstpl_cityName = '<div id="${pId}_cityname" class="cityname" style="color:#${color}">${name}</div>';
 var jstpl_house = `
   <div id="\${pId}_house_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="house"></div>
   <div id="\${pId}_top_fence_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="top-fence"></div>
@@ -45,6 +46,11 @@ var jstpl_house = `
 `;
 var jstpl_park = '<div id="${pId}_park_${x}_${y}" data-x="${x}" data-y="${y}" class="park"></div>';
 
+//// BOTTOM PART ////
+var jstpl_scorePool = '<div id="${pId}_score_pool_${x}" data-x="${x}" class="score-pool"></div>';
+var jstpl_scoreTemp = '<div id="${pId}_score_temp_${x}" data-x="${x}" class="score-temp"></div>';
+var jstpl_scoreEstate = '<div id="${pId}_score_estate_${x}_${y}" data-x="${x}" data-y="${y}" class="score-estate"></div>';
+var jstpl_scoreBis = '<div id="${pId}_score_bis_${x}" data-x="${x}" class="score-bis"></div>';
 
 
 

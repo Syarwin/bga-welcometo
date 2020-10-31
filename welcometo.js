@@ -57,9 +57,9 @@ define([
       this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet', this);
       this._scoreSheet.addScribble({
         id :1,
-        location: "park_0_0",
+        location: "score_temp_0",
         turn: 1,
-      }, false);
+      }, true);
      },
 
 

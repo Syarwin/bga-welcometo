@@ -4,6 +4,7 @@ var debug = isDebug ? console.info.bind(window.console) : function () { };
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
   return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
     constructor(player, gameData, parentDiv, gameui) {
+      debug("Construction score sheet", player);
       this.player = player;
 
       // Create container
@@ -11,7 +12,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       this.container = "score-sheet-" + player.id;
 
       // Setup divs
-      this.setupStreets();
+      this.setupUpperSheet();
+      this.setupLowerSheet();
     },
 
     tpl(tplName, data, container){
@@ -23,21 +25,44 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     ////////////////////////
     ////////  Setup ////////
     ////////////////////////
-    setupStreets(){
+    setupUpperSheet(){
+      // City name
+      this.tpl("cityName", this.player);
+
+      // Streets
       var houses = [10, 11, 12];
       var parks = [3, 4, 5];
 
       for(var x = 0; x < 3; x++){
-        for(var y = 0; y < houses[x]; y++){
+        for(var y = 0; y < houses[x]; y++)
           this.tpl('house', {x: x, y : y});
-        }
 
-        for(var y = 0; y < parks[x]; y++){
+        for(var y = 0; y < parks[x]; y++)
           this.tpl('park', {x: x, y : y});
-        }
       };
     },
 
+
+    setupLowerSheet(){
+
+      // Pool & Bis
+      for(var i = 0; i < 9; i++){
+        this.tpl('scorePool', { x:i });
+        this.tpl('scoreBis', { x:i });
+      }
+
+      // Temp
+      for(var i = 0; i < 11; i++)
+        this.tpl('scoreTemp', { x:i });
+
+      // Real estate
+      var estates = [1,2,3,4,4,4];
+      for(var x = 0; x < 6; x++){
+        for(var y = 0; y < estates[x]; y++){
+          this.tpl('scoreEstate', {x:x, y:y});
+        }
+      }
+    },
 
     /////////////////////////
     /////// Scribble ////////

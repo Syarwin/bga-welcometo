@@ -46,6 +46,7 @@ $machinestates = [
     "description" => clienttranslate('Waiting for other players to end their turn.'),
     "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
     "type" => "multipleactiveplayer",
+    "action" => "stPlayerTurn",
     "args" => "argPlayerTurn",
     "possibleactions" => ["registerPlayerTurn"],
     "transitions" => ["applyTurns" => ST_APPLY_TURNS]

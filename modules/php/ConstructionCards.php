@@ -1,5 +1,6 @@
 <?php
 namespace WTO;
+use welcometo;
 
 /*
  * Construction Cards
@@ -34,6 +35,12 @@ class ConstructionCards extends Helpers\Pieces
   ];
 
 
+  //////////////////////////////////
+  //////////////////////////////////
+  ///////////// SETUP //////////////
+  //////////////////////////////////
+  //////////////////////////////////
+
   public function setupNewGame($players){
     $cards = [];
     foreach(self::$deck as $number => $nActions){
@@ -49,12 +56,113 @@ class ConstructionCards extends Helpers\Pieces
     self::create($cards, 'deck');
     self::shuffle('deck');
 
-    if(count($players) == 1){
-      // TODO
-      // Draw two decks
-      // Add the solo card on the bottom one
-      // Shuffle the bottom one
-      // Merge the two
+    if(Globals::isStandard()){
+      // Standard mode : set-up an initial card in each stack, new turn will bring the second one.
+      self::draw(null, true);
+    } else {
+      if(Globals::isSolo()){
+        // Solo mode setup : add the solo card on the bottom half
+        self::soloSetupNewGame();
+      }
+      else if(Globals::isExpert()){
+        // Expert mode : pre-draft one card per player
+        foreach($players as $playerId){
+          self::pickForLocation(1, 'deck', "for_{$playerId}");
+        }
+      }
     }
+  }
+
+
+  public function soloSetupNewGame()
+  {
+    // Add the solo cards in the deck
+    self::create([ ['number' => null, 'action' => SOLO, 'location' => 'deck'] ]);
+    self::shuffle('deck');
+
+    // Depending on its position, move it around
+    $middle = 42;
+    $card = self::DB()->where('action', SOLO)->get();
+    if ($card['card_state'] >= $middle) {
+      self::insertAt($card['card_id'], 'deck', $card['card_state'] - $middle);
+    }
+  }
+
+
+  ////////////////////////////////////
+  ////////////////////////////////////
+  //////////// NEW TURN //////////////
+  ////////////////////////////////////
+  ////////////////////////////////////
+
+  /*
+   * Return the stacks depending on whether we are playing in expert mode or not
+   */
+  public function getStacks($playerId)
+  {
+    if(Globals::isExpert())
+      return ["{$playerId}_stack_0", "{$playerId}_stack_1", "{$playerId}_stack_2"];
+    else
+      return ['stack_0', 'stack_1', 'stack_2'];
+  }
+
+
+
+  /*
+   * Draw a new set of cards for new turn. Will be called either :
+   *   - only once with $playerId = null if in standard or solo mode
+   *   - once per player's id in expert mode
+   */
+  public function draw($playerId = null)
+  {
+    $drawnCards = [];
+    $soloCardDrawn = false;
+    foreach (self::getStacks($playerId) as $stackId => $stack) {
+      ///// Cleaning stack /////
+      if(Globals::isStandard()){
+        // Standard mode : Discard last flipped card if any, flip the current construction card if any, draw a new card
+        self::moveAllInLocation($stack, 'discard', 1);
+        self::moveAllInLocation($stack, $stack,    0, 1);
+      } else {
+        // Discard all previously drawn cards
+        self::moveAllInLocation($stack, 'discard', 0); // TODO : remove 0 ?
+      }
+
+      ///// Drawing new card /////
+      // In expert mode, the first card was drafter by another player in prev turn
+      $fromLocation = ($stackId == 0 && Globals::isExpert())? "for_{$this->playerId}" : "deck";
+      $drawnCard = self::pickOneForLocation($fromLocation, $stack);
+
+      // Drawing the solo card ? Re-draw another card immediately
+      if ($drawnCard['action'] == SOLO) {
+        self::move($drawCard['id'], 'removed');
+        $drawnCard = self::pickOneForLocation($fromLocation, $stack);
+        $soloCardDrawn = true;
+      }
+
+      $drawnCards[$stackId] = $drawnCard;
+    }
+
+    return [
+      'drawnCards' => $drawnCards,
+      'soloCardDrawn' => $soloCardDrawn
+    ];
+  }
+
+
+  ////////////////////////////////////
+  ////////////////////////////////////
+  ////////////  GETTERS  /////////////
+  ////////////////////////////////////
+  ////////////////////////////////////
+
+  public function getForPlayer($pId)
+  {
+    $cards = [];
+    foreach (self::getStacks($pId) as $stackId => $stack) {
+        $cards[$stackId] = self::getInLocation($stack);
+    }
+
+    return $cards;
   }
 }

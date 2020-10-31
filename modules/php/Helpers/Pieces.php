@@ -58,7 +58,7 @@ class Pieces extends DB_Manager {
    */
   final static function getSelectQuery() {
     $basic = ['id' => static::$prefix."id", 'location' => static::$prefix."location", 'state' => static::$prefix."state"];
-    if(!self::$autoremovePrefix)
+    if(!static::$autoremovePrefix)
       $basic = array_values($basic);
 
     return self::DB()->select(array_merge($basic, static::$customFields));
@@ -71,10 +71,12 @@ class Pieces extends DB_Manager {
     if(!is_null($state))
       $data[static::$prefix.'state'] = $state;
 
-    if(!is_array($ids))
-      $ids = [$ids];
+    $query = self::DB()->update($data);
+    if(!is_null($ids)){
+      $query = $query->whereIn(static::$prefix.'id', is_array($ids)? $ids : [$ids]);
+    }
 
-    return self::DB()->update($data)->whereIn(static::$prefix.'id', $ids);
+    return $query;
   }
 
   /****
@@ -352,6 +354,9 @@ class Pieces extends DB_Manager {
     return $pieces;
   }
 
+  public static function pickOneForLocation($fromLocation, $toLocation, $state = 0, $deckReform = true) {
+    return self::pickForLocation(1, $fromLocation, $toLocation, $state, $deckReform)->first();
+  }
 
   /*
    * Reform a location from another location when enmpty
