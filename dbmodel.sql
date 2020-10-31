@@ -23,3 +23,22 @@ CREATE TABLE IF NOT EXISTS `plan_cards` (
   `approved` int(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`card_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `scribbles` (
+  `scribble_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `scribble_location` varchar(16) NOT NULL,
+  `scribble_state` int(11) NOT NULL,
+  `player_id` int(10) NOT NULL,
+  `turn` int(10) NOT NULL,
+  PRIMARY KEY (`scribble_id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS `houses` (
+  `player_id` int(10) NOT NULL,
+  `x` int(10) NOT NULL,
+  `y` int(10) NOT NULL,
+  `number` int(10) NOT NULL,
+  `turn` int(10) NOT NULL,
+  PRIMARY KEY (`player_id`, `x`, `y`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;

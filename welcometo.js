@@ -46,13 +46,20 @@ define([
     setup(gamedatas) {
       debug('SETUP', gamedatas);
 
-      if(!this.isSpectator){
-        var player = gamedatas.players[this.player_id];
-        this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet', this);
-      }
+      // Setup game notifications
+      this.setupNotifications();
 
-       // Setup game notifications
-       this.setupNotifications();
+      // Stop here if spectator
+      if(this.isSpectator)
+        return;
+
+      var player = gamedatas.players[this.player_id];
+      this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet', this);
+      this._scoreSheet.addScribble({
+        id :1,
+        location: "park_0_0",
+        turn: 1,
+      }, false);
      },
 
 

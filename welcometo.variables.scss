@@ -1,0 +1,81 @@
+$houses:(
+  0:(
+    0:("left" : 374px, "top" : 186px),
+    1:("left" : 478px, "top" : 186px),
+    2:("left" : 581px, "top" : 201px),
+    3:("left" : 686px, "top" : 186px),
+    4:("left" : 788px, "top" : 186px),
+    5:("left" : 893px, "top" : 186px),
+    6:("left" : 995px, "top" : 202px),
+    7:("left" : 1097px, "top" : 202px),
+    8:("left" : 1199px, "top" : 186px),
+    9:("left" : 1300px, "top" : 186px),
+  ),
+
+  1:(
+    0:("left" : 273px, "top" : 478px),
+    1:("left" : 374px, "top" : 462px),
+    2:("left" : 478px, "top" : 462px),
+    3:("left" : 581px, "top" : 479px),
+    4:("left" : 686px, "top" : 462px),
+    5:("left" : 788px, "top" : 462px),
+    6:("left" : 893px, "top" : 462px),
+    7:("left" : 995px, "top" : 479px),
+    8:("left" : 1096px, "top" : 462px),
+    9:("left" : 1199px, "top" : 462px),
+    10:("left" : 1300px, "top" : 462px),
+  ),
+
+  2:(
+    0:("left" : 167px, "top" : 738px),
+    1:("left" : 273px, "top" : 753px),
+    2:("left" : 374px, "top" : 738px),
+    3:("left" : 478px, "top" : 738px),
+    4:("left" : 581px, "top" : 738px),
+    5:("left" : 686px, "top" : 738px),
+    6:("left" : 790px, "top" : 753px),
+    7:("left" : 893px, "top" : 738px),
+    8:("left" : 995px, "top" : 738px),
+    9:("left" : 1097px, "top" : 738px),
+    10:("left" : 1199px, "top" : 752px),
+    11:("left" : 1300px, "top" : 738px),
+  ),
+);
+
+
+$fences:(
+  0:(
+    "left":357px,
+    "top":134px,
+    "widths" : (105px, 104px, 105px, 102px, 103px, 103px, 103px, 101px, 103px, 103px)
+  ),
+  1:(
+    "left":253px,
+    "top":409px,
+    "widths" : (107px, 102px, 104px, 105px, 102px, 103px, 104px, 102px, 101px, 102px, 103px)
+  ),
+  2:(
+    "left":149px,
+    "top":686px,
+    "widths" : (108px, 103px, 102px, 104px, 105px, 102px, 103px, 103px, 102px, 101px, 103px, 103px)
+  ),
+);
+
+
+$parks:(
+  0:(
+    "left":1220px,
+    "top":73px,
+    "n" : 3,
+  ),
+  1:(
+    "left":1166px,
+    "top":347px,
+    "n" : 4,
+  ),
+  2:(
+    "left":1114px,
+    "top":623px,
+    "n" : 5,
+  ),
+);

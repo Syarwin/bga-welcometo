@@ -25,20 +25,7 @@
 }
 
 
-$houses:(
-  0:(
-    0:("left" : 374px, "top" : 186px),
-    1:("left" : 478px, "top" : 186px),
-    2:("left" : 581px, "top" : 201px),
-    3:("left" : 686px, "top" : 186px),
-    4:("left" : 788px, "top" : 186px),
-    5:("left" : 893px, "top" : 186px),
-    6:("left" : 995px, "top" : 202px),
-    7:("left" : 1097px, "top" : 202px),
-    8:("left" : 1199px, "top" : 186px),
-    9:("left" : 1300px, "top" : 186px),
-  ),
-);
+@import 'welcometo.variables';
 
 .score-sheet-container {
   width: 1544px;
@@ -51,17 +38,129 @@ $houses:(
     background-size: 100%;
     position: relative;
 
+
+/*****************************
+******************************
+********* UPPER PART *********
+******************************
+*****************************/
+
+    /////////// HOUSES ////////////
     .house {
       position:absolute;
       width:70px;
       height:70px;
-      background-color:red;
+      background-color:rgba(255,0,0,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
 
       @each $x, $street in $houses {
         @each $y, $house in $street {
           &[data-x="#{$x}"][data-y="#{$y}"] {
             left: map-get($house, 'left');
             top: map-get($house, 'top');
+          }
+        }
+      }
+    }
+
+
+    /////////// FENCES ////////////
+    .top-fence {
+      position: absolute;
+      width: 96px;
+      height: 11px;
+      background-color: rgba(0,255,0,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+    }
+
+    .estate-fence {
+      position: absolute;
+      height: 180px;
+      width: 12px;
+      background-color: rgba(0,0,255,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+    }
+
+    @each $x, $street in $fences {
+      $left:map-get($street, 'left');
+      @for $y from 1 through length(map-get($street, 'widths')) {
+        .top-fence[data-x="#{$x}"][data-y="#{$y - 1}"] {
+          left: $left;
+          top: map-get($street, 'top');
+          width: nth(map-get($street, 'widths'), $y);
+        }
+
+        .estate-fence[data-x="#{$x}"][data-y="#{$y - 1}"] {
+          left: $left - 6px;
+          top: map-get($street, 'top') - 11px;
+        }
+
+        $left:$left + nth(map-get($street, 'widths'), $y);
+      }
+    }
+
+
+
+    /////////// PARKS ////////////
+    .park {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+      background-color: rgba(255,0,255,0.5);
+      box-sizing: border-box;
+      border:1px solid black;
+
+      @each $x, $street in $parks {
+        $left:map-get($street, 'left');
+        @for $y from 1 through map-get($street, 'n') {
+          &[data-x="#{$x}"][data-y="#{$y - 1}"] {
+            left: $left + ($y - 1)*52px;
+            top: map-get($street, 'top');
+          }
+        }
+      }
+    }
+
+
+/*****************************
+******************************
+********* LOWER PART *********
+******************************
+*****************************/
+
+
+
+
+
+/****************************
+*****************************
+********* SCRIBBLE  *********
+*****************************
+****************************/
+    .scribble {
+      width:100%;
+      height:100%;
+
+      .scribble-path {
+        stroke-dasharray: 4500;
+        stroke-dashoffset: 0;
+        stroke:black;
+      }
+
+      &.highlight .scribble-path {
+        stroke:red;
+      }
+
+      &.animate .scribble-path {
+        stroke-dashoffset: 4500;
+        animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite;
+
+        @keyframes drawScribble {
+          to {
+            stroke-dashoffset: 0;
           }
         }
       }
@@ -185,189 +284,6 @@ $houses:(
     animation: 2s ease-in-out 0.5s infinite alternate hammerHighlight;
 }
 
-.house0 {
-    top: 11.6%;
-}
-
-.house1 {
-    top: 11.6%;
-}
-
-.house2 {
-    top: 12.6%;
-}
-
-.house2 {
-    top: 12.6%;
-}
-
-.house3 {
-    top: 11.8%;
-}
-
-.house4 {
-    top: 11.6%;
-}
-
-.house5 {
-    top: 11.6%;
-}
-
-.house6 {
-    top: 12.6%;
-}
-
-.house7 {
-    top: 12.6%;
-}
-
-.house8 {
-    top: 11.9%;
-}
-
-.house9 {
-    top: 11.9%;
-}
-
-.house10 {
-    top: 30.6%;
-}
-
-.house11 {
-    top: 29.7%;
-}
-
-.house12 {
-    top: 29.7%;
-}
-
-.house13 {
-    top: 30.6%;
-}
-
-.house14 {
-    top: 29.8%;
-}
-
-.house15 {
-    top: 29.8%;
-}
-
-.house16 {
-    top: 29.7%;
-}
-
-.house17 {
-    top: 30.6%;
-}
-
-.house18 {
-    top: 29.8%;
-}
-
-.house19 {
-    top: 29.8%;
-}
-
-.house20 {
-    top: 29.8%;
-}
-
-.house21 {
-    top: 47.6%;
-}
-
-.house22 {
-    top: 48.4%;
-}
-
-.house23 {
-    top: 47.6%;
-}
-
-.house24 {
-    top: 47.6%;
-}
-
-.house25 {
-    top: 47.6%;
-}
-
-.house26 {
-    top: 47.6%;
-}
-
-.house27 {
-    top: 48.4%;
-}
-
-.house28 {
-    top: 47.6%;
-}
-
-.house29 {
-    top: 47.6%;
-}
-
-.house30 {
-    top: 47.6%;
-}
-
-.house31 {
-    top: 48.4%;
-}
-
-.house32 {
-    top: 47.6%;
-}
-
-.avenue0 {
-    left: 10%;
-}
-
-.avenue1 {
-    left: 16.9%;
-}
-
-.avenue2 {
-    left: 23.5%;
-}
-
-.avenue3 {
-    left: 30.1%;
-}
-
-.avenue4 {
-    left: 37%;
-}
-
-.avenue5 {
-    left: 43.8%;
-}
-
-.avenue6 {
-    left: 50.3%;
-}
-
-.avenue7 {
-    left: 57%;
-}
-
-.avenue8 {
-    left: 63.6%;
-}
-
-.avenue9 {
-    left: 70.3%;
-}
-
-.avenue10 {
-    left: 76.9%;
-}
-
-.avenue11 {
-    left: 83.5%;
-}
 
 .plan_fence_div {
     width: 6.6%;
