@@ -51,6 +51,12 @@ class Players extends Helpers\DB_Manager
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()->where($pId)->get();
+/*
+$pId = $pId ?: welcometo::get()->gamestate->getActivePlayerList();
+return is_array($pId)?
+  self::DB()->whereIn($pId)->get()
+: self::DB()->where($pId)->get();
+*/
   }
 
   public function getActive()

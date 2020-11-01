@@ -80,6 +80,12 @@ define([
      onEnteringState(stateName, args) {
        debug('Entering state: ' + stateName, args);
 
+       // Private state machine
+       if(args.parallel){
+         this.setupPrivateState(args);
+         return;
+       }
+
        // Stop here if it's not the current player's turn for some states
        if (["playerAssign"].includes(stateName) && !this.isCurrentPlayerActive())
          return;
@@ -90,6 +96,17 @@ define([
          this[methodName](args.args);
      },
 
+     setupPrivateState(args){
+       var data = args.args._private.state;
+       delete this.gamedatas.gamestate.parallel;
+       this.gamedatas.gamestate.name = data.name;
+       this.gamedatas.gamestate.descriptionmyturn = data.descriptionmyturn;
+       this.gamedatas.gamestate.possibleactions = data.possibleactions;
+       this.gamedatas.gamestate.transitions = data.transitions;
+       this.gamedatas.gamestate.args = args.args._private.args;
+       this.updatePageTitle();
+       this.onEnteringState(data.name, this.gamedatas.gamestate);
+     },
 
      /*
       * onLeavingState:
@@ -145,6 +162,25 @@ define([
        this._connections.forEach(dojo.disconnect);
        this._connections = [];
      },
+
+     //     lightsOn: 'mrjack_lightsOn',
+
+     playSound(sound, playNextMoveSound = true) {
+       playSound(sound);
+       playNextMoveSound && this.disableNextMoveSound();
+     },
+
+
+
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     //////   Choose construction cards   ///////
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     onEnteringStateChooseCards(args){
+       debug("Test", args);
+     },
+
 
 
      ///////////////////////////////////////////////////

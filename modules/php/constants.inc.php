@@ -9,6 +9,11 @@ define('ST_NEW_TURN', 3);
 define('ST_PLAYER_TURN', 4);
 define('ST_APPLY_TURNS', 5);
 define('ST_VALIDATE_PLANS', 6);
+
+// Parallel flow
+define('ST_CHOOSE_CARDS', 20);
+
+
 define('ST_COMPUTE_SCORES', 90);
 
 define('ST_GAME_END', 99);

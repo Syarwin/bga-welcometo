@@ -122,21 +122,26 @@ class welcometo extends Table
     $n = (int) self::getGamestateValue('currentTurn') + 1;
     self::setGamestateValue("currentTurn", $n);
     WTO\ConstructionCards::draw();
+
+    WTO\StateMachine::initPrivateStates(ST_PLAYER_TURN);
     $this->gamestate->nextState("playerTurn");
   }
 
   function stPlayerTurn()
   {
-    $this->gamestate->setAllPlayersMultiactive();
+    $ids = WTO\Players::getAll()->getIds();
+    $this->gamestate->setPlayersMultiactive($ids, '');
   }
 
   function argPlayerTurn()
   {
-    return [
-      '_private' => WTO\Players::getAll()->assocMap(function($player){ return $player->argPlayerTurn(); })
-    ];
+    return WTO\StateMachine::getArgs();
   }
 
+  function argChooseCards($pId)
+  {
+    return ["test"];
+  }
 
   ////////////////////////////////////
   ////////////   Zombie   ////////////

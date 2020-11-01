@@ -160,7 +160,11 @@ class ConstructionCards extends Helpers\Pieces
   {
     $cards = [];
     foreach (self::getStacks($pId) as $stackId => $stack) {
-        $cards[$stackId] = self::getInLocation($stack);
+      $cards[$stackId] = self::getTopOf($stack, 2)->toArray();
+      if(Globals::isStandard()){
+        // Hide the number of the second card
+        unset($cards[$stackId][0]['number']);
+      }
     }
 
     return $cards;

@@ -38,6 +38,56 @@
 
 @import 'welcometo.variables';
 
+
+/*****************************
+******************************
+*********** CARDS ************
+******************************
+*****************************/
+.construction_cards_wrap {
+    width: 33.33%;
+    display: table-cell;
+}
+
+#construction_cards_wrap_global {
+    display: table;
+    width: 100%;
+}
+
+#responsive_card_viewer {
+    display: inline-block;
+    width: 100%;
+}
+
+#responsive_plan_cards {
+    width: 100%;
+    display: inline-block;
+}
+
+#responsive_construction_cards {
+    width: 100%;
+    display: inline-block;
+}
+
+@media only screen and (min-width: 1500px) {
+    #responsive_construction_cards {
+        width: 66%;
+        display: inline-block;
+    }
+    #responsive_plan_cards {
+        width: 33%;
+        display: inline-block;
+    }
+}
+
+
+
+
+/***********************************
+************************************
+*********** SCORE SHEET ************
+************************************
+***********************************/
 .score-sheet-container {
   width: 1544px;
   height:1544px;
@@ -50,11 +100,12 @@
     position: relative;
 
 
-/*****************************
-******************************
-********* UPPER PART *********
-******************************
-*****************************/
+
+  /*****************************
+  ******************************
+  ********* UPPER PART *********
+  ******************************
+  *****************************/
     /////////// CITY NAME ////////////
     .cityname {
       position:absolute;
@@ -149,11 +200,11 @@
     }
 
 
-/*****************************
-******************************
-********* LOWER PART *********
-******************************
-*****************************/
+  /*****************************
+  ******************************
+  ********* LOWER PART *********
+  ******************************
+  *****************************/
     /////////// POOLS ////////////
     .score-pool {
       position: absolute;
@@ -459,65 +510,7 @@
     }
 }
 
-.park_column0 {
-    left: 72%;
-}
 
-.park_column1 {
-    left: 75.4%;
-}
-
-.park_column2 {
-    left: 78.9%;
-}
-
-.park_column3 {
-    left: 82.3%;
-}
-
-.park_column4 {
-    left: 85.5%;
-}
-
-.park_column5 {
-    left: 88.9%;
-}
-
-.construction_cards_wrap {
-    width: 33.33%;
-    display: table-cell;
-}
-
-#construction_cards_wrap_global {
-    display: table;
-    width: 100%;
-}
-
-#responsive_card_viewer {
-    display: inline-block;
-    width: 100%;
-}
-
-#responsive_plan_cards {
-    width: 100%;
-    display: inline-block;
-}
-
-#responsive_construction_cards {
-    width: 100%;
-    display: inline-block;
-}
-
-@media only screen and (min-width: 1500px) {
-    #responsive_construction_cards {
-        width: 66%;
-        display: inline-block;
-    }
-    #responsive_plan_cards {
-        width: 33%;
-        display: inline-block;
-    }
-}
 
 @keyframes hammerHighlight {
     from {

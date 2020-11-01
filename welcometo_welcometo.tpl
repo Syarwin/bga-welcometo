@@ -30,6 +30,9 @@
   </div>
 </div>
 
+<audio id="audiosrc_o_welcometo_scribble" src="{URL}/img/sound/scribble.ogg" preload="none" autobuffer></audio>
+<audio id="audiosrc_welcometo_scribble" src="{URL}/img/scribble.mp3" preload="none" autobuffer></audio>
+
 <script type="text/javascript">
 var jstpl_scoreSheet = `
 <div class="score-sheet-container">

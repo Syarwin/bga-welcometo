@@ -52,3 +52,6 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `turn` int(10) NOT NULL,
   PRIMARY KEY (`player_id`, `x`, `y`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;

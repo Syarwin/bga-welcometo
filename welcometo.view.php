@@ -24,6 +24,6 @@ class view_welcometo_welcometo extends game_view
 
   function build_page($viewArgs)
   {
-
+    $this->tpl['URL'] = "./";
   }
 }

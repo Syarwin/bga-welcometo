@@ -263,7 +263,7 @@ class QueryBuilder extends \APP_DbObject {
 
 	public function whereIn()
 	{
-    $this->where = is_null($this->where)? " WHERE " : ($this->isOrWhere? " OR " : " AND ");
+    $this->where = is_null($this->where)? " WHERE " : ($this->where. ($this->isOrWhere? " OR " : " AND "));
 
 		$num_args = func_num_args();
 		$args = func_get_args();

@@ -44,13 +44,28 @@ $machinestates = [
   ST_PLAYER_TURN => [
     "name" => "playerTurn",
     "description" => clienttranslate('Waiting for other players to end their turn.'),
-    "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
+    "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'), // Won't be displayed anyway
     "type" => "multipleactiveplayer",
+    "parallel" => ST_CHOOSE_CARDS, // Allow to have parallel flow for each player
     "action" => "stPlayerTurn",
     "args" => "argPlayerTurn",
     "possibleactions" => ["registerPlayerTurn"],
     "transitions" => ["applyTurns" => ST_APPLY_TURNS]
   ],
+
+
+
+  ST_CHOOSE_CARDS => [
+    "name" => "chooseCards",
+    "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
+    "type" => "local",
+    "args" => "argChooseCards",
+    "possibleactions" => [],
+    "transitions" => []
+  ],
+
+
+
 
   ST_APPLY_TURNS => [
     "name" => "applyTurns",
