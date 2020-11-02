@@ -1,18 +1,11 @@
 {OVERALL_GAME_HEADER}
 
 <div id="cards-container" class="whiteblock">
-    <h3>Table</h3>
-    <div id="responsive_card_viewer">
-        <div id="responsive_plan_cards">
-            <div id="plan_cards_wrap"></div>
-        </div>
-        <div id="responsive_construction_cards">
-            <div id="construction_cards_wrap_global">
-                <div id="construction_cards_wrap_0" class="construction_cards_wrap"></div>
-                <div id="construction_cards_wrap_1" class="construction_cards_wrap"></div>
-                <div id="construction_cards_wrap_2" class="construction_cards_wrap"></div>
-            </div>
-        </div>
+    <div id="plan-cards-container"></div>
+    <div id="construction-cards-container">
+        <div id="construction-cards-stack-0" class="construction-cards-stack"></div>
+        <div id="construction-cards-stack-1" class="construction-cards-stack"></div>
+        <div id="construction-cards-stack-2" class="construction-cards-stack"></div>
     </div>
 </div>
 
@@ -34,6 +27,21 @@
 <audio id="audiosrc_welcometo_scribble" src="{URL}/img/scribble.mp3" preload="none" autobuffer></audio>
 
 <script type="text/javascript">
+
+var jstpl_constructionCard = `
+<div id="construction-card-\${id}" data-action="\${action}" data-number="\${number}" class="construction-card-holder">
+  <div class="construction-card-back"></div>
+  <div class="construction-card-front">
+    <div class="card-corners"></div>
+    <div class="number"></div>
+  </div>
+</div>`;
+
+//var house_div = '<div id="house_${house_id}_${player_id}" class="avenue${avenue} house${house_id} house_div empty_house handwritten"></div>';
+
+/////////////////////
+//// SCORE SHEET ////
+/////////////////////
 var jstpl_scoreSheet = `
 <div class="score-sheet-container">
   <div id="score-sheet-\${pId}" class="score-sheet"></div>

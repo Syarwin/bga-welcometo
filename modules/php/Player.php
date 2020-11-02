@@ -12,8 +12,7 @@ class Player extends Helpers\DB_Manager
     $this->color = $row['player_color'];
     $this->eliminated = $row['player_eliminated'] == 1;
     $this->zombie = $row['player_zombie'] == 1;
-
-
+    $this->state = $row['player_state'];
   }
 
   private $id;
@@ -30,6 +29,7 @@ class Player extends Helpers\DB_Manager
   public function getColor(){ return $this->color; }
   public function isEliminated(){ return $this->eliminated; }
   public function isZombie(){ return $this->zombie; }
+  public function getState(){ return $this->state; }
 
   public function getUiData()
   {
@@ -42,23 +42,20 @@ class Player extends Helpers\DB_Manager
   }
 
 
-  public function argPlayerTurn()
+  public function getConstructionCards()
   {
-    $data = [
-      'turn' => Globals::getCurrentTurn(),
-      'cards' => ConstructionCards::getForPlayer($this->id),
-    ];
-
-    $action = Log::getLastAction('selectCard', $this->id);
-    if(is_null($action)){
-      return array_merge($data, $this->argPlayerChooseCard() );
-    }
+    return ConstructionCards::getForPlayer($this->id);
   }
 
-  public function argPlayerChooseCard()
+  public function hasSomethingToCancel()
   {
-    return [
-      'toto'
-    ];
+    return !empty(Log::getLastActions($this->id));
   }
+
+  public function getSelectedCards()
+  {
+    $selectCardAction = Log::getLastAction('selectCard', $this->id);
+    return is_null($selectCardAction)? null : $selectCardAction['arg'];
+  }
+
 }

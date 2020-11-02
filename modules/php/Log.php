@@ -60,6 +60,6 @@ class Log extends Helpers\DB_Manager
 
   public static function getLastAction($action, $pId)
   {
-    return self::getLastActionsQuery($pId)->where('action', $action)->limit(1)->get();
+    return self::getLastActionsQuery($pId)->where('action', $action)->limit(1)->get(true);
   }
 }

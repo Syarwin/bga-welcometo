@@ -44,6 +44,18 @@
 *********** CARDS ************
 ******************************
 *****************************/
+$cardWidth:343px;
+$cardHeight:520px;
+
+#cards-container {
+
+  #construction-cards-container {
+    .construction-card-holder {
+      width:$cardWidth;
+      height:$cardHeight;
+    }
+  }
+}
 .construction_cards_wrap {
     width: 33.33%;
     display: table-cell;

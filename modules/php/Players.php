@@ -10,7 +10,6 @@ class Players extends Helpers\DB_Manager
 {
   protected static $table = 'player';
   protected static $primary = 'player_id';
-  protected static $associative = false;
   protected static function cast($row)
   {
     return new \WTO\Player($row);

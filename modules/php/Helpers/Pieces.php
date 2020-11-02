@@ -45,7 +45,9 @@ class Pieces extends DB_Manager {
     return parent::DB(static::$table);;
   }
 
-
+// TODO : putDeckOnTop
+// TODO : pickRandomFor
+// TODO : collection filter
 
   /************************************
   *************************************

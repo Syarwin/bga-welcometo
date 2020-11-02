@@ -94,13 +94,14 @@ class StateMachine extends \APP_DbObject
   public function getArgs()
   {
     self::checkParallel();
+    $states = self::getCollectionFromDB("SELECT player_id, ". self::$stateField . " FROM player", true);
     $data = ['_private' => [] ];
-    foreach(Players::getAll() as $player){
-      $state = self::getPrivateState($player->getState(), false);
+    foreach($states as $pId => $stateId){
+      $state = self::getPrivateState($stateId, false);
       $method = $state['args'];
-      $data['_private'][$player->getId()] = [
+      $data['_private'][$pId] = [
         'state' => $state,
-        'args' => self::getGame()->$method($player),
+        'args' => self::getGame()->$method($pId),
       ];
     }
 

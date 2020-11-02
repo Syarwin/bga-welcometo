@@ -25,6 +25,7 @@ define([
     "ebg/counter",
     "ebg/stock",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
+    g_gamethemeurl + "modules/js/wtoCardManager.js",
 ], function (dojo, declare) {
   return declare("bgagame.welcometo", ebg.core.gamegui, {
     /*
@@ -48,6 +49,8 @@ define([
 
       // Setup game notifications
       this.setupNotifications();
+
+      this._cardManager = new bgagame.wtoCardManager(gamedatas);
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -171,6 +174,22 @@ define([
      },
 
 
+     /////////////////////////////////////
+     //////   Display basic info   ///////
+     /////////////////////////////////////
+     displayBasicInfo(args){
+       // Add an UNDO button if there is something to cancel
+       if(args.cancelable){
+         this.addActionButton('buttonCancel', _('Undo'), 'onClickUndo', null, false, 'gray');
+       }
+
+       // Hightlight scribbles/action from current turn
+       // dojo.query(...) args.turn...
+     },
+
+     onClickUndo(){
+        debug("Undo ! :)");
+     },
 
      ////////////////////////////////////////////
      ////////////////////////////////////////////

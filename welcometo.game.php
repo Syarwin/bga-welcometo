@@ -43,6 +43,9 @@ require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
 
 class welcometo extends Table
 {
+  use WTO\States\PublicTurnTrait;
+  use WTO\States\PrivateTurnTrait;
+
   public static $instance = null;
   public function __construct()
   {
@@ -98,7 +101,8 @@ class welcometo extends Table
   protected function getAllDatas()
   {
     return [
-      'players' => WTO\Players::getUiData()
+      'players' => WTO\Players::getUiData(),
+      'constructionCards' => WTO\ConstructionCards::getForPlayer(self::getCurrentPlayerId()),
     ];
   }
 
@@ -116,32 +120,6 @@ class welcometo extends Table
   }
 
 
-  function stNewTurn()
-  {
-    // Increase turn number
-    $n = (int) self::getGamestateValue('currentTurn') + 1;
-    self::setGamestateValue("currentTurn", $n);
-    WTO\ConstructionCards::draw();
-
-    WTO\StateMachine::initPrivateStates(ST_PLAYER_TURN);
-    $this->gamestate->nextState("playerTurn");
-  }
-
-  function stPlayerTurn()
-  {
-    $ids = WTO\Players::getAll()->getIds();
-    $this->gamestate->setPlayersMultiactive($ids, '');
-  }
-
-  function argPlayerTurn()
-  {
-    return WTO\StateMachine::getArgs();
-  }
-
-  function argChooseCards($pId)
-  {
-    return ["test"];
-  }
 
   ////////////////////////////////////
   ////////////   Zombie   ////////////
