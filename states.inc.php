@@ -55,17 +55,35 @@ $machinestates = [
 
 
 
+/****************************
+***** PARALLEL STATES *******
+****************************/
+
   ST_CHOOSE_CARDS => [
     "name" => "chooseCards",
     "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
-    "type" => "local",
+    "type" => "private",
     "args" => "argChooseCards",
-    "possibleactions" => [],
-    "transitions" => []
+    "possibleactions" => ["chooseCards"],
+    "transitions" => [
+      'writeNumber' => ST_WRITE_NUMBER,
+    ]
   ],
 
 
+  ST_WRITE_NUMBER => [
+    "name" => "writeNumber",
+    "descriptionmyturn" => clienttranslate('${you} must write a number on a house'),
+    "type" => "private",
+    "args" => "argWriteNumber",
+    "possibleactions" => ["writeNumber"],
+    "transitions" => [
+    ]
+  ],
 
+
+/****************************
+****************************/
 
   ST_APPLY_TURNS => [
     "name" => "applyTurns",

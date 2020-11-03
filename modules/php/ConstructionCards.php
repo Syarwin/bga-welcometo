@@ -156,6 +156,9 @@ class ConstructionCards extends Helpers\Pieces
   ////////////////////////////////////
   ////////////////////////////////////
 
+  /*
+   * Get the content of the three stacks
+   */
   public function getForPlayer($pId)
   {
     $cards = [];
@@ -164,5 +167,24 @@ class ConstructionCards extends Helpers\Pieces
     }
 
     return $cards;
+  }
+
+
+  /*
+   * Get the combination corresponding to the stack(s) selection
+   */
+  public function getCombination($pId, $stack)
+  {
+    $stacks = self::getForPlayer($pId);
+    $data = [];
+    if(Globals::isStandard()){
+      $data['number'] = $stacks[$stack][0]['number'];
+      $data['action'] = $stacks[$stack][1]['action'];
+    } else {
+      $data['number'] = $stacks[$stack[0]][0]['number'];
+      $data['action'] = $stacks[$stack[1]][0]['action'];
+    }
+
+    return $data;
   }
 }

@@ -41,7 +41,7 @@ class StateMachine extends \APP_DbObject
     $stateId = $fetch ? self::getUniqueValueFromDB("SELECT ".self::$stateField." FROM player WHERE player_id = $mixed") : $mixed;
     $states = self::getGameState()->states;
     if(!array_key_exists($stateId, $states))
-      throw new \BgaVisibleSystemException("Cannot fetch local state of a player in the state machine : player $mixed, state $stateId");
+      throw new \BgaVisibleSystemException("Cannot fetch private state of a player in the state machine : player $mixed, state $stateId");
 
     return $states[$stateId];
   }
@@ -54,17 +54,17 @@ class StateMachine extends \APP_DbObject
     $whereIds = is_array($ids)? ("IN (".implode(",", $ids) .")") : " = $ids";
     $states = self::getGameState()->states;
     if(!array_key_exists($stateId, $states))
-      throw new \BgaVisibleSystemException("Cannot find local state you want to set: state $stateId on player $whereIds");
+      throw new \BgaVisibleSystemException("Cannot find private state you want to set: state $stateId on player $whereIds");
 
-    if($states[$stateId]['type'] != "local")
-      throw new \BgaVisibleSystemException("Trying to set state $stateId which is not a valid local state on player $whereIds");
+    if($states[$stateId]['type'] != "private")
+      throw new \BgaVisibleSystemException("Trying to set state $stateId which is not a valid private state on player $whereIds");
 
     self::DbQuery("UPDATE player SET `".self::$stateField."` = $stateId WHERE player_id $whereIds");
   }
 
 
   /*
-   * Sanity check: local state are only enabled in a multiactive state with the flag "parallel" set to true
+   * Sanity check: private state are only enabled in a multiactive state with the flag "parallel" set to true
    */
   public function checkParallel($stateId = null)
   {
@@ -89,7 +89,7 @@ class StateMachine extends \APP_DbObject
 
 
   /*
-   * Get corresponding args for each player depending on its local state
+   * Get corresponding args for each player depending on its private state
    */
   public function getArgs()
   {
@@ -105,5 +105,52 @@ class StateMachine extends \APP_DbObject
     }
 
     return $data;
+  }
+
+  /*
+   * Check if current action is possible for given player
+   */
+  public function checkAction($action, $throwException = true)
+  {
+    $pId = self::getGame()->getCurrentPId();
+    $state = self::getPrivateState($pId);
+    $found = in_array($action, $state['possibleactions']);
+    if(!$found && $throwException)
+      throw new \BgaVisibleSystemException("You cannot perform action '$action' in private state {$state['name']}");
+    return $found;
+  }
+
+
+  /*
+   * Update the state of a player, trigger action and send arg to update UI
+   */
+  public static function nextState($transition)
+  {
+    $pId = self::getGame()->getCurrentPId();
+    $state = self::getPrivateState($pId);
+    if(!isset($state['transitions'][$transition]))
+      throw new \BgaVisibleSystemException("Transition '$transition' does not exist in private state {$state['name']}");
+
+    $newStateId = $state['transitions'][$transition];
+    $states = self::getGameState()->states;
+    if(!isset($states[$newStateId]))
+      throw new \BgaVisibleSystemException("Transition '$transition' in {$state['name']} lead to a non-existing state $newStateId");
+
+    $newState = $states[$newStateId];
+    self::setPrivateState($pId, $newStateId);
+    
+    // Call action if it exists
+    if(isset($newState['action'])){
+      $actionMethod = $newState['action'];
+      self::getGame()->$actionMethod();
+    }
+
+    // Update state and args on UI using notification
+    $player = Players::get($pId);
+    $method = $newState['args'];
+    self::getGame()->notifyPlayer($player->getId(), "newPrivateState", '', [
+      'state' => $newState,
+      'args' => self::getGame()->$method($player),
+    ]);
   }
 }

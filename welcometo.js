@@ -25,7 +25,7 @@ define([
     "ebg/counter",
     "ebg/stock",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
-    g_gamethemeurl + "modules/js/wtoCardManager.js",
+    g_gamethemeurl + "modules/js/wtoConstructionCards.js",
 ], function (dojo, declare) {
   return declare("bgagame.welcometo", ebg.core.gamegui, {
     /*
@@ -33,6 +33,7 @@ define([
      */
     constructor() {
       this._connections = [];
+      this._isStandard = true;
     },
 
 
@@ -46,11 +47,12 @@ define([
      */
     setup(gamedatas) {
       debug('SETUP', gamedatas);
+      this._isStandard = gamedatas.options.standard;
 
       // Setup game notifications
       this.setupNotifications();
 
-      this._cardManager = new bgagame.wtoCardManager(gamedatas);
+      this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -85,7 +87,7 @@ define([
 
        // Private state machine
        if(args.parallel){
-         this.setupPrivateState(args);
+         this.setupPrivateState(args.args._private.state, args.args._private.args);
          return;
        }
 
@@ -99,16 +101,24 @@ define([
          this[methodName](args.args);
      },
 
-     setupPrivateState(args){
-       var data = args.args._private.state;
-       delete this.gamedatas.gamestate.parallel;
-       this.gamedatas.gamestate.name = data.name;
-       this.gamedatas.gamestate.descriptionmyturn = data.descriptionmyturn;
-       this.gamedatas.gamestate.possibleactions = data.possibleactions;
-       this.gamedatas.gamestate.transitions = data.transitions;
-       this.gamedatas.gamestate.args = args.args._private.args;
+     /*
+      * Private state
+      */
+     setupPrivateState(state, args){
+       if(this.gamedatas.gamestate.parallel)
+         delete this.gamedatas.gamestate.parallel;
+       this.gamedatas.gamestate.name = state.name;
+       this.gamedatas.gamestate.descriptionmyturn = state.descriptionmyturn;
+       this.gamedatas.gamestate.possibleactions = state.possibleactions;
+       this.gamedatas.gamestate.transitions = state.transitions;
+       this.gamedatas.gamestate.args = args;
        this.updatePageTitle();
-       this.onEnteringState(data.name, this.gamedatas.gamestate);
+       this.onEnteringState(state.name, this.gamedatas.gamestate);
+     },
+
+     notif_newPrivateState(args){
+       this.onLeavingState(this.gamedatas.gamestate.name);
+       this.setupPrivateState(args.args.state, args.args.args);
      },
 
      /*
@@ -138,40 +148,6 @@ define([
      },
 
 
-     /*
- 		 * TODO description
- 		 */
-     takeAction(action, data, callback) {
-       data = data || {};
-       data.lock = true;
-       callback = callback || function (res) { };
-       this.ajaxcall("/mutantcrops/mutantcrops/" + action + ".html", data, this, callback);
-     },
-
-
-
-     connect(node, action, callback){
-       this._connections.push(dojo.connect(node, action, callback));
-     },
-
-     /*
-      * clearPossible:
-      * 	clear every clickable space and any selected worker
-      */
-     clearPossible() {
-       this.removeActionButtons();
-       this.onUpdateActionButtons(this.gamedatas.gamestate.name, this.gamedatas.gamestate.args);
-
-       this._connections.forEach(dojo.disconnect);
-       this._connections = [];
-     },
-
-     //     lightsOn: 'mrjack_lightsOn',
-
-     playSound(sound, playNextMoveSound = true) {
-       playSound(sound);
-       playNextMoveSound && this.disableNextMoveSound();
-     },
 
 
      /////////////////////////////////////
@@ -181,6 +157,10 @@ define([
        // Add an UNDO button if there is something to cancel
        if(args.cancelable){
          this.addActionButton('buttonCancel', _('Undo'), 'onClickUndo', null, false, 'gray');
+       }
+
+       if(args.selectedCards){
+         this._constructionCards.highlight(args.selectedCards);
        }
 
        // Hightlight scribbles/action from current turn
@@ -197,10 +177,76 @@ define([
      ////////////////////////////////////////////
      ////////////////////////////////////////////
      onEnteringStateChooseCards(args){
-       debug("Test", args);
+       this.displayBasicInfo(args);
+       this._constructionCards.promptPlayer(args.selectableStacks, this.onChooseCards.bind(this));
+     },
+
+     onChooseCards(choice){
+       debug("You chose", choice);
+       if(this._isStandard){
+         this.takeAction("chooseStack", { stack: choice});
+       } else {
+         this.takeAction("chooseStacks", { number: choice[0], action: choice[1] });
+       }
      },
 
 
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     ///////   Draw a number on a house   ///////
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     onEnteringStateWriteNumber(args){
+       this.displayBasicInfo(args);
+
+     },
+
+
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     //////////////   Utils   ///////////////////
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     /*
+ 		 * Make an AJAX call with automatic lock
+ 		 */
+     takeAction(action, data, callback) {
+       data = data || {};
+       data.lock = true;
+       callback = callback || function (res) { };
+       this.ajaxcall("/welcometo/welcometo/" + action + ".html", data, this, callback);
+     },
+
+
+     /*
+      * Custom method to connect to easily disconnect all the connectors if needed
+      */
+     connect(node, action, callback){
+       this._connections.push(dojo.connect(node, action, callback));
+     },
+
+     /*
+      * clearPossible:
+      * 	clear every clickable space and any selected worker
+      */
+     clearPossible() {
+       this.removeActionButtons();
+       this.onUpdateActionButtons(this.gamedatas.gamestate.name, this.gamedatas.gamestate.args);
+
+       this._connections.forEach(dojo.disconnect);
+       this._connections = [];
+
+       this._constructionCards.clearPossible();
+     },
+
+
+     /*
+      * Play a given sound that should be first added in the tpl file
+      */
+     playSound(sound, playNextMoveSound = true) {
+       playSound(sound);
+       playNextMoveSound && this.disableNextMoveSound();
+     },
 
      ///////////////////////////////////////////////////
      //////   Reaction to cometD notifications   ///////
@@ -212,15 +258,9 @@ define([
       *	Note: game notification names correspond to "notifyAllPlayers" and "notifyPlayer" in the santorini.game.php file.
       */
      setupNotifications() {
-       var notifs = [];
-       /*
-         ['farmerAssigned', 1000],
-         ['newField', 10],
-         ['addResources', 1000],
-         ['addMultiResources', 1000],
-         ['sowCrop', 1500],
-         ['newCrop', 100],
-       ];*/
+       var notifs = [
+         ['newPrivateState', 1],
+       ];
 
        notifs.forEach(notif => {
          dojo.subscribe(notif[0], this, "notif_" + notif[0]);

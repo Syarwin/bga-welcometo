@@ -44,15 +44,100 @@
 *********** CARDS ************
 ******************************
 *****************************/
-$cardWidth:343px;
-$cardHeight:520px;
+$cardWidth:200px;
+$cardHeight:520px * $cardWidth / 343px;
+$cardMargin:5px;
 
 #cards-container {
 
   #construction-cards-container {
+    display:flex;
+    flex-flow:row;
+    flex-grow:1;
+    justify-content: space-around;
+
+    .construction-cards-stack {
+      display:flex;
+      flex-flow:row;
+      border:4px solid transparent;
+      border-radius:4px;
+      width:$cardWidth;
+      height:$cardHeight;
+
+      &.unselectable {
+        opacity:0.6;
+        cursor:not-allowed;
+      }
+
+      &.selectable {
+        cursor:pointer;
+        &:hover {
+          transform:scale(1.02);
+          border-color:red;
+        }
+      }
+
+      &.selected {
+        border-color:red;
+        &.unselectable {
+          opacity:1;
+          cursor:default;
+        }
+      }
+    }
+
+    /* Standard mode : changing display for nice flip animation */
+    &.standard {
+      .construction-cards-stack {
+        position:relative;
+        width:2*$cardWidth + $cardMargin;
+      }
+      .construction-card-holder {
+        position:absolute;
+        top:0;
+        left:0;
+        transform-origin: ($cardWidth + $cardMargin / 2) / $cardWidth * 100% 0%;
+      }
+    }
+
     .construction-card-holder {
       width:$cardWidth;
       height:$cardHeight;
+      transition: transform .5s ease-in-out;
+      transform-origin: 50% 50%;
+      transform-style: preserve-3d;
+      &.flipped {
+        transform:rotateY(180deg);
+      }
+
+      .construction-card-back, .construction-card-front {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        backface-visibility: hidden;
+      }
+
+      .construction-card-back {
+        background-image:url("img/construction_back.jpg");
+        background-size:cover;
+        transform: rotateY(180deg);
+        z-index:2;
+      }
+
+      .construction-card-front {
+        background-image:url("img/construction_front.jpg");
+        background-size:cover;
+      }
+
+      @for $i from 0 through 5 {
+        &[data-action="#{$i}"] .construction-card-back { background-position: $i*100%/5 center; }
+      }
+
+      @for $i from 1 through 15 {
+        &[data-number="#{$i}"] .construction-card-front { background-position: ($i - 1)*100%/14 center; }
+      }
     }
   }
 }

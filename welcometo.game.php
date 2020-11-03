@@ -67,6 +67,11 @@ class welcometo extends Table
     return self::$instance;
   }
 
+  // Exposing protected method getCurrentPlayerId
+  public static function getCurrentPId(){
+    return self::getCurrentPlayerId();
+  }
+
 
   protected function getGameName()
   {
@@ -103,6 +108,7 @@ class welcometo extends Table
     return [
       'players' => WTO\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer(self::getCurrentPlayerId()),
+      'options' => WTO\Globals::getOptions(),
     ];
   }
 

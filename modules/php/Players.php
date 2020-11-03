@@ -39,6 +39,11 @@ class Players extends Helpers\DB_Manager
     return welcometo::get()->getActivePlayerId();
   }
 
+  public function getCurrentId()
+  {
+    return welcometo::get()->getCurrentPId();
+  }
+
   public function getAll(){
     return self::DB()->get(false);
   }
@@ -50,17 +55,16 @@ class Players extends Helpers\DB_Manager
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()->where($pId)->get();
-/*
-$pId = $pId ?: welcometo::get()->gamestate->getActivePlayerList();
-return is_array($pId)?
-  self::DB()->whereIn($pId)->get()
-: self::DB()->where($pId)->get();
-*/
   }
 
   public function getActive()
   {
     return self::get();
+  }
+
+  public function getCurrent()
+  {
+    return self::get(self::getCurrentId());
   }
 
   /*

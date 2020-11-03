@@ -19,6 +19,144 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap; }
+/*****************************
+******************************
+*********** CARDS ************
+******************************
+*****************************/
+#cards-container #construction-cards-container {
+  display: flex;
+  flex-flow: row;
+  flex-grow: 1;
+  justify-content: space-around;
+  /* Standard mode : changing display for nice flip animation */ }
+  #cards-container #construction-cards-container .construction-cards-stack {
+    display: flex;
+    flex-flow: row;
+    border: 4px solid transparent;
+    border-radius: 4px;
+    width: 200px;
+    height: 303.2069970845px; }
+    #cards-container #construction-cards-container .construction-cards-stack.unselectable {
+      opacity: 0.6;
+      cursor: not-allowed; }
+    #cards-container #construction-cards-container .construction-cards-stack.selectable {
+      cursor: pointer; }
+      #cards-container #construction-cards-container .construction-cards-stack.selectable:hover {
+        transform: scale(1.02);
+        border-color: red; }
+    #cards-container #construction-cards-container .construction-cards-stack.selected {
+      border-color: red; }
+      #cards-container #construction-cards-container .construction-cards-stack.selected.unselectable {
+        opacity: 1;
+        cursor: default; }
+  #cards-container #construction-cards-container.standard .construction-cards-stack {
+    position: relative;
+    width: 405px; }
+  #cards-container #construction-cards-container.standard .construction-card-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 101.25% 0%; }
+  #cards-container #construction-cards-container .construction-card-holder {
+    width: 200px;
+    height: 303.2069970845px;
+    transition: transform .5s ease-in-out;
+    transform-origin: 50% 50%;
+    transform-style: preserve-3d; }
+    #cards-container #construction-cards-container .construction-card-holder.flipped {
+      transform: rotateY(180deg); }
+    #cards-container #construction-cards-container .construction-card-holder .construction-card-back, #cards-container #construction-cards-container .construction-card-holder .construction-card-front {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden; }
+    #cards-container #construction-cards-container .construction-card-holder .construction-card-back {
+      background-image: url("img/construction_back.jpg");
+      background-size: cover;
+      transform: rotateY(180deg);
+      z-index: 2; }
+    #cards-container #construction-cards-container .construction-card-holder .construction-card-front {
+      background-image: url("img/construction_front.jpg");
+      background-size: cover; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="0"] .construction-card-back {
+      background-position: 0% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="1"] .construction-card-back {
+      background-position: 20% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="2"] .construction-card-back {
+      background-position: 40% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="3"] .construction-card-back {
+      background-position: 60% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="4"] .construction-card-back {
+      background-position: 80% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="5"] .construction-card-back {
+      background-position: 100% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="1"] .construction-card-front {
+      background-position: 0% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="2"] .construction-card-front {
+      background-position: 7.1428571429% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="3"] .construction-card-front {
+      background-position: 14.2857142857% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="4"] .construction-card-front {
+      background-position: 21.4285714286% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="5"] .construction-card-front {
+      background-position: 28.5714285714% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="6"] .construction-card-front {
+      background-position: 35.7142857143% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="7"] .construction-card-front {
+      background-position: 42.8571428571% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="8"] .construction-card-front {
+      background-position: 50% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="9"] .construction-card-front {
+      background-position: 57.1428571429% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="10"] .construction-card-front {
+      background-position: 64.2857142857% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="11"] .construction-card-front {
+      background-position: 71.4285714286% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="12"] .construction-card-front {
+      background-position: 78.5714285714% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="13"] .construction-card-front {
+      background-position: 85.7142857143% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="14"] .construction-card-front {
+      background-position: 92.8571428571% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-number="15"] .construction-card-front {
+      background-position: 100% center; }
+
+.construction_cards_wrap {
+  width: 33.33%;
+  display: table-cell; }
+
+#construction_cards_wrap_global {
+  display: table;
+  width: 100%; }
+
+#responsive_card_viewer {
+  display: inline-block;
+  width: 100%; }
+
+#responsive_plan_cards {
+  width: 100%;
+  display: inline-block; }
+
+#responsive_construction_cards {
+  width: 100%;
+  display: inline-block; }
+
+@media only screen and (min-width: 1500px) {
+  #responsive_construction_cards {
+    width: 66%;
+    display: inline-block; }
+
+  #responsive_plan_cards {
+    width: 33%;
+    display: inline-block; } }
+/***********************************
+************************************
+*********** SCORE SHEET ************
+************************************
+***********************************/
 .score-sheet-container {
   width: 1544px;
   height: 1544px; }
@@ -786,52 +924,6 @@
     box-shadow: 0px 0px 0px lawngreen; }
   to {
     box-shadow: 0px 0px 12px 6px lawngreen; } }
-.park_column0 {
-  left: 72%; }
-
-.park_column1 {
-  left: 75.4%; }
-
-.park_column2 {
-  left: 78.9%; }
-
-.park_column3 {
-  left: 82.3%; }
-
-.park_column4 {
-  left: 85.5%; }
-
-.park_column5 {
-  left: 88.9%; }
-
-.construction_cards_wrap {
-  width: 33.33%;
-  display: table-cell; }
-
-#construction_cards_wrap_global {
-  display: table;
-  width: 100%; }
-
-#responsive_card_viewer {
-  display: inline-block;
-  width: 100%; }
-
-#responsive_plan_cards {
-  width: 100%;
-  display: inline-block; }
-
-#responsive_construction_cards {
-  width: 100%;
-  display: inline-block; }
-
-@media only screen and (min-width: 1500px) {
-  #responsive_construction_cards {
-    width: 66%;
-    display: inline-block; }
-
-  #responsive_plan_cards {
-    width: 33%;
-    display: inline-block; } }
 @keyframes hammerHighlight {
   from {
     opacity: 0; }

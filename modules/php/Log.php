@@ -13,7 +13,7 @@ class Log extends Helpers\DB_Manager
   protected static function cast($row)
   {
     return [
-      'id' => (int) $row['id'],
+      'id' => (int) $row['log_id'],
       'pId' => (int) $row['player_id'],
       'turn' => (int) $row['turn'],
       'action' => $row['action'],
@@ -30,12 +30,13 @@ class Log extends Helpers\DB_Manager
   /*
    * insert: add a new log entry
    * params:
-   *   - int $pid: the player who is making the action
+   *   - mixed $player : either the id or an object of the player who is making the action
    *   - string $action : the name of the action
    *   - array $args : action arguments
    */
-  public static function insert($pId, $action, $args = [])
+  public static function insert($player, $action, $args = [])
   {
+    $pId = is_integer($player)? $player : $player->getId();
     $turn = Globals::getCurrentTurn();
     $actionArgs = json_encode($args);
     self::DB()->insert(['turn' => $turn, 'player_id' => $pId, 'action' => $action, 'action_arg' => $actionArgs]);

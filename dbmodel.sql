@@ -45,12 +45,14 @@ CREATE TABLE IF NOT EXISTS `scribbles` (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
 
 CREATE TABLE IF NOT EXISTS `houses` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player_id` int(10) NOT NULL,
   `x` int(10) NOT NULL,
   `y` int(10) NOT NULL,
   `number` int(10) NOT NULL,
+  `is_bis` BOOLEAN,
   `turn` int(10) NOT NULL,
-  PRIMARY KEY (`player_id`, `x`, `y`)
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 

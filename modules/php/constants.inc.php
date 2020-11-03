@@ -12,6 +12,7 @@ define('ST_VALIDATE_PLANS', 6);
 
 // Parallel flow
 define('ST_CHOOSE_CARDS', 20);
+define('ST_WRITE_NUMBER', 21);
 
 
 define('ST_COMPUTE_SCORES', 90);
@@ -43,7 +44,7 @@ define('TEMP', 5);
 define('BIS', 6);
 define('SOLO', 7);
 
-
+define('ROUNDABOUT', 100);
 /*
  * Stats
  */

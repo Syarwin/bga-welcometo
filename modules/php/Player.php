@@ -52,10 +52,67 @@ class Player extends Helpers\DB_Manager
     return !empty(Log::getLastActions($this->id));
   }
 
+
+  ///////////////////////////////
+  //////// CHOOSE CARDS /////////
+  ///////////////////////////////
+  public function chooseCards($stack)
+  {
+    Log::insert($this->id, 'selectCard', $stack);
+  }
+
   public function getSelectedCards()
   {
     $selectCardAction = Log::getLastAction('selectCard', $this->id);
     return is_null($selectCardAction)? null : $selectCardAction['arg'];
   }
 
+  public function getCombination()
+  {
+    $selectedCards = $this->getSelectedCards();
+    if(is_null($selectedCards))
+      throw new \BgaVisibleSystemException("Trying to fetch the combination of a player who haven't choose the construction cards yet");
+
+    return ConstructionCards::getCombination($this->id, $selectedCards);
+  }
+
+
+  ///////////////////////////////
+  //////// WRITE NUMBER /////////
+  ///////////////////////////////
+  public function getAvailableNumbers()
+  {
+    return $this->getAvailableNumbersOfCombination($this->getCombination());
+  }
+
+  public function getAvailableNumbersOfCombination($combination)
+  {
+    // Unless the action is temporary agent, a combination is uniquely associated to a number
+    $numbers = [ $combination["number"] ];
+
+    // For temporary agent, we can do -2, -1, +1, +2
+    if($combination["action"] == TEMP){
+      $modifiers = [-2, -1, 1, 2];
+      foreach($modifiers as $dx){
+        $n = $combination["number"] + $dx;
+        if($n < 1 || $n > 15)
+          continue;
+
+        array_push($n, $numbers);
+      }
+    }
+
+    // For each number, compute list of houses where we can write the number
+    $result = [];
+    foreach($numbers as $number){
+      $houses = $this->getAvailableHousesForNumber($number);
+      if(!empty($houses))
+        $result[$number] = $houses;
+    }
+    return $result;
+  }
+
+  public function getAvailableHousesForNumber($number, $isBis = false){
+    return Houses::getAvailableLocations($this->id, $number, $isBis);
+  }
 }

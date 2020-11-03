@@ -27,6 +27,20 @@ class Globals
     return !self::isExpert() && !self::isSolo();
   }
 
+
+  public static function getOptions()
+  {
+    return [
+      "advanced" => self::isAdvanced(),
+      "expert" => self::isExpert(),
+
+      // Not 100% needed as this can recomputed on client side, but who cares ?
+      "solo" => self::isSolo(),
+      "standard" => self::isStandard(),
+    ];
+  }
+
+
   public static function getCurrentTurn()
   {
     return (int) welcometo::get()->getGameStateValue('currentTurn');
