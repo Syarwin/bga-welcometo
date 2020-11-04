@@ -56,4 +56,25 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
+
+  public function writeNumber()
+  {
+    self::setAjaxMode();
+    $number = self::getArg("number", AT_posint, true);
+    $x = self::getArg("x", AT_posint, true);
+    $y = self::getArg("y", AT_posint, true);
+    $this->game->writeNumber($number, [$x, $y]);
+    self::ajaxResponse();
+  }
+
+  public function writeNumberBis()
+  {
+    self::setAjaxMode();
+    $number = self::getArg("number", AT_posint, true);
+    $x = self::getArg("x", AT_posint, true);
+    $y = self::getArg("y", AT_posint, true);
+    $this->game->writeNumberBis($number, [$x, $y]);
+    self::ajaxResponse();
+  }
+
 }

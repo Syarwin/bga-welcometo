@@ -78,6 +78,40 @@ $machinestates = [
     "args" => "argWriteNumber",
     "possibleactions" => ["writeNumber"],
     "transitions" => [
+      'surveyor' => ST_ACTION_SURVEYOR,
+      'estate'   => ST_ACTION_ESTATE,
+      'bis'      => ST_ACTION_BIS,
+    ]
+  ],
+
+  ST_ACTION_SURVEYOR => [
+    "name" => "actionSurveyor",
+    "descriptionmyturn" => clienttranslate('${you} may build a fence between two houses'),
+    "type" => "private",
+    "args" => "argActionSurveyor",
+    "possibleactions" => ["buildFence", "pass"],
+    "transitions" => [
+    ]
+  ],
+
+  ST_ACTION_ESTATE => [
+    "name" => "actionSurveyor",
+    "descriptionmyturn" => clienttranslate('${you} can increase the value of completed housing estates'),
+    "type" => "private",
+    "args" => "argActionEstate",
+    "possibleactions" => ["crossSpace", "pass"],
+    "transitions" => [
+    ]
+  ],
+
+  ST_ACTION_BIS => [
+    "name" => "actionBis",
+    "descriptionmyturn" => clienttranslate('${you} may duplicate a house number'),
+    "type" => "private",
+    "args" => "argActionBis",
+    "possibleactions" => ["writeNumberBis", "pass"],
+    "transitions" => [
+      'bis' => ST_ACTION_BIS,
     ]
   ],
 

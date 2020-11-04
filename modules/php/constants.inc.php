@@ -13,6 +13,9 @@ define('ST_VALIDATE_PLANS', 6);
 // Parallel flow
 define('ST_CHOOSE_CARDS', 20);
 define('ST_WRITE_NUMBER', 21);
+define('ST_ACTION_SURVEYOR', 22);
+define('ST_ACTION_ESTATE', 23);
+define('ST_ACTION_BIS', 24);
 
 
 define('ST_COMPUTE_SCORES', 90);

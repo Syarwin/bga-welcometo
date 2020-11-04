@@ -138,7 +138,7 @@ class StateMachine extends \APP_DbObject
 
     $newState = $states[$newStateId];
     self::setPrivateState($pId, $newStateId);
-    
+
     // Call action if it exists
     if(isset($newState['action'])){
       $actionMethod = $newState['action'];

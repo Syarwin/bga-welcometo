@@ -3,6 +3,14 @@ var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
   return declare("bgagame.wtoConstructionCards", ebg.core.gamegui, {
+/****************************************
+******* Constructions cards class *******
+*****************************************
+ * create the layout for the cards
+ * handle the clicks event to ask user to select card
+ * animate cards at the beggining of a new turn
+ */
+
     constructor(gamedatas) {
       debug("Seting up the cards", gamedatas.options.standard? "Standard mode" : "Only one card by stack");
       this._isStandard = gamedatas.options.standard; // Standard = playing with three stack

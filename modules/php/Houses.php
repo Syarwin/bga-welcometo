@@ -11,7 +11,14 @@ class Houses extends Helpers\DB_Manager
   protected static $primary = 'id';
   protected static function cast($row)
   {
-    return $row;
+    return [
+      'pId' => $row['player_id'],
+      'number' => (int) $row['number'],
+      'x' => (int) $row['x'],
+      'y' => (int) $row['y'],
+      'isBis' => $row['is_bis'] == 1,
+      'turn' => (int) $row['turn'],
+    ];
   }
 
   protected static $streetSizes = [10, 11, 12];
@@ -38,7 +45,7 @@ class Houses extends Helpers\DB_Manager
    */
   public function get($pId)
   {
-    return self::DB()->where('player_id', $pId)->get(false);
+    return self::DB()->where('player_id', $pId)->get(false)->toArray();
   }
 
 
@@ -51,7 +58,7 @@ class Houses extends Helpers\DB_Manager
     foreach(self::get($pId) as $house){
       $streets[$house['x']][$house['y']] = [
         'number' => $house['number'],
-        'bis' => (bool) $house['is_bis'],
+        'bis' => $house['isBis'],
         'turn' => $house['turn'],
       ];
     }
@@ -71,13 +78,14 @@ class Houses extends Helpers\DB_Manager
 
     // Filter the location to enforce increasing left to right
     for($x = 0; $x < 3; $x++){
-      $maxNumber = 0;
+      $maxNumber = -1;
       $hole = 0; // Useful to ensure bis numbers are next to the the house they are copying
       for($y = 0; $y < self::$streetSizes[$x]; $y++){
         // If the location is empty
         if(is_null($streets[$x][$y])){
           // Check condition with biggest value on left so far
-          $locations[$x][$y] = $number > $maxNumber || ($number == $maxNumber && $isBis && $hole == 0);
+          $locations[$x][$y] = (!$isBis && $number > $maxNumber)
+                            || ($isBis && $number == $maxNumber && $hole == 0);
           $hole++;
         } else {
           // Not empty => not available and update max number
@@ -90,11 +98,12 @@ class Houses extends Helpers\DB_Manager
 
     // Second right to left traversal
     for($x = 0; $x < 3; $x++){
-      $minNumber = 16;
+      $minNumber = 18;
       $hole = 0;
       for($y = self::$streetSizes[$x] - 1; $y >= 0; $y--){
         if(is_null($streets[$x][$y])){
-          $locations[$x][$y] = $locations[$x][$y] && ($number < $minNumber || ($number == $maxNumber && $isBis && $hole == 0));
+          $locations[$x][$y] = (!$isBis && $locations[$x][$y] && $number < $minNumber)
+                            || ($isBis && ($locations[$x][$y] || ($number == $minNumber && $isBis && $hole == 0)));
           $hole++;
         } else {
           $locations[$x][$y] = false;
@@ -104,16 +113,33 @@ class Houses extends Helpers\DB_Manager
       }
     }
 
+
     // Last traversal to output locations
     $result = [];
     for($x = 0; $x < 3; $x++){
       for($y = 0; $y < self::$streetSizes[$x]; $y++){
         if($locations[$x][$y]){
-          array_push($result, ['x' => $x, 'y' => $y]);
+          array_push($result, [$x, $y]);
         }
       }
     }
 
     return $result;
+  }
+
+
+  /*
+   * Add a new house number
+   */
+  public static function add($pId, $number, $pos, $isBis)
+  {
+    return self::DB()->insert([
+      'player_id' => $pId,
+      'number' => $number,
+      'x' => $pos[0],
+      'y' => $pos[1],
+      'is_bis' => $isBis? 1 : 0,
+      'turn' => Globals::getCurrentTurn(),
+    ]);
   }
 }

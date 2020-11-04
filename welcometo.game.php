@@ -105,10 +105,12 @@ class welcometo extends Table
    */
   protected function getAllDatas()
   {
+    $pId = self::getCurrentPlayerId();
     return [
       'players' => WTO\Players::getUiData(),
-      'constructionCards' => WTO\ConstructionCards::getForPlayer(self::getCurrentPlayerId()),
+      'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
       'options' => WTO\Globals::getOptions(),
+      'houses' => WTO\Houses::get($pId),
     ];
   }
 

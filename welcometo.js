@@ -172,9 +172,7 @@ define([
      },
 
      ////////////////////////////////////////////
-     ////////////////////////////////////////////
      //////   Choose construction cards   ///////
-     ////////////////////////////////////////////
      ////////////////////////////////////////////
      onEnteringStateChooseCards(args){
        this.displayBasicInfo(args);
@@ -182,7 +180,7 @@ define([
      },
 
      onChooseCards(choice){
-       debug("You chose", choice);
+       debug("You chose construction cards :", choice);
        if(this._isStandard){
          this.takeAction("chooseStack", { stack: choice});
        } else {
@@ -192,14 +190,32 @@ define([
 
 
      ////////////////////////////////////////////
-     ////////////////////////////////////////////
      ///////   Draw a number on a house   ///////
-     ////////////////////////////////////////////
      ////////////////////////////////////////////
      onEnteringStateWriteNumber(args){
        this.displayBasicInfo(args);
-
+       this._scoreSheet.promptNumbers(args.numbers, this.onChooseNumber.bind(this));
      },
+
+     onChooseNumber(number, x, y){
+       debug("You chose to write", number, " at location ", x, y);
+       this.takeAction("writeNumber", { number: number, x:x, y:y});
+     },
+
+
+     //////////////////////////////////////
+     //////////   Bis action   ////////////
+     //////////////////////////////////////
+     onEnteringStateActionBis(args){
+       this.displayBasicInfo(args);
+       this._scoreSheet.promptNumbers(args.numbers, this.onChooseNumberBis.bind(this));
+     },
+
+     onChooseNumberBis(number, x, y){
+       debug("You chose to write", number, " bis at location ", x, y);
+       this.takeAction("writeNumberBis", { number: number, x:x, y:y});
+     },
+
 
 
      ////////////////////////////////////////////
@@ -237,6 +253,7 @@ define([
        this._connections = [];
 
        this._constructionCards.clearPossible();
+       this._scoreSheet.clearPossible();
      },
 
 

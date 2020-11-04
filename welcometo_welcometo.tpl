@@ -50,11 +50,9 @@ var jstpl_scoreSheet = `
 
 //// TOP PART ////
 var jstpl_cityName = '<div id="${pId}_cityname" class="cityname" style="color:#${color}">${name}</div>';
-var jstpl_house = `
-  <div id="\${pId}_house_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="house"></div>
-  <div id="\${pId}_top_fence_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="top-fence"></div>
-  <div id="\${pId}_estate_fence_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="estate-fence"></div>
-`;
+var jstpl_house = '<div id="${pId}_house_${x}_${y}" data-x="${x}" data-y="${y}" class="house"></div>';
+var jstpl_topFence = '<div id="${pId}_top_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="top-fence"></div>';
+var jstpl_estateFence = '<div id="${pId}_estate_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="estate-fence"></div>';
 var jstpl_park = '<div id="${pId}_park_${x}_${y}" data-x="${x}" data-y="${y}" class="park"></div>';
 
 //// BOTTOM PART ////

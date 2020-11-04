@@ -20,4 +20,5 @@
 
 03/11
   2h - displaying construction card + selecting them (expert mode should also work)
-  
+  3h - implementing next private state + computing combinations and available locations
+  30min - click event on scoreSheet elem

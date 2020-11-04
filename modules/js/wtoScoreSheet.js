@@ -3,9 +3,19 @@ var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
   return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
+/****************************************
+********** Score sheet class ************
+*****************************************
+ * create the layout for a scoresheet
+ * handle the clicks event to ask user to select a house
+ * animate the scribbles
+ */
+
     constructor(player, gameData, parentDiv, gameui) {
       debug("Construction score sheet", player);
       this.player = player;
+      this.streetSizes = [10, 11, 12];
+      this._selectableHouses = null;
 
       // Create container
       this.tpl('scoreSheet', {}, parentDiv);
@@ -14,13 +24,47 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       // Setup divs
       this.setupUpperSheet();
       this.setupLowerSheet();
+
+      // Add houses number
+      gameData.houses.forEach(house => this.addHouseNumber(house) );
     },
 
-    tpl(tplName, data, container){
+    /*
+     * Return a 2D array of the street
+     */
+    getBlankStreets(){
+      return this.streetSizes.map(size => {
+        var street = [];
+        for(let i = 0; i < size; i++)
+          street[i] = [];
+        return street;
+      });
+    },
+
+    /*
+     * Create an tpl using format_block and connect click event
+     */
+    tpl(tplName, data, container, clickCallback){
       data.pId = this.player.id;
       container = container || this.container;
-      return dojo.place(this.format_block('jstpl_' + tplName, data), container);
+      var elem = dojo.place(this.format_block('jstpl_' + tplName, data), container);
+      if(clickCallback){
+        dojo.connect(elem, 'click', () => clickCallback(data));
+      }
+      return elem;
     },
+
+    clickableTpl(tplName, data, clickCallback, container){
+      return this.tpl(tplName, data, container, clickCallback);
+    },
+
+
+    // Clear everything
+    clearPossible(){
+      dojo.query(".house").removeClass("unselectable selectable");
+      this._selectableHouses = null;
+    },
+
 
     ////////////////////////
     ////////  Setup ////////
@@ -35,7 +79,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       for(var x = 0; x < 3; x++){
         for(var y = 0; y < houses[x]; y++)
-          this.tpl('house', {x: x, y : y});
+          this.clickableTpl('house', {x: x, y : y}, this.onClickHouse.bind(this));
 
         for(var y = 0; y < parks[x]; y++)
           this.tpl('park', {x: x, y : y});
@@ -78,6 +122,66 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       if(animation){
         $("scribble-" + scribble.id).classList.add("animate");
       }
+    },
+
+
+    /////////////////////////
+    //////// Houses /////////
+    /////////////////////////
+    /*
+     * Ask the use to select a house to write a number inside
+     *   numbers is an array of possible number to write with associated locations
+     */
+    promptNumbers(numbers, callback){
+      this._callback = callback;
+      var streets = this.getBlankStreets();
+      for(let number in numbers){
+        numbers[number].forEach(house => streets[house[0]][house[1]].push(number));
+      }
+      this.makeHousesSelectable(streets);
+    },
+
+    /*
+     * For each house, if there is at least one writtable number, make it selectable
+     */
+    makeHousesSelectable(streets){
+      this._selectableHouses = streets;
+      dojo.query(".house").addClass("unselectable");
+      streets.forEach((street,x) => {
+        street.forEach((house,y) => {
+          if(house.length > 0)
+            dojo.query(`#${this.player.id}_house_${x}_${y}`).removeClass("unselectable").addClass("selectable");
+        });
+      });
+    },
+
+
+    /*
+     * Listener called when a house is clicked
+     */
+    onClickHouse(house){
+      // Make sure we are in a state where you can click a house and that we can write a number on the house
+      if(this._selectableHouses == null || this._selectableHouses[house.x][house.y].length == 0)
+        return;
+
+      var numbers = this._selectableHouses[house.x][house.y];
+      if(numbers.length == 1){
+        // Only one number, we can call the callback directly
+        this._callback(numbers[0], house.x, house.y);
+      } else {
+        // Open a modal to ask the number to write
+        // TODO : dialog
+      }
+    },
+
+
+    /*
+     * Add a number to a house
+     */
+    addHouseNumber(house){
+      var id = `${house.pId}_house_${house.x}_${house.y}`;
+      $(id).innerHTML = house.number + (house.isBis? _("Bis") : "");
+      dojo.addClass(id, "built");
     },
   });
 });

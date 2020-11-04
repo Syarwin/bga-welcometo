@@ -131,8 +131,8 @@ $cardMargin:5px;
         background-size:cover;
       }
 
-      @for $i from 0 through 5 {
-        &[data-action="#{$i}"] .construction-card-back { background-position: $i*100%/5 center; }
+      @for $i from 1 through 6 {
+        &[data-action="#{$i}"] .construction-card-back { background-position: ($i - 1)*100%/5 center; }
       }
 
       @for $i from 1 through 15 {
@@ -141,31 +141,8 @@ $cardMargin:5px;
     }
   }
 }
-.construction_cards_wrap {
-    width: 33.33%;
-    display: table-cell;
-}
 
-#construction_cards_wrap_global {
-    display: table;
-    width: 100%;
-}
-
-#responsive_card_viewer {
-    display: inline-block;
-    width: 100%;
-}
-
-#responsive_plan_cards {
-    width: 100%;
-    display: inline-block;
-}
-
-#responsive_construction_cards {
-    width: 100%;
-    display: inline-block;
-}
-
+/*
 @media only screen and (min-width: 1500px) {
     #responsive_construction_cards {
         width: 66%;
@@ -176,7 +153,7 @@ $cardMargin:5px;
         display: inline-block;
     }
 }
-
+*/
 
 
 
@@ -221,10 +198,16 @@ $cardMargin:5px;
     .house {
       position:absolute;
       width:70px;
-      height:70px;
-      background-color:rgba(255,0,0,0.5);
+      height:86px;
       box-sizing: border-box;
-      border:1px solid black;
+      clip-path:polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
+      @include handwritten;
+      font-size:55px;
+      padding-left:3px;
+
+      &.built {
+        border:2px solid black;
+      }
 
       @each $x, $street in $houses {
         @each $y, $house in $street {
@@ -233,6 +216,27 @@ $cardMargin:5px;
             top: map-get($house, 'top');
           }
         }
+      }
+
+      &.unselectable:not(.built) {
+        background-color:rgba(155, 155, 155, 0.8);
+        cursor:not-allowed;
+      }
+
+      &.selectable {
+        cursor:pointer;
+        background:rgba(255,0,0,0.5);
+        background-image: url("img/truelle.png");
+        background-size: contain;
+        animation: 2s ease-in-out 0.5s infinite alternate hammerHighlight;
+        @keyframes hammerHighlight { from { opacity: 1; }  to { opacity: 0; } }
+
+        /*
+        &:hover {
+          opacity:1;
+          animation-name: none;
+        }
+        */
       }
     }
 

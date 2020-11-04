@@ -81,17 +81,17 @@
     #cards-container #construction-cards-container .construction-card-holder .construction-card-front {
       background-image: url("img/construction_front.jpg");
       background-size: cover; }
-    #cards-container #construction-cards-container .construction-card-holder[data-action="0"] .construction-card-back {
-      background-position: 0% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-action="1"] .construction-card-back {
-      background-position: 20% center; }
+      background-position: 0% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-action="2"] .construction-card-back {
-      background-position: 40% center; }
+      background-position: 20% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-action="3"] .construction-card-back {
-      background-position: 60% center; }
+      background-position: 40% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-action="4"] .construction-card-back {
-      background-position: 80% center; }
+      background-position: 60% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-action="5"] .construction-card-back {
+      background-position: 80% center; }
+    #cards-container #construction-cards-container .construction-card-holder[data-action="6"] .construction-card-back {
       background-position: 100% center; }
     #cards-container #construction-cards-container .construction-card-holder[data-number="1"] .construction-card-front {
       background-position: 0% center; }
@@ -124,34 +124,18 @@
     #cards-container #construction-cards-container .construction-card-holder[data-number="15"] .construction-card-front {
       background-position: 100% center; }
 
-.construction_cards_wrap {
-  width: 33.33%;
-  display: table-cell; }
-
-#construction_cards_wrap_global {
-  display: table;
-  width: 100%; }
-
-#responsive_card_viewer {
-  display: inline-block;
-  width: 100%; }
-
-#responsive_plan_cards {
-  width: 100%;
-  display: inline-block; }
-
-#responsive_construction_cards {
-  width: 100%;
-  display: inline-block; }
-
+/*
 @media only screen and (min-width: 1500px) {
-  #responsive_construction_cards {
-    width: 66%;
-    display: inline-block; }
-
-  #responsive_plan_cards {
-    width: 33%;
-    display: inline-block; } }
+    #responsive_construction_cards {
+        width: 66%;
+        display: inline-block;
+    }
+    #responsive_plan_cards {
+        width: 33%;
+        display: inline-block;
+    }
+}
+*/
 /***********************************
 ************************************
 *********** SCORE SHEET ************
@@ -198,10 +182,15 @@
     .score-sheet-container .score-sheet .house {
       position: absolute;
       width: 70px;
-      height: 70px;
-      background-color: rgba(255, 0, 0, 0.5);
+      height: 86px;
       box-sizing: border-box;
-      border: 1px solid black; }
+      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
+      font-size: x-large;
+      font-family: "Caveat";
+      font-size: 55px;
+      padding-left: 3px; }
+      .score-sheet-container .score-sheet .house.built {
+        border: 2px solid black; }
       .score-sheet-container .score-sheet .house[data-x="0"][data-y="0"] {
         left: 374px;
         top: 186px; }
@@ -301,6 +290,26 @@
       .score-sheet-container .score-sheet .house[data-x="2"][data-y="11"] {
         left: 1300px;
         top: 738px; }
+      .score-sheet-container .score-sheet .house.unselectable:not(.built) {
+        background-color: rgba(155, 155, 155, 0.8);
+        cursor: not-allowed; }
+      .score-sheet-container .score-sheet .house.selectable {
+        cursor: pointer;
+        background: rgba(255, 0, 0, 0.5);
+        background-image: url("img/truelle.png");
+        background-size: contain;
+        animation: 2s ease-in-out 0.5s infinite alternate hammerHighlight;
+        /*
+        &:hover {
+          opacity:1;
+          animation-name: none;
+        }
+        */ }
+@keyframes hammerHighlight {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
     .score-sheet-container .score-sheet .top-fence {
       position: absolute;
       width: 96px;

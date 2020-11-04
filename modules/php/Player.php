@@ -85,6 +85,19 @@ class Player extends Helpers\DB_Manager
     return $this->getAvailableNumbersOfCombination($this->getCombination());
   }
 
+  public function getAvailableNumbersForBis()
+  {
+    $result = [];
+    for($i = 13; $i <= 13; $i++){
+//    for($i = 0; $i <= 17; $i++){
+      $houses = $this->getAvailableHousesForNumber($i, true);
+
+      if(!empty($houses))
+        $result[$i] = $houses;
+    }
+    return $result;
+  }
+
   public function getAvailableNumbersOfCombination($combination)
   {
     // Unless the action is temporary agent, a combination is uniquely associated to a number
@@ -98,7 +111,7 @@ class Player extends Helpers\DB_Manager
         if($n < 1 || $n > 15)
           continue;
 
-        array_push($n, $numbers);
+        array_push($numbers, $n);
       }
     }
 
@@ -115,4 +128,11 @@ class Player extends Helpers\DB_Manager
   public function getAvailableHousesForNumber($number, $isBis = false){
     return Houses::getAvailableLocations($this->id, $number, $isBis);
   }
+
+
+  public function writeNumber($number, $pos, $isBis = false)
+  {
+    Houses::add($this->id, $number, $pos, $isBis);
+  }
+
 }

@@ -43,8 +43,8 @@ trait PrivateTurnTrait
   function chooseCards($stack)
   {
     // Sanity checks
-    $player = Players::getCurrent();
     StateMachine::checkAction("chooseCards");
+    $player = Players::getCurrent();
     $args = self::argChooseCards($player);
     if(!in_array($stack, $args['selectableStacks']))
       throw new \BgaUserException(clienttranslate("You cannot select this stack"));
@@ -63,7 +63,52 @@ trait PrivateTurnTrait
   function argWriteNumber($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
-    $data["test"] = $player->getAvailableNumbers();
+    $data["numbers"] = $player->getAvailableNumbers();
     return $data;
   }
+
+  function writeNumber($number, $pos)
+  {
+    // Sanity checks
+    StateMachine::checkAction("writeNumber");
+    $player = Players::getCurrent();
+    $args = self::argWriteNumber($player);
+    if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
+      throw new \BgaUserException(clienttranslate("You cannot write this number in this house"));
+
+    // Do the action
+    $player->writeNumber($number, $pos);
+
+    // Move on to next state
+    StateMachine::nextState("bis");
+  }
+
+
+
+  ///////////////////////////////
+  ///////// ACTION BIS //////////
+  ///////////////////////////////
+  function argActionBis($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data["numbers"] = $player->getAvailableNumbersForBis();
+    return $data;
+  }
+
+  function writeNumberBis($number, $pos)
+  {
+    // Sanity checks
+    StateMachine::checkAction("writeNumberBis");
+    $player = Players::getCurrent();
+    $args = self::argActionBis($player);
+    if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
+      throw new \BgaUserException(clienttranslate("You cannot write this number bis in this house"));
+
+    // Do the action
+    $player->writeNumber($number, $pos, true);
+
+    // Move on to next state
+    StateMachine::nextState("bis");
+  }
+
 }
