@@ -22,3 +22,8 @@
   2h - displaying construction card + selecting them (expert mode should also work)
   3h - implementing next private state + computing combinations and available locations
   30min - click event on scoreSheet elem
+
+04/11
+  2h30 - highlight available house + selecting them + action and DB write + computation for bis houses
+
+05/11

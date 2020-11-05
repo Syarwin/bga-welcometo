@@ -110,7 +110,7 @@ class welcometo extends Table
       'players' => WTO\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
       'options' => WTO\Globals::getOptions(),
-      'houses' => WTO\Houses::get($pId),
+      'houses' => WTO\Houses::getOfPlayer($pId),
     ];
   }
 

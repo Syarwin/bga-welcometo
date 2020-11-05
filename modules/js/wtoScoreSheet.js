@@ -59,12 +59,20 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     },
 
 
-    // Clear everything
+    // Clear every (un)selectable classes
     clearPossible(){
       dojo.query(".house").removeClass("unselectable selectable");
       this._selectableHouses = null;
     },
 
+
+    // Destroy elements added during turn (for restart)
+    clearTurn(turn){
+      dojo.query(`.house div[data-turn="${turn}"]`).forEach(elt => {
+        dojo.removeClass(elt.parentNode, "built");
+        dojo.destroy(elt);
+      });
+    },
 
     ////////////////////////
     ////////  Setup ////////
@@ -180,7 +188,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
      */
     addHouseNumber(house){
       var id = `${house.pId}_house_${house.x}_${house.y}`;
-      $(id).innerHTML = house.number + (house.isBis? _("Bis") : "");
+      house.bis = house.isBis? _("Bis") : "";
+      this.tpl("houseNumber", house, id);
       dojo.addClass(id, "built");
     },
   });

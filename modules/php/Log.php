@@ -21,6 +21,13 @@ class Log extends Helpers\DB_Manager
     ];
   }
 
+  /*
+   * Utils : where filter with player and current turn
+   */
+  private function getFilteredQuery($pId){
+    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() );
+  }
+
 ////////////////////////////////
 ////////////////////////////////
 //////////   Adders   //////////
@@ -48,19 +55,24 @@ class Log extends Helpers\DB_Manager
 //////////   Getters   //////////
 /////////////////////////////////
 /////////////////////////////////
-  private static function getLastActionsQuery($pId)
-  {
-    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() );
-  }
-
-
   public static function getLastActions($pId)
   {
-    return self::getLastActionsQuery($pId)->get();
+    return self::getFilteredQuery($pId)->get();
   }
 
   public static function getLastAction($action, $pId)
   {
-    return self::getLastActionsQuery($pId)->where('action', $action)->limit(1)->get(true);
+    return self::getFilteredQuery($pId)->where('action', $action)->limit(1)->get(true);
+  }
+
+
+/////////////////////////////////
+/////////////////////////////////
+//////////   Setters   //////////
+/////////////////////////////////
+/////////////////////////////////
+  public static function clearTurn($pId)
+  {
+    self::getFilteredQuery($pId)->delete()->run();
   }
 }

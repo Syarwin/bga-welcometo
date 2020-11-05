@@ -76,21 +76,25 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} must write a number on a house'),
     "type" => "private",
     "args" => "argWriteNumber",
-    "possibleactions" => ["writeNumber"],
+    "possibleactions" => ["writeNumber", "restart"],
     "transitions" => [
       'surveyor' => ST_ACTION_SURVEYOR,
       'estate'   => ST_ACTION_ESTATE,
       'bis'      => ST_ACTION_BIS,
+      'restart' => ST_CHOOSE_CARDS,
     ]
   ],
+
 
   ST_ACTION_SURVEYOR => [
     "name" => "actionSurveyor",
     "descriptionmyturn" => clienttranslate('${you} may build a fence between two houses'),
     "type" => "private",
     "args" => "argActionSurveyor",
-    "possibleactions" => ["buildFence", "pass"],
+    "possibleactions" => ["buildFence", "pass", "restart"],
     "transitions" => [
+      'pass' => ST_CONFIRM_TURN,
+      'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 
@@ -99,8 +103,10 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} can increase the value of completed housing estates'),
     "type" => "private",
     "args" => "argActionEstate",
-    "possibleactions" => ["crossSpace", "pass"],
+    "possibleactions" => ["crossSpace", "pass", "restart"],
     "transitions" => [
+      'pass' => ST_CONFIRM_TURN,
+      'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 
@@ -109,12 +115,27 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} may duplicate a house number'),
     "type" => "private",
     "args" => "argActionBis",
-    "possibleactions" => ["writeNumberBis", "pass"],
+    "possibleactions" => ["writeNumberBis", "pass", "restart"],
     "transitions" => [
       'bis' => ST_ACTION_BIS,
+      'pass' => ST_CONFIRM_TURN,
+      'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 
+
+  // Pre-end of parallel flow
+  ST_CONFIRM_TURN => [
+    "name" => "confirmTurn",
+    "descriptionmyturn" => clienttranslate('${you} must confirm or restart your turn'),
+    "type" => "private",
+    "args" => "argPrivatePlayerTurn",
+    "possibleactions" => ["confirm", "restart"],
+    "transitions" => [
+      'confirm' => ST_APPLY_TURNS,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
 
 /****************************
 ****************************/

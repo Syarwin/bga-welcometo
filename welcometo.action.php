@@ -67,6 +67,19 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
+
+  /////////////////////////////
+  /// Non-automatic actions ///
+  /////////////////////////////
+
+  public function passAction()
+  {
+    self::setAjaxMode();
+    $this->game->passAction();
+    self::ajaxResponse();
+  }
+
+
   public function writeNumberBis()
   {
     self::setAjaxMode();
@@ -77,4 +90,21 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
+
+  /////////////////////////////
+  //// Confirm / pass turn ////
+  /////////////////////////////
+  public function cancelTurn()
+  {
+    self::setAjaxMode();
+    $this->game->cancelTurn();
+    self::ajaxResponse();
+  }
+
+  public function confirmTurn()
+  {
+    self::setAjaxMode();
+    $this->game->confirmTurn();
+    self::ajaxResponse();
+  }
 }

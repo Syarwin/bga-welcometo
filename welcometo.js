@@ -155,8 +155,8 @@ define([
      /////////////////////////////////////
      displayBasicInfo(args){
        // Add an UNDO button if there is something to cancel
-       if(args.cancelable){
-         this.addActionButton('buttonCancel', _('Undo'), 'onClickUndo', null, false, 'gray');
+       if(args.cancelable && !$('buttonCancelTurn')){
+         this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), 'onClickCancelTurn');
        }
 
        if(args.selectedCards){
@@ -167,9 +167,6 @@ define([
        // dojo.query(...) args.turn...
      },
 
-     onClickUndo(){
-        debug("Undo ! :)");
-     },
 
      ////////////////////////////////////////////
      //////   Choose construction cards   ///////
@@ -200,14 +197,33 @@ define([
      onChooseNumber(number, x, y){
        debug("You chose to write", number, " at location ", x, y);
        this.takeAction("writeNumber", { number: number, x:x, y:y});
+       this.clearPossible();
      },
 
+     notif_writeNumber(args){
+       debug("Notif: writing a number on a house", args);
+       this._scoreSheet.addHouseNumber(args.args.house);
+     },
+
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     ////////   Non-automatic actions   /////////
+     ////////////////////////////////////////////
+     ////////////////////////////////////////////
+     addPassActionButton(){
+       this.addPrimaryActionButton("buttonPassAction", _("Pass"), 'onClickPassAction');
+     },
+
+     onClickPassAction(){
+       this.takeAction("passAction");
+     },
 
      //////////////////////////////////////
      //////////   Bis action   ////////////
      //////////////////////////////////////
      onEnteringStateActionBis(args){
        this.displayBasicInfo(args);
+       this.addPassActionButton();
        this._scoreSheet.promptNumbers(args.numbers, this.onChooseNumberBis.bind(this));
      },
 
@@ -216,6 +232,29 @@ define([
        this.takeAction("writeNumberBis", { number: number, x:x, y:y});
      },
 
+
+     ///////////////////////////////////////
+     ///////////////////////////////////////
+     /////////   Confirm/undo turn   ///////
+     ///////////////////////////////////////
+     ///////////////////////////////////////
+     onEnteringStateConfirmTurn(args){
+       this.displayBasicInfo(args);
+       this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), 'onClickConfirmTurn');
+     },
+
+     onClickConfirmTurn(){
+       debug("Confirming turn");
+     },
+
+     onClickCancelTurn(){
+       this.takeAction("cancelTurn");
+     },
+
+     notif_clearTurn(args){
+       debug("Notif: restarting turn", args);
+       this._scoreSheet.clearTurn(args.args.turn);
+     },
 
 
      ////////////////////////////////////////////
@@ -265,6 +304,20 @@ define([
        playNextMoveSound && this.disableNextMoveSound();
      },
 
+
+     /*
+      * Add a blue/grey button if it doesn't already exists
+      */
+     addPrimaryActionButton(id, text, callback){
+       if(!$(id))
+        this.addActionButton(id, text, callback, null, false, 'blue');
+     },
+
+     addSecondaryActionButton(id, text, callback){
+       if(!$(id))
+        this.addActionButton(id, text, callback, null, false, 'gray');
+     },
+
      ///////////////////////////////////////////////////
      //////   Reaction to cometD notifications   ///////
      ///////////////////////////////////////////////////
@@ -277,6 +330,8 @@ define([
      setupNotifications() {
        var notifs = [
          ['newPrivateState', 1],
+         ['clearTurn', 1],
+         ['writeNumber', 1000]
        ];
 
        notifs.forEach(notif => {

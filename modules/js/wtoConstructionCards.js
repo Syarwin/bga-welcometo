@@ -67,6 +67,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
 
     makeStacksSelectable(stacks){
+      dojo.query(".construction-cards-stack").removeClass("selected"); // TODO : add in the clearPossible function instead ?
       dojo.query(".construction-cards-stack").addClass("unselectable");
       this._selectableStacks = stacks;
       stacks.forEach(stackId =>  dojo.query("#construction-cards-stack-" + stackId).removeClass("unselectable").addClass("selectable") );

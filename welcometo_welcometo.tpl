@@ -65,7 +65,7 @@ var jstpl_scoreBis = '<div id="${pId}_score_bis_${x}" data-x="${x}" class="score
 
 
 
-
+var jstpl_houseNumber = '<div class="house-number" data-turn="${turn}">${number}${bis}</div>';
 
 var jstpl_scribble = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.33331 533.33331" class="scribble" id="scribble-\${id}">

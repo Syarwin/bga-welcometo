@@ -23,6 +23,12 @@ class Player extends Helpers\DB_Manager
   private $zombie = false;
 
 
+  /////////////////////////////////
+  /////////////////////////////////
+  //////////   Getters   //////////
+  /////////////////////////////////
+  /////////////////////////////////
+
   public function getId(){ return $this->id; }
   public function getNo(){ return $this->no; }
   public function getName(){ return $this->name; }
@@ -42,15 +48,47 @@ class Player extends Helpers\DB_Manager
   }
 
 
+  /*
+   * Boolean value needed to know if we display the "restart turn" button
+   */
+  public function hasSomethingToCancel()
+  {
+    return !empty(Log::getLastActions($this->id));
+  }
+
+  /*
+   * Return the constructions for player (which can be player-specific in the expert variant)
+   */
   public function getConstructionCards()
   {
     return ConstructionCards::getForPlayer($this->id);
   }
 
-  public function hasSomethingToCancel()
+
+  /*
+   * Return either the selected stacks (of construction cards) if any, or null
+   */
+  public function getSelectedCards()
   {
-    return !empty(Log::getLastActions($this->id));
+    $selectCardAction = Log::getLastAction('selectCard', $this->id);
+    return is_null($selectCardAction)? null : $selectCardAction['arg'];
   }
+
+
+  /*
+   * Allow to format the selected stacks (getter defined below)
+   *   into a combination [number, action]
+   */
+  public function getCombination()
+  {
+    $selectedCards = $this->getSelectedCards();
+    if(is_null($selectedCards))
+      throw new \BgaVisibleSystemException("Trying to fetch the combination of a player who haven't choose the construction cards yet");
+
+    return ConstructionCards::getCombination($this->id, $selectedCards);
+  }
+
+
 
 
   ///////////////////////////////
@@ -61,19 +99,20 @@ class Player extends Helpers\DB_Manager
     Log::insert($this->id, 'selectCard', $stack);
   }
 
-  public function getSelectedCards()
-  {
-    $selectCardAction = Log::getLastAction('selectCard', $this->id);
-    return is_null($selectCardAction)? null : $selectCardAction['arg'];
-  }
 
-  public function getCombination()
-  {
-    $selectedCards = $this->getSelectedCards();
-    if(is_null($selectedCards))
-      throw new \BgaVisibleSystemException("Trying to fetch the combination of a player who haven't choose the construction cards yet");
 
-    return ConstructionCards::getCombination($this->id, $selectedCards);
+
+/////////////////////////////////
+/////////////////////////////////
+//////////   Setters   //////////
+/////////////////////////////////
+/////////////////////////////////
+
+  public function restartTurn()
+  {
+    Log::clearTurn($this->id);
+    Houses::clearTurn($this->id);
+    Notifications::clearTurn($this);
   }
 
 
@@ -88,8 +127,7 @@ class Player extends Helpers\DB_Manager
   public function getAvailableNumbersForBis()
   {
     $result = [];
-    for($i = 13; $i <= 13; $i++){
-//    for($i = 0; $i <= 17; $i++){
+    for($i = 0; $i <= 17; $i++){
       $houses = $this->getAvailableHousesForNumber($i, true);
 
       if(!empty($houses))
@@ -126,13 +164,16 @@ class Player extends Helpers\DB_Manager
   }
 
   public function getAvailableHousesForNumber($number, $isBis = false){
-    return Houses::getAvailableLocations($this->id, $number, $isBis);
+    return $isBis?
+      Houses::getAvailableLocationsForBis($this->id, $number)
+     :Houses::getAvailableLocations($this->id, $number);
   }
 
 
   public function writeNumber($number, $pos, $isBis = false)
   {
-    Houses::add($this->id, $number, $pos, $isBis);
+    $house = Houses::add($this->id, $number, $pos, $isBis);
+    Notifications::writeNumber($this, $house);
   }
 
 }

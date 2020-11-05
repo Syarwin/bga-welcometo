@@ -85,6 +85,19 @@ trait PrivateTurnTrait
 
 
 
+
+  //////////////////////////////////////////
+  //////////////////////////////////////////
+  ///////// NON-AUTOMATIC ACTIONS //////////
+  //////////////////////////////////////////
+  //////////////////////////////////////////
+  function passAction()
+  {
+    StateMachine::checkAction("pass");
+    // TODO : Log the passing ?
+    StateMachine::nextState("pass");
+  }
+
   ///////////////////////////////
   ///////// ACTION BIS //////////
   ///////////////////////////////
@@ -111,4 +124,16 @@ trait PrivateTurnTrait
     StateMachine::nextState("bis");
   }
 
+
+
+  //////////////////////////////////////
+  ///////// CONFIRM / RESTART //////////
+  //////////////////////////////////////
+  function cancelTurn()
+  {
+    StateMachine::checkAction("restart");
+    $player = Players::getCurrent();
+    $player->restartTurn();
+    StateMachine::nextState("restart");
+  }
 }
