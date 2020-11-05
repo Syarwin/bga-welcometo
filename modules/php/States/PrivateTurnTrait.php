@@ -33,7 +33,7 @@ trait PrivateTurnTrait
   function argChooseCards($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
-    $data['selectableStacks'] = [0, 1]; // TODO filter stack depending on playable combinaison + handle non standard
+    $data['selectableStacks'] = [0, 2]; // TODO filter stack depending on playable combinaison + handle non standard
     return $data;
   }
 
@@ -46,7 +46,7 @@ trait PrivateTurnTrait
     if(!in_array($stack, $args['selectableStacks']))
       throw new \BgaUserException(clienttranslate("You cannot select this stack"));
 
-    // Do the action
+    // Do the action (logging the choice for rest of the turn)
     $player->chooseCards($stack);
 
     // Move on to next state
@@ -73,11 +73,12 @@ trait PrivateTurnTrait
     if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
       throw new \BgaUserException(clienttranslate("You cannot write this number in this house"));
 
-    // Do the action
+    // Write the number on the house
     $player->writeNumber($number, $pos);
 
-    // Move on to next state
-    StateMachine::nextState("bis");
+    // Move on to next state depending on the action card
+    $combination = $player->getCombination();
+    StateMachine::nextState($combination["action"]);
   }
 
 
@@ -85,7 +86,7 @@ trait PrivateTurnTrait
 
   //////////////////////////////////////////
   //////////////////////////////////////////
-  ///////// NON-AUTOMATIC ACTIONS //////////
+  //////////////   ACTIONS   ///////////////
   //////////////////////////////////////////
   //////////////////////////////////////////
   function passAction()
@@ -94,6 +95,38 @@ trait PrivateTurnTrait
     // TODO : Log the passing ?
     StateMachine::nextState("pass");
   }
+
+  /*
+   * Generic scribble zone action
+   */
+  function scribbleZone($zone)
+  {
+    StateMachine::checkAction("scribbleZone");
+    $player = Players::getCurrent();
+    $args = StateMachine::getArgsOfPlayer($player);
+    if(!in_array($zone, $args['zones']))
+      throw new \BgaUserException(clienttranslate("You cannot scribble this zone"));
+
+    $player->scribbleZone($zone);
+    StateMachine::nextState("scribbleZone");
+  }
+
+
+  ///////////////////////////
+  ///////// ESTATE //////////
+  ///////////////////////////
+  function argActionEstate($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data['zones'] = [
+      [0,0],
+      [1,0],
+      [2,0],
+    ];
+    return $data;
+  }
+
+
 
   ///////////////////////////////
   ///////// ACTION BIS //////////

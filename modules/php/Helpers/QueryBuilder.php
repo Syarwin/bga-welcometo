@@ -53,7 +53,7 @@ class QueryBuilder extends \APP_DbObject {
 
 		$this->sql .= implode(',', $vals);
 		self::DbQuery($this->sql);
-		return self::DbAffectedRow();
+		return self::DbGetLastId();
 	}
 
 

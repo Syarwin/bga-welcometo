@@ -60,11 +60,13 @@ define([
 
       var player = gamedatas.players[this.player_id];
       this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet', this);
+      /*
       this._scoreSheet.addScribble({
         id :1,
         location: "score_temp_0",
         turn: 1,
       }, true);
+      */
      },
 
 
@@ -217,6 +219,26 @@ define([
      onClickPassAction(){
        this.takeAction("passAction");
      },
+
+
+     //////////////////////////////////////
+     ////////   Generic zones   ///////////
+     //////////////////////////////////////
+     /*
+      * Generic handling of most zones : estate score, pool, parks, ...
+      */
+     promptZones(type, args){
+       this.displayBasicInfo(args);
+       this.addPassActionButton();
+       this._scoreSheet.promptZones(type, args.zones, (zone) => {
+         this.takeAction('scribbleZone', zone);
+       });
+     },
+
+     onEnteringStateActionEstate(args){
+       this.promptZones("score-estate", args);
+     },
+
 
      //////////////////////////////////////
      //////////   Bis action   ////////////

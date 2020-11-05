@@ -35,6 +35,27 @@
   text-align: center;
 }
 
+@mixin highlight {
+  &.selectable {
+    cursor:pointer;
+    background-color:rgba(255,0,0, 0.3);
+    animation:borderBlink 0.9s infinite;
+  }
+
+  &.unselectable {
+    cursor:not-allowed;
+  }
+}
+
+@keyframes borderBlink {
+  0%   { border: 2px dashed white; }
+  49%  { border: 2px dashed white; }
+  50%  { border: 2px dashed black; }
+  99% { border: 2px dashed black; }
+  100% { border: 2px dashed white; }
+}
+
+
 
 @import 'welcometo.variables';
 
@@ -361,9 +382,9 @@ $cardMargin:5px;
       position: absolute;
       width: 40px;
       height: 40px;
-      background-color: rgba(0,255,0,0.5);
       box-sizing: border-box;
-      border:1px solid black;
+      border-radius: 10px;
+      @include highlight;
 
       @for $x from 1 through 6 {
         @for $y from 1 through map-get(nth($scoreEstates, $x), 'n') {

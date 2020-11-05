@@ -78,13 +78,20 @@ $machinestates = [
     "args" => "argWriteNumber",
     "possibleactions" => ["writeNumber", "restart"],
     "transitions" => [
-      'surveyor' => ST_ACTION_SURVEYOR,
-      'estate'   => ST_ACTION_ESTATE,
-      'bis'      => ST_ACTION_BIS,
+      SURVEYOR => ST_ACTION_SURVEYOR,
+      ESTATE   => ST_ACTION_ESTATE,
+      PARK     => ST_ACTION_PARK,
+      POOL     => ST_ACTION_POOL,
+      TEMP     => ST_CONFIRM_TURN,
+      BIS      => ST_ACTION_BIS,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 
+
+  ////////////////////
+  ///// ACTIONS //////
+  ////////////////////
 
   ST_ACTION_SURVEYOR => [
     "name" => "actionSurveyor",
@@ -99,16 +106,42 @@ $machinestates = [
   ],
 
   ST_ACTION_ESTATE => [
-    "name" => "actionSurveyor",
-    "descriptionmyturn" => clienttranslate('${you} can increase the value of completed housing estates'),
+    "name" => "actionEstate",
+    "descriptionmyturn" => clienttranslate('${you} may increase the value of completed housing estates'),
     "type" => "private",
     "args" => "argActionEstate",
+    "possibleactions" => ["scribbleZone", "pass", "restart"],
+    "transitions" => [
+      'scribbleZone' => ST_CONFIRM_TURN, 
+      'pass' => ST_CONFIRM_TURN,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
+  ST_ACTION_PARK => [
+    "name" => "actionPark",
+    "descriptionmyturn" => clienttranslate('${you} may build a park'),
+    "type" => "private",
+    "args" => "argActionPark",
     "possibleactions" => ["crossSpace", "pass", "restart"],
     "transitions" => [
       'pass' => ST_CONFIRM_TURN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
+
+  ST_ACTION_POOL => [
+    "name" => "actionPool",
+    "descriptionmyturn" => clienttranslate('${you} may build a pool'),
+    "type" => "private",
+    "args" => "argActionPool",
+    "possibleactions" => ["crossSpace", "pass", "restart"],
+    "transitions" => [
+      'pass' => ST_CONFIRM_TURN,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
 
   ST_ACTION_BIS => [
     "name" => "actionBis",

@@ -37,9 +37,8 @@ CREATE TABLE IF NOT EXISTS `plan_cards` (
 
 CREATE TABLE IF NOT EXISTS `scribbles` (
   `scribble_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `scribble_location` varchar(16) NOT NULL,
+  `scribble_location` varchar(100) NOT NULL,
   `scribble_state` int(11) NOT NULL,
-  `player_id` int(10) NOT NULL,
   `turn` int(10) NOT NULL,
   PRIMARY KEY (`scribble_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;

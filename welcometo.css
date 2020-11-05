@@ -19,6 +19,17 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap; }
+@keyframes borderBlink {
+  0% {
+    border: 2px dashed white; }
+  49% {
+    border: 2px dashed white; }
+  50% {
+    border: 2px dashed black; }
+  99% {
+    border: 2px dashed black; }
+  100% {
+    border: 2px dashed white; } }
 /*****************************
 ******************************
 *********** CARDS ************
@@ -746,9 +757,14 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      background-color: rgba(0, 255, 0, 0.5);
       box-sizing: border-box;
-      border: 1px solid black; }
+      border-radius: 10px; }
+      .score-sheet-container .score-sheet .score-estate.selectable {
+        cursor: pointer;
+        background-color: rgba(255, 0, 0, 0.3);
+        animation: borderBlink 0.9s infinite; }
+      .score-sheet-container .score-sheet .score-estate.unselectable {
+        cursor: not-allowed; }
       .score-sheet-container .score-sheet .score-estate[data-x="0"][data-y="0"] {
         top: 1168px;
         left: 687px; }

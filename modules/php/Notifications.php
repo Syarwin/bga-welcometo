@@ -19,6 +19,12 @@ class Notifications
     ]);
   }
 
+  public static function addScribble($player, $scribble){
+    self::notify($player->getId(), 'addScribble', '', [
+      'scribble' => $scribble,
+    ]);
+  }
+
 
   public static function clearTurn($player){
     self::notify($player->getId(), 'clearTurn', '', [

@@ -79,6 +79,17 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
+  // Generic handler
+  public function scribbleZone()
+  {
+    self::setAjaxMode();
+    $zone = [ (int) self::getArg("x", AT_posint, true) ];
+    if(self::isArg("y"))
+      $zone[] = (int) self::getArg("y", AT_posint, true);
+    $this->game->scribbleZone($zone);
+    self::ajaxResponse();
+  }
+
 
   public function writeNumberBis()
   {

@@ -132,7 +132,7 @@ class Pieces extends DB_Manager {
       $location = implode("_", $location);
 
     $extra = $like? "%" : "";
-    if (preg_match("/^[A-Za-z${extra}][A-Za-z_0-9${extra}-]*$/", $location) == 0)
+    if (preg_match("/^[A-Za-z0-9${extra}-][A-Za-z_0-9${extra}-]*$/", $location) == 0)
       throw new \BgaVisibleSystemException("Class Pieces: location must be alphanum and underscore non empty string '$location'");
   }
 
@@ -210,11 +210,11 @@ class Pieces extends DB_Manager {
     if (empty($ids))
         return [];
 
-    $result = self::getSelectQuery()->whereIn(static::$prefix."id", $ids)->get();
+    $result = self::getSelectQuery()->whereIn(static::$prefix."id", $ids)->get(false);
     if (count($result) != count($ids))
       throw new \BgaVisibleSystemException("Class Pieces: getMany, some pieces have not been found !");
 
-    return $result;
+    return count($result) == 1? $result->first() : $result;
   }
 
 
@@ -482,8 +482,9 @@ class Pieces extends DB_Manager {
       $fields[] = $field;
     }
 
-    self::DB()->multipleInsert($fields)->values($values);
-    return $ids;
+    // With auto increment, we only return the last inserted elem id
+    $lastId = self::DB()->multipleInsert($fields)->values($values);
+    return static::$autoIncrement? $lastId : $ids;
   }
 
   /*

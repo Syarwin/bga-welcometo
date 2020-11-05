@@ -1,6 +1,13 @@
 var isDebug = window.location.host == 'studio.boardgamearena.com' || window.location.hash.indexOf('debug') > -1;
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
+function arrayEquals(a, b) {
+  return Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((val, index) => val === b[index]);
+}
+
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
   return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
 /****************************************
@@ -27,6 +34,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       // Add houses number
       gameData.houses.forEach(house => this.addHouseNumber(house) );
+
+      // Add scribbles
+      gameData.scribbles.forEach(scribble => this.addScribble(scribble, false) );
     },
 
     /*
@@ -62,7 +72,12 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     // Clear every (un)selectable classes
     clearPossible(){
       dojo.query(".house").removeClass("unselectable selectable");
+
+      if(this._zoneType != null)
+        dojo.query("." + this._zoneType).removeClass("unselectable selectable");
       this._selectableHouses = null;
+      this._selectableZones = null;
+      this._zoneType = null;
     },
 
 
@@ -111,27 +126,18 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       var estates = [1,2,3,4,4,4];
       for(var x = 0; x < 6; x++){
         for(var y = 0; y < estates[x]; y++){
-          this.tpl('scoreEstate', {x:x, y:y});
+          this.clickableTpl('scoreEstate', {x:x, y:y}, this.onClickZoneFactory('score-estate') );
         }
       }
     },
 
-    /////////////////////////
-    /////// Scribble ////////
-    /////////////////////////
-    addScribble(scribble, animation){
-      var location = this.player.id + "_" + scribble.location;
-      if(!$(location)){
-        console.error("Trying to add a scribble to an invalid location : ", location);
-        return;
-      }
 
-      this.tpl("scribble", scribble, location);
-      if(animation){
-        $("scribble-" + scribble.id).classList.add("animate");
-      }
-    },
 
+/******************************
+*******************************
+********* TOP HALF ************
+*******************************
+******************************/
 
     /////////////////////////
     //////// Houses /////////
@@ -192,5 +198,77 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       this.tpl("houseNumber", house, id);
       dojo.addClass(id, "built");
     },
+
+
+
+/******************************
+*******************************
+*** GENERIC SCRIBBLING ZONE ***
+*******************************
+******************************/
+
+    /*
+     * Ask the use to select a score zone
+     *   type is the type of zone (pool, estate, park)
+     */
+    promptZones(type, zones, callback){
+      this._callback = callback;
+      this._selectableZones = zones;
+      this._zoneType = type;
+
+      dojo.query("." + type).addClass("unselectable");
+      zones.forEach(zone => {
+        var selector = "." + type;
+        selector += `[data-x="${zone[0]}"]`;
+        if(zone.length > 1)
+          selector += `[data-y="${zone[1]}"]`;
+
+        dojo.query(selector).removeClass("unselectable").addClass("selectable");
+      });
+    },
+
+    /*
+     * Check if a zone of given type is clickable
+     */
+    selectableZone(type, zone){
+      var data = [];
+      if(typeof zone.x != "undefined") data.push(zone.x);
+      if(typeof zone.y != "undefined") data.push(zone.y);
+
+      return this._zoneType == type && this._selectableZones.some(val => arrayEquals(val, data) );
+    },
+
+    /*
+     * Generic click handler for zone
+     */
+     onClickZoneFactory(type){
+       return (zone) => {
+         if(!this.selectableZone(type, zone))
+          return;
+
+          this._callback(zone);
+        };
+     },
+
+     /////////////////////////
+     /////// Scribble ////////
+     /////////////////////////
+     addScribble(scribble, animation){
+       var location = this.player.id + "_" + scribble.type + "_" + scribble.x;
+       if(scribble.y != null)
+        location += "_" + scribble.y;
+      debug(location);
+
+       if(!$(location)){
+         console.error("Trying to add a scribble to an invalid location : ", location);
+         return;
+       }
+
+       this.tpl("scribble", scribble, location);
+       if(animation){
+         $("scribble-" + scribble.id).classList.add("animate");
+       }
+     },
+
   });
 });

@@ -16,6 +16,8 @@ define('ST_WRITE_NUMBER', 21);
 define('ST_ACTION_SURVEYOR', 22);
 define('ST_ACTION_ESTATE', 23);
 define('ST_ACTION_BIS', 24);
+define('ST_ACTION_PARK', 25);
+define('ST_ACTION_POOL', 26);
 
 define('ST_CONFIRM_TURN', 30);
 define('ST_WAIT_OTHERS', 31);

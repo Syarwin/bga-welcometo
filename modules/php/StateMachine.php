@@ -108,6 +108,18 @@ class StateMachine extends \APP_DbObject
   }
 
   /*
+   * Get corresponding args for one player
+   */
+  public function getArgsOfPlayer($player)
+  {
+    self::checkParallel();
+    $state = self::getPrivateState($player->getState(), false);
+    $method = $state['args'];
+    return self::getGame()->$method($player);
+  }
+
+
+  /*
    * Check if current action is possible for given player
    */
   public function checkAction($action, $throwException = true)

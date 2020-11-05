@@ -176,4 +176,16 @@ class Player extends Helpers\DB_Manager
     Notifications::writeNumber($this, $house);
   }
 
+
+  public function scribbleZone($zone)
+  {
+    $stateId = $this->getState();
+    $locations = [
+      ST_ACTION_ESTATE => "score-estate"
+    ];
+
+    // TODO : add sanity checks
+    $scribble = Scribbles::add($this->id, $locations[$stateId], $zone);
+    Notifications::addScribble($this, $scribble);
+  }
 }
