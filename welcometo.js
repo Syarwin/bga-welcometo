@@ -244,7 +244,7 @@ define([
      },
 
      onClickConfirmTurn(){
-       debug("Confirming turn");
+       this.takeAction("confirmTurn");
      },
 
      onClickCancelTurn(){
@@ -256,6 +256,10 @@ define([
        this._scoreSheet.clearTurn(args.args.turn);
      },
 
+
+     onEnteringStateWaitOthers(args){
+       this.displayBasicInfo(args);
+     },
 
      ////////////////////////////////////////////
      ////////////////////////////////////////////

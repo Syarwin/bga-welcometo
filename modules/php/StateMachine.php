@@ -138,15 +138,15 @@ class StateMachine extends \APP_DbObject
 
     $newState = $states[$newStateId];
     self::setPrivateState($pId, $newStateId);
+    $player = Players::get($pId);
 
     // Call action if it exists
     if(isset($newState['action'])){
       $actionMethod = $newState['action'];
-      self::getGame()->$actionMethod();
+      self::getGame()->$actionMethod($player);
     }
 
     // Update state and args on UI using notification
-    $player = Players::get($pId);
     $method = $newState['args'];
     self::getGame()->notifyPlayer($player->getId(), "newPrivateState", '', [
       'state' => $newState,

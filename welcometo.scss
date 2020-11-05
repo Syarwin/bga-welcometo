@@ -173,7 +173,14 @@ $cardMargin:5px;
     background-size: 100%;
     position: relative;
 
-
+  /********************************
+  *** Hightlight recent actions ***
+  ********************************/
+  @for $t from 1 through 30 {
+    &[data-turn="#{$t}"] .house-number[data-turn="#{$t}"] {
+      color:red;
+    }
+  }
 
   /*****************************
   ******************************
@@ -201,12 +208,17 @@ $cardMargin:5px;
       height:86px;
       box-sizing: border-box;
       clip-path:polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
-      @include handwritten;
-      font-size:55px;
-      padding-left:3px;
 
       &.built {
         border:2px solid black;
+
+        .house-number {
+          margin:auto;
+          @include handwritten;
+          @include centered;
+          font-size:55px;
+          line-height:61px
+        }
       }
 
       @each $x, $street in $houses {

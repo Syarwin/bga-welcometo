@@ -132,7 +132,20 @@ $machinestates = [
     "args" => "argPrivatePlayerTurn",
     "possibleactions" => ["confirm", "restart"],
     "transitions" => [
-      'confirm' => ST_APPLY_TURNS,
+      'confirm' => ST_WAIT_OTHERS,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
+  // Waiting other
+  ST_WAIT_OTHERS => [
+    "name" => "waitOthers",
+    "descriptionmyturn" => '',
+    "type" => "private",
+    "action" => "stWaitOther",
+    "args" => "argPrivatePlayerTurn",
+    "possibleactions" => ["restart"],
+    "transitions" => [
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],

@@ -111,6 +111,7 @@ class welcometo extends Table
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
       'options' => WTO\Globals::getOptions(),
       'houses' => WTO\Houses::getOfPlayer($pId),
+      'turn' => WTO\Globals::getCurrentTurn(),
     ];
   }
 

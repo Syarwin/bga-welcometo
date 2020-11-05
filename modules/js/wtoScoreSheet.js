@@ -18,7 +18,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       this._selectableHouses = null;
 
       // Create container
-      this.tpl('scoreSheet', {}, parentDiv);
+      this.tpl('scoreSheet', { turn: gameData.turn }, parentDiv);
       this.container = "score-sheet-" + player.id;
 
       // Setup divs

@@ -44,7 +44,7 @@ var jstpl_constructionCard = `
 /////////////////////
 var jstpl_scoreSheet = `
 <div class="score-sheet-container">
-  <div id="score-sheet-\${pId}" class="score-sheet"></div>
+  <div id="score-sheet-\${pId}" class="score-sheet" data-turn="\${turn}"></div>
 </div>`;
 
 

@@ -150,6 +150,9 @@
     background-image: url("img/board.png");
     background-size: 100%;
     position: relative;
+    /********************************
+    *** Hightlight recent actions ***
+    ********************************/
     /*****************************
     ******************************
     ********* UPPER PART *********
@@ -165,6 +168,66 @@
     ********* SCRIBBLE  *********
     *****************************
     ****************************/ }
+    .score-sheet-container .score-sheet[data-turn="1"] .house-number[data-turn="1"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="2"] .house-number[data-turn="2"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="3"] .house-number[data-turn="3"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="4"] .house-number[data-turn="4"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="5"] .house-number[data-turn="5"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="6"] .house-number[data-turn="6"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="7"] .house-number[data-turn="7"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="8"] .house-number[data-turn="8"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="9"] .house-number[data-turn="9"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="10"] .house-number[data-turn="10"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="11"] .house-number[data-turn="11"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="12"] .house-number[data-turn="12"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="13"] .house-number[data-turn="13"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="14"] .house-number[data-turn="14"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="15"] .house-number[data-turn="15"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="16"] .house-number[data-turn="16"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="17"] .house-number[data-turn="17"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="18"] .house-number[data-turn="18"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="19"] .house-number[data-turn="19"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="20"] .house-number[data-turn="20"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="21"] .house-number[data-turn="21"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="22"] .house-number[data-turn="22"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="23"] .house-number[data-turn="23"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="24"] .house-number[data-turn="24"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="25"] .house-number[data-turn="25"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="26"] .house-number[data-turn="26"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="27"] .house-number[data-turn="27"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="28"] .house-number[data-turn="28"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="29"] .house-number[data-turn="29"] {
+      color: red; }
+    .score-sheet-container .score-sheet[data-turn="30"] .house-number[data-turn="30"] {
+      color: red; }
     .score-sheet-container .score-sheet .cityname {
       position: absolute;
       top: 253px;
@@ -184,13 +247,19 @@
       width: 70px;
       height: 86px;
       box-sizing: border-box;
-      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
-      font-size: x-large;
-      font-family: "Caveat";
-      font-size: 55px;
-      padding-left: 3px; }
+      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px); }
       .score-sheet-container .score-sheet .house.built {
         border: 2px solid black; }
+        .score-sheet-container .score-sheet .house.built .house-number {
+          margin: auto;
+          font-size: x-large;
+          font-family: "Caveat";
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          font-size: 55px;
+          line-height: 61px; }
       .score-sheet-container .score-sheet .house[data-x="0"][data-y="0"] {
         left: 374px;
         top: 186px; }

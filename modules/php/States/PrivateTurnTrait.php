@@ -12,15 +12,12 @@ trait PrivateTurnTrait
 {
   /*
    * Fetch the basic info a player should have no matter in which private state he is :
-   *   - turn number to highlight last actions
-   *   - construction cards (might depend on the variant)
    *   - selected construction cards (if any)
    *   - cancelable flag on if an action was already done by user
    */
   function argPrivatePlayerTurn($player)
   {
     $data = [
-      'turn' => Globals::getCurrentTurn(),
       'selectedCards' => $player->getSelectedCards(),
       'cancelable' => $player->hasSomethingToCancel(),
     ];
@@ -134,6 +131,21 @@ trait PrivateTurnTrait
     StateMachine::checkAction("restart");
     $player = Players::getCurrent();
     $player->restartTurn();
+    $this->gamestate->setPlayersMultiactive([$player->getId()], '');
     StateMachine::nextState("restart");
+  }
+
+  function confirmTurn()
+  {
+    StateMachine::checkAction("confirm");
+    StateMachine::nextState("confirm");
+  }
+
+  /*
+   * Make the player inactive and wait for other
+   */
+  function stWaitOther($player)
+  {
+    $this->gamestate->setPlayerNonMultiactive($player->getId(), "applyTurns");
   }
 }
