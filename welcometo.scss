@@ -62,6 +62,44 @@
 
 /*****************************
 ******************************
+*********** LAYOUT ***********
+******************************
+*****************************/
+#welcometo-container {
+  display:flex;
+  flex-flow: row;
+
+  #cards-container {
+
+    #cards-container-resizable {
+      transform-origin: top left;
+      display:flex;
+      flex-flow:column;
+
+      #construction-cards-container {
+        flex-flow:column;
+      }
+    }
+  }
+
+  #player-score-sheet-resizable {
+    transform-origin: top left;
+  }
+}
+
+
+/*
+#welcometo-container {
+  display:flex;
+  flex-flow: column;
+
+  #cards-container {
+
+}
+*/
+
+/*****************************
+******************************
 *********** CARDS ************
 ******************************
 *****************************/
@@ -70,10 +108,12 @@ $cardHeight:520px * $cardWidth / 343px;
 $cardMargin:5px;
 
 #cards-container {
+  background-color:rgba(255,255,255,0.6);
+  padding:10px;
+  margin-right:10px;
 
   #construction-cards-container {
     display:flex;
-    flex-flow:row;
     flex-grow:1;
     justify-content: space-around;
 
@@ -322,9 +362,7 @@ $cardMargin:5px;
       position: absolute;
       height: 50px;
       width: 50px;
-      background-color: rgba(255,0,255,0.5);
       box-sizing: border-box;
-      border:1px solid black;
 
       @each $x, $street in $parks {
         $left:map-get($street, 'left');
@@ -333,6 +371,43 @@ $cardMargin:5px;
             left: $left + ($y - 1)*52px;
             top: map-get($street, 'top');
           }
+        }
+      }
+
+      &.selectable {
+        cursor:pointer;
+        svg.highlight {
+          display:block;
+        }
+      }
+
+      svg {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+      }
+
+      svg.highlight {
+        display:none;
+
+        .park-black {
+          fill:rgba(255,0,0,0.4);
+          stroke:black;
+          stroke-width:2px;
+        }
+        .park-white {
+          fill:none;
+          stroke:white;
+          stroke-width:2px;
+          stroke-dasharray:20;
+          animation:snake linear 0.9s infinite;
+        }
+
+        @keyframes snake {
+          0%   { stroke-dashoffset: 40; }
+          100% { stroke-dashoffset: 0; }
         }
       }
     }

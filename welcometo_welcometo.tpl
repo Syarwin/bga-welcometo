@@ -1,15 +1,20 @@
 {OVERALL_GAME_HEADER}
 
-<div id="cards-container" class="whiteblock">
-    <div id="plan-cards-container"></div>
-    <div id="construction-cards-container">
-        <div id="construction-cards-stack-0" class="construction-cards-stack"></div>
-        <div id="construction-cards-stack-1" class="construction-cards-stack"></div>
-        <div id="construction-cards-stack-2" class="construction-cards-stack"></div>
+<div id="welcometo-container">
+  <div id="cards-container">
+    <div id="cards-container-resizable">
+      <div id="plan-cards-container"></div>
+      <div id="construction-cards-container">
+          <div id="construction-cards-stack-0" class="construction-cards-stack"></div>
+          <div id="construction-cards-stack-1" class="construction-cards-stack"></div>
+          <div id="construction-cards-stack-2" class="construction-cards-stack"></div>
+      </div>
     </div>
-</div>
+  </div>
 
-<div id="player-score-sheet">
+  <div id="player-score-sheet">
+    <div id="player-score-sheet-resizable"></div>
+  </div>
 </div>
 
   <!-- TBD : One modal per player? -->
@@ -53,7 +58,17 @@ var jstpl_cityName = '<div id="${pId}_cityname" class="cityname" style="color:#$
 var jstpl_house = '<div id="${pId}_house_${x}_${y}" data-x="${x}" data-y="${y}" class="house"></div>';
 var jstpl_topFence = '<div id="${pId}_top_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="top-fence"></div>';
 var jstpl_estateFence = '<div id="${pId}_estate_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="estate-fence"></div>';
-var jstpl_park = '<div id="${pId}_park_${x}_${y}" data-x="${x}" data-y="${y}" class="park"></div>';
+var jstpl_park = `<div id="\${pId}_park_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="park">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49 47" class="highlight">
+    <path class="park-black" d="M 8.82,14.18 C 6.82,10.45 10.27,3.00 19.55,5.91 19.45,1.09 29.64,-1.09 31.55,6.55 35.36,3.64 44.45,7.36 40.91,14.91
+             49.22,17.80 46.27,24.55 42.82,27.18 46.92,32.83 40.73,37.73 36.91,37.00 36.84,46.08 26.97,44.41 25.27,41.18
+             23.45,44.55 13.82,45.91 13.82,36.82 6.36,38.36 2.93,31.22 6.91,27.18 2.60,25.95 0.09,15.18 8.82,14.18" />
+    <path class="park-white" d="M 8.82,14.18 C 6.82,10.45 10.27,3.00 19.55,5.91 19.45,1.09 29.64,-1.09 31.55,6.55 35.36,3.64 44.45,7.36 40.91,14.91
+             49.22,17.80 46.27,24.55 42.82,27.18 46.92,32.83 40.73,37.73 36.91,37.00 36.84,46.08 26.97,44.41 25.27,41.18
+             23.45,44.55 13.82,45.91 13.82,36.82 6.36,38.36 2.93,31.22 6.91,27.18 2.60,25.95 0.09,15.18 8.82,14.18" />
+  </svg>
+</div>`;
+
 
 //// BOTTOM PART ////
 var jstpl_scorePool = '<div id="${pId}_score_pool_${x}" data-x="${x}" class="score-pool"></div>';

@@ -24,6 +24,10 @@ class Houses extends Helpers\DB_Manager
 
   protected static $streetSizes = [10, 11, 12];
 
+  public function getLast($pId)
+  {
+    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->get(true);
+  }
 
   /*
    * clearTurn : remove all houses written by player during this turn

@@ -1,5 +1,6 @@
 <?php
 namespace WTO;
+use WTO\Game\Globals;
 /*
  * Plan Cards
  */

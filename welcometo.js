@@ -34,6 +34,7 @@ define([
     constructor() {
       this._connections = [];
       this._isStandard = true;
+      this.default_viewport = 'width=900, user-scalable=yes';
     },
 
 
@@ -59,7 +60,7 @@ define([
         return;
 
       var player = gamedatas.players[this.player_id];
-      this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet', this);
+      this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet-resizable', this);
       /*
       this._scoreSheet.addScribble({
         id :1,
@@ -235,11 +236,20 @@ define([
        });
      },
 
+     // Estate
      onEnteringStateActionEstate(args){
        this.promptZones("score-estate", args);
      },
 
+     // Parks
+     onEnteringStateActionPark(args){
+       this.promptZones("park", args);
+     },
 
+
+     /*
+      * Add a scribble to a zone
+      */
      notif_addScribble(args){
        debug("Notif: scribbling a zone", args);
        this._scoreSheet.addScribble(args.args.scribble, true);
@@ -348,6 +358,25 @@ define([
      addSecondaryActionButton(id, text, callback){
        if(!$(id))
         this.addActionButton(id, text, callback, null, false, 'gray');
+     },
+
+
+     onScreenWidthChange () {
+       dojo.style('page-content', 'zoom', '');
+       dojo.style('page-title', 'zoom', '');
+       dojo.style('right-side-first-part', 'zoom', '');
+
+       let box = $('welcometo-container').getBoundingClientRect();
+
+       let sheetWidth = 1544;
+       let sheetScale = 0.8*box['width'] / sheetWidth;
+       dojo.style("player-score-sheet-resizable", "transform", `scale(${sheetScale})`);
+
+       let cardsWidth = 433;
+       let newCardsWidth = 0.2*box['width'] - 10;
+       let cardsScale = newCardsWidth / cardsWidth;
+       dojo.style('cards-container-resizable', 'transform', `scale(${cardsScale})`);
+       dojo.style('cards-container', 'width', `${newCardsWidth - 20}px`);
      },
 
      ///////////////////////////////////////////////////

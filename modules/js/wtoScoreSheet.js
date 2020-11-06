@@ -107,7 +107,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           this.clickableTpl('house', {x: x, y : y}, this.onClickHouse.bind(this));
 
         for(var y = 0; y < parks[x]; y++)
-          this.tpl('park', {x: x, y : y});
+          this.clickableTpl('park', {x: x, y : y}, this.onClickZoneFactory('park') );
       };
     },
 

@@ -90,6 +90,13 @@ class Player extends Helpers\DB_Manager
   }
 
 
+  /*
+   * Get the house written that turn if any
+   */
+   public function getLastHouse()
+   {
+     return Houses::getLast($this->id);
+   }
 
 
   ///////////////////////////////
@@ -183,7 +190,8 @@ class Player extends Helpers\DB_Manager
   {
     $stateId = $this->getState();
     $locations = [
-      ST_ACTION_ESTATE => "score-estate"
+      ST_ACTION_ESTATE => "score-estate",
+      ST_ACTION_PARK   => "park",
     ];
 
     // TODO : add sanity checks

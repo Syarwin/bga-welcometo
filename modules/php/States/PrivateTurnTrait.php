@@ -1,5 +1,7 @@
 <?php
 namespace WTO\States;
+use \WTO\RealEstate;
+use \WTO\Park;
 use \WTO\Game\Players;
 use \WTO\Game\Globals;
 use \WTO\Game\Log;
@@ -118,14 +120,20 @@ trait PrivateTurnTrait
   function argActionEstate($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
-    $data['zones'] = [
-      [0,0],
-      [1,0],
-      [2,0],
-    ];
+    $data['zones'] = RealEstate::getAvailableZones($player);
     return $data;
   }
 
+
+  ///////////////////////////
+  ///////// PARKS ///////////
+  ///////////////////////////
+  function argActionPark($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data['zones'] = Park::getAvailableZones($player);
+    return $data;
+  }
 
 
   ///////////////////////////////

@@ -6,7 +6,8 @@ namespace WTO;
  */
 class RealEstate extends Helpers\Zone
 {
-  protected static $scoringCols = [1,2,3,4,4,4];
+  protected static $type = "score-estate";
+  protected static $cols = [1,2,3,4,4,4];
 
   public function getMultipliers($pId)
   {

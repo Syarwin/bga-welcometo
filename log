@@ -32,3 +32,5 @@
   3h - zones highlight + click handler + action + db insert + getters + display
 
 06/11
+  1h30 - add Scribble notification + deleting on restart + restructure backend with Game folder
+  
