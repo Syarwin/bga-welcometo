@@ -23,8 +23,8 @@
   </div>
 </div>
 
-<audio id="audiosrc_o_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.ogg" preload="none" autobuffer></audio>
-<audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/scribble.mp3" preload="none" autobuffer></audio>
+<audio id="audiosrc_o_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.ogg" autobuffer></audio>
+<audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/scribble.mp3" autobuffer></audio>
 
 <script type="text/javascript">
 

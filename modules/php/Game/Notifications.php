@@ -1,5 +1,5 @@
 <?php
-namespace WTO;
+namespace WTO\Game;
 use welcometo;
 
 class Notifications

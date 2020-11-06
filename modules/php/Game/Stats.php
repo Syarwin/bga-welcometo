@@ -1,8 +1,8 @@
 <?php
-namespace WTO;
+namespace WTO\Game;
 use welcometo;
 
-class Stats extends \APP_DbObject
+class Stats
 {
   protected static function init($type, $name, $value = 0){
     welcometo::get()->initStat($type, $name, $value);

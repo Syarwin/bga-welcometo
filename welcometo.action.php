@@ -21,7 +21,7 @@
  * this.ajaxcall( "/welcometo/welcometo/myAction.html", ...)
  *
  */
-require_once('modules/WTOTurnInstruction.php');
+
 
 class action_welcometo extends APP_GameAction
 {

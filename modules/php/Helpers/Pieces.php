@@ -259,7 +259,7 @@ class Pieces extends DB_Manager {
    * Return all pieces in specific location
    * note: if "order by" is used, result object is NOT indexed by ids
    */
-  public static function getInLocation($location, $state = null, $orderBy = null) {
+  public static function getInLocationQ($location, $state = null, $orderBy = null) {
     self::checkLocation($location, true);
     self::checkState($state, true);
 
@@ -268,7 +268,11 @@ class Pieces extends DB_Manager {
       $query = $query->orderBy($orderBy);
     }
 
-    return $query->get(false);
+    return $query;
+  }
+
+  public static function getInLocation($location, $state = null, $orderBy = null) {
+    return self::getInLocationQ($location, $state, $orderBy)->get(false);
   }
 
   /**

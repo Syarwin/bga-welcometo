@@ -1,9 +1,9 @@
 <?php
 namespace WTO\States;
-use WTO\Players;
-use WTO\Globals;
-use WTO\Log;
-use WTO\StateMachine;
+use \WTO\Game\Players;
+use \WTO\Game\Globals;
+use \WTO\Game\Log;
+use \WTO\Game\StateMachine;
 
 /*
  * Handle the private state of each player during the turn

@@ -87,6 +87,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         dojo.removeClass(elt.parentNode, "built");
         dojo.destroy(elt);
       });
+
+      dojo.query(`.scribble[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////
@@ -257,7 +259,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
        var location = this.player.id + "_" + scribble.type + "_" + scribble.x;
        if(scribble.y != null)
         location += "_" + scribble.y;
-      debug(location);
 
        if(!$(location)){
          console.error("Trying to add a scribble to an invalid location : ", location);
@@ -266,6 +267,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
        this.tpl("scribble", scribble, location);
        if(animation){
+         playSound("welcometo_scribble");
          $("scribble-" + scribble.id).classList.add("animate");
        }
      },

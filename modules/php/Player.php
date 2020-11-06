@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
-use welcometo;
+use WTO\Game\Log;
+use WTO\Game\Notifications;
 
 class Player extends Helpers\DB_Manager
 {
@@ -112,6 +113,7 @@ class Player extends Helpers\DB_Manager
   {
     Log::clearTurn($this->id);
     Houses::clearTurn($this->id);
+    Scribbles::clearTurn($this->id);
     Notifications::clearTurn($this);
   }
 

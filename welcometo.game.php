@@ -17,8 +17,9 @@
  *
  */
 
+// $autoloadFuncs = spl_autoload_functions();
+//var_dump($autoloadFuncs);
 /*
-$autoloadFuncs = spl_autoload_functions();
 foreach($autoloadFuncs as $unregisterFunc)
 {
     spl_autoload_unregister($unregisterFunc);
@@ -33,6 +34,8 @@ $swdNamespaceAutoload = function ($class)
     $file = dirname(__FILE__) . "/modules/php/" . implode(DIRECTORY_SEPARATOR, $classParts) . ".php";
     if (file_exists($file)) {
       require_once($file);
+    } else {
+      var_dump("Impossible to load welcometo class : $class");
     }
   }
 };
@@ -88,8 +91,8 @@ class welcometo extends Table
    */
   protected function setupNewGame($players, $options = [])
   {
-    WTO\Players::setupNewGame($players);
-    WTO\Stats::setupNewGame();
+    WTO\Game\Players::setupNewGame($players);
+    WTO\Game\Stats::setupNewGame();
     WTO\PlanCards::setupNewGame($players);
     WTO\ConstructionCards::setupNewGame($players);
 
@@ -107,12 +110,12 @@ class welcometo extends Table
   {
     $pId = self::getCurrentPlayerId();
     return [
-      'players' => WTO\Players::getUiData(),
+      'players' => WTO\Game\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
-      'options' => WTO\Globals::getOptions(),
+      'options' => WTO\Game\Globals::getOptions(),
       'houses' => WTO\Houses::getOfPlayer($pId),
       'scribbles' => WTO\Scribbles::getOfPlayer($pId),
-      'turn' => WTO\Globals::getCurrentTurn(),
+      'turn' => WTO\Game\Globals::getCurrentTurn(),
     ];
   }
 

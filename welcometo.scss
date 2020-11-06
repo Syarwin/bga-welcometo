@@ -201,6 +201,10 @@ $cardMargin:5px;
     &[data-turn="#{$t}"] .house-number[data-turn="#{$t}"] {
       color:red;
     }
+
+    &[data-turn="#{$t}"] .scribble[data-turn="#{$t}"] .scribble-path  {
+      stroke:red;
+    }
   }
 
   /*****************************
@@ -429,13 +433,10 @@ $cardMargin:5px;
         stroke:black;
       }
 
-      &.highlight .scribble-path {
-        stroke:red;
-      }
-
       &.animate .scribble-path {
         stroke-dashoffset: 4500;
-        animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite;
+        animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation-fill-mode: forwards;
 
         @keyframes drawScribble {
           to {

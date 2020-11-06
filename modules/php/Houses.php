@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
 use welcometo;
+use WTO\Game\Globals;
 
 /*
  * Houses manager : allows to easily access houses ...

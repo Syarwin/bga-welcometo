@@ -1,6 +1,6 @@
 <?php
 namespace WTO;
-use welcometo;
+use WTO\Game\Globals;
 
 /*
  * Construction Cards

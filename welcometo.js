@@ -240,6 +240,12 @@ define([
      },
 
 
+     notif_addScribble(args){
+       debug("Notif: scribbling a zone", args);
+       this._scoreSheet.addScribble(args.args.scribble, true);
+     },
+
+
      //////////////////////////////////////
      //////////   Bis action   ////////////
      //////////////////////////////////////
@@ -357,7 +363,8 @@ define([
        var notifs = [
          ['newPrivateState', 1],
          ['clearTurn', 1],
-         ['writeNumber', 1000]
+         ['writeNumber', 1000],
+         ['addScribble', 1000],
        ];
 
        notifs.forEach(notif => {

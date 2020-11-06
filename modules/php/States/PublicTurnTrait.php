@@ -1,9 +1,9 @@
 <?php
 namespace WTO\States;
 
-use WTO\StateMachine;
+use WTO\Game\StateMachine;
+use WTO\Game\Players;
 use WTO\ConstructionCards;
-use WTO\Players;
 
 /*
  * Handle the public start and end of a turn

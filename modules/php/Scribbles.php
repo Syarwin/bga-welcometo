@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
-use welcometo;
+use WTO\Game\Globals;
+
 /*
  * Scribbles
  */
@@ -24,6 +25,14 @@ class Scribbles extends Helpers\Pieces
   public function getOfPlayer($pId)
   {
     return self::getInLocation([$pId, "%"])->toArray();
+  }
+
+  /*
+   * clearTurn : remove all houses written by player during this turn
+   */
+  public function clearTurn($pId)
+  {
+    self::getInLocationQ([$pId, "%"])->where('turn', Globals::getCurrentTurn() )->delete()->run();
   }
 
 

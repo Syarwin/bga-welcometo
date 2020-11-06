@@ -1,11 +1,11 @@
 <?php
+namespace WTO\Game;
 
-namespace WTO;
 /*
  * Log: a class that allows to log some actions
  *   and then fetch these actions latter
  */
-class Log extends Helpers\DB_Manager
+class Log extends \WTO\Helpers\DB_Manager
 {
   protected static $table = 'log';
   protected static $primary = 'log_id';
