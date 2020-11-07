@@ -186,7 +186,19 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         this._callback(numbers[0], house.x, house.y);
       } else {
         // Open a modal to ask the number to write
-        // TODO : dialog
+        var dial = new ebg.popindialog();
+        dial.create('chooseNumber');
+        dial.setTitle(_("Choose the number you want to write"));
+        dojo.query("#popin_chooseNumber_close i").removeClass("fa-times-circle").addClass("fa-times");
+
+        numbers.forEach(number => {
+          var div = dojo.place(`<div class='number-choice' data-number='${number}'></div>`, 'popin_chooseNumber_contents');
+          dojo.connect(div, 'onclick', () => {
+            dial.destroy();
+            this._callback(number, house.x, house.y);
+          });
+        });
+        dial.show();
       }
     },
 

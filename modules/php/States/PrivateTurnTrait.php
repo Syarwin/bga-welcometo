@@ -187,6 +187,6 @@ trait PrivateTurnTrait
    */
   function stWaitOther($player)
   {
-    $this->gamestate->setPlayerNonMultiactive($player->getId(), "applyTurns");
+    return $this->gamestate->setPlayerNonMultiactive($player->getId(), "applyTurns");
   }
 }

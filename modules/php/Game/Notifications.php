@@ -12,6 +12,18 @@ class Notifications
     welcometo::get()->notifyPlayer($pId, $name, $msg, $data);
   }
 
+  public static function newCards($pId, $cards){
+    if(is_null($pId)){
+      self::notifyAll('newCards', '', [
+        'cards' => $cards,
+      ]);
+    } else {
+      self::notify($pId, 'newCards', '', [
+        'cards' => $cards,
+      ]);
+    }
+  }
+
 
   public static function writeNumber($player, $house){
     self::notify($player->getId(), 'writeNumber', '', [

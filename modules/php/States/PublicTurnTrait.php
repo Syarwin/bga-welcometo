@@ -42,4 +42,13 @@ trait PublicTurnTrait
   {
     return StateMachine::getArgs();
   }
+
+
+  /*
+   *
+   */
+  function stApplyTurn()
+  {
+    $this->gamestate->nextState("newTurn");
+  }
 }

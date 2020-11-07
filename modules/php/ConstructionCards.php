@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
 use WTO\Game\Globals;
+use WTO\Game\Notifications;
 
 /*
  * Construction Cards
@@ -142,6 +143,8 @@ class ConstructionCards extends Helpers\Pieces
 
       $drawnCards[$stackId] = $drawnCard;
     }
+
+    Notifications::newCards($playerId, $drawnCard);
 
     return [
       'drawnCards' => $drawnCards,

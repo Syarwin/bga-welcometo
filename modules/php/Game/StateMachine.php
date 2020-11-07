@@ -154,7 +154,11 @@ class StateMachine extends \APP_DbObject
     // Call action if it exists
     if(isset($newState['action'])){
       $actionMethod = $newState['action'];
-      self::getGame()->$actionMethod($player);
+      $changedState = self::getGame()->$actionMethod($player);
+
+      // If another transition occured while computing this action, no need to compute the args
+      if($changedState === true)
+        return;
     }
 
     // Update state and args on UI using notification

@@ -153,6 +153,14 @@ define([
 
 
 
+     ///////////////////////////////
+     //////   Start of turn  ///////
+     ///////////////////////////////
+     notif_newCards(args){
+       debug("Notif: dealing new cards", args);
+     },
+
+
      /////////////////////////////////////
      //////   Display basic info   ///////
      /////////////////////////////////////
@@ -394,6 +402,7 @@ define([
          ['clearTurn', 1],
          ['writeNumber', 1000],
          ['addScribble', 1000],
+         ['newCards', 1000],
        ];
 
        notifs.forEach(notif => {
