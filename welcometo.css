@@ -724,6 +724,44 @@
     .score-sheet-container .score-sheet .estate-fence[data-x="2"][data-y="11"] {
       left: 1279px;
       top: 675px; }
+    .score-sheet-container .score-sheet .pool {
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      box-sizing: border-box; }
+      .score-sheet-container .score-sheet .pool[data-x="0"][data-y="2"] {
+        left: 592px;
+        top: 139px; }
+      .score-sheet-container .score-sheet .pool[data-x="0"][data-y="6"] {
+        left: 1011px;
+        top: 140px; }
+      .score-sheet-container .score-sheet .pool[data-x="0"][data-y="7"] {
+        left: 1112px;
+        top: 142px; }
+      .score-sheet-container .score-sheet .pool svg.ladder {
+        display: none; }
+        .score-sheet-container .score-sheet .pool svg.ladder path {
+          animation: blinkColor linear 0.9s infinite;
+          stroke: white;
+          stroke-width: 2px; }
+@keyframes blinkColor {
+  0% {
+    fill: red; }
+  49% {
+    fill: red; }
+  50% {
+    fill: black; }
+  100% {
+    fill: black; } }
+      .score-sheet-container .score-sheet .pool.selectable {
+        cursor: pointer; }
+        .score-sheet-container .score-sheet .pool.selectable svg.ladder {
+          display: block; }
+      .score-sheet-container .score-sheet .pool.built svg.ladder {
+        display: block; }
+        .score-sheet-container .score-sheet .pool.built svg.ladder path {
+          animation: none;
+          fill: black; }
     .score-sheet-container .score-sheet .park {
       position: absolute;
       height: 50px;
@@ -796,9 +834,14 @@
       position: absolute;
       height: 45px;
       width: 45px;
-      background-color: rgba(255, 0, 255, 0.5);
       box-sizing: border-box;
-      border: 1px solid black; }
+      border-radius: 10px; }
+      .score-sheet-container .score-sheet .score-pool.selectable {
+        cursor: pointer;
+        background-color: rgba(255, 0, 0, 0.3);
+        animation: borderBlink 0.9s infinite; }
+      .score-sheet-container .score-sheet .score-pool.unselectable {
+        cursor: not-allowed; }
       .score-sheet-container .score-sheet .score-pool[data-x="0"] {
         top: 1099px;
         left: 337px; }
@@ -831,9 +874,7 @@
       height: 42px;
       width: 42px;
       transform: rotate(45deg);
-      background-color: rgba(0, 255, 255, 0.5);
-      box-sizing: border-box;
-      border: 1px solid black; }
+      box-sizing: border-box; }
       .score-sheet-container .score-sheet .score-temp[data-x="0"] {
         top: 1076px;
         left: 496px; }
@@ -937,9 +978,7 @@
       position: absolute;
       height: 45px;
       width: 45px;
-      background-color: rgba(0, 255, 255, 0.5);
-      box-sizing: border-box;
-      border: 1px solid black; }
+      box-sizing: border-box; }
       .score-sheet-container .score-sheet .score-bis[data-x="0"] {
         top: 1051px;
         left: 1153px; }

@@ -17,7 +17,7 @@ class Scribbles extends Helpers\Pieces
       'pId' => $data[0],
       'type' => $data[1],
       'x' => $data[2] ?? null,
-      'y' => $data[3] ?? nul,
+      'y' => $data[3] ?? null,
       'turn' => $scribble['turn'],
     ];
   }

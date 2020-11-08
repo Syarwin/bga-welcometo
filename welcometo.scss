@@ -356,6 +356,58 @@ $cardMargin:5px;
     }
 
 
+    /////////// POOLS /////////////
+    .pool {
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      box-sizing: border-box;
+
+
+      @for $i from 1 through length($pools) {
+        $p:nth($pools, $i);
+        &[data-x="#{map-get($p,'x')}"][data-y="#{map-get($p,'y')}"] {
+          left: map-get($p,'left');
+          top: map-get($p,'top');
+        }
+      }
+
+      svg.ladder {
+        display:none;
+
+        path {
+          animation:blinkColor linear 0.9s infinite;
+          stroke:white;
+          stroke-width:2px;
+        }
+
+        @keyframes blinkColor {
+          0%   { fill: red; }
+          49%   { fill: red; }
+          50%   { fill: black; }
+          100%   { fill: black; }
+        }
+      }
+
+      &.selectable {
+        cursor:pointer;
+        svg.ladder {
+          display:block;
+        }
+      }
+
+      &.built {
+        svg.ladder {
+          display:block;
+          path {
+            animation:none;
+            fill:black;
+          }
+        }
+      }
+    }
+
+
 
     /////////// PARKS ////////////
     .park {
@@ -423,9 +475,9 @@ $cardMargin:5px;
       position: absolute;
       height: 45px;
       width: 45px;
-      background-color: rgba(255,0,255,0.5);
       box-sizing: border-box;
-      border:1px solid black;
+      border-radius: 10px;
+      @include highlight;
 
       @for $x from 1 through 9 {
         &[data-x="#{$x - 1}"] {
@@ -443,9 +495,7 @@ $cardMargin:5px;
       height: 42px;
       width: 42px;
       transform:rotate(45deg);
-      background-color: rgba(0,255,255,0.5);
       box-sizing: border-box;
-      border:1px solid black;
 
       @for $x from 1 through 11 {
         &[data-x="#{$x - 1}"] {
@@ -480,9 +530,7 @@ $cardMargin:5px;
       position: absolute;
       height: 45px;
       width: 45px;
-      background-color: rgba(0,255,255,0.5);
       box-sizing: border-box;
-      border:1px solid black;
 
       @for $x from 1 through 9 {
         &[data-x="#{$x - 1}"] {

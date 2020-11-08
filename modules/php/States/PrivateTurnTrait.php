@@ -1,7 +1,12 @@
 <?php
 namespace WTO\States;
-use \WTO\RealEstate;
-use \WTO\Park;
+
+use \WTO\Actions\RealEstate;
+use \WTO\Actions\Park;
+use \WTO\Actions\Temp;
+use \WTO\Actions\Bis;
+use \WTO\Actions\Pool;
+
 use \WTO\Game\Players;
 use \WTO\Game\Globals;
 use \WTO\Game\Log;
@@ -136,6 +141,38 @@ trait PrivateTurnTrait
   }
 
 
+  ///////////////////////////
+  ///////// POOL ///////////
+  ///////////////////////////
+  function stActionPool($player)
+  {
+    if(!Pool::canBuild($player)){
+      StateMachine::nextState("pass");
+      return true;
+    }
+  }
+
+  function argActionPool($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data['zones'] = Pool::getAvailableZones($player);
+    $data['lastHouse'] = $player->getLastHouse();
+    return $data;
+  }
+
+
+  //////////////////////////
+  ///////// TEMP ///////////
+  //////////////////////////
+  function stActionTemp($player)
+  {
+    // Write the next available spot in the score sheet
+    $zones = Temp::getAvailableZones($player);
+    $player->scribbleZone($zones[0]);
+    StateMachine::nextState("scribbleZone");
+    return true; // Skip this state
+  }
+
   ///////////////////////////////
   ///////// ACTION BIS //////////
   ///////////////////////////////
@@ -155,8 +192,11 @@ trait PrivateTurnTrait
     if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
       throw new \BgaUserException(clienttranslate("You cannot write this number bis in this house"));
 
-    // Do the action
+    // Write the number
     $player->writeNumber($number, $pos, true);
+    // Write the next available spot in the score sheet
+    $zones = Bis::getAvailableZones($player);
+    $player->scribbleZone($zones[0]);
 
     // Move on to next state
     StateMachine::nextState("bis");

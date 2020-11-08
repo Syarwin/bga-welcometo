@@ -82,7 +82,7 @@ $machinestates = [
       ESTATE   => ST_ACTION_ESTATE,
       PARK     => ST_ACTION_PARK,
       POOL     => ST_ACTION_POOL,
-      TEMP     => ST_CONFIRM_TURN,
+      TEMP     => ST_ACTION_TEMP,
       BIS      => ST_ACTION_BIS,
       'restart' => ST_CHOOSE_CARDS,
     ]
@@ -118,6 +118,17 @@ $machinestates = [
     ]
   ],
 
+  ST_ACTION_TEMP => [
+    "name" => "actionTemp",
+    "descriptionmyturn" => clienttranslate('${you} automatically cross one box from the temp agency column'),
+    "action" => "stActionTemp",
+    "type" => "private",
+    "transitions" => [
+      'scribbleZone' => ST_CONFIRM_TURN,
+    ]
+  ],
+
+
   ST_ACTION_PARK => [
     "name" => "actionPark",
     "descriptionmyturn" => clienttranslate('${you} may build a park'),
@@ -135,9 +146,11 @@ $machinestates = [
     "name" => "actionPool",
     "descriptionmyturn" => clienttranslate('${you} may build a pool'),
     "type" => "private",
+    "action" => "stActionPool",
     "args" => "argActionPool",
-    "possibleactions" => ["crossSpace", "pass", "restart"],
+    "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
+      'scribbleZone' => ST_CONFIRM_TURN,
       'pass' => ST_CONFIRM_TURN,
       'restart' => ST_CHOOSE_CARDS,
     ]
@@ -151,7 +164,7 @@ $machinestates = [
     "args" => "argActionBis",
     "possibleactions" => ["writeNumberBis", "pass", "restart"],
     "transitions" => [
-      'bis' => ST_ACTION_BIS,
+      'bis' => ST_CONFIRM_TURN,
       'pass' => ST_CONFIRM_TURN,
       'restart' => ST_CHOOSE_CARDS,
     ]

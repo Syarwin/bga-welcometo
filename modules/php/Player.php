@@ -191,11 +191,21 @@ class Player extends Helpers\DB_Manager
     $stateId = $this->getState();
     $locations = [
       ST_ACTION_ESTATE => "score-estate",
+      ST_ACTION_TEMP   => "score-temp",
+      ST_ACTION_BIS    => "score-bis",
+      ST_ACTION_POOL   => "score-pool",
       ST_ACTION_PARK   => "park",
     ];
 
     // TODO : add sanity checks
     $scribble = Scribbles::add($this->id, $locations[$stateId], $zone);
     Notifications::addScribble($this, $scribble);
+
+    // If building a pool, add another scribble on the pool itself
+    if($stateId == ST_ACTION_POOL){
+      $house = $this->getLastHouse();
+      $scribble = Scribbles::add($this->id, "pool", [ $house['x'], $house['y'] ]);
+      Notifications::addScribble($this, $scribble);
+    }
   }
 }

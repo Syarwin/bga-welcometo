@@ -161,11 +161,17 @@ class StateMachine extends \APP_DbObject
         return;
     }
 
+    // Compute args if any provided
+    $args = [];
+    if(isset($newState['args'])){
+      $method = $newState['args'];
+      $args = self::getGame()->$method($player);
+    }
+
     // Update state and args on UI using notification
-    $method = $newState['args'];
     self::getGame()->notifyPlayer($player->getId(), "newPrivateState", '', [
       'state' => $newState,
-      'args' => self::getGame()->$method($player),
+      'args' => $args,
     ]);
   }
 }

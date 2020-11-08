@@ -1,5 +1,5 @@
 <?php
-namespace WTO\Helpers;
+namespace WTO\Actions;
 use \WTO\Scribbles;
 
 /*

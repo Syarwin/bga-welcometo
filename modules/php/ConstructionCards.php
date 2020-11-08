@@ -144,7 +144,7 @@ class ConstructionCards extends Helpers\Pieces
       $drawnCards[$stackId] = $drawnCard;
     }
 
-    Notifications::newCards($playerId, $drawnCard);
+    Notifications::newCards($playerId, $drawnCards);
 
     return [
       'drawnCards' => $drawnCards,

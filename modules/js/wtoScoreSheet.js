@@ -73,6 +73,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     clearPossible(){
       dojo.query(".house").removeClass("unselectable selectable");
 
+      this._lastHouse = null;
+      dojo.query(".pool").removeClass("selectable");
+
       if(this._zoneType != null)
         dojo.query("." + this._zoneType).removeClass("unselectable selectable");
       this._selectableHouses = null;
@@ -109,6 +112,16 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         for(var y = 0; y < parks[x]; y++)
           this.clickableTpl('park', {x: x, y : y}, this.onClickZoneFactory('park') );
       };
+
+      // Pools
+      var pools = [
+        [0,2], [0,6], [0,7],
+        [1,0], [1,3], [1,7],
+        [2,1], [2,6], [2,10],
+      ];
+      pools.forEach(pool => {
+        this.clickableTpl('pool', {x: pool[0], y:pool[1]}, this.onClickPool.bind(this));
+      })
     },
 
 
@@ -116,7 +129,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       // Pool & Bis
       for(var i = 0; i < 9; i++){
-        this.tpl('scorePool', { x:i });
+        this.clickableTpl('scorePool', { x:i }, this.onClickZoneFactory('score-pool'));
         this.tpl('scoreBis', { x:i });
       }
 
@@ -189,7 +202,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         var dial = new ebg.popindialog();
         dial.create('chooseNumber');
         dial.setTitle(_("Choose the number you want to write"));
-        dojo.query("#popin_chooseNumber_close i").removeClass("fa-times-circle").addClass("fa-times");
+        dojo.query("#popin_chooseNumber_close i").removeClass("fa-times-circle ").addClass("fa-times");
 
         numbers.forEach(number => {
           var div = dojo.place(`<div class='number-choice' data-number='${number}'></div>`, 'popin_chooseNumber_contents');
@@ -214,6 +227,24 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     },
 
 
+
+    /////////////////////////
+    //////// Pools /////////
+    /////////////////////////
+    /*
+     * Let the use click a pool
+     */
+    promptPool(house){
+      this._lastHouse = house;
+      dojo.addClass(`${house.pId}_pool_${house.x}_${house.y}`, "selectable");
+    },
+
+    onClickPool(house){
+      if(this._lastHouse == null || this._lastHouse.x != house.x || this._lastHouse.y != house.y || this._selectableZones == null)
+        return;
+
+      this.onClickZoneFactory("score-pool")({x : this._selectableZones[0][0]});
+    },
 
 /******************************
 *******************************
@@ -260,6 +291,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
          if(!this.selectableZone(type, zone))
           return;
 
+          this.clearPossible();
           this._callback(zone);
         };
      },
@@ -274,6 +306,12 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
        if(!$(location)){
          console.error("Trying to add a scribble to an invalid location : ", location);
+         return;
+       }
+
+       // TODO : add a circle scribble instead
+       if(scribble.type == "pool"){
+         dojo.addClass(location, 'built');
          return;
        }
 

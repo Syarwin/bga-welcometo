@@ -87,6 +87,45 @@ define([
       */
      onEnteringState(stateName, args) {
        debug('Entering state: ' + stateName, args);
+this.addPrimaryActionButton("test", "Test", () => {
+  this.notif_newCards({
+  "uid": "5fa7a1071e127",
+  "type": "newCards",
+  "log": "",
+  "args": {
+    "cards": [
+      {
+        "id": "52",
+        "location": "deck",
+        "state": "74",
+        "number": "9",
+        "action": "2"
+      },
+      {
+        "id": "74",
+        "location": "deck",
+        "state": "73",
+        "number": "13",
+        "action": "5"
+      },
+      {
+        "id": "39",
+        "location": "deck",
+        "state": "72",
+        "number": "8",
+        "action": "4"
+      }
+    ]
+  },
+  "channelorig": "/table/t206915",
+  "gamenameorig": "welcometo",
+  "time": 1604821255,
+  "move_id": 6,
+  "bIsTableMsg": true,
+  "table_id": "206915"
+})
+});
+
 
        // Private state machine
        if(args.parallel){
@@ -158,6 +197,7 @@ define([
      ///////////////////////////////
      notif_newCards(args){
        debug("Notif: dealing new cards", args);
+       this._constructionCards(args.args.cards);
      },
 
 
@@ -252,6 +292,12 @@ define([
      // Parks
      onEnteringStateActionPark(args){
        this.promptZones("park", args);
+     },
+
+     // Pools
+     onEnteringStateActionPool(args){
+       this.promptZones("score-pool", args);
+       this._scoreSheet.promptPool(args.lastHouse);
      },
 
 
