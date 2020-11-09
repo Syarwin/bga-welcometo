@@ -54,6 +54,21 @@ define('BIS', 6);
 define('SOLO', 7);
 
 define('ROUNDABOUT', 100);
+
+// Advanced city plans
+define('FULL_STREET_3', 1);
+define('FULL_STREET_1', 2);
+define('FIVE_BIS', 3);
+define('SEVEN_TEMP', 4);
+define('ALL_ENDS_BUILT', 5);
+
+define('FULL_2PARK', 6);
+define('COMPLETE_STREET', 7);
+define('FULL_2POOL', 8);
+define('FULL_PARK_POOL_3', 9);
+define('FULL_PARK_POOL_2', 10);
+
+
 /*
  * Stats
  */

@@ -19,6 +19,7 @@ class Houses extends Helpers\DB_Manager
       'y' => (int) $row['y'],
       'isBis' => $row['is_bis'] == 1,
       'turn' => (int) $row['turn'],
+      'usedInPlan' => $row['used_in_plan'] == 1,
     ];
   }
 
@@ -93,6 +94,7 @@ class Houses extends Helpers\DB_Manager
         'number' => $house['number'],
         'bis' => $house['isBis'],
         'turn' => $house['turn'],
+        'usedInPlan' => $house['usedInPlan'],
       ];
     }
 

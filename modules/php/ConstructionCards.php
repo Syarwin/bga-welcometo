@@ -184,8 +184,8 @@ class ConstructionCards extends Helpers\Pieces
       for($i = 0; $i < 3; $i++){
         array_push($result, [
           'stacks' => $i,
-          'number' => $stacks[$i][0]['action'],
-          'action' => $stacks[$i][1]['number'],
+          'action' => $stacks[$i][0]['action'],
+          'number' => $stacks[$i][1]['number'],
         ]);
       }
     } else {

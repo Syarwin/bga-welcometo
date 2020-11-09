@@ -24,6 +24,7 @@ define([
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/stock",
+    g_gamethemeurl + "modules/js/wtoLayout.js",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
     g_gamethemeurl + "modules/js/wtoPlanCards.js",
@@ -36,6 +37,7 @@ define([
       this._connections = [];
       this._isStandard = true;
       this.default_viewport = 'width=900, user-scalable=yes';
+      this._layoutManager = new bgagame.wtoLayout();
     },
 
 
@@ -147,7 +149,7 @@ define([
       */
      onUpdateActionButtons(stateName, args) {
        debug('Update action buttons: ' + stateName, args); // Make sure it the player's turn
-
+//TODO handle when someone do something => that remove button
        if (!this.isCurrentPlayerActive())
          return;
      },
@@ -160,7 +162,8 @@ define([
      ///////////////////////////////
      notif_newCards(args){
        debug("Notif: dealing new cards", args);
-       this._constructionCards.newTurn(args.args.cards);
+       this._constructionCards.newTurn(args.args.cards, args.args.turn);
+       this._scoreSheet.newTurn(args.args.turn);
      },
 
 
@@ -245,6 +248,11 @@ define([
        this._scoreSheet.promptZones(type, args.zones, (zone) => {
          this.takeAction('scribbleZone', zone);
        });
+     },
+
+     // Estate
+     onEnteringStateActionSurveyor(args){
+       this.promptZones("estate-fence", args);
      },
 
      // Estate
@@ -379,31 +387,7 @@ define([
 
 
      onScreenWidthChange () {
-       dojo.style('page-content', 'zoom', '');
-       dojo.style('page-title', 'zoom', '');
-       dojo.style('right-side-first-part', 'zoom', '');
-
-       let box = $('welcometo-container').getBoundingClientRect();
-
-       let sheetWidth = 1544;
-       let newSheetWidth = 0.7*box['width'];
-       let sheetScale = 0.7*box['width'] / sheetWidth;
-       dojo.style("player-score-sheet-resizable", "transform", `scale(${sheetScale})`);
-       dojo.style("player-score-sheet", "width", `${newSheetWidth}px`);
-       dojo.style("player-score-sheet", "height", `${newSheetWidth}px`);
-
-       let cardsWidth = 433;
-       let newCardsWidth = 0.2*box['width'] - 20;
-       let cardsScale = newCardsWidth / cardsWidth;
-       dojo.style('construction-cards-container-resizable', 'transform', `scale(${cardsScale})`);
-       dojo.style('construction-cards-container', 'width', `${newCardsWidth - 10}px`);
-
-       let plansWidth = 228;
-       let newPlansWidth = 0.1*box['width'] - 10;
-       let plansScale = newPlansWidth / plansWidth;
-       dojo.style('plan-cards-container-resizable', 'transform', `scale(${plansScale})`);
-       dojo.style('plan-cards-container', 'width', `${newPlansWidth - 20}px`);
-
+       this._layoutManager.onScreenWidthChange();
      },
 
      ///////////////////////////////////////////////////

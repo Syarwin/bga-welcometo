@@ -39,6 +39,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       gameData.scribbles.forEach(scribble => this.addScribble(scribble, false) );
     },
 
+    newTurn(turn){
+      dojo.attr('score-sheet-' + this.player.id, 'data-turn', turn);
+    },
+
     /*
      * Return a 2D array of the street
      */
@@ -107,8 +111,12 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       var parks = [3, 4, 5];
 
       for(var x = 0; x < 3; x++){
-        for(var y = 0; y < houses[x]; y++)
+        for(var y = 0; y < houses[x]; y++){
           this.clickableTpl('house', {x: x, y : y}, this.onClickHouse.bind(this));
+
+          if(y < houses[x] - 1)
+            this.clickableTpl('estateFence', {x: x, y : y}, this.onClickZoneFactory('estate-fence'));
+        }
 
         for(var y = 0; y < parks[x]; y++)
           this.clickableTpl('park', {x: x, y : y}, this.onClickZoneFactory('park') );
@@ -310,7 +318,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
          return;
        }
 
-       var scribbleTpl = scribble.type == "pool"? "scribbleCircle" : "scribble";
+       var scribbleTpl = "scribble";
+       if(scribble.type == "pool") scribbleTpl = "scribbleCircle";
+       if(scribble.type == "estate-fence") scribbleTpl = "scribbleLine";
        this.tpl(scribbleTpl, scribble, location);
        if(animation){
          playSound("welcometo_scribble");

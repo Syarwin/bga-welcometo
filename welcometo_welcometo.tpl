@@ -63,7 +63,7 @@ var jstpl_scoreSheet = `
 var jstpl_cityName = '<div id="${pId}_cityname" class="cityname" style="color:#${color}">${name}</div>';
 var jstpl_house = '<div id="${pId}_house_${x}_${y}" data-x="${x}" data-y="${y}" class="house"></div>';
 var jstpl_topFence = '<div id="${pId}_top_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="top-fence"></div>';
-var jstpl_estateFence = '<div id="${pId}_estate_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="estate-fence"></div>';
+var jstpl_estateFence = '<div id="${pId}_estate-fence_${x}_${y}" data-x="${x}" data-y="${y}" class="estate-fence"></div>';
 var jstpl_park = `<div id="\${pId}_park_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="park">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49 47" class="highlight">
     <path class="park-black" d="M 8.82,14.18 C 6.82,10.45 10.27,3.00 19.55,5.91 19.45,1.09 29.64,-1.09 31.55,6.55 35.36,3.64 44.45,7.36 40.91,14.91
@@ -125,6 +125,18 @@ var jstpl_scribbleCircle = `
 		 class="scribble-path"
      d="M 26.429579,293.67823 A 234.53815,232.61044 0 0 1 228.07832,32.689965 234.53815,232.61044 0 0 1 491.4228,232.43086 234.53815,232.61044 0 0 1 290.27933,493.80237 234.53815,232.61044 0 0 1 26.548924,294.56297 L 258.95581,263.27576 Z"
   />
+</svg>
+`;
+
+
+var jstpl_scribbleLine = `
+<svg xmlns="http://www.w3.org/2000/svg" class="scribble-line" id="scribble-\${id}" data-turn="\${turn}" viewBox="0 0 17.874146 190.63744">
+  <path
+     style="fill:#000000"
+     d="M 4.6524392,1.8005081 C 5.9885742,0.28849807 12.89342,-0.58857193 14.693417,0.45611507 c 2.51067,1.45714403 4.12406,8.43201103 2.56988,11.10986693 -4.910112,8.460136 -7.4489658,50.604884 -4.960648,82.346251 1.17946,15.045367 1.424158,28.262277 0.977971,52.822997 -0.663698,36.53366 -1.416339,42.12233 -5.8777408,43.64474 -3.026311,1.03269 -7.928712,-1.23273 -7.347445,-3.39529 1.753674,-6.52443 1.817118,-51.88021 0.102779,-73.47937 -0.766625,-9.65882 1.336684,-108.1316319 4.494226,-111.7048019 z"
+     id="path821"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ssssscsss" />
 </svg>
 `;
 

@@ -201,6 +201,7 @@ class Player extends Helpers\DB_Manager
   {
     $stateId = $this->getState();
     $locations = [
+      ST_ACTION_SURVEYOR => "estate-fence",
       ST_ACTION_ESTATE => "score-estate",
       ST_ACTION_TEMP   => "score-temp",
       ST_ACTION_BIS    => "score-bis",

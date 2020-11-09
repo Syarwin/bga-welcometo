@@ -98,8 +98,9 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} may build a fence between two houses'),
     "type" => "private",
     "args" => "argActionSurveyor",
-    "possibleactions" => ["buildFence", "pass", "restart"],
+    "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
+      'scribbleZone' => ST_CONFIRM_TURN,
       'pass' => ST_CONFIRM_TURN,
       'restart' => ST_CHOOSE_CARDS,
     ]

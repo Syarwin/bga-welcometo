@@ -25,6 +25,15 @@ class PlanCards extends Helpers\Pieces
     [7, 4], [10, 5], [7, 4], [10, 5],[8, 3],
   ];
 
+  protected static $conditions = [
+    [1,1,1,1,1,1],    [2,2,2,2],    [3,3,3],    [4,4],    [5,5],    [6,6],
+    [1,1,1,6],    [5,2,2],    [3,3,4],    [3,6],    [4,5],    [4,1,1,1],
+    [1,2,6],    [1,4,5],    [3,4],    [2,5],    [1,2,2,3],    [2,3,5],
+
+    FULL_STREET_3, FULL_STREET_1, FIVE_BIS, SEVEN_TEMP, ALL_ENDS_BUILT,
+    FULL_2PARK, COMPLETE_STREET, FULL_2POOL, FULL_PARK_POOL_3, FULL_PARK_POOL_2
+  ];
+
 
   public function setupNewGame($players)
   {

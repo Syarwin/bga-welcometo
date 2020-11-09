@@ -6,6 +6,7 @@ use \WTO\Actions\Park;
 use \WTO\Actions\Temp;
 use \WTO\Actions\Bis;
 use \WTO\Actions\Pool;
+use \WTO\Actions\Surveyor;
 
 use \WTO\Game\Players;
 use \WTO\Game\Globals;
@@ -117,6 +118,16 @@ trait PrivateTurnTrait
 
     $player->scribbleZone($zone);
     StateMachine::nextState("scribbleZone");
+  }
+
+  ///////////////////////////
+  ///////// FENCES //////////
+  ///////////////////////////
+  function argActionSurveyor($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data['zones'] = Surveyor::getAvailableZones($player);
+    return $data;
   }
 
 

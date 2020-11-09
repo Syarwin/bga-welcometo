@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `number` int(10) NOT NULL,
   `is_bis` BOOLEAN,
   `turn` int(10) NOT NULL,
+  `used_in_plan` BOOLEAN,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

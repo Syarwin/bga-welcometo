@@ -36,6 +36,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
     // Clear everything
     clearPossible(){
+      this._callback = null;
+      this._possibleChoices = null;
       dojo.query(".construction-cards-stack").removeClass("unselectable selectable");
     },
 
@@ -96,7 +98,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     onClickStack(stackId){
       debug("Clicked on a stack", stackId);
       // Check if selectable
-      if(!this._selectableStacks.includes(stackId))
+      if(!this._selectableStacks || !this._selectableStacks.includes(stackId))
         return;
 
       // Standard mode => return stack id
@@ -116,7 +118,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           return; // TODO
 
         // Animation
-        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last")[0];
+        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type")[0];
         this.flipCard(toFlip, turn);
 
         // New card

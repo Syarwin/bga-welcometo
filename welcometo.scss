@@ -358,9 +358,13 @@ $cardMargin:5px;
       position: absolute;
       height: 180px;
       width: 12px;
-      background-color: rgba(0,0,255,0.5);
       box-sizing: border-box;
-      border:1px solid black;
+
+      &.selectable {
+        cursor:pointer;
+        background-color: rgba(0,0,255,0.5);
+        border:2px solid black;
+      }
     }
 
     @each $x, $street in $fences {
@@ -372,12 +376,12 @@ $cardMargin:5px;
           width: nth(map-get($street, 'widths'), $y);
         }
 
+        $left:$left + nth(map-get($street, 'widths'), $y);
+
         .estate-fence[data-x="#{$x}"][data-y="#{$y - 1}"] {
           left: $left - 6px;
           top: map-get($street, 'top') - 11px;
         }
-
-        $left:$left + nth(map-get($street, 'widths'), $y);
       }
     }
 
