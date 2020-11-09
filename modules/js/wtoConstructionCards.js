@@ -17,17 +17,16 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       // Adjust stack size for flip animation
       if(this._isStandard)
-        dojo.addClass("construction-cards-container", "standard");
+        dojo.addClass("construction-cards-container-resizable", "standard");
 
       // Display the cards
-      // TODO : handle the z-indexes
       gamedatas.constructionCards.forEach((stack, i) => {
         stack.forEach((card,j) => {
           dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + i);
+          dojo.style("construction-card-" + card.id, "z-index", 100);
           if(j == 0 && this._isStandard){ // Flip first card
-            dojo.addClass("construction-card-" + card.id, "flipped");
+            this.flipCard("construction-card-" + card.id, 1);
           }
-          dojo.style("construction-card-" + card.id, "z-index", j == 0? 1 : 100);
         });
 
         dojo.connect($('construction-cards-stack-' + i), 'click', () => this.onClickStack(i));
@@ -49,6 +48,26 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         dojo.addClass('construction-cards-stack-' + stack[0], 'selected');
         dojo.addClass('construction-cards-stack-' + stack[1], 'selected flipped');
       }
+    },
+
+    // Flip card and add tooltip
+    flipCard(card, turn){
+      dojo.addClass(card, 'flipped');
+      setTimeout(() => {
+        dojo.style(card, "z-index", turn);
+
+        let action = dojo.attr(card, 'data-action');
+        let tooltipContent = [
+          '',
+          _("Build a fence between two houses on the same streets to create housing estates"),
+          _("Promotes and increase the value of completed housing estates"),
+          _("Build a park in the same street that the house number is written"),
+          _("If the number is written in a house with a planned pool, you may build that pool"),
+          _("Allow you to add or substract 1 or 2 to the house number, and cross one box from the Temp Agency column (majority scoring)"),
+          _("Allow you to write a second house number by duplicating an already existing number next to it. Cross one space in the 'bis' column (negative scoring)")
+        ];
+        this.addTooltip(card, tooltipContent[action], "");
+      }, 1000);
     },
 
     ////////////////////////////////////
@@ -97,9 +116,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           return; // TODO
 
         // Animation
-        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last");
-        toFlip.addClass('flipped');
-        setTimeout(() => toFlip.style("z-index", turn), 1000);
+        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last")[0];
+        this.flipCard(toFlip, turn);
 
         // New card
         dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);

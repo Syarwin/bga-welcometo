@@ -26,6 +26,7 @@ define([
     "ebg/stock",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
+    g_gamethemeurl + "modules/js/wtoPlanCards.js",
 ], function (dojo, declare) {
   return declare("bgagame.welcometo", ebg.core.gamegui, {
     /*
@@ -54,6 +55,7 @@ define([
       this.setupNotifications();
 
       this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
+      this._planCards = new bgagame.wtoPlanCards(gamedatas);
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -384,14 +386,24 @@ define([
        let box = $('welcometo-container').getBoundingClientRect();
 
        let sheetWidth = 1544;
-       let sheetScale = 0.8*box['width'] / sheetWidth;
+       let newSheetWidth = 0.7*box['width'];
+       let sheetScale = 0.7*box['width'] / sheetWidth;
        dojo.style("player-score-sheet-resizable", "transform", `scale(${sheetScale})`);
+       dojo.style("player-score-sheet", "width", `${newSheetWidth}px`);
+       dojo.style("player-score-sheet", "height", `${newSheetWidth}px`);
 
        let cardsWidth = 433;
-       let newCardsWidth = 0.2*box['width'] - 10;
+       let newCardsWidth = 0.2*box['width'] - 20;
        let cardsScale = newCardsWidth / cardsWidth;
-       dojo.style('cards-container-resizable', 'transform', `scale(${cardsScale})`);
-       dojo.style('cards-container', 'width', `${newCardsWidth - 20}px`);
+       dojo.style('construction-cards-container-resizable', 'transform', `scale(${cardsScale})`);
+       dojo.style('construction-cards-container', 'width', `${newCardsWidth - 10}px`);
+
+       let plansWidth = 228;
+       let newPlansWidth = 0.1*box['width'] - 10;
+       let plansScale = newPlansWidth / plansWidth;
+       dojo.style('plan-cards-container-resizable', 'transform', `scale(${plansScale})`);
+       dojo.style('plan-cards-container', 'width', `${newPlansWidth - 20}px`);
+
      },
 
      ///////////////////////////////////////////////////

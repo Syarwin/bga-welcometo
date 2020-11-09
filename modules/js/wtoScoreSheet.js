@@ -92,6 +92,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       });
 
       dojo.query(`.scribble[data-turn="${turn}"]`).forEach(dojo.destroy);
+      dojo.query(`.scribble-circle[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////
@@ -309,13 +310,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
          return;
        }
 
-       // TODO : add a circle scribble instead
-       if(scribble.type == "pool"){
-         dojo.addClass(location, 'built');
-         return;
-       }
-
-       this.tpl("scribble", scribble, location);
+       var scribbleTpl = scribble.type == "pool"? "scribbleCircle" : "scribble";
+       this.tpl(scribbleTpl, scribble, location);
        if(animation){
          playSound("welcometo_scribble");
          $("scribble-" + scribble.id).classList.add("animate");

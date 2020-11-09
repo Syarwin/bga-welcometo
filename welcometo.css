@@ -38,14 +38,16 @@
 #welcometo-container {
   display: flex;
   flex-flow: row; }
-  #welcometo-container #cards-container #cards-container-resizable {
+  #welcometo-container #construction-cards-container #construction-cards-container-resizable {
     transform-origin: top left;
     display: flex;
     flex-flow: column; }
-    #welcometo-container #cards-container #cards-container-resizable #construction-cards-container {
-      flex-flow: column; }
   #welcometo-container #player-score-sheet-resizable {
     transform-origin: top left; }
+  #welcometo-container #plan-cards-container #plan-cards-container-resizable {
+    transform-origin: top left;
+    display: flex;
+    flex-flow: column; }
 
 /*
 #welcometo-container {
@@ -61,121 +63,184 @@
 *********** CARDS ************
 ******************************
 *****************************/
-#cards-container {
+#construction-cards-container {
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px;
   margin-right: 10px; }
-  #cards-container #construction-cards-container {
+  #construction-cards-container #construction-cards-container-resizable {
     display: flex;
     flex-grow: 1;
     justify-content: space-around;
     /* Standard mode : changing display for nice flip animation */ }
-    #cards-container #construction-cards-container .construction-cards-stack {
+    #construction-cards-container #construction-cards-container-resizable .construction-cards-stack {
       display: flex;
       flex-flow: row;
       border: 4px solid transparent;
       border-radius: 4px;
+      margin-bottom: 10px;
       width: 200px;
       height: 303.2069970845px; }
-      #cards-container #construction-cards-container .construction-cards-stack.unselectable {
+      #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.unselectable {
         opacity: 0.6;
         cursor: not-allowed; }
-      #cards-container #construction-cards-container .construction-cards-stack.selectable {
+      #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.selectable {
         cursor: pointer; }
-        #cards-container #construction-cards-container .construction-cards-stack.selectable:hover {
+        #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.selectable:hover {
           transform: scale(1.02);
           border-color: red; }
-      #cards-container #construction-cards-container .construction-cards-stack.selected {
+      #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.selected {
         border-color: red; }
-        #cards-container #construction-cards-container .construction-cards-stack.selected.unselectable {
+        #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.selected.unselectable {
           opacity: 1;
           cursor: default; }
-    #cards-container #construction-cards-container.standard .construction-cards-stack {
+    #construction-cards-container #construction-cards-container-resizable.standard .construction-cards-stack {
       position: relative;
       width: 405px; }
-    #cards-container #construction-cards-container.standard .construction-card-holder {
+    #construction-cards-container #construction-cards-container-resizable.standard .construction-card-holder {
       position: absolute;
       top: 0;
       left: 0;
       transform-origin: 101.25% 0%; }
-    #cards-container #construction-cards-container .construction-card-holder {
+    #construction-cards-container #construction-cards-container-resizable .construction-card-holder {
       width: 200px;
       height: 303.2069970845px;
       transition: transform .5s ease-in-out;
       transform-origin: 50% 50%;
       transform-style: preserve-3d; }
-      #cards-container #construction-cards-container .construction-card-holder.flipped {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder.flipped {
         transform: rotateY(180deg); }
-      #cards-container #construction-cards-container .construction-card-holder .construction-card-back, #cards-container #construction-cards-container .construction-card-holder .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-back, #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         backface-visibility: hidden; }
-      #cards-container #construction-cards-container .construction-card-holder .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-back {
         background-image: url("img/construction_back.jpg");
         background-size: cover;
         transform: rotateY(180deg);
         z-index: 2; }
-      #cards-container #construction-cards-container .construction-card-holder .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front {
         background-image: url("img/construction_front.jpg");
         background-size: cover; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="1"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="1"] .construction-card-back {
         background-position: 0% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="2"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="2"] .construction-card-back {
         background-position: 20% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="3"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="3"] .construction-card-back {
         background-position: 40% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="4"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="4"] .construction-card-back {
         background-position: 60% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="5"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="5"] .construction-card-back {
         background-position: 80% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-action="6"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="6"] .construction-card-back {
         background-position: 100% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="1"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="1"] .construction-card-front {
         background-position: 0% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="2"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="2"] .construction-card-front {
         background-position: 7.1428571429% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="3"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="3"] .construction-card-front {
         background-position: 14.2857142857% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="4"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="4"] .construction-card-front {
         background-position: 21.4285714286% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="5"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="5"] .construction-card-front {
         background-position: 28.5714285714% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="6"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="6"] .construction-card-front {
         background-position: 35.7142857143% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="7"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="7"] .construction-card-front {
         background-position: 42.8571428571% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="8"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="8"] .construction-card-front {
         background-position: 50% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="9"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="9"] .construction-card-front {
         background-position: 57.1428571429% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="10"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="10"] .construction-card-front {
         background-position: 64.2857142857% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="11"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="11"] .construction-card-front {
         background-position: 71.4285714286% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="12"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="12"] .construction-card-front {
         background-position: 78.5714285714% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="13"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="13"] .construction-card-front {
         background-position: 85.7142857143% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="14"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="14"] .construction-card-front {
         background-position: 92.8571428571% center; }
-      #cards-container #construction-cards-container .construction-card-holder[data-number="15"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="15"] .construction-card-front {
         background-position: 100% center; }
 
-/*
-@media only screen and (min-width: 1500px) {
-    #responsive_construction_cards {
-        width: 66%;
-        display: inline-block;
-    }
-    #responsive_plan_cards {
-        width: 33%;
-        display: inline-block;
-    }
-}
-*/
+#plan-cards-container {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  margin-left: 10px; }
+  #plan-cards-container #plan-cards-container-resizable {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around; }
+    #plan-cards-container #plan-cards-container-resizable .plan-card-holder {
+      width: 200px;
+      height: 303.2069970845px;
+      margin-bottom: 10px; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front {
+        width: 100%;
+        height: 100%;
+        background-image: url("img/plans.jpg");
+        background-size: cover; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="1"] .plan-card-front {
+        background-position: 0% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="2"] .plan-card-front {
+        background-position: 3.7037037037% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="3"] .plan-card-front {
+        background-position: 7.4074074074% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="4"] .plan-card-front {
+        background-position: 11.1111111111% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="5"] .plan-card-front {
+        background-position: 14.8148148148% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="6"] .plan-card-front {
+        background-position: 18.5185185185% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="7"] .plan-card-front {
+        background-position: 22.2222222222% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="8"] .plan-card-front {
+        background-position: 25.9259259259% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="9"] .plan-card-front {
+        background-position: 29.6296296296% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="10"] .plan-card-front {
+        background-position: 33.3333333333% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="11"] .plan-card-front {
+        background-position: 37.037037037% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="12"] .plan-card-front {
+        background-position: 40.7407407407% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="13"] .plan-card-front {
+        background-position: 44.4444444444% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="14"] .plan-card-front {
+        background-position: 48.1481481481% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="15"] .plan-card-front {
+        background-position: 51.8518518519% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="16"] .plan-card-front {
+        background-position: 55.5555555556% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="17"] .plan-card-front {
+        background-position: 59.2592592593% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="18"] .plan-card-front {
+        background-position: 62.962962963% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="19"] .plan-card-front {
+        background-position: 66.6666666667% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="20"] .plan-card-front {
+        background-position: 70.3703703704% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="21"] .plan-card-front {
+        background-position: 74.0740740741% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="22"] .plan-card-front {
+        background-position: 77.7777777778% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="23"] .plan-card-front {
+        background-position: 81.4814814815% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="24"] .plan-card-front {
+        background-position: 85.1851851852% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="25"] .plan-card-front {
+        background-position: 88.8888888889% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="26"] .plan-card-front {
+        background-position: 92.5925925926% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="27"] .plan-card-front {
+        background-position: 96.2962962963% center; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="28"] .plan-card-front {
+        background-position: 100% center; }
+
 /***********************************
 ************************************
 *********** SCORE SHEET ************
@@ -212,121 +277,181 @@
       color: red; }
     .score-sheet-container .score-sheet[data-turn="1"] .scribble[data-turn="1"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="1"] .scribble-circle[data-turn="1"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="2"] .house-number[data-turn="2"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="2"] .scribble[data-turn="2"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="2"] .scribble-circle[data-turn="2"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="3"] .house-number[data-turn="3"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="3"] .scribble[data-turn="3"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="3"] .scribble-circle[data-turn="3"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="4"] .house-number[data-turn="4"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="4"] .scribble[data-turn="4"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="4"] .scribble-circle[data-turn="4"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="5"] .house-number[data-turn="5"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="5"] .scribble[data-turn="5"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="5"] .scribble-circle[data-turn="5"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="6"] .house-number[data-turn="6"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="6"] .scribble[data-turn="6"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="6"] .scribble-circle[data-turn="6"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="7"] .house-number[data-turn="7"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="7"] .scribble[data-turn="7"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="7"] .scribble-circle[data-turn="7"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="8"] .house-number[data-turn="8"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="8"] .scribble[data-turn="8"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="8"] .scribble-circle[data-turn="8"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="9"] .house-number[data-turn="9"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="9"] .scribble[data-turn="9"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="9"] .scribble-circle[data-turn="9"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="10"] .house-number[data-turn="10"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="10"] .scribble[data-turn="10"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="10"] .scribble-circle[data-turn="10"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="11"] .house-number[data-turn="11"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="11"] .scribble[data-turn="11"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="11"] .scribble-circle[data-turn="11"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="12"] .house-number[data-turn="12"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="12"] .scribble[data-turn="12"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="12"] .scribble-circle[data-turn="12"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="13"] .house-number[data-turn="13"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="13"] .scribble[data-turn="13"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="13"] .scribble-circle[data-turn="13"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="14"] .house-number[data-turn="14"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="14"] .scribble[data-turn="14"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="14"] .scribble-circle[data-turn="14"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="15"] .house-number[data-turn="15"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="15"] .scribble[data-turn="15"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="15"] .scribble-circle[data-turn="15"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="16"] .house-number[data-turn="16"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="16"] .scribble[data-turn="16"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="16"] .scribble-circle[data-turn="16"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="17"] .house-number[data-turn="17"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="17"] .scribble[data-turn="17"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="17"] .scribble-circle[data-turn="17"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="18"] .house-number[data-turn="18"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="18"] .scribble[data-turn="18"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="18"] .scribble-circle[data-turn="18"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="19"] .house-number[data-turn="19"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="19"] .scribble[data-turn="19"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="19"] .scribble-circle[data-turn="19"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="20"] .house-number[data-turn="20"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="20"] .scribble[data-turn="20"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="20"] .scribble-circle[data-turn="20"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="21"] .house-number[data-turn="21"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="21"] .scribble[data-turn="21"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="21"] .scribble-circle[data-turn="21"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="22"] .house-number[data-turn="22"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="22"] .scribble[data-turn="22"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="22"] .scribble-circle[data-turn="22"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="23"] .house-number[data-turn="23"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="23"] .scribble[data-turn="23"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="23"] .scribble-circle[data-turn="23"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="24"] .house-number[data-turn="24"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="24"] .scribble[data-turn="24"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="24"] .scribble-circle[data-turn="24"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="25"] .house-number[data-turn="25"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="25"] .scribble[data-turn="25"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="25"] .scribble-circle[data-turn="25"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="26"] .house-number[data-turn="26"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="26"] .scribble[data-turn="26"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="26"] .scribble-circle[data-turn="26"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="27"] .house-number[data-turn="27"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="27"] .scribble[data-turn="27"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="27"] .scribble-circle[data-turn="27"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="28"] .house-number[data-turn="28"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="28"] .scribble[data-turn="28"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="28"] .scribble-circle[data-turn="28"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="29"] .house-number[data-turn="29"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="29"] .scribble[data-turn="29"] .scribble-path {
       stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="29"] .scribble-circle[data-turn="29"] .scribble-path {
+      stroke: red; }
     .score-sheet-container .score-sheet[data-turn="30"] .house-number[data-turn="30"] {
       color: red; }
     .score-sheet-container .score-sheet[data-turn="30"] .scribble[data-turn="30"] .scribble-path {
+      stroke: red; }
+    .score-sheet-container .score-sheet[data-turn="30"] .scribble-circle[data-turn="30"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet .cityname {
       position: absolute;
@@ -757,11 +882,6 @@
         cursor: pointer; }
         .score-sheet-container .score-sheet .pool.selectable svg.ladder {
           display: block; }
-      .score-sheet-container .score-sheet .pool.built svg.ladder {
-        display: block; }
-        .score-sheet-container .score-sheet .pool.built svg.ladder path {
-          animation: none;
-          fill: black; }
     .score-sheet-container .score-sheet .park {
       position: absolute;
       height: 50px;
@@ -1020,6 +1140,18 @@
 @keyframes drawScribble {
   to {
     stroke-dashoffset: 0; } }
+    .score-sheet-container .score-sheet .scribble-circle {
+      width: 100%;
+      height: 100%; }
+      .score-sheet-container .score-sheet .scribble-circle .scribble-path {
+        stroke-dasharray: 1500;
+        stroke-dashoffset: 0;
+        stroke: black; }
+      .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path {
+        stroke-dashoffset: 1500;
+        animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation-fill-mode: forwards; }
+
 /*************************
 **************************
 ********* MODAL  *********

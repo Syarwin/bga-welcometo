@@ -10,7 +10,10 @@ class PlanCards extends Helpers\Pieces
 	protected static $prefix = "card_";
   protected static $customFields = ['approved'];
   protected static function cast($card){
-    return $card;
+    return [
+      'id' => $card['id'],
+      'approved' => $card['approved'] == 1,
+    ];
   }
 
   protected static $scores = [
@@ -23,7 +26,8 @@ class PlanCards extends Helpers\Pieces
   ];
 
 
-  public function setupNewGame($players){
+  public function setupNewGame($players)
+  {
     // Basic cards
     self::create([
       ['location' => 'deck_1', 'nbr' => 6],
@@ -44,5 +48,11 @@ class PlanCards extends Helpers\Pieces
       self::shuffle(['deck', $i]);
       self::pickForLocation(1, ['deck', $i], ['stack', $i]);
     }
+  }
+
+
+  public function getUiData()
+  {
+    return self::getInLocation(['stack', '%'])->toArray();
   }
 }

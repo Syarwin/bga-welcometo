@@ -112,6 +112,7 @@ class welcometo extends Table
     return [
       'players' => WTO\Game\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
+      'planCards' => WTO\PlanCards::getUiData(),
       'options' => WTO\Game\Globals::getOptions(),
       'houses' => WTO\Houses::getOfPlayer($pId),
       'scribbles' => WTO\Scribbles::getOfPlayer($pId),

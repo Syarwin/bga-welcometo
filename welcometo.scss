@@ -69,21 +69,24 @@
   display:flex;
   flex-flow: row;
 
-  #cards-container {
-
-    #cards-container-resizable {
+  #construction-cards-container {
+    #construction-cards-container-resizable {
       transform-origin: top left;
       display:flex;
       flex-flow:column;
-
-      #construction-cards-container {
-        flex-flow:column;
-      }
     }
   }
 
   #player-score-sheet-resizable {
     transform-origin: top left;
+  }
+
+  #plan-cards-container {
+    #plan-cards-container-resizable {
+      transform-origin: top left;
+      display:flex;
+      flex-flow:column;
+    }
   }
 }
 
@@ -107,12 +110,12 @@ $cardWidth:200px;
 $cardHeight:520px * $cardWidth / 343px;
 $cardMargin:5px;
 
-#cards-container {
+#construction-cards-container {
   background-color:rgba(255,255,255,0.6);
   padding:10px;
   margin-right:10px;
 
-  #construction-cards-container {
+  #construction-cards-container-resizable {
     display:flex;
     flex-grow:1;
     justify-content: space-around;
@@ -122,6 +125,7 @@ $cardMargin:5px;
       flex-flow:row;
       border:4px solid transparent;
       border-radius:4px;
+      margin-bottom:10px;
       width:$cardWidth;
       height:$cardHeight;
 
@@ -203,19 +207,37 @@ $cardMargin:5px;
   }
 }
 
-/*
-@media only screen and (min-width: 1500px) {
-    #responsive_construction_cards {
-        width: 66%;
-        display: inline-block;
-    }
-    #responsive_plan_cards {
-        width: 33%;
-        display: inline-block;
-    }
-}
-*/
 
+
+#plan-cards-container {
+  background-color:rgba(255,255,255,0.6);
+  padding:10px;
+  margin-left:10px;
+
+  #plan-cards-container-resizable {
+    display:flex;
+    flex-grow:1;
+    justify-content: space-around;
+
+
+    .plan-card-holder {
+      width:$cardWidth;
+      height:$cardHeight;
+      margin-bottom:10px;
+
+      .plan-card-front {
+        width:100%;
+        height:100%;
+        background-image:url("img/plans.jpg");
+        background-size:cover;
+      }
+
+      @for $i from 1 through 28 {
+        &[data-id="#{$i}"] .plan-card-front { background-position: ($i - 1)*100%/27 center; }
+      }
+    }
+  }
+}
 
 
 /***********************************
@@ -243,6 +265,10 @@ $cardMargin:5px;
     }
 
     &[data-turn="#{$t}"] .scribble[data-turn="#{$t}"] .scribble-path  {
+      stroke:red;
+    }
+
+    &[data-turn="#{$t}"] .scribble-circle[data-turn="#{$t}"] .scribble-path  {
       stroke:red;
     }
   }
@@ -393,16 +419,6 @@ $cardMargin:5px;
         cursor:pointer;
         svg.ladder {
           display:block;
-        }
-      }
-
-      &.built {
-        svg.ladder {
-          display:block;
-          path {
-            animation:none;
-            fill:black;
-          }
         }
       }
     }
@@ -566,6 +582,24 @@ $cardMargin:5px;
             stroke-dashoffset: 0;
           }
         }
+      }
+    }
+
+
+    .scribble-circle {
+      width:100%;
+      height:100%;
+
+      .scribble-path {
+        stroke-dasharray: 1500;
+        stroke-dashoffset: 0;
+        stroke:black;
+      }
+
+      &.animate .scribble-path {
+        stroke-dashoffset: 1500;
+        animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation-fill-mode: forwards;
       }
     }
   }
