@@ -13,14 +13,15 @@ class Notifications
   }
 
   public static function newCards($pId, $cards){
+    $data = [
+      'cards' => $cards,
+      'turn' => Globals::getCurrentTurn(),
+    ];
+
     if(is_null($pId)){
-      self::notifyAll('newCards', '', [
-        'cards' => $cards,
-      ]);
+      self::notifyAll('newCards', '', $data);
     } else {
-      self::notify($pId, 'newCards', '', [
-        'cards' => $cards,
-      ]);
+      self::notify($pId, 'newCards', '', $data);
     }
   }
 

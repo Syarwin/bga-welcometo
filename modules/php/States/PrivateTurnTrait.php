@@ -40,7 +40,8 @@ trait PrivateTurnTrait
   function argChooseCards($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
-    $data['selectableStacks'] = [0, 2]; // TODO filter stack depending on playable combinaison + handle non standard
+    $data['selectableStacks'] = $player->getAvailableStacks();
+    // TODO handle permit refusal
     return $data;
   }
 

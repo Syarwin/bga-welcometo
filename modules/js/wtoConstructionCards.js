@@ -24,9 +24,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       gamedatas.constructionCards.forEach((stack, i) => {
         stack.forEach((card,j) => {
           dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + i);
-          if(j == 1 && this._isStandard){ // Flip second card
+          if(j == 0 && this._isStandard){ // Flip first card
             dojo.addClass("construction-card-" + card.id, "flipped");
           }
+          dojo.style("construction-card-" + card.id, "z-index", j == 0? 1 : 100);
         });
 
         dojo.connect($('construction-cards-stack-' + i), 'click', () => this.onClickStack(i));
@@ -84,6 +85,26 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         this._callback(stackId)
       else
         this.onClickStackNonStandard(stackId);
+    },
+
+
+    //////////////////////////////////////
+    /////////////  New turn  /////////////
+    //////////////////////////////////////
+    newTurn(cards, turn){
+      cards.forEach(card => {
+        if(!this._isStandard)
+          return; // TODO
+
+        // Animation
+        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last");
+        toFlip.addClass('flipped');
+        setTimeout(() => toFlip.style("z-index", turn), 1000);
+
+        // New card
+        dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
+        dojo.style("construction-card-" + card.id, "z-index", 100 - turn);
+      });
     },
 
 

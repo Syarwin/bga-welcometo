@@ -141,6 +141,7 @@ class ConstructionCards extends Helpers\Pieces
         $soloCardDrawn = true;
       }
 
+      $drawnCard['stackId'] = $stackId;
       $drawnCards[$stackId] = $drawnCard;
     }
 
@@ -172,6 +173,39 @@ class ConstructionCards extends Helpers\Pieces
     return $cards;
   }
 
+  /*
+   * Get all the possible combinations
+   */
+  public function getPossibleCombinations($pId)
+  {
+    $stacks = self::getForPlayer($pId);
+    $result = [];
+    if(Globals::isStandard()){
+      for($i = 0; $i < 3; $i++){
+        array_push($result, [
+          'stacks' => $i,
+          'number' => $stacks[$i][0]['action'],
+          'action' => $stacks[$i][1]['number'],
+        ]);
+      }
+    } else {
+      for($i = 0; $i < 3; $i++){
+        for($j = 0; $j < 3; $j++){
+          if($i == $j) continue;
+
+          array_push($result, [
+            'stacks' => [$i, $j],
+            'number' => $stacks[$i][0]['number'],
+            'action' => $stacks[$j][0]['action'],
+          ]);
+        }
+      }
+    }
+
+    return $result;
+  }
+
+
 
   /*
    * Get the combination corresponding to the stack(s) selection
@@ -181,8 +215,8 @@ class ConstructionCards extends Helpers\Pieces
     $stacks = self::getForPlayer($pId);
     $data = [];
     if(Globals::isStandard()){
-      $data['number'] = $stacks[$stack][0]['number'];
-      $data['action'] = $stacks[$stack][1]['action'];
+      $data['action'] = $stacks[$stack][0]['action'];
+      $data['number'] = $stacks[$stack][1]['number'];
     } else {
       $data['number'] = $stacks[$stack[0]][0]['number'];
       $data['action'] = $stacks[$stack[1]][0]['action'];

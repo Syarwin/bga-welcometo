@@ -128,6 +128,17 @@ class Player extends Helpers\DB_Manager
   ///////////////////////////////
   //////// WRITE NUMBER /////////
   ///////////////////////////////
+  public function getAvailableStacks()
+  {
+    $combinations = ConstructionCards::getPossibleCombinations($this->id);
+    $result = [];
+    foreach($combinations as $combination){
+      if(!empty($this->getAvailableNumbersOfCombination($combination)))
+        array_push($result, $combination['stacks']);
+    }
+    return $result;
+  }
+
   public function getAvailableNumbers()
   {
     return $this->getAvailableNumbersOfCombination($this->getCombination());
