@@ -113,6 +113,7 @@ var jstpl_scoreTemp = '<div id="${pId}_score-temp_${x}" data-x="${x}" class="sco
 var jstpl_scoreEstate = '<div id="${pId}_score-estate_${x}_${y}" data-x="${x}" data-y="${y}" class="score-estate"></div>';
 var jstpl_scoreBis = '<div id="${pId}_score-bis_${x}" data-x="${x}" class="score-bis"></div>';
 
+var jstpl_scoreCounter = '<div id="${pId}_score_${id}" class="score-counter score_${id}"></div>';
 
 
 

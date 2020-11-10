@@ -3,6 +3,13 @@ namespace WTO;
 use WTO\Game\Log;
 use WTO\Game\Notifications;
 
+use \WTO\Actions\RealEstate;
+use \WTO\Actions\Park;
+use \WTO\Actions\Temp;
+use \WTO\Actions\Bis;
+use \WTO\Actions\Pool;
+use \WTO\Actions\Surveyor;
+
 class Player extends Helpers\DB_Manager
 {
   public function __construct($row)
@@ -48,6 +55,16 @@ class Player extends Helpers\DB_Manager
     ];
   }
 
+
+  public function getScores()
+  {
+    return \array_merge(
+      Park::getScore($this),
+      Pool::getScore($this),
+      Temp::getScore($this),
+      Bis::getScore($this)
+    );
+  }
 
   /*
    * Boolean value needed to know if we display the "restart turn" button

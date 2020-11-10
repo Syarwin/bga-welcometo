@@ -1,5 +1,7 @@
 <?php
 namespace WTO\Game;
+use \WTO\Houses;
+use \WTO\Scribbles;
 use welcometo;
 
 /*
@@ -32,6 +34,69 @@ class Players extends \WTO\Helpers\DB_Manager
     $query->values($values);
     welcometo::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
     welcometo::get()->reloadPlayersBasicInfos();
+
+
+    $pIds = array_keys($players);
+
+
+    Houses::add($pIds[0], 2, [0,0], false);
+    Houses::add($pIds[0], 3, [0,2], false);
+    Houses::add($pIds[0], 5, [0,3], false);
+    Houses::add($pIds[0], 7, [0,4], false);
+    Houses::add($pIds[0], 8, [0,5], false);
+    Houses::add($pIds[0], 11, [0,6], false);
+    Houses::add($pIds[0], 12, [0,7], false);
+    Houses::add($pIds[0], 13, [0,8], false);
+    Houses::add($pIds[0], 14, [0,9], false);
+
+
+    Houses::add($pIds[0], 1, [1,0], false);
+    Houses::add($pIds[0], 2, [1,1], false);
+    Houses::add($pIds[0], 3, [1,2], false);
+    Houses::add($pIds[0], 4, [1,3], false);
+    Houses::add($pIds[0], 7, [1,4], false);
+    Houses::add($pIds[0], 8, [1,5], false);
+    Houses::add($pIds[0], 9, [1,6], false);
+    Houses::add($pIds[0], 10, [1,7], false);
+    Houses::add($pIds[0], 11, [1,8], false);
+    Houses::add($pIds[0], 12, [1,9], false);
+    Houses::add($pIds[0], 13, [1,10], false);
+
+
+    Houses::add($pIds[0], 1, [1,0], false);
+    Houses::add($pIds[0], 3, [1,1], false);
+    Houses::add($pIds[0], 4, [1,2], false);
+    Houses::add($pIds[0], 5, [1,3], false);
+    Houses::add($pIds[0], 7, [1,5], false);
+    Houses::add($pIds[0], 8, [1,6], false);
+    Houses::add($pIds[0], 9, [1,7], false);
+
+    Scribbles::add($pIds[0], 'park', [0,0]);
+    Scribbles::add($pIds[0], 'park', [0,1]);
+    Scribbles::add($pIds[0], 'park', [0,2]);
+
+    Scribbles::add($pIds[0], 'park', [1,0]);
+    Scribbles::add($pIds[0], 'park', [1,1]);
+    Scribbles::add($pIds[0], 'park', [1,2]);
+
+    Scribbles::add($pIds[0], 'park', [2,0]);
+    Scribbles::add($pIds[0], 'park', [2,1]);
+
+    Scribbles::add($pIds[0], 'score-pool', [0]);
+    Scribbles::add($pIds[0], 'score-pool', [1]);
+    Scribbles::add($pIds[0], 'score-pool', [2]);
+    Scribbles::add($pIds[0], 'score-pool', [3]);
+    Scribbles::add($pIds[0], 'score-pool', [4]);
+
+    Scribbles::add($pIds[0], 'score-temp', [0]);
+    Scribbles::add($pIds[0], 'score-temp', [1]);
+    Scribbles::add($pIds[0], 'score-temp', [2]);
+    Scribbles::add($pIds[0], 'score-temp', [3]);
+
+
+
+
+    Scribbles::add($pIds[1], 'score-temp', [0]);
   }
 
   public function getActiveId()

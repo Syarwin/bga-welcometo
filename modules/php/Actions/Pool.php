@@ -24,8 +24,13 @@ class Pool extends Zone
   }
 
 
-  public function getScores($pId)
+  protected static $scores = [0, 3, 6, 9, 13, 17, 21, 26, 31, 36];
+  public function getScore($pId)
   {
+    $free = count(self::$scores) - 1;
+    foreach(self::getAvailableZones($pId) as $zone)
+      $free = $zone[0];
 
+    return ['pool-total' => self::$scores[$free] ];
   }
 }

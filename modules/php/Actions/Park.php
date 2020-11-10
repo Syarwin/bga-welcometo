@@ -22,8 +22,25 @@ class Park extends Zone
     return $zones;
   }
 
-  public function getScores($pId)
-  {
 
+  protected static $scores = [
+    [0, 2, 4, 10],
+    [0, 2, 4, 6, 14],
+    [0, 2, 4, 6, 8, 18],
+  ];
+  public function getScore($player)
+  {
+    $free = [3, 4, 5];
+    foreach(parent::getAvailableZones($player) as $zone)
+      $free[$zone[0]] = $zone[1];
+
+    $res = [
+      'park-0' => self::$scores[0][$free[0]],
+      'park-1' => self::$scores[1][$free[1]],
+      'park-2' => self::$scores[2][$free[2]],
+    ];
+    $res['park-total'] = $res['park-0'] + $res['park-1'] + $res['park-2'];
+
+    return $res;
   }
 }

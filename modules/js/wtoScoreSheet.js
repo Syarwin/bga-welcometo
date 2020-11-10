@@ -31,6 +31,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       // Setup divs
       this.setupUpperSheet();
       this.setupLowerSheet();
+      this.setupScores();
+      this.updateScores(gameData.scores);
 
       // Add houses number
       gameData.houses.forEach(house => this.addHouseNumber(house) );
@@ -327,6 +329,39 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
          $("scribble-" + scribble.id).classList.add("animate");
        }
      },
+
+
+
+/******************************
+*******************************
+*********** SCORES ************
+*******************************
+******************************/
+    setupScores(){
+      this._counters = {};
+      let ids = [
+        'plan-0', 'plan-1', 'plan-2', 'plan-total',
+        'park-0', 'park-1', 'park-2', 'park-total',
+        'pool-total', 'temp-total', 'bis-total', 'other-total', 'total'
+      ];
+
+      ids.forEach(id => {
+        this.tpl('scoreCounter', {id : id});
+        this._counters[id] = new ebg.counter();
+        this._counters[id].create(this.player.id + "_score_" + id);
+      });
+    },
+
+    updateScores(scores){
+      debug("Updating scores", scores);
+
+      for(var id in scores){
+        if(!this._counters[id])
+          continue;
+
+        this._counters[id].toValue(parseInt(scores[id]));
+      }
+    },
 
   });
 });

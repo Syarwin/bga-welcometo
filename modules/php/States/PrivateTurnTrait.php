@@ -181,7 +181,8 @@ trait PrivateTurnTrait
   {
     // Write the next available spot in the score sheet
     $zones = Temp::getAvailableZones($player);
-    $player->scribbleZone($zones[0]);
+    if(!empty($zones))
+      $player->scribbleZone($zones[0]);
     StateMachine::nextState("scribbleZone");
     return true; // Skip this state
   }
