@@ -70,11 +70,6 @@ class welcometo extends Table
     return self::$instance;
   }
 
-  // Exposing protected method getCurrentPlayerId
-  public static function getCurrentPId(){
-    return self::getCurrentPlayerId();
-  }
-
 
   protected function getGameName()
   {
@@ -180,4 +175,18 @@ class welcometo extends Table
   {
   }
 
+
+  ///////////////////////////////////////////////////////////
+  // Exposing proteced method, please use at your own risk //
+  ///////////////////////////////////////////////////////////
+
+  // Exposing protected method getCurrentPlayerId
+  public static function getCurrentPId(){
+    return self::getCurrentPlayerId();
+  }
+
+  // Exposing protected method translation
+  public static function translate($text){
+    return ($text == '')? '' : dcgettext( self::getGameName(), $text, LC_MESSAGES );
+  }
 }

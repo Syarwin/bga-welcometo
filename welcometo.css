@@ -13,6 +13,7 @@
  * welcometo stylesheet
  *
  */
+@import url(modules/css/nouislider.css);
 @font-face {
   font-family: 'Caveat';
   src: url("img/font/Caveat-Regular.woff2") format("woff2"), url("img/font/Caveat-Regular.woff") format("woff");
@@ -35,19 +36,78 @@
 *********** LAYOUT ***********
 ******************************
 *****************************/
+#layout-controls-container {
+  position: relative; }
+  #layout-controls-container.undefined svg path {
+    animation: blinkColor linear 0.9s infinite; }
+  #layout-controls-container.layoutControlsHidden #layout-button path {
+    fill: #777; }
+  #layout-controls-container.layoutControlsHidden #layout-controls {
+    display: none; }
+  #layout-controls-container svg#layout-button {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: relative;
+    top: 17px; }
+    #layout-controls-container svg#layout-button path {
+      fill: black; }
+  #layout-controls-container #layout-controls {
+    position: absolute;
+    z-index: 1;
+    top: 48px;
+    right: -73px;
+    background-color: #e7e9e8;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -2px #385088;
+    text-align: left; }
+    #layout-controls-container #layout-controls .button-group {
+      display: flex;
+      justify-content: center; }
+      #layout-controls-container #layout-controls .button-group .bgabutton {
+        border-radius: 0px; }
+        #layout-controls-container #layout-controls .button-group .bgabutton:first-of-type {
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px; }
+        #layout-controls-container #layout-controls .button-group .bgabutton:last-of-type {
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px; }
+    #layout-controls-container #layout-controls[data-mode="0"] #layout-control-0 {
+      background-color: #4871b6;
+      color: white; }
+    #layout-controls-container #layout-controls[data-mode="0"] #layout-control-range {
+      width: 95%; }
+    #layout-controls-container #layout-controls[data-mode="1"] #layout-control-1 {
+      background-color: #4871b6;
+      color: white; }
+
+#overall-content {
+  overflow: initial !important; }
+
 #welcometo-container {
   display: flex;
   flex-flow: row; }
-  #welcometo-container #construction-cards-container #construction-cards-container-resizable {
-    transform-origin: top left;
-    display: flex;
-    flex-flow: column; }
+  #welcometo-container #construction-cards-container {
+    position: relative; }
+    #welcometo-container #construction-cards-container #construction-cards-container-sticky {
+      position: sticky;
+      top: 60px; }
+      #welcometo-container #construction-cards-container #construction-cards-container-sticky #construction-cards-container-resizable {
+        transform-origin: top left;
+        display: flex;
+        flex-flow: column; }
   #welcometo-container #player-score-sheet-resizable {
     transform-origin: top left; }
-  #welcometo-container #plan-cards-container #plan-cards-container-resizable {
-    transform-origin: top left;
-    display: flex;
-    flex-flow: column; }
+  #welcometo-container #plan-cards-container {
+    position: relative; }
+    #welcometo-container #plan-cards-container #plan-cards-container-sticky {
+      position: sticky;
+      top: 60px; }
+      #welcometo-container #plan-cards-container #plan-cards-container-sticky #plan-cards-container-resizable {
+        transform-origin: top left;
+        display: flex;
+        flex-flow: column; }
 
 /*
 #welcometo-container {

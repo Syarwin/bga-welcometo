@@ -56,8 +56,8 @@
 }
 
 
-
-@import 'welcometo.variables';
+@import 'modules/css/nouislider.css';
+@import 'modules/css/welcometo.variables';
 
 
 /*****************************
@@ -65,15 +65,105 @@
 *********** LAYOUT ***********
 ******************************
 *****************************/
+
+#layout-controls-container {
+  position:relative;
+
+  &.undefined svg path {
+    animation:blinkColor linear 0.9s infinite;
+  }
+
+  &.layoutControlsHidden {
+    #layout-button path {
+      fill:#777;
+    }
+
+    #layout-controls {
+      display:none;
+    }
+  }
+
+
+  svg#layout-button {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: relative;
+    top: 17px;
+
+    path {
+      fill: black;
+    }
+  }
+
+  #layout-controls {
+    position: absolute;
+    z-index: 1;
+    top: 55px;
+    right: -73px;
+    background-color: #e7e9e8;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -2px #385088;
+    text-align: left;
+
+    .button-group {
+      display:flex;
+      justify-content: center;
+      .bgabutton {
+        border-radius:0px;
+        &:first-of-type {
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+        }
+        &:last-of-type {
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+        }
+      }
+    }
+
+    &[data-mode="0"] {
+      #layout-control-0 {
+        background-color:#4871b6;
+        color:white;
+      }
+
+      #layout-control-range {
+        width:95%;
+      }
+    }
+
+    &[data-mode="1"]{
+      #layout-control-1 {
+        background-color:#4871b6;
+        color:white;
+      }
+
+    }
+  }
+}
+
+
+#overall-content {
+  overflow:initial !important;
+}
+
 #welcometo-container {
   display:flex;
   flex-flow: row;
 
   #construction-cards-container {
-    #construction-cards-container-resizable {
-      transform-origin: top left;
-      display:flex;
-      flex-flow:column;
+    position:relative;
+    #construction-cards-container-sticky {
+      position:sticky;
+      top:60px;
+
+      #construction-cards-container-resizable {
+        transform-origin: top left;
+        display:flex;
+        flex-flow:column;
+      }
     }
   }
 
@@ -82,10 +172,15 @@
   }
 
   #plan-cards-container {
-    #plan-cards-container-resizable {
-      transform-origin: top left;
-      display:flex;
-      flex-flow:column;
+    position:relative;
+    #plan-cards-container-sticky {
+      position:sticky;
+      top:20px;
+      #plan-cards-container-resizable {
+        transform-origin: top left;
+        display:flex;
+        flex-flow:column;
+      }
     }
   }
 }

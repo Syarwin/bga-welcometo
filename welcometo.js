@@ -24,6 +24,7 @@ define([
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/stock",
+    g_gamethemeurl + "modules/js/nouislider.min.js",
     g_gamethemeurl + "modules/js/wtoLayout.js",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
