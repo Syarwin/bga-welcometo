@@ -62,8 +62,14 @@ class Player extends Helpers\DB_Manager
       Park::getScore($this),
       Pool::getScore($this),
       Temp::getScore($this),
-      Bis::getScore($this)
+      Bis::getScore($this),
+      RealEstate::getScore($this)
     );
+  }
+
+  public function getEstates()
+  {
+    return RealEstate::getEstates($this);
   }
 
   /*

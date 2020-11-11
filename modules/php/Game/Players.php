@@ -71,6 +71,11 @@ class Players extends \WTO\Helpers\DB_Manager
     Houses::add($pIds[0], 8, [1,6], false);
     Houses::add($pIds[0], 9, [1,7], false);
 
+    Scribbles::add($pIds[0], 'score-estate', [2,0]);
+    Scribbles::add($pIds[0], 'score-estate', [2,1]);
+    Scribbles::add($pIds[0], 'score-estate', [3,0]);
+
+
     Scribbles::add($pIds[0], 'estate-fence', [0,0]);
     Scribbles::add($pIds[0], 'estate-fence', [0,2]);
     Scribbles::add($pIds[0], 'estate-fence', [0,5]);
@@ -101,6 +106,11 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-temp', [1]);
     Scribbles::add($pIds[0], 'score-temp', [2]);
     Scribbles::add($pIds[0], 'score-temp', [3]);
+
+    Scribbles::add($pIds[0], 'score-bis', [0]);
+    Scribbles::add($pIds[0], 'score-bis', [1]);
+    Scribbles::add($pIds[0], 'score-bis', [2]);
+    Scribbles::add($pIds[0], 'score-bis', [3]);
 
 
 

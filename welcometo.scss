@@ -217,7 +217,7 @@
 
   #construction-cards-container {
     grid-row: 1;
-    grid-column: 1;
+    grid-column: 1 / span 1;
     margin:0;
 
     #construction-cards-container-sticky {
@@ -245,7 +245,7 @@
     margin:0;
     position:relative;
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 2  / span 1;
     #plan-cards-container-sticky {
       position:initial;
 
@@ -342,6 +342,7 @@ $cardMargin:5px;
         width:100%;
         height:100%;
         backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
       }
 
       .construction-card-back {
@@ -785,6 +786,20 @@ $cardMargin:5px;
     .score_temp-total {  top:1388px;  left:510px; }
 
     // ESTATES //
+    .score_estate-mult-0 {  top:1296px;  left:680px; }
+    .score_estate-mult-1 {  top:1296px;  left:748px; }
+    .score_estate-mult-2 {  top:1296px;  left:821px; }
+    .score_estate-mult-3 {  top:1296px;  left:891px; }
+    .score_estate-mult-4 {  top:1296px;  left:967px; }
+    .score_estate-mult-5 {  top:1296px;  left:1043px; }
+
+
+    .score_estate-total-0 {  top:1388px;  left:664px; }
+    .score_estate-total-1 {  top:1388px;  left:736px; }
+    .score_estate-total-2 {  top:1388px;  left:802px; }
+    .score_estate-total-3 {  top:1388px;  left:875px; }
+    .score_estate-total-4 {  top:1388px;  left:953px; }
+    .score_estate-total-5 {  top:1388px;  left:1028px; }
 
 
     // BIS //

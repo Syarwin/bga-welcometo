@@ -342,7 +342,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       let ids = [
         'plan-0', 'plan-1', 'plan-2', 'plan-total',
         'park-0', 'park-1', 'park-2', 'park-total',
-        'pool-total', 'temp-total', 'bis-total', 'other-total', 'total'
+        'pool-total', 'temp-total', 'bis-total',
+        'estate-mult-0', 'estate-mult-1', 'estate-mult-2', 'estate-mult-3', 'estate-mult-4', 'estate-mult-5',
+        'estate-total-0', 'estate-total-1', 'estate-total-2', 'estate-total-3', 'estate-total-4', 'estate-total-5',
+        'other-total', 'total'
       ];
 
       ids.forEach(id => {
