@@ -37,7 +37,7 @@ define([
     constructor() {
       this._connections = [];
       this._isStandard = true;
-      this.default_viewport = 'width=900, user-scalable=yes';
+//      this.default_viewport = 'width=700, user-scalable=yes';
       this._layoutManager = new bgagame.wtoLayout();
     },
 

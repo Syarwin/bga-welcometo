@@ -23,17 +23,6 @@
   </div>
 </div>
 
-  <!-- TBD : One modal per player? -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div id="myModalContent" class="modal-content">
-    <span id="myCloseModal" class="close">&times;</span>
-    <div id="responsive_score_sheet" class="responsive_score_sheet">
-       <div id="my_score_sheet" class="score_sheet"></div>
-    </div>
-  </div>
-</div>
-
 <audio id="audiosrc_o_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.ogg" autobuffer></audio>
 <audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/scribble.mp3" autobuffer></audio>
 
@@ -61,9 +50,12 @@ var jstpl_layoutControls = `
 /////////////////////
 var jstpl_constructionCard = `
 <div id="construction-card-\${id}" data-action="\${action}" data-number="\${number}" class="construction-card-holder">
-  <div class="construction-card-back"></div>
+  <div class="construction-card-back">
+    <div class="action"></div>
+  </div>
   <div class="construction-card-front">
-    <div class="card-corners"></div>
+    <div class="top-right-corner"></div>
+    <div class="bottom-left-corner"></div>
     <div class="number"></div>
   </div>
 </div>`;

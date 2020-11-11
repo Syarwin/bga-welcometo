@@ -36,6 +36,9 @@
 *********** LAYOUT ***********
 ******************************
 *****************************/
+/*
+ * Controls in the top bar
+ */
 #layout-controls-container {
   position: relative; }
   #layout-controls-container.undefined svg path {
@@ -82,6 +85,9 @@
       background-color: #4871b6;
       color: white; }
 
+/********************
+* HORIZONTAL LAYOUT *
+********************/
 #overall-content {
   overflow: initial !important; }
 
@@ -89,7 +95,8 @@
   display: flex;
   flex-flow: row; }
   #welcometo-container #construction-cards-container {
-    position: relative; }
+    position: relative;
+    margin-right: 10px; }
     #welcometo-container #construction-cards-container #construction-cards-container-sticky {
       position: sticky;
       top: 60px; }
@@ -97,9 +104,12 @@
         transform-origin: top left;
         display: flex;
         flex-flow: column; }
+        #welcometo-container #construction-cards-container #construction-cards-container-sticky #construction-cards-container-resizable .construction-cards-stack {
+          margin-bottom: 10px; }
   #welcometo-container #player-score-sheet-resizable {
     transform-origin: top left; }
   #welcometo-container #plan-cards-container {
+    margin-left: 10px;
     position: relative; }
     #welcometo-container #plan-cards-container #plan-cards-container-sticky {
       position: sticky;
@@ -108,16 +118,45 @@
         transform-origin: top left;
         display: flex;
         flex-flow: column; }
+        #welcometo-container #plan-cards-container #plan-cards-container-sticky #plan-cards-container-resizable .plan-card-holder {
+          margin-bottom: 10px; }
 
-/*
-#welcometo-container {
-  display:flex;
-  flex-flow: column;
+/******************
+* VERTICAL LAYOUT *
+******************/
+#welcometo-container[data-mode="1"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr; }
+  #welcometo-container[data-mode="1"] #construction-cards-container {
+    grid-row: 1;
+    grid-column: 1;
+    margin: 0; }
+    #welcometo-container[data-mode="1"] #construction-cards-container #construction-cards-container-sticky {
+      position: initial; }
+      #welcometo-container[data-mode="1"] #construction-cards-container #construction-cards-container-sticky #construction-cards-container-resizable {
+        transform-origin: top left;
+        display: flex;
+        flex-flow: row; }
+        #welcometo-container[data-mode="1"] #construction-cards-container #construction-cards-container-sticky #construction-cards-container-resizable .construction-cards-stack {
+          margin-right: 10px; }
+  #welcometo-container[data-mode="1"] #player-score-sheet {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+    transform-origin: top left; }
+  #welcometo-container[data-mode="1"] #plan-cards-container {
+    margin: 0;
+    position: relative;
+    grid-row: 1;
+    grid-column: 2; }
+    #welcometo-container[data-mode="1"] #plan-cards-container #plan-cards-container-sticky {
+      position: initial; }
+      #welcometo-container[data-mode="1"] #plan-cards-container #plan-cards-container-sticky #plan-cards-container-resizable {
+        transform-origin: top left;
+        display: flex;
+        flex-flow: row; }
+        #welcometo-container[data-mode="1"] #plan-cards-container #plan-cards-container-sticky #plan-cards-container-resizable .plan-card-holder {
+          margin-left: 10px; }
 
-  #cards-container {
-
-}
-*/
 /*****************************
 ******************************
 *********** CARDS ************
@@ -125,8 +164,7 @@
 *****************************/
 #construction-cards-container {
   background-color: rgba(255, 255, 255, 0.6);
-  padding: 10px;
-  margin-right: 10px; }
+  padding: 10px; }
   #construction-cards-container #construction-cards-container-resizable {
     display: flex;
     flex-grow: 1;
@@ -137,7 +175,6 @@
       flex-flow: row;
       border: 4px solid transparent;
       border-radius: 4px;
-      margin-bottom: 10px;
       width: 200px;
       height: 303.2069970845px; }
       #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.unselectable {
@@ -180,65 +217,105 @@
         background-image: url("img/construction_back.jpg");
         background-size: cover;
         transform: rotateY(180deg);
-        z-index: 2; }
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center; }
+        #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-back .action {
+          width: 170px;
+          height: 170px;
+          background-image: url("img/actions.png");
+          background-size: cover; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front {
         background-image: url("img/construction_front.jpg");
-        background-size: cover; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="1"] .construction-card-back {
+        background-size: cover;
+        position: relative; }
+        #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front .bottom-left-corner {
+          position: absolute;
+          width: 47px;
+          height: 47px;
+          background-image: url("img/actions.png");
+          background-size: cover;
+          clip-path: polygon(0 13%, 0 0, 100% 0, 100% 100%, 80% 100%); }
+        #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front .top-right-corner {
+          top: 5px;
+          left: 149px; }
+        #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-front .bottom-left-corner {
+          transform: rotate(180deg);
+          bottom: 13px;
+          left: 4px; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="1"] .action {
         background-position: 0% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="2"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="1"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="1"] .bottom-left-corner {
+        background-position: 0% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="2"] .action {
         background-position: 20% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="3"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="2"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="2"] .bottom-left-corner {
+        background-position: 20% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="3"] .action {
         background-position: 40% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="4"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="3"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="3"] .bottom-left-corner {
+        background-position: 40% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="4"] .action {
         background-position: 60% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="5"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="4"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="4"] .bottom-left-corner {
+        background-position: 60% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="5"] .action {
         background-position: 80% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="6"] .construction-card-back {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="5"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="5"] .bottom-left-corner {
+        background-position: 80% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="6"] .action {
         background-position: 100% center; }
-      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="1"] .construction-card-front {
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="6"] .top-right-corner, #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-action="6"] .bottom-left-corner {
+        background-position: 100% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="0"] .construction-card-front {
         background-position: 0% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="1"] .construction-card-front {
+        background-position: 5.8823529412% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="2"] .construction-card-front {
-        background-position: 7.1428571429% center; }
+        background-position: 11.7647058824% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="3"] .construction-card-front {
-        background-position: 14.2857142857% center; }
+        background-position: 17.6470588235% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="4"] .construction-card-front {
-        background-position: 21.4285714286% center; }
+        background-position: 23.5294117647% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="5"] .construction-card-front {
-        background-position: 28.5714285714% center; }
+        background-position: 29.4117647059% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="6"] .construction-card-front {
-        background-position: 35.7142857143% center; }
+        background-position: 35.2941176471% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="7"] .construction-card-front {
-        background-position: 42.8571428571% center; }
+        background-position: 41.1764705882% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="8"] .construction-card-front {
-        background-position: 50% center; }
+        background-position: 47.0588235294% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="9"] .construction-card-front {
-        background-position: 57.1428571429% center; }
+        background-position: 52.9411764706% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="10"] .construction-card-front {
-        background-position: 64.2857142857% center; }
+        background-position: 58.8235294118% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="11"] .construction-card-front {
-        background-position: 71.4285714286% center; }
+        background-position: 64.7058823529% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="12"] .construction-card-front {
-        background-position: 78.5714285714% center; }
+        background-position: 70.5882352941% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="13"] .construction-card-front {
-        background-position: 85.7142857143% center; }
+        background-position: 76.4705882353% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="14"] .construction-card-front {
-        background-position: 92.8571428571% center; }
+        background-position: 82.3529411765% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="15"] .construction-card-front {
+        background-position: 88.2352941176% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="16"] .construction-card-front {
+        background-position: 94.1176470588% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="17"] .construction-card-front {
         background-position: 100% center; }
 
 #plan-cards-container {
   background-color: rgba(255, 255, 255, 0.6);
-  padding: 10px;
-  margin-left: 10px; }
+  padding: 10px; }
   #plan-cards-container #plan-cards-container-resizable {
     display: flex;
     flex-grow: 1;
     justify-content: space-around; }
     #plan-cards-container #plan-cards-container-resizable .plan-card-holder {
       width: 200px;
-      height: 303.2069970845px;
-      margin-bottom: 10px; }
+      height: 303.2069970845px; }
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front {
         width: 100%;
         height: 100%;
