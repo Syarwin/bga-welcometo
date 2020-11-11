@@ -71,6 +71,15 @@ class Players extends \WTO\Helpers\DB_Manager
     Houses::add($pIds[0], 8, [1,6], false);
     Houses::add($pIds[0], 9, [1,7], false);
 
+    Scribbles::add($pIds[0], 'estate-fence', [0,0]);
+    Scribbles::add($pIds[0], 'estate-fence', [0,2]);
+    Scribbles::add($pIds[0], 'estate-fence', [0,5]);
+    Scribbles::add($pIds[0], 'estate-fence', [1,3]);
+    Scribbles::add($pIds[0], 'estate-fence', [1,6]);
+    Scribbles::add($pIds[0], 'estate-fence', [2,3]);
+    Scribbles::add($pIds[0], 'estate-fence', [2,7]);
+
+
     Scribbles::add($pIds[0], 'park', [0,0]);
     Scribbles::add($pIds[0], 'park', [0,1]);
     Scribbles::add($pIds[0], 'park', [0,2]);

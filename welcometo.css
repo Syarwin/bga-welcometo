@@ -1243,31 +1243,35 @@
     .score-sheet-container .score-sheet .score_total {
       top: 1388px;
       left: 1411px; }
-    .score-sheet-container .score-sheet .scribble {
+    .score-sheet-container .score-sheet .scribble, .score-sheet-container .score-sheet .scribble-circle, .score-sheet-container .score-sheet .scribble-line {
       width: 100%;
       height: 100%; }
-      .score-sheet-container .score-sheet .scribble .scribble-path {
-        stroke-dasharray: 4500;
-        stroke-dashoffset: 0;
-        stroke: black; }
-      .score-sheet-container .score-sheet .scribble.animate .scribble-path {
-        stroke-dashoffset: 4500;
+      .score-sheet-container .score-sheet .scribble .scribble-path, .score-sheet-container .score-sheet .scribble-circle .scribble-path, .score-sheet-container .score-sheet .scribble-line .scribble-path {
+        stroke: black;
+        stroke-linecap: round; }
+      .score-sheet-container .score-sheet .scribble.animate .scribble-path, .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path, .score-sheet-container .score-sheet .scribble-line.animate .scribble-path {
         animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
         animation-fill-mode: forwards; }
 @keyframes drawScribble {
   to {
     stroke-dashoffset: 0; } }
-    .score-sheet-container .score-sheet .scribble-circle {
-      width: 100%;
-      height: 100%; }
-      .score-sheet-container .score-sheet .scribble-circle .scribble-path {
-        stroke-dasharray: 1500;
-        stroke-dashoffset: 0;
-        stroke: black; }
-      .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path {
-        stroke-dashoffset: 1500;
-        animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
-        animation-fill-mode: forwards; }
+    .score-sheet-container .score-sheet .scribble .scribble-path {
+      stroke-dasharray: 4500;
+      stroke-dashoffset: 0; }
+    .score-sheet-container .score-sheet .scribble.animate .scribble-path {
+      stroke-dashoffset: 4500; }
+    .score-sheet-container .score-sheet .scribble-circle .scribble-path {
+      stroke-dasharray: 1500;
+      stroke-dashoffset: 0; }
+    .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path {
+      stroke-dashoffset: 1500; }
+    .score-sheet-container .score-sheet .scribble-line {
+      padding-top: 12px; }
+      .score-sheet-container .score-sheet .scribble-line .scribble-path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 0; }
+      .score-sheet-container .score-sheet .scribble-line.animate .scribble-path {
+        stroke-dashoffset: 300; }
 
 /*************************
 **************************
