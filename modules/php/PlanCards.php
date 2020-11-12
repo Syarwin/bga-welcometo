@@ -8,49 +8,93 @@ class PlanCards extends Helpers\Pieces
 {
   protected static $table = "plan_cards";
 	protected static $prefix = "card_";
+  protected static $autoIncrement = false;
   protected static $customFields = ['approved'];
   protected static function cast($card){
-    return [
-      'id' => $card['id'],
-      'approved' => $card['approved'] == 1,
-    ];
+    if(!isset(self::$plans[$card['id']]))
+      throw new \BgaVisibleSystemException("Trying to fetch a plan with no corresponding id : $planId");
+
+    $plan = self::$plans[$card['id']];
+    $className = "\WTO\Plans\\" . $plan[3] . "Plan";
+    return new $className($plan, $card);
   }
 
-  protected static $scores = [
-    [8, 4], [8, 4], [8, 4], [6, 3], [8, 4], [10, 6],
-    [11, 6], [10, 6], [12, 7], [8, 4], [9, 5], [9, 5],
-    [12, 7], [13, 7], [7, 3], [7, 3], [11, 6], [13, 7],
+  protected static $plans = [
+    /*
+     * List of plans with :
+     *   - expansion/variant
+     *   - stack number
+     *   - scores
+     *   - class name to handle canBeScore / args / score functions
+     *   - additional arg passed to the constructor
+     */
+    [BASIC, 1, [8, 4], 'Estate', [1,1,1,1,1,1] ],
+    [BASIC, 1, [8, 4], 'Estate', [2,2,2,2] ],
+    [BASIC, 1, [8, 4], 'Estate', [3,3,3] ],
+    [BASIC, 1, [6, 3], 'Estate', [4,4] ],
+    [BASIC, 1, [8, 4], 'Estate', [5,5] ],
+    [BASIC, 1, [10, 6], 'Estate',[6,6] ],
 
-    [8, 4], [6, 3],  [8, 3], [6, 3], [7, 4],
-    [7, 4], [10, 5], [7, 4], [10, 5],[8, 3],
+    [BASIC, 2, [11, 6], 'Estate', [1,1,1,6] ],
+    [BASIC, 2, [10, 6], 'Estate', [5,2,2] ],
+    [BASIC, 2, [12, 7], 'Estate', [3,3,4] ],
+    [BASIC, 2, [8, 4], 'Estate', [3,6] ],
+    [BASIC, 2, [9, 5], 'Estate', [4,5] ],
+    [BASIC, 2, [9, 5], 'Estate', [4,1,1,1] ],
+
+    [BASIC, 3, [12, 7], 'Estate', [1,2,6] ],
+    [BASIC, 3, [13, 7], 'Estate', [1,4,5] ],
+    [BASIC, 3, [7, 3], 'Estate', [3,4] ],
+    [BASIC, 3, [7, 3], 'Estate', [2,5] ],
+    [BASIC, 3, [11, 6], 'Estate', [1,2,2,3] ],
+    [BASIC, 3, [13, 7], 'Estate', [2,3,5] ],
+
+/*
+    [ADVANCED, 1, [8, 4], 'FullStreet', 3],
+    [ADVANCED, 1, [6, 3], 'FullStreet', 1],
+    [ADVANCED, 1, [8, 3], 'FiveBis', null],
+    [ADVANCED, 1, [6, 3], 'SevenTemp', null],
+    [ADVANCED, 1, [7, 4], 'Extremities', null],
+
+    [ADVANCED, 2, [7, 4], 'Decorative', ['park'] ],
+    [ADVANCED, 2, [10,5], 'FullStreet', null],
+    [ADVANCED, 2, [7, 4], 'Decorative', ['pool'] ],
+    [ADVANCED, 2, [10, 5], 'Decorative', ['pool&park', 3] ],
+    [ADVANCED, 2, [8, 3], 'Decorative', ['pool&park', 2] ],
+*/
   ];
 
-  protected static $conditions = [
-    [1,1,1,1,1,1],    [2,2,2,2],    [3,3,3],    [4,4],    [5,5],    [6,6],
-    [1,1,1,6],    [5,2,2],    [3,3,4],    [3,6],    [4,5],    [4,1,1,1],
-    [1,2,6],    [1,4,5],    [3,4],    [2,5],    [1,2,2,3],    [2,3,5],
 
-    FULL_STREET_3, FULL_STREET_1, FIVE_BIS, SEVEN_TEMP, ALL_ENDS_BUILT,
-    FULL_2PARK, COMPLETE_STREET, FULL_2POOL, FULL_PARK_POOL_3, FULL_PARK_POOL_2
-  ];
+  protected static function getAllInstances()
+  {
+    $res = [];
+    foreach(self::$plans as $id => $plan){
+      $className = "\WTO\Plans\\" . $plan[3] . "Plan";
+      $res[$id] = new $className($plan);
+    }
 
+    return $res;
+  }
+
+
+  public function getCurrent()
+  {
+    return self::getInLocation(['stack', '%']);
+  }
 
   public function setupNewGame($players)
   {
-    // Basic cards
-    self::create([
-      ['location' => 'deck_1', 'nbr' => 6],
-      ['location' => 'deck_2', 'nbr' => 6],
-      ['location' => 'deck_3', 'nbr' => 6],
-    ]);
-
-    // Advanced variant
-    if(Globals::isAdvanced()){
-      self::create([
-        ['location' => 'deck_1', 'nbr' => 6],
-        ['location' => 'deck_2', 'nbr' => 6],
-      ]);
+    // Create the available cards, depending on variant/expansions
+    $cards = [];
+    foreach(self::getAllInstances() as $id => $plan){
+      if($plan->isAvailable()){
+        array_push($cards, [
+          'id' => $id,
+          'location' => 'deck_' . $plan->getStack(),
+        ]);
+      }
     }
+    self::create($cards);
 
     // Pick the three projects
     for($i = 1; $i <= 3; $i++){
@@ -62,6 +106,8 @@ class PlanCards extends Helpers\Pieces
 
   public function getUiData()
   {
-    return self::getInLocation(['stack', '%'])->toArray();
+    return self::getInLocation(['stack', '%'])->map(function($plan){
+      return $plan->getUiData();
+    });
   }
 }

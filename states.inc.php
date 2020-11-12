@@ -212,18 +212,38 @@ $machinestates = [
     ]
   ],
 
+
+
   ST_VALIDATE_PLANS => [
     "name" => "validatePlans",
     "description" => clienttranslate('Some players can validate their plans.'),
     "descriptionmyturn" => clienttranslate('${you} must decide which plan to validate, and which housing estate must be used for it if the plan doesn\'t have an asterisk (not an advanced one).'),
     "type" => "multipleactiveplayer",
+    "parallel" => ST_CHOOSE_PLAN, // Allow to have parallel flow for each player
     "action" => "stValidatePlans",
     "args" => "argValidatePlans",
-    "possibleactions" => "validatePlans",
+    "possibleactions" => ["validatePlans"],
     "transitions" => [
 //      "applyPlansValidation" => ST_APPLY_ TODO : weird
     ]
   ],
+
+
+/************************
+**** PARALLEL STATES ****
+************************/
+  ST_CHOOSE_PLAN => [
+    "name" => "choosePlan",
+    "description" => clienttranslate('Some players may validate their plans.'),
+    "descriptionmyturn" => clienttranslate('${you} can select a plan to validate, or pass.'),
+    "type" => "private",
+    "args" => "argChoosePlan",
+    "possibleactions" => ["choosePlan"],
+    "transitions" => [
+  //      "applyPlansValidation" => ST_APPLY_ TODO : weird
+    ]
+  ],
+
 
 /*
     7 => array(

@@ -54,7 +54,7 @@ trait PrivateTurnTrait
     $player = Players::getCurrent();
     $args = self::argChooseCards($player);
     if(!in_array($stack, $args['selectableStacks']))
-      throw new UserException(clienttranslate("You cannot select this stack"));
+      throw new UserException(totranslate("You cannot select this stack"));
 
     // Do the action (logging the choice for rest of the turn)
     $player->chooseCards($stack);
@@ -81,7 +81,7 @@ trait PrivateTurnTrait
     $player = Players::getCurrent();
     $args = self::argWriteNumber($player);
     if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
-      throw new UserException(clienttranslate("You cannot write this number in this house"));
+      throw new UserException(totranslate("You cannot write this number in this house"));
 
     // Write the number on the house
     $player->writeNumber($number, $pos);
@@ -115,7 +115,7 @@ trait PrivateTurnTrait
     $player = Players::getCurrent();
     $args = StateMachine::getArgsOfPlayer($player);
     if(!in_array($zone, $args['zones']))
-      throw new UserException(clienttranslate("You cannot scribble this zone"));
+      throw new UserException(totranslate("You cannot scribble this zone"));
 
     $player->scribbleZone($zone);
     StateMachine::nextState("scribbleZone");
@@ -204,7 +204,7 @@ trait PrivateTurnTrait
     $player = Players::getCurrent();
     $args = self::argActionBis($player);
     if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
-      throw new UserException(clienttranslate("You cannot write this number bis in this house"));
+      throw new UserException(totranslate("You cannot write this number bis in this house"));
 
     // Write the number
     $player->writeNumber($number, $pos, true);

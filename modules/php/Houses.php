@@ -144,8 +144,6 @@ class Houses extends Helpers\DB_Manager
 
   public function getAvailableLocationsForBis($pId, $number)
   {
-    // TODO : handle fences !
-
     // Init all locations to be unavailable
     $locations = self::getBlankStreets(false);
     $streets = self::getStreets($pId);

@@ -188,6 +188,6 @@ class welcometo extends Table
 
   // Exposing protected method translation
   public static function translate($text){
-    return ($text == '')? '' : dcgettext( self::getGameName(), $text, LC_MESSAGES );
+    return self::_($text);
   }
 }

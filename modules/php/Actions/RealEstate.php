@@ -10,8 +10,9 @@ class RealEstate extends Zone
   protected static $type = "score-estate";
   protected static $cols = [1,2,3,4,4,4];
 
-
-  public function getEstates($player)
+  // Return a list of the estates of the player, in the following format :
+  //  [ street x,  starting house y, size ]
+  public function getEstates($player, $evenIfUsedInPlan = true)
   {
     $streets = Houses::getStreets($player->getId());
     $fences = Surveyor::getOfPlayerStructured($player);
@@ -22,7 +23,8 @@ class RealEstate extends Zone
       $full = true;
       for($j = 0; $j < count($streets[$i]); $j++){
         // TODO : handle turnaround
-        if(is_null($streets[$i][$j])){
+        if(is_null($streets[$i][$j])
+        || ($streets[$i][$j]['usedInPlan'] && !$evenIfUsedInPlan) ){
           $full = false;
         }
 

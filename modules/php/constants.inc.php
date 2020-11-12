@@ -8,7 +8,6 @@ define('ST_GAME_SETUP', 1);
 define('ST_NEW_TURN', 3);
 define('ST_PLAYER_TURN', 4);
 define('ST_APPLY_TURNS', 5);
-define('ST_VALIDATE_PLANS', 6);
 
 // Parallel flow
 define('ST_CHOOSE_CARDS', 20);
@@ -22,6 +21,11 @@ define('ST_ACTION_TEMP', 27);
 
 define('ST_CONFIRM_TURN', 30);
 define('ST_WAIT_OTHERS', 31);
+
+// Plan with parallel flow
+define('ST_CHOOSE_PLAN', 6);
+define('ST_VALIDATE_PLANS', 30);
+
 
 
 define('ST_COMPUTE_SCORES', 90);
@@ -55,19 +59,11 @@ define('SOLO', 7);
 
 define('ROUNDABOUT', 100);
 
-// Advanced city plans
-define('FULL_STREET_3', 1);
-define('FULL_STREET_1', 2);
-define('FIVE_BIS', 3);
-define('SEVEN_TEMP', 4);
-define('ALL_ENDS_BUILT', 5);
-
-define('FULL_2PARK', 6);
-define('COMPLETE_STREET', 7);
-define('FULL_2POOL', 8);
-define('FULL_PARK_POOL_3', 9);
-define('FULL_PARK_POOL_2', 10);
-
+/*
+ * City plans
+ */
+define('BASIC', 1);
+define('ADVANCED', 2);
 
 /*
  * Stats

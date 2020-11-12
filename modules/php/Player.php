@@ -67,9 +67,9 @@ class Player extends Helpers\DB_Manager
     );
   }
 
-  public function getEstates()
+  public function getEstates($evenIfUsedInPlan = true)
   {
-    return RealEstate::getEstates($this);
+    return RealEstate::getEstates($this, $evenIfUsedInPlan);
   }
 
   /*
@@ -122,23 +122,12 @@ class Player extends Helpers\DB_Manager
    }
 
 
-  ///////////////////////////////
-  //////// CHOOSE CARDS /////////
-  ///////////////////////////////
-  public function chooseCards($stack)
-  {
-    Log::insert($this->id, 'selectCard', $stack);
-  }
-
-
-
-
 /////////////////////////////////
 /////////////////////////////////
-//////////   Setters   //////////
+///////// START OF TURN /////////
 /////////////////////////////////
 /////////////////////////////////
-
+  // Restart the turn by clearing all log, houses, scribbles.
   public function restartTurn()
   {
     Log::clearTurn($this->id);
@@ -149,36 +138,12 @@ class Player extends Helpers\DB_Manager
 
 
   ///////////////////////////////
-  //////// WRITE NUMBER /////////
+  //////// CHOOSE CARDS /////////
   ///////////////////////////////
-  public function getAvailableStacks()
-  {
-    $combinations = ConstructionCards::getPossibleCombinations($this->id);
-    $result = [];
-    foreach($combinations as $combination){
-      if(!empty($this->getAvailableNumbersOfCombination($combination)))
-        array_push($result, $combination['stacks']);
-    }
-    return $result;
-  }
 
-  public function getAvailableNumbers()
-  {
-    return $this->getAvailableNumbersOfCombination($this->getCombination());
-  }
-
-  public function getAvailableNumbersForBis()
-  {
-    $result = [];
-    for($i = 0; $i <= 17; $i++){
-      $houses = $this->getAvailableHousesForNumber($i, true);
-
-      if(!empty($houses))
-        $result[$i] = $houses;
-    }
-    return $result;
-  }
-
+  /*
+   * Given a number/action combination (as assoc array), compute the set of writtable numbers on the sheet
+   */
   public function getAvailableNumbersOfCombination($combination)
   {
     // Unless the action is temporary agent, a combination is uniquely associated to a number
@@ -206,13 +171,54 @@ class Player extends Helpers\DB_Manager
     return $result;
   }
 
-  public function getAvailableHousesForNumber($number, $isBis = false){
-    return $isBis?
-      Houses::getAvailableLocationsForBis($this->id, $number)
-     :Houses::getAvailableLocations($this->id, $number);
+
+  /*
+   *  Return the set of possible number to write given current selected combination
+   */
+  public function getAvailableNumbers()
+  {
+    return $this->getAvailableNumbersOfCombination($this->getCombination());
   }
 
 
+  /*
+   * Using function above, we can return the stack combinations that leads to at least one writtable number
+   */
+  public function getAvailableStacks()
+  {
+    $combinations = ConstructionCards::getPossibleCombinations($this->id);
+    $result = [];
+    foreach($combinations as $combination){
+      if(!empty($this->getAvailableNumbersOfCombination($combination)))
+        array_push($result, $combination['stacks']);
+    }
+    return $result;
+  }
+
+
+  /*
+   * Tag the selected cards
+   */
+  public function chooseCards($stack)
+  {
+    Log::insert($this->id, 'selectCard', $stack);
+  }
+
+
+  /////////////////////////////////
+  ///////// WRITE NUMBER //////////
+  /////////////////////////////////
+  /*
+   * Given a number, return the list of possible houses to be written on it
+   */
+  public function getAvailableHousesForNumber($number){
+    return Houses::getAvailableLocations($this->id, $number);
+  }
+
+
+  /*
+   * Write the number on the house
+   */
   public function writeNumber($number, $pos, $isBis = false)
   {
     $house = Houses::add($this->id, $number, $pos, $isBis);
@@ -220,27 +226,54 @@ class Player extends Helpers\DB_Manager
   }
 
 
-  public function scribbleZone($zone)
+
+  /////////////////////////////////
+  /////////// ACTIONS  ////////////
+  /////////////////////////////////
+  /*
+   * Generic zone scribbling that handle almost all actions
+   */
+   public function scribbleZone($zone)
+   {
+     // Compute the name of the zone depending on the state
+     $stateId = $this->getState();
+     $locations = [
+       ST_ACTION_SURVEYOR => "estate-fence",
+       ST_ACTION_ESTATE => "score-estate",
+       ST_ACTION_TEMP   => "score-temp",
+       ST_ACTION_BIS    => "score-bis",
+       ST_ACTION_POOL   => "score-pool",
+       ST_ACTION_PARK   => "park",
+     ];
+
+     // TODO : add sanity checks
+     $scribble = Scribbles::add($this->id, $locations[$stateId], $zone);
+     Notifications::addScribble($this, $scribble);
+
+     // If building a pool, add another scribble on the pool itself
+     if($stateId == ST_ACTION_POOL){
+       $house = $this->getLastHouse();
+       $scribble = Scribbles::add($this->id, "pool", [ $house['x'], $house['y'] ]);
+       Notifications::addScribble($this, $scribble);
+     }
+   }
+
+
+  /*
+   * Computing available number for bis action
+   */
+  public function getAvailableNumbersForBis()
   {
-    $stateId = $this->getState();
-    $locations = [
-      ST_ACTION_SURVEYOR => "estate-fence",
-      ST_ACTION_ESTATE => "score-estate",
-      ST_ACTION_TEMP   => "score-temp",
-      ST_ACTION_BIS    => "score-bis",
-      ST_ACTION_POOL   => "score-pool",
-      ST_ACTION_PARK   => "park",
-    ];
+    // TODO : handle fences !
+    $result = [];
+    for($i = 0; $i <= 17; $i++){
+      $houses = Houses::getAvailableLocationsForBis($this->id, $i);
 
-    // TODO : add sanity checks
-    $scribble = Scribbles::add($this->id, $locations[$stateId], $zone);
-    Notifications::addScribble($this, $scribble);
-
-    // If building a pool, add another scribble on the pool itself
-    if($stateId == ST_ACTION_POOL){
-      $house = $this->getLastHouse();
-      $scribble = Scribbles::add($this->id, "pool", [ $house['x'], $house['y'] ]);
-      Notifications::addScribble($this, $scribble);
+      if(!empty($houses))
+        $result[$i] = $houses;
     }
+    return $result;
+
+    return $houses;
   }
 }
