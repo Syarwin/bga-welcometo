@@ -37,6 +37,14 @@ class action_welcometo extends APP_GameAction
     }
   }
 
+  public function permitRefusal()
+  {
+    self::setAjaxMode();
+    $this->game->permitRefusal();
+    self::ajaxResponse();
+  }
+
+
   // Standard mode => one stack
   public function chooseStack()
   {
@@ -118,4 +126,46 @@ class action_welcometo extends APP_GameAction
     $this->game->confirmTurn();
     self::ajaxResponse();
   }
+
+
+  /////////////////////////////
+  ///// Choose card plan  /////
+  /////////////////////////////
+  public function choosePlan()
+  {
+    self::setAjaxMode();
+    $planId = self::getArg("plan", AT_posint, true);
+    $this->game->choosePlan($planId);
+    self::ajaxResponse();
+  }
+
+  public function validatePlan(){
+    self::setAjaxMode();
+    $arg = self::getArg("planArg", AT_json, true);
+    $this->validateJSonAlphaNum($arg, "planArg");
+    $this->game->validatePlan($arg);
+    self::ajaxResponse();
+  }
+
+
+
+
+  //////////////////
+  ///// UTILS  /////
+  //////////////////
+  public function validateJSonAlphaNum($value, $argName = "unknown"){
+      if (is_array($value)) {
+          foreach ($value as $key => $v) {
+              $this->validateJSonAlphaNum($key);
+              $this->validateJSonAlphaNum($v);
+          }
+          return true;
+      }
+      if (is_int($value)) return true;
+      $bValid = ( preg_match( "/^[0-9a-zA-Z- ]*$/", $value ) === 1 );
+      if (!$bValid)
+          throw new feException( "Bad value for: $argName", true, true, FEX_bad_input_argument );
+      return true;
+  }
+
 }

@@ -12,45 +12,76 @@ use \WTO\Game\UserException;
  */
 trait PlanValidationTrait
 {
+  //////////////////////////////
+  //////// CHOOSE CARD /////////
+  //////////////////////////////
   /*
-   * Fetch the basic info a player should have no matter in which private state he is :
-   *   - selected plan cards (if any)
-   *   - cancelable flag on if an action was already done by user
+   * Skip the state if no plan can be scored
    */
-  function argPrivatePlayerPlanTurn($player)
+  function stChoosePlan($player)
   {
-    $data = [
-//      'selectedCards' => $player->getSelectedCards(),
-//      'cancelable' => $player->hasSomethingToCancel(),
-    ];
-
-    return $data;
+    $plans = $player->getScorablePlans();
+    if(empty($plans)){
+      StateMachine::nextState("none");
+      return true; // Skip this state
+    }
   }
 
-
-  ///////////////////////////////
-  //////// CHOOSE CARDS /////////
-  ///////////////////////////////
+  /*
+   * Return the list of scorable plans
+   */
   function argChoosePlan($player)
   {
-    $data = $this->argPrivatePlayerPlanTurn($player);
-    $data['selectablePlans'] = $player->getAvailablePlans();
+    $data = $this->argPrivatePlayerTurn($player);
+    $data['selectablePlans'] = $player->getScorablePlans();
     return $data;
   }
 
-  function chooseCards($stack)
+  function choosePlan($planId)
   {
     // Sanity checks
     StateMachine::checkAction("choosePlan");
     $player = Players::getCurrent();
-    $args = self::argChooseCards($player);
-    if(!in_array($stack, $args['selectableStacks']))
-      throw new UserException(totranslate("You cannot select this stack"));
+    $args = self::argChoosePlan($player);
+    if(!in_array($planId, $args['selectablePlans']))
+      throw new UserException(totranslate("You cannot select this plan to validate"));
 
     // Do the action (logging the choice for rest of the turn)
-    $player->chooseCards($stack);
+    $player->choosePlan($planId);
 
     // Move on to next state
-    StateMachine::nextState("writeNumber");
+    StateMachine::nextState("validatePlan");
+  }
+
+
+  //////////////////////////////////
+  //////// PLAN VALIDATION /////////
+  //////////////////////////////////
+  function stValidatePlan()
+  {
+
+  }
+
+  /*
+   * Return data needed to compute actions asked by the plan
+   */
+  function argValidatePlan($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $plan = $player->getCurrentPlan();
+    $data['currentPlan'] = $plan->argValidate($player);
+    return $data;
+  }
+
+
+  function validatePlan($arg)
+  {
+    // Sanity checks
+    StateMachine::checkAction("validatePlan");
+    $player = Players::getCurrent();
+    $player->getCurrentPlan()->validate($player, $arg);
+
+    // Move on to next state
+    StateMachine::nextState("choosePlan");
   }
 }

@@ -15,90 +15,10 @@ use \WTO\Game\StateMachine;
 use \WTO\Game\UserException;
 
 /*
- * Handle the private state of each player during the turn
+ * Handle everything related to actions
  */
-trait PrivateTurnTrait
+trait ActionsTrait
 {
-  /*
-   * Fetch the basic info a player should have no matter in which private state he is :
-   *   - selected construction cards (if any)
-   *   - cancelable flag on if an action was already done by user
-   */
-  function argPrivatePlayerTurn($player)
-  {
-    $data = [
-      'selectedCards' => $player->getSelectedCards(),
-      'cancelable' => $player->hasSomethingToCancel(),
-    ];
-
-    return $data;
-  }
-
-
-
-  ///////////////////////////////
-  //////// CHOOSE CARDS /////////
-  ///////////////////////////////
-  function argChooseCards($player)
-  {
-    $data = $this->argPrivatePlayerTurn($player);
-    $data['selectableStacks'] = $player->getAvailableStacks();
-    // TODO handle permit refusal
-    return $data;
-  }
-
-  function chooseCards($stack)
-  {
-    // Sanity checks
-    StateMachine::checkAction("chooseCards");
-    $player = Players::getCurrent();
-    $args = self::argChooseCards($player);
-    if(!in_array($stack, $args['selectableStacks']))
-      throw new UserException(totranslate("You cannot select this stack"));
-
-    // Do the action (logging the choice for rest of the turn)
-    $player->chooseCards($stack);
-
-    // Move on to next state
-    StateMachine::nextState("writeNumber");
-  }
-
-
-  ///////////////////////////////
-  //////// WRITE NUMBER /////////
-  ///////////////////////////////
-  function argWriteNumber($player)
-  {
-    $data = $this->argPrivatePlayerTurn($player);
-    $data["numbers"] = $player->getAvailableNumbers();
-    return $data;
-  }
-
-  function writeNumber($number, $pos)
-  {
-    // Sanity checks
-    StateMachine::checkAction("writeNumber");
-    $player = Players::getCurrent();
-    $args = self::argWriteNumber($player);
-    if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
-      throw new UserException(totranslate("You cannot write this number in this house"));
-
-    // Write the number on the house
-    $player->writeNumber($number, $pos);
-
-    // Move on to next state depending on the action card
-    $combination = $player->getCombination();
-    StateMachine::nextState($combination["action"]);
-  }
-
-
-
-
-  //////////////////////////////////////////
-  //////////////////////////////////////////
-  //////////////   ACTIONS   ///////////////
-  //////////////////////////////////////////
-  //////////////////////////////////////////
   function passAction()
   {
     StateMachine::checkAction("pass");
@@ -214,33 +134,5 @@ trait PrivateTurnTrait
 
     // Move on to next state
     StateMachine::nextState("bis");
-  }
-
-
-
-  //////////////////////////////////////
-  ///////// CONFIRM / RESTART //////////
-  //////////////////////////////////////
-  function cancelTurn()
-  {
-    StateMachine::checkAction("restart");
-    $player = Players::getCurrent();
-    $player->restartTurn();
-    $this->gamestate->setPlayersMultiactive([$player->getId()], '');
-    StateMachine::nextState("restart");
-  }
-
-  function confirmTurn()
-  {
-    StateMachine::checkAction("confirm");
-    StateMachine::nextState("confirm");
-  }
-
-  /*
-   * Make the player inactive and wait for other
-   */
-  function stWaitOther($player)
-  {
-    return $this->gamestate->setPlayerNonMultiactive($player->getId(), "applyTurns");
   }
 }

@@ -63,10 +63,12 @@ $machinestates = [
     "name" => "chooseCards",
     "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
     "type" => "private",
+    'action' => "stChooseCards",
     "args" => "argChooseCards",
     "possibleactions" => ["chooseCards"],
     "transitions" => [
       'writeNumber' => ST_WRITE_NUMBER,
+      'refusal' => ST_PERMIT_REFUSAL,
     ]
   ],
 
@@ -89,6 +91,19 @@ $machinestates = [
   ],
 
 
+  ST_PERMIT_REFUSAL => [
+    "name" => "permitRefusal",
+    "descriptionmyturn" => clienttranslate('${you} cannot write a number and must take a permit refusal'),
+    "type" => "private",
+    "args" => "argPermitRefusal",
+    "possibleactions" => ["refusal"],
+    "transitions" => [
+      'refusal' => ST_CONFIRM_TURN,
+    ]
+  ],
+
+
+
   ////////////////////
   ///// ACTIONS //////
   ////////////////////
@@ -100,8 +115,8 @@ $machinestates = [
     "args" => "argActionSurveyor",
     "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
-      'scribbleZone' => ST_CONFIRM_TURN,
-      'pass' => ST_CONFIRM_TURN,
+      'scribbleZone' => ST_CHOOSE_PLAN,
+      'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
@@ -113,8 +128,8 @@ $machinestates = [
     "args" => "argActionEstate",
     "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
-      'scribbleZone' => ST_CONFIRM_TURN,
-      'pass' => ST_CONFIRM_TURN,
+      'scribbleZone' => ST_CHOOSE_PLAN,
+      'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
@@ -125,7 +140,7 @@ $machinestates = [
     "action" => "stActionTemp",
     "type" => "private",
     "transitions" => [
-      'scribbleZone' => ST_CONFIRM_TURN,
+      'scribbleZone' => ST_CHOOSE_PLAN,
     ]
   ],
 
@@ -137,8 +152,8 @@ $machinestates = [
     "args" => "argActionPark",
     "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
-      'scribbleZone' => ST_CONFIRM_TURN,
-      'pass' => ST_CONFIRM_TURN,
+      'scribbleZone' => ST_CHOOSE_PLAN,
+      'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
@@ -151,8 +166,8 @@ $machinestates = [
     "args" => "argActionPool",
     "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [
-      'scribbleZone' => ST_CONFIRM_TURN,
-      'pass' => ST_CONFIRM_TURN,
+      'scribbleZone' => ST_CHOOSE_PLAN,
+      'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
@@ -165,12 +180,51 @@ $machinestates = [
     "args" => "argActionBis",
     "possibleactions" => ["writeNumberBis", "pass", "restart"],
     "transitions" => [
-      'bis' => ST_CONFIRM_TURN,
-      'pass' => ST_CONFIRM_TURN,
+      'bis' => ST_CHOOSE_PLAN,
+      'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 
+
+
+  ////////////////////
+  ////// PLANS ///////
+  ////////////////////
+
+  ST_CHOOSE_PLAN => [
+    "name" => "choosePlan",
+    "descriptionmyturn" => clienttranslate('${you} must select a plan to validate'),
+    "type" => "private",
+    "action" => "stChoosePlan",
+    "args" => "argChoosePlan",
+    "possibleactions" => ["choosePlan", "restart"],
+    "transitions" => [
+      'none' => ST_CONFIRM_TURN,
+      'validatePlan' => ST_VALIDATE_PLAN,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
+
+
+  ST_VALIDATE_PLAN => [
+    "name" => "validatePlan",
+    "descriptionmyturn" => clienttranslate('${you} must select estates to validate this plan'),
+    "type" => "private",
+    "action" => "stValidatePlan",
+    "args" => "argValidatePlan",
+    "possibleactions" => ["validatePlan", "restart"],
+    "transitions" => [
+      'restart' => ST_CHOOSE_CARDS,
+      'choosePlan' => ST_CHOOSE_PLAN,
+    ]
+  ],
+
+
+  //////////////////////////
+  ///// CONFIRM / END //////
+  //////////////////////////
 
   // Pre-end of parallel flow
   ST_CONFIRM_TURN => [
@@ -208,53 +262,11 @@ $machinestates = [
     "action" => "stApplyTurn",
     "transitions" => [
       "newTurn" => ST_NEW_TURN,
-      "validatePlans" => ST_VALIDATE_PLANS
     ]
   ],
 
 
 
-  ST_VALIDATE_PLANS => [
-    "name" => "validatePlans",
-    "description" => clienttranslate('Some players can validate their plans.'),
-    "descriptionmyturn" => clienttranslate('${you} must decide which plan to validate, and which housing estate must be used for it if the plan doesn\'t have an asterisk (not an advanced one).'),
-    "type" => "multipleactiveplayer",
-    "parallel" => ST_CHOOSE_PLAN, // Allow to have parallel flow for each player
-    "action" => "stValidatePlans",
-    "args" => "argValidatePlans",
-    "possibleactions" => ["validatePlans"],
-    "transitions" => [
-//      "applyPlansValidation" => ST_APPLY_ TODO : weird
-    ]
-  ],
-
-
-/************************
-**** PARALLEL STATES ****
-************************/
-  ST_CHOOSE_PLAN => [
-    "name" => "choosePlan",
-    "description" => clienttranslate('Some players may validate their plans.'),
-    "descriptionmyturn" => clienttranslate('${you} can select a plan to validate, or pass.'),
-    "type" => "private",
-    "args" => "argChoosePlan",
-    "possibleactions" => ["choosePlan"],
-    "transitions" => [
-  //      "applyPlansValidation" => ST_APPLY_ TODO : weird
-    ]
-  ],
-
-
-/*
-    7 => array(
-        "name" => "applyPlansValidation",
-        "description" => clienttranslate('Some players can validate their plans.'),
-        "descriptionmyturn" => clienttranslate('${you} must decide which plan to validate, and which housing estate must be used for it if the plan doesn\'t have an asterisk (not an advanced one).'),
-        "type" => "multipleactiveplayer",
-        "action" => "stApplyPlans",
-        "transitions" => array("checkEndGameConditions" => 8)
-    ),
-*/
 
 /* TODO : weird
     8 => array(

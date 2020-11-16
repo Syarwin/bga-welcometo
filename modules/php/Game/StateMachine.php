@@ -96,10 +96,16 @@ class StateMachine extends \APP_DbObject
     $data = ['_private' => [] ];
     foreach(Players::getAll() as $player){
       $state = self::getPrivateState($player->getState(), false);
-      $method = $state['args'];
+
+      $args = [];
+      if(isset($state['args'])){
+        $method = $state['args'];
+        $args = self::getGame()->$method($player);
+      }
+
       $data['_private'][$player->getId()] = [
         'state' => $state,
-        'args' => self::getGame()->$method($player),
+        'args' => $args,
       ];
     }
 

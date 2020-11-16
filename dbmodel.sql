@@ -51,9 +51,11 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `number` int(10) NOT NULL,
   `is_bis` BOOLEAN,
   `turn` int(10) NOT NULL,
-  `used_in_plan` BOOLEAN,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 
 ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
+ALTER TABLE `player` ADD `validation_plan_1` INT(10) UNSIGNED;
+ALTER TABLE `player` ADD `validation_plan_2` INT(10) UNSIGNED;
+ALTER TABLE `player` ADD `validation_plan_3` INT(10) UNSIGNED;

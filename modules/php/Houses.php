@@ -2,6 +2,7 @@
 namespace WTO;
 use welcometo;
 use WTO\Game\Globals;
+use WTO\Actions\Surveyor;
 
 /*
  * Houses manager : allows to easily access houses ...
@@ -19,7 +20,6 @@ class Houses extends Helpers\DB_Manager
       'y' => (int) $row['y'],
       'isBis' => $row['is_bis'] == 1,
       'turn' => (int) $row['turn'],
-      'usedInPlan' => $row['used_in_plan'] == 1,
     ];
   }
 
@@ -76,8 +76,9 @@ class Houses extends Helpers\DB_Manager
   /*
    * getOfPlayer : returns the houses of given player id
    */
-  public function getOfPlayer($pId)
+  public function getOfPlayer($player)
   {
+    $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
     return self::DB()->where('player_id', $pId)->get(false)->toArray();
   }
 
@@ -86,15 +87,14 @@ class Houses extends Helpers\DB_Manager
   /*
    * getStreets : 2D array of houses/null
    */
-  public function getStreets($pId)
+  public function getStreets($player)
   {
     $streets = self::getBlankStreets();
-    foreach(self::getOfPlayer($pId) as $house){
+    foreach(self::getOfPlayer($player) as $house){
       $streets[$house['x']][$house['y']] = [
         'number' => $house['number'],
         'bis' => $house['isBis'],
         'turn' => $house['turn'],
-        'usedInPlan' => $house['usedInPlan'],
       ];
     }
 
@@ -105,11 +105,11 @@ class Houses extends Helpers\DB_Manager
   /*
    * getAvailableLocations of a given number
    */
-  public function getAvailableLocations($pId, $number)
+  public function getAvailableLocations($player, $number)
   {
     // Init all locations to be available
     $locations = self::getBlankStreets(true);
-    $streets = self::getStreets($pId);
+    $streets = self::getStreets($player);
 
     // Filter the location to enforce increasing left to right
     for($x = 0; $x < 3; $x++){
@@ -142,11 +142,13 @@ class Houses extends Helpers\DB_Manager
     return self::convertBooleansToArray($locations);
   }
 
-  public function getAvailableLocationsForBis($pId, $number)
+  public function getAvailableLocationsForBis($player, $number)
   {
     // Init all locations to be unavailable
     $locations = self::getBlankStreets(false);
-    $streets = self::getStreets($pId);
+    $streets = self::getStreets($player);
+    $fences = Surveyor::getOfPlayerStructured($player);
+
 
     // Add location that matches condition going left to right
     for($x = 0; $x < 3; $x++){
@@ -161,6 +163,9 @@ class Houses extends Helpers\DB_Manager
           $hole = 0;
           $maxNumber = ($streets[$x][$y]['number'] == ROUNDABOUT)? -1 : $streets[$x][$y]['number'];
         }
+
+        if(isset($fences[$x][$y]) && !is_null($fences[$x][$y]))
+          $maxNumber = -1;
       }
     }
 
@@ -176,6 +181,9 @@ class Houses extends Helpers\DB_Manager
           $hole = 0;
           $minNumber = ($streets[$x][$y]['number'] == ROUNDABOUT)? 18 : $streets[$x][$y]['number'];
         }
+
+        if(isset($fences[$x][$y-1]) && !is_null($fences[$x][$y-1]))
+          $minNumber = 18;
       }
     }
 

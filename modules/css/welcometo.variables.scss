@@ -47,14 +47,13 @@ $pools:(
   ("x":0, "y":2, "left":592px, "top":139px),
   ("x":0, "y":6, "left":1011px, "top":140px),
   ("x":0, "y":7, "left":1112px, "top":142px),
-  /*
-  ("x":0, "y":2, "left":592px, "top":139px),
-  ("x":0, "y":2, "left":592px, "top":139px),
-  ("x":0, "y":2, "left":592px, "top":139px),
-  ("x":0, "y":2, "left":592px, "top":139px),
-  ("x":0, "y":2, "left":592px, "top":139px),
-  ("x":0, "y":2, "left":592px, "top":139px),
-  */
+  ("x":1, "y":0, "left":287px, "top":417px),
+  ("x":1, "y":3, "left":594px, "top":414px),
+  ("x":1, "y":7, "left":1008px, "top":418px),
+
+  ("x":2, "y":1, "left":289px, "top":692px),
+  ("x":2, "y":6, "left":804px, "top":692px),
+  ("x":2, "y":10, "left":1210px, "top":688px),
 );
 
 $fences:(
@@ -128,3 +127,5 @@ $scoreEstates:(
 
 
 $scoreBis:(1051px, 1114px, 1177px, 1240px, 1301px);
+
+$permitRefusal:(1133px, 1194px, 1254px);

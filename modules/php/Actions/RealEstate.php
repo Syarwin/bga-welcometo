@@ -12,7 +12,7 @@ class RealEstate extends Zone
 
   // Return a list of the estates of the player, in the following format :
   //  [ street x,  starting house y, size ]
-  public function getEstates($player, $evenIfUsedInPlan = true)
+  public function getEstates($player)
   {
     $streets = Houses::getStreets($player->getId());
     $fences = Surveyor::getOfPlayerStructured($player);
@@ -23,15 +23,21 @@ class RealEstate extends Zone
       $full = true;
       for($j = 0; $j < count($streets[$i]); $j++){
         // TODO : handle turnaround
-        if(is_null($streets[$i][$j])
-        || ($streets[$i][$j]['usedInPlan'] && !$evenIfUsedInPlan) ){
+        if(is_null($streets[$i][$j])){
           $full = false;
         }
 
-        // If no hole and a fence on the right (either built or right edge of street)
+        // If a fence on the right (either built or right edge of street)
         if($j == count($streets[$i]) - 1 || !is_null($fences[$i][$j]) ){
+          // If no hole : that's an estate !
           if($full)
-            array_push($estates, [$i, $start, $j - $start + 1]);
+            array_push($estates, [
+              'x' => $i,
+              'y' => $start,
+              'size' => $j - $start + 1
+            ]);
+
+          // Start a new one
           $full = true;
           $start = $j + 1;
         }
@@ -45,7 +51,7 @@ class RealEstate extends Zone
   {
     $mult = [0,0,0,0,0,0];
     foreach(self::getEstates($player) as $estate){
-      $size = $estate[2];
+      $size = $estate['size'];
       if($size < 7)
         $mult[$size - 1]++;
     }

@@ -24,7 +24,6 @@ define([
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/stock",
-    g_gamethemeurl + "modules/js/nouislider.min.js",
     g_gamethemeurl + "modules/js/wtoLayout.js",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
@@ -53,6 +52,8 @@ define([
     setup(gamedatas) {
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
+
+      dojo.place("<div id='customActions' style='display:inline-block'></div>", $("generalactions"), "after");
 
       // Setup game notifications
       this.setupNotifications();
@@ -181,7 +182,11 @@ define([
          this._constructionCards.highlight(args.selectedCards);
        }
 
-       // Hightlight scribbles/action from current turn
+       if(args.selectedPlans && args.selectedPlans.length > 0){
+         this._planCards.highlight(args.selectedPlans);
+       }
+
+       // TODO Hightlight scribbles/action from current turn
        // dojo.query(...) args.turn...
      },
 
@@ -203,6 +208,17 @@ define([
        }
      },
 
+
+     ////////////////////////////////
+     //////  Permit refusal   ///////
+     ////////////////////////////////
+     onEnteringStatePermitRefusal(args){
+       this.displayBasicInfo(args);
+
+       let callback = (zone) => this.takeAction("permitRefusal");
+       this._scoreSheet.promptZones("permit-refusal", args.zones, callback);
+       this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
+     },
 
      ////////////////////////////////////////////
      ///////   Draw a number on a house   ///////
@@ -282,6 +298,12 @@ define([
      },
 
 
+     notif_addMultipleScribbles(args){
+       debug("Notif: scribbling several zones", args);
+       args.args.scribbles.forEach(scribble => this._scoreSheet.addScribble(scribble, true) );
+     },
+
+
      //////////////////////////////////////
      //////////   Bis action   ////////////
      //////////////////////////////////////
@@ -325,6 +347,35 @@ define([
        this.displayBasicInfo(args);
      },
 
+
+     ///////////////////////////////////////////////////
+     //////   Choose city plans for validation   ///////
+     //////////////////////////////////////////////////
+     onEnteringStateChoosePlan(args){
+       this.displayBasicInfo(args);
+       this._planCards.promptPlayer(args.selectablePlans, this.onChoosePlan.bind(this));
+     },
+
+     onChoosePlan(planId){
+       debug("You chose plan cards :", planId);
+       this.takeAction("choosePlan", { plan: planId});
+     },
+
+
+     ///////////////////////////////////////////////////
+     //////   Choose estates to validate plan   ///////
+     //////////////////////////////////////////////////
+     onEnteringStateValidatePlan(args){
+       this.displayBasicInfo(args);
+       this._scoreSheet.promptPlayerEstates(args.currentPlan, this.onChooseEstates.bind(this));
+     },
+
+     onChooseEstates(estates){
+       debug("You chose following estates for the plan :", estates);
+       this.takeAction("validatePlan", { planArg : JSON.stringify(estates) });
+     },
+
+
      ////////////////////////////////////////////
      ////////////////////////////////////////////
      //////////////   Utils   ///////////////////
@@ -354,6 +405,7 @@ define([
       */
      clearPossible() {
        this.removeActionButtons();
+       dojo.empty("customActions");
        this.onUpdateActionButtons(this.gamedatas.gamestate.name, this.gamedatas.gamestate.args);
 
        this._connections.forEach(dojo.disconnect);
@@ -378,12 +430,17 @@ define([
       */
      addPrimaryActionButton(id, text, callback){
        if(!$(id))
-        this.addActionButton(id, text, callback, null, false, 'blue');
+        this.addActionButton(id, text, callback, "customActions", false, 'blue');
      },
 
      addSecondaryActionButton(id, text, callback){
        if(!$(id))
-        this.addActionButton(id, text, callback, null, false, 'gray');
+        this.addActionButton(id, text, callback, "customActions", false, 'gray');
+     },
+
+     addDangerActionButton(id, text, callback){
+       if(!$(id))
+        this.addActionButton(id, text, callback, "customActions", false, 'red');
      },
 
 
@@ -406,12 +463,19 @@ define([
          ['clearTurn', 1],
          ['writeNumber', 1000],
          ['addScribble', 1000],
+         ['addMultipleScribbles', 1000],
          ['newCards', 1000],
        ];
 
        notifs.forEach(notif => {
-         dojo.subscribe(notif[0], this, "notif_" + notif[0]);
+         var functionName = "notif_" + notif[0];
+
+         dojo.subscribe(notif[0], this, functionName);
          this.notifqueue.setSynchronous(notif[0], notif[1]);
+
+         // xxxInstant notification runs same function without delay
+         dojo.subscribe(notif[0] + 'Instant', this, functionName);
+         this.notifqueue.setSynchronous(notif[0] + 'Instant', 10);
        });
      }
    });

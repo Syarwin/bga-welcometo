@@ -78,7 +78,7 @@ var jstpl_scoreSheet = `
 //// TOP PART ////
 var jstpl_cityName = '<div id="${pId}_cityname" class="cityname" style="color:#${color}">${name}</div>';
 var jstpl_house = '<div id="${pId}_house_${x}_${y}" data-x="${x}" data-y="${y}" class="house"></div>';
-var jstpl_topFence = '<div id="${pId}_top_fence_${x}_${y}" data-x="${x}" data-y="${y}" class="top-fence"></div>';
+var jstpl_topFence = '<div id="${pId}_top-fence_${x}_${y}" data-x="${x}" data-y="${y}" class="top-fence"></div>';
 var jstpl_estateFence = '<div id="${pId}_estate-fence_${x}_${y}" data-x="${x}" data-y="${y}" class="estate-fence"></div>';
 var jstpl_park = `<div id="\${pId}_park_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="park">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 49 47" class="highlight">
@@ -98,19 +98,28 @@ var jstpl_pool = `<div id="\${pId}_pool_\${x}_\${y}" data-x="\${x}" data-y="\${y
   </svg>
 </div>`;
 
+var jstpl_houseNumber = '<div class="house-number" data-turn="${turn}">${number}${bis}</div>';
+var jstpl_estate = `
+<div class="estate" data-size="\${size}" data-x="\${x}" data-y="\${y}" style="left:\${left}px; top:\${top}px; width:\${width}px; height:\${height}px">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" />
+    <rect width="100%" height="100%" />
+  </svg>
+</div>`;
+
 
 //// BOTTOM PART ////
 var jstpl_scorePool = '<div id="${pId}_score-pool_${x}" data-x="${x}" class="score-pool"></div>';
 var jstpl_scoreTemp = '<div id="${pId}_score-temp_${x}" data-x="${x}" class="score-temp"></div>';
 var jstpl_scoreEstate = '<div id="${pId}_score-estate_${x}_${y}" data-x="${x}" data-y="${y}" class="score-estate"></div>';
 var jstpl_scoreBis = '<div id="${pId}_score-bis_${x}" data-x="${x}" class="score-bis"></div>';
+var jstpl_permitRefusal = '<div id="${pId}_permit-refusal_${x}" data-x="${x}" class="permit-refusal"></div>';
 
 var jstpl_scoreCounter = '<div id="${pId}_score_${id}" class="score-counter score_${id}"></div>';
 
 
 
 
-var jstpl_houseNumber = '<div class="house-number" data-turn="${turn}">${number}${bis}</div>';
 
 var jstpl_scribble = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.33331 533.33331" class="scribble" id="scribble-\${id}" data-turn="\${turn}">
@@ -161,84 +170,23 @@ var jstpl_scribbleLine = `
 	/>
 </svg>
 `;
-
-/*
-var jstpl_house = '<div id="house_${pId}_${x}_${y}" data-x="${x}" data-y="${y}" class="house"></div>;
-var jstpl_topFence = ';
-var jstpl_rightFence = '';
-*/
-
-//// BOTTOM PART ////
-/*
-var jstpl_scorePlans = '<div id="score_${pId}_plan_${plan_id}" class="plan-score"></div>';
-var park_score_div = '<div id="park_${street}_score_${player_id}" class="park_score_div park_${street}_score handwritten"></div>';
-var pool_score_div = '<div id="pool_${pool_number}_score_${player_id}" class="pool_score_div pool_line_${pool_line} pool_column_${pool_column}"></div>';
-var real_estate_score_div = '<div id="real_estate_${size}_${number}_score_${player_id}" class="real_estate_score_div real_estate_size_${size} real_estate_${size}_${number}"></div>';
-var temp_score_div = '<div id="temp_${temp_number}_score_${player_id}" class="temp_score_div temp_line_${temp_line} temp_column_${temp_column}"></div>';
-var bis_score_div = '<div id="bis_${bis_number}_score_${player_id}" class="bis_score_div bis_line_${bis_line} bis_column_${bis_column}"></div>';
-var roundabout_score_div = '<div id="roundabout_${roundabout_number}_score_${player_id}" class="roundabout_score_div roundabout_${roundabout_number}_score"></div>';
-var permit_refusal_score_div = '<div id="permit_refusal_${permit_refusal_number}_score_${player_id}" class="permit_refusal_score_div permit_refusal_${permit_refusal_number}_score"></div>';
-
-var result_score_div = '<div id="result_score_${category}_${player_id}" class="result_score_div result_score_${category} handwritten"></div>';
-var real_estate_score_number_div = '<div id="real_estate_${size}_number_${player_id}" class="real_estate_score_number_div real_estate_number_size_${size} handwritten"></div>';
-var temp_ranking_score_div = '<div id="temp_ranking_${rank}_score_${player_id}" class="temp_ranking_score_div temp_ranking_${rank}_score_div"></div>';
-
-*/
-
-/*
-var jstpl_player_board = '\
-<span id="player_${id}_helper_${icon}">\
-    <img id="player_${id}_icon_${icon}" class=${icon}></img>\
-</span>';
-
-var player_board_modal = '<div id="modal_${player_id}" class="modal">\
-  <div id="modal_content_${player_id}" class="modal-content">\
-    <span id="close_modal_${player_id}" class="close">&times;</span>\
-  </div>\
-</div>';
-
-var last_turn_modal = '<div id="modal_${player_id}_last_turn" class="modal">\
-  <div id="modal_content_${player_id}_last_turn" class="modal-content">\
-    <span id="close_modal_${player_id}_last_turn" class="close">&times;</span>\
-  </div>\
-</div>';
-
-var last_turn_content = '<div id="modal_${player_id}_last_turn_wrapper">\
-${content_blocks}\
-</div>';
-
-var modal_template = '<div id="modal_${player_id}_${modal_name}" class="modal modal_${modal_name}">\
-  <div id="modal_content_${player_id}_${modal_name}" class="modal-content modal-content-${modal_name}">\
-    <span id="close_modal_${player_id}_${modal_name}" class="close">&times;</span>\
-  </div>\
-</div>';
-
-var easy_opening_modal = '<div id="easy_opening_modal"></div>';
-var easy_opening_choice = '<button id="easy_opening_${number}" class="easy_opening_button">${number}</button>';
-
-var bis_modal = '<div id="bis_modal"></div>';
-var bis_choice = '<button id="easy_opening_${direction}" class="easy_opening_button">Copy from ${direction} : ${number}</button>';
-
-var house_div = '<div id="house_${house_id}_${player_id}" class="avenue${avenue} house${house_id} house_div empty_house handwritten"></div>';
-var house_pool_div = '<div id="house_pool_${house_id}_${player_id}" class="avenue${avenue} pool${street} house_pool_div handwritten"></div>';
-var plan_fence_div = '<div id="top_fence_${house_id}_${player_id}" class="avenue${avenue} street${street} plan_fence_div"></div>';
-var estate_fence_div = '<div id="estate_fence_${house_id}_${player_id}" class="avenue${avenue} street${street} estate_fence_div"></div>';
-var park_div = '<div id="park_${street}_${park_number}_${player_id}" class="street${street} park_column${park_column} park_div handwritten"></div>';
+var jstpl_scribbleLineHor = `
+<svg xmlns="http://www.w3.org/2000/svg" class="scribble-line-hor" id="scribble-\${id}" data-turn="\${turn}"    viewBox="0 0 181.54053 16.163235">
+	<clipPath id="scribble-line-hor-clip-path">
+    <path
+    d="M 1.0350344,13.933326 C -0.41474042,12.018066 -0.18785306,5.2625575 0.77312792,2.5701545 2.1135185,-1.1852626 7.9386045,1.4892012 10.561954,1.3915884 c 8.96413,-0.3335481 44.091008,2.8138849 74.340816,0.8835658 14.258666,-0.9098825 27.4567,-0.4206211 50.68871,-0.6571415 34.55724,-0.3518454 43.59139,-4.1121759 45.64059,1.2050805 0.20746,4.9076403 2.07544,12.1970858 -2.22963,11.6616108 -6.39465,-0.795382 -32.06728,-1.972175 -53.51382,-0.363446 C 116.33086,14.808194 4.4611209,18.459455 1.0350344,13.933326 Z"
+     />
+  </clipPath>
+  <path
+		 clip-path="url(#scribble-line-hor-clip-path)"
+     class="scribble-path"
+		 fill="none" stroke-miterlimit="0" stroke-width="30"
+     d="M 0.6984223,7.1739953 C 60.640151,21.094503 123.45482,0.22400919 180.6929,6.4385659"
+ 	/>
+</svg>
+`;
 
 
-var plan_score_div = '<div id="plan_${plan_id}_score_${player_id}" class="plan_score_div plan_${plan_id}_score handwritten"></div>';
-var park_score_div = '<div id="park_${street}_score_${player_id}" class="park_score_div park_${street}_score handwritten"></div>';
-var pool_score_div = '<div id="pool_${pool_number}_score_${player_id}" class="pool_score_div pool_line_${pool_line} pool_column_${pool_column}"></div>';
-var real_estate_score_div = '<div id="real_estate_${size}_${number}_score_${player_id}" class="real_estate_score_div real_estate_size_${size} real_estate_${size}_${number}"></div>';
-var temp_score_div = '<div id="temp_${temp_number}_score_${player_id}" class="temp_score_div temp_line_${temp_line} temp_column_${temp_column}"></div>';
-var bis_score_div = '<div id="bis_${bis_number}_score_${player_id}" class="bis_score_div bis_line_${bis_line} bis_column_${bis_column}"></div>';
-var roundabout_score_div = '<div id="roundabout_${roundabout_number}_score_${player_id}" class="roundabout_score_div roundabout_${roundabout_number}_score"></div>';
-var permit_refusal_score_div = '<div id="permit_refusal_${permit_refusal_number}_score_${player_id}" class="permit_refusal_score_div permit_refusal_${permit_refusal_number}_score"></div>';
-
-var result_score_div = '<div id="result_score_${category}_${player_id}" class="result_score_div result_score_${category} handwritten"></div>';
-var real_estate_score_number_div = '<div id="real_estate_${size}_number_${player_id}" class="real_estate_score_number_div real_estate_number_size_${size} handwritten"></div>';
-var temp_ranking_score_div = '<div id="temp_ranking_${rank}_score_${player_id}" class="temp_ranking_score_div temp_ranking_${rank}_score_div"></div>';
-*/
 </script>
 
 {OVERALL_GAME_FOOTER}

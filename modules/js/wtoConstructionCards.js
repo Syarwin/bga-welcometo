@@ -38,6 +38,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     clearPossible(){
       this._callback = null;
       this._possibleChoices = null;
+      this._selectableStacks = null;
       dojo.query(".construction-cards-stack").removeClass("unselectable selectable");
     },
 

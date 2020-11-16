@@ -11,52 +11,50 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
     constructor(gamedatas) {
       debug("Seting up the plan cards");
+      this._selectablePlans = [];
 
       // Display the cards
       gamedatas.planCards.forEach(plan => {
         dojo.place(this.format_block('jstpl_planCard', plan), 'plan-cards-container-resizable');
+        dojo.connect($('plan-card-' + plan.id), 'click', () => this.onClickPlan(plan.id));
       });
     },
 
     // Clear everything
     clearPossible(){
+      this._callback = null;
+      this._selectablePlans = null;
+      dojo.query(".plan-card-holder").removeClass("unselectable selectable");
+    },
+
+    // Hightlight selected plan
+    highlight(plans){
+      dojo.query(".plan-card-holder").addClass("unselectable");
+      plans.forEach(planId => dojo.addClass('plan-card-' + planId, 'selected') );
     },
 
     ////////////////////////////////////
     ////////  Selecting a stack ////////
     ////////////////////////////////////
-    promptPlayer(possibleChoices, callback){
+    promptPlayer(planIds, callback){
       this._callback = callback;
-      this._possibleChoices = possibleChoices;
-      this.initSelectableStacks();
+      this.makePlansSelectable(planIds);
     },
 
-    initSelectableStacks(){
-      this._selectedStackForNonStandard = null;
-      let stacks = this._possibleChoices.map(choice => this._isStandard? choice : choice[0]);
-      this.makeStacksSelectable(stacks);
+    makePlansSelectable(planIds){
+      dojo.query(".plan-card-holder").removeClass("selected");
+      dojo.query(".plan-card-holder").addClass("unselectable");
+      this._selectablePlans = planIds;
+      planIds.forEach(planId =>  dojo.query("#plan-card-" + planId).removeClass("unselectable").addClass("selectable") );
     },
 
-
-    makeStacksSelectable(stacks){
-      dojo.query(".construction-cards-stack").removeClass("selected"); // TODO : add in the clearPossible function instead ?
-      dojo.query(".construction-cards-stack").addClass("unselectable");
-      this._selectableStacks = stacks;
-      stacks.forEach(stackId =>  dojo.query("#construction-cards-stack-" + stackId).removeClass("unselectable").addClass("selectable") );
-    },
-
-    onClickStack(stackId){
-      debug("Clicked on a stack", stackId);
+    onClickPlan(planId){
+      debug("Clicked on a plan", planId);
       // Check if selectable
-      if(!this._selectableStacks.includes(stackId))
+      if(!this._selectablePlans || !this._selectablePlans.includes(planId))
         return;
 
-      // Standard mode => return stack id
-      if(this._isStandard)
-        this._callback(stackId)
-      else
-        this.onClickStackNonStandard(stackId);
+      this._callback(planId)
     },
-
   });
 });

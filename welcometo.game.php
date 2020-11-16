@@ -46,8 +46,11 @@ require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
 
 class welcometo extends Table
 {
-  use WTO\States\PublicTurnTrait;
-  use WTO\States\PrivateTurnTrait;
+  use WTO\States\TurnTrait;
+  use WTO\States\WriteNumberTrait;
+  use WTO\States\ActionsTrait;
+  use WTO\States\PlanValidationTrait;
+  use WTO\States\ConfirmWaitTrait;
 
   public static $instance = null;
   public function __construct()

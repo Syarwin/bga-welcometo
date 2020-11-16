@@ -31,12 +31,13 @@ abstract class AbstractPlan
     ];
   }
 
+  public function getId(){ return $this->id; }
   public function getStack(){ return $this->stack; }
   public function isAvailable(){
     return $this->variant == BASIC || Globals::isAdvanced();
   }
 
   abstract public function canBeScored($player);
-  abstract public function argValidatePlans($player);
-  abstract public function validatePlans($player, $args);
+  abstract public function argValidate($player);
+  abstract public function validate($player, $args);
 }

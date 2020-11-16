@@ -60,9 +60,9 @@ class Log extends \WTO\Helpers\DB_Manager
     return self::getFilteredQuery($pId)->get();
   }
 
-  public static function getLastAction($action, $pId)
+  public static function getLastAction($action, $pId, $limit = 1)
   {
-    return self::getFilteredQuery($pId)->where('action', $action)->limit(1)->get(true);
+    return self::getFilteredQuery($pId)->where('action', $action)->limit($limit)->get($limit == 1);
   }
 
 

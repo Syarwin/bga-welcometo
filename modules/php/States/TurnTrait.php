@@ -9,7 +9,7 @@ use WTO\ConstructionCards;
  * Handle the public start and end of a turn
  */
 
-trait PublicTurnTrait
+trait TurnTrait
 {
   /*
    * Game state that init a new turn
@@ -43,6 +43,21 @@ trait PublicTurnTrait
     return StateMachine::getArgs();
   }
 
+  /*
+   * Fetch the basic info a player should have no matter in which private state he is :
+   *   - selected construction cards (if any)
+   *   - cancelable flag on if an action was already done by user
+   */
+  function argPrivatePlayerTurn($player)
+  {
+    $data = [
+      'selectedCards' => $player->getSelectedCards(),
+      'selectedPlans' => $player->getSelectedPlans(),
+      'cancelable' => $player->hasSomethingToCancel(),
+    ];
+
+    return $data;
+  }
 
   /*
    *

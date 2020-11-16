@@ -100,6 +100,25 @@ class Player extends Helpers\DB_Manager
 
 
   /*
+   * Return either the selected plans if any, or null
+   */
+  public function getSelectedPlans()
+  {
+    return Log::getLastAction('selectPlan', $this->id, 3)->map(function($action){ return $action['arg']; });
+  }
+
+  /*
+   * Return the currently in validation plan
+   */
+  public function getCurrentPlan()
+  {
+    $selectedPlanAction = Log::getLastAction('selectPlan', $this->id);
+    // TODO : add sanity check
+    return PlanCards::get($selectedPlanAction['arg']);
+  }
+
+
+  /*
    * Allow to format the selected stacks (getter defined below)
    *   into a combination [number, action]
    */
@@ -212,7 +231,7 @@ class Player extends Helpers\DB_Manager
    * Given a number, return the list of possible houses to be written on it
    */
   public function getAvailableHousesForNumber($number){
-    return Houses::getAvailableLocations($this->id, $number);
+    return Houses::getAvailableLocations($this, $number);
   }
 
 
@@ -244,6 +263,7 @@ class Player extends Helpers\DB_Manager
        ST_ACTION_BIS    => "score-bis",
        ST_ACTION_POOL   => "score-pool",
        ST_ACTION_PARK   => "park",
+       ST_PERMIT_REFUSAL=> "permit-refusal",
      ];
 
      // TODO : add sanity checks
@@ -267,7 +287,7 @@ class Player extends Helpers\DB_Manager
     // TODO : handle fences !
     $result = [];
     for($i = 0; $i <= 17; $i++){
-      $houses = Houses::getAvailableLocationsForBis($this->id, $i);
+      $houses = Houses::getAvailableLocationsForBis($this, $i);
 
       if(!empty($houses))
         $result[$i] = $houses;
@@ -276,4 +296,37 @@ class Player extends Helpers\DB_Manager
 
     return $houses;
   }
+
+
+
+
+/////////////////////////////////
+/////////////////////////////////
+/////////// CITY PLANS //////////
+/////////////////////////////////
+/////////////////////////////////
+
+  /*
+   *  Return the set of scorable plans
+   */
+  public function getScorablePlans()
+  {
+    $res = [];
+    foreach(PlanCards::getCurrent() as $plan){
+      if($plan->canBeScored($this))
+        array_push($res, $plan->getId());
+    }
+    return $res;
+  }
+
+
+  /*
+   * Tag the selected plan
+   */
+  public function choosePlan($planId)
+  {
+    Log::insert($this->id, 'selectPlan', $planId);
+  }
+
+
 }

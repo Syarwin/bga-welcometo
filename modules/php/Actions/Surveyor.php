@@ -13,6 +13,7 @@ class Surveyor extends Zone
   public function getAvailableZones($player)
   {
     $fences = parent::getOfPlayerStructured($player);
+    $topFences = TopFence::getOfPlayerStructured($player);
     $houses = Houses::getStreets($player->getId());
     $zones = [];
 
@@ -23,8 +24,8 @@ class Surveyor extends Zone
           continue;
 
         if(!is_null($houses[$i][$j])){
-          // Not used in plan
-          if($houses[$i][$j]['usedInPlan'])
+          // Can't separate two houses used in same plan
+          if($topFences[$i][$j] && $topFences[$i][$j+1])
             continue;
 
           // Can't separate a bis

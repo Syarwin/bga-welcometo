@@ -2,7 +2,9 @@ var isDebug = window.location.host == 'studio.boardgamearena.com' || window.loca
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
-  g_gamethemeurl + "modules/js/nouislider.min.js",], function (dojo, declare, gameui, noUiSlider) {
+  g_gamethemeurl + "modules/js/nouislider.min.js",
+  g_gamethemeurl + "modules/js/sticky.min.js"
+], function (dojo, declare, gameui, noUiSlider, Stickyfill) {
   let HORIZONTAL = 0;
   let VERTICAL = 1;
 
@@ -12,6 +14,20 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
 *********************************/
     constructor() {
       debug("Seting up the layout manager");
+
+/*
+      debug(Stickyfill);
+      Stickyfill.forceSticky();
+      Stickyfill.add($("construction-cards-container-sticky"));
+/*
+      let param = {
+        stickyBitStickyOffset: 60,
+        useFixed: true,
+        useGetBoundingClientRect: true,
+      };
+      stickybits("#construction-cards-container-sticky", param);
+      stickybits("#plans-cards-container-sticky",  param);
+*/
 
       dojo.place(jstpl_layoutControls, 'upperrightmenu', 'first');
       dojo.connect($('layout-button'), 'onclick', () => this.toggleControls() );
@@ -106,8 +122,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       dojo.style('construction-cards-container-sticky', 'height', `${cardsHeight * cardsScale}px`);
       dojo.style('construction-cards-container', 'width', `${newCardsWidth - 10}px`);
 
-      let plansWidth = 228;
-      let plansHeight = 940;
+      let plansWidth = 236;
+      let plansHeight = 964;
       let plansRatio = (100 - this._secondHandle) / 100;
       let newPlansWidth = plansRatio*box['width'] - 10;
       let plansScale = newPlansWidth / plansWidth;
@@ -129,7 +145,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
 
 
       let cardsWidth = 1289;
-      let plansWidth = 630;
+      let plansWidth = 654;
       let cardsHeight = 312;
 
       if(this._merged){

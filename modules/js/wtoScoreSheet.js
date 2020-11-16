@@ -87,6 +87,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       this._selectableHouses = null;
       this._selectableZones = null;
       this._zoneType = null;
+
+      dojo.query(".estate").forEach(dojo.destroy);
+      this._selectedEstates = [];
+      this._selectableSizes = null;
+      this._callback = null;
     },
 
 
@@ -99,6 +104,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       dojo.query(`.scribble[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-circle[data-turn="${turn}"]`).forEach(dojo.destroy);
+      dojo.query(`.scribble-line[data-turn="${turn}"]`).forEach(dojo.destroy);
+      dojo.query(`.scribble-line-hor[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////
@@ -113,11 +120,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       var parks = [3, 4, 5];
 
       for(var x = 0; x < 3; x++){
+        this.tpl('estateFence', {x: x, y : -1});
         for(var y = 0; y < houses[x]; y++){
           this.clickableTpl('house', {x: x, y : y}, this.onClickHouse.bind(this));
-
-          if(y < houses[x] - 1)
-            this.clickableTpl('estateFence', {x: x, y : y}, this.onClickZoneFactory('estate-fence'));
+          this.clickableTpl('estateFence', {x: x, y : y}, this.onClickZoneFactory('estate-fence'));
+          this.tpl('topFence', {x: x, y : y});
         }
 
         for(var y = 0; y < parks[x]; y++)
@@ -154,6 +161,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         for(var y = 0; y < estates[x]; y++){
           this.clickableTpl('scoreEstate', {x:x, y:y}, this.onClickZoneFactory('score-estate') );
         }
+      }
+
+      // Permit refusal
+      for(var i = 0; i < 3; i++){
+        this.clickableTpl('permitRefusal', { x:i }, this.onClickZoneFactory('permitRefusal'));
       }
     },
 
@@ -302,8 +314,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
          if(!this.selectableZone(type, zone))
           return;
 
-          this.clearPossible();
           this._callback(zone);
+          this.clearPossible();
         };
      },
 
@@ -323,13 +335,103 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
        var scribbleTpl = "scribble";
        if(scribble.type == "pool") scribbleTpl = "scribbleCircle";
        if(scribble.type == "estate-fence") scribbleTpl = "scribbleLine";
+       if(scribble.type == "top-fence") scribbleTpl = "scribbleLineHor";
        this.tpl(scribbleTpl, scribble, location);
+
        if(animation){
          playSound("welcometo_scribble");
          $("scribble-" + scribble.id).classList.add("animate");
        }
      },
 
+/******************************
+*******************************
+*** PROMPT ESTATES FOR PLAN ***
+*******************************
+******************************/
+      promptPlayerEstates(plan, callback){
+        // Create estates
+        plan.estates.forEach(estate => {
+          let leftFence = this.player.id + "_estate-fence_" + estate.x + "_" + (estate.y - 1);
+          let rightFence = this.player.id + "_estate-fence_" + estate.x + "_" + (estate.y + estate.size - 1);
+          estate.left = dojo.style(leftFence, "left") + dojo.style(leftFence, "width");
+          estate.top = dojo.style(leftFence, "top");
+          estate.width = dojo.style(rightFence, "left") - dojo.style(leftFence, "left") - dojo.style(leftFence, "width");
+          estate.height = dojo.style(leftFence, "height");
+
+          this.clickableTpl('estate', estate, this.onClickEstate.bind(this) );
+        });
+
+        // Init selection
+        this._plan = plan;
+        this._callback = callback;
+        this._selectedEstates = [];
+        this.updateSelectableEstates();
+      },
+
+      updateSelectableEstates(){
+        // Compute the conditions unfulfilled yet
+        var selectedSizes = this._selectedEstates.map(estate => estate.size);
+        var conditionsLeft = this._plan.conditions.filter(size => {
+          let i = selectedSizes.indexOf(size);
+          if(i != -1){
+            selectedSizes.splice(i, 1);
+            return false;
+          } else {
+            return true;
+          }
+        });
+
+        // Update selectable estates
+        dojo.query(".estate").removeClass("selectable");
+        this._selectableSizes = conditionsLeft;
+        this._selectableSizes.forEach(size => dojo.query(`[data-size="${size}"`).addClass("selectable") );
+      },
+
+      onClickEstate(estate){
+        if(!this._selectableSizes.includes(estate.size))
+          return;
+
+        // Select the estate
+        dojo.query(`.estate[data-size="${estate.size}"][data-x="${estate.x}"][data-y="${estate.y}"]`).addClass("selected");
+        this._selectedEstates.push({
+          x:estate.x,
+          y:estate.y,
+          size:estate.size,
+        });
+
+        // Update other estates
+        this.addSecondaryActionButton("cancelEstateSelect", "Undo", () => this.onClickCancelEstates() );
+        this.updateSelectableEstates();
+        if(this._selectableSizes.length == 0)
+          this.addPrimaryActionButton("confirmEstateSelect", "Confirm", () => this.onClickConfirmEstates() );
+      },
+
+      onClickCancelEstates(){
+        this._selectedEstates = [];
+        dojo.query(".estate").removeClass("selected");
+        dojo.destroy("cancelEstateSelect");
+        dojo.destroy("confirmEstateSelect");
+        this.updateSelectableEstates();
+      },
+
+      onClickConfirmEstates(){
+        this._callback(this._selectedEstates);
+        this.clearPossible();
+      },
+
+      /*
+       * Add a blue/grey button if it doesn't already exists
+       */
+      addPrimaryActionButton(id, text, callback){
+        if(!$(id))
+         this.addActionButton(id, text, callback, "customActions", false, 'blue');
+      },
+
+      addSecondaryActionButton(id, text, callback){
+        if(!$(id))
+         this.addActionButton(id, text, callback, "customActions", false, 'gray');
+      },
 
 
 /******************************
