@@ -24,18 +24,13 @@ trait WriteNumberTrait
   ///////////////////////////////
   //////// CHOOSE CARDS /////////
   ///////////////////////////////
-  function stChooseCards($player)
-  {
-    if(empty($player->getAvailableStacks())){
-      StateMachine::nextState("refusal");
-      return true; // Skip this state
-    }
-  }
-
   function argChooseCards($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
     $data['selectableStacks'] = $player->getAvailableStacks();
+    if(empty($data['selectableStacks'])){
+      $data['zones'] = PermitRefusal::getAvailableZones($player);
+    }
     return $data;
   }
 
@@ -59,21 +54,17 @@ trait WriteNumberTrait
   ///////////////////////
   //// PERMIT REFUSAL ///
   ///////////////////////
-  function argPermitRefusal($player)
-  {
-    $data = $this->argPrivatePlayerTurn($player);
-    $data['zones'] = PermitRefusal::getAvailableZones($player);
-    return $data;
-  }
-
   function permitRefusal()
   {
     $player = Players::getCurrent();
 
     // Write the next available spot in the score sheet
     $zones = PermitRefusal::getAvailableZones($player);
-    if(!empty($zones))
-      $player->scribbleZone($zones[0]);
+    if(empty($zones))
+      throw new UserException(totranslate("You cannot take a permit refusal if a pair of construction cards is playable"));
+
+    $player->scribbleZone($zones[0]);
+    $player->updateScores();
 
     StateMachine::nextState("refusal");
   }
@@ -99,6 +90,7 @@ trait WriteNumberTrait
 
     // Write the number on the house
     $player->writeNumber($number, $pos);
+    $player->updateScores();
 
     // Move on to next state depending on the action card
     $combination = $player->getCombination();

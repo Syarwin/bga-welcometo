@@ -2,6 +2,7 @@
 namespace WTO;
 use WTO\Game\Log;
 use WTO\Game\Notifications;
+use WTO\Game\Globals;
 
 use \WTO\Actions\RealEstate;
 use \WTO\Actions\Park;
@@ -12,6 +13,8 @@ use \WTO\Actions\Surveyor;
 
 class Player extends Helpers\DB_Manager
 {
+  protected static $table = 'player';
+  protected static $primary = 'player_id';
   public function __construct($row)
   {
     $this->id = (int) $row['player_id'];
@@ -63,9 +66,16 @@ class Player extends Helpers\DB_Manager
       Pool::getScore($this),
       Temp::getScore($this),
       Bis::getScore($this),
-      RealEstate::getScore($this)
+      RealEstate::getScore($this),
+      PlanCards::getScore($this)
     );
   }
+
+  public function updateScores()
+  {
+    Notifications::updateScores($this);
+  }
+
 
   public function getEstates($evenIfUsedInPlan = true)
   {
@@ -152,6 +162,7 @@ class Player extends Helpers\DB_Manager
     Log::clearTurn($this->id);
     Houses::clearTurn($this->id);
     Scribbles::clearTurn($this->id);
+    PlanCards::clearTurn($this->id);
     Notifications::clearTurn($this);
   }
 
@@ -257,13 +268,13 @@ class Player extends Helpers\DB_Manager
      // Compute the name of the zone depending on the state
      $stateId = $this->getState();
      $locations = [
+       ST_CHOOSE_CARDS  => "permit-refusal",
        ST_ACTION_SURVEYOR => "estate-fence",
        ST_ACTION_ESTATE => "score-estate",
        ST_ACTION_TEMP   => "score-temp",
        ST_ACTION_BIS    => "score-bis",
        ST_ACTION_POOL   => "score-pool",
        ST_ACTION_PARK   => "park",
-       ST_PERMIT_REFUSAL=> "permit-refusal",
      ];
 
      // TODO : add sanity checks
@@ -327,6 +338,4 @@ class Player extends Helpers\DB_Manager
   {
     Log::insert($this->id, 'selectPlan', $planId);
   }
-
-
 }

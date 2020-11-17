@@ -6,7 +6,7 @@ class QueryBuilder extends \APP_DbObject {
 	$where, $orWhere, $whereCount=0, $isOrWhere = false, $limit, $orderBy;
 
 
-	public function __construct($table, $cast, $primary = 'id')
+	public function __construct($table, $cast = null, $primary = 'id')
 	{
     $this->table = $table;
 		$this->cast = $cast;
@@ -107,7 +107,7 @@ class QueryBuilder extends \APP_DbObject {
   public function run($id = null)
   {
     if (isset($id)) {
-      $this->computeWhereClause($id);
+      $this->computeWhereClause([ [$id] ]);
     }
     $this->assembleQueryClauses();
     self::DbQuery($this->sql);

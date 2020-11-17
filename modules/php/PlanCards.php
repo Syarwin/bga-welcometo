@@ -106,8 +106,33 @@ class PlanCards extends Helpers\Pieces
 
   public function getUiData()
   {
-    return self::getInLocation(['stack', '%'])->map(function($plan){
+    return self::getCurrent()->map(function($plan){
       return $plan->getUiData();
     });
   }
+
+
+  public function getCurrentScores()
+  {
+    return self::getCurrent()->map(function($plan){
+      return $plan->getScores();
+    });
+  }
+
+  public function getScore($player)
+  {
+    $res = [];
+    foreach(self::getCurrentScores() as $stack => $scores){
+      $res['plan-' . $stack] = $scores[$player->getId()] ?? 0;
+    }
+
+    return $res;
+  }
+
+  public function clearTurn($pId)
+  {
+    $query = new Helpers\QueryBuilder('plan_validation');
+    $query->delete()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->run();
+  }
+
 }

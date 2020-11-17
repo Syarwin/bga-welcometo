@@ -70,7 +70,6 @@ class EstatePlan extends AbstractPlan
       }
     }
     Notifications::addMultipleScribbles($player, $scribbles);
-
-    // TODO : save in player table
+    parent::validate($player, $args);
   }
 }

@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS `plan_cards` (
   PRIMARY KEY (`card_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
 
+CREATE TABLE IF NOT EXISTS `plan_validation` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `card_id` int(10) unsigned NOT NULL,
+  `player_id` int(10) NOT NULL,
+  `turn` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
+
 
 CREATE TABLE IF NOT EXISTS `scribbles` (
   `scribble_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -56,6 +64,3 @@ CREATE TABLE IF NOT EXISTS `houses` (
 
 
 ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
-ALTER TABLE `player` ADD `validation_plan_1` INT(10) UNSIGNED;
-ALTER TABLE `player` ADD `validation_plan_2` INT(10) UNSIGNED;
-ALTER TABLE `player` ADD `validation_plan_3` INT(10) UNSIGNED;

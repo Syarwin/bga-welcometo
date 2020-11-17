@@ -31,6 +31,17 @@
     border: 2px dashed black; }
   100% {
     border: 2px dashed white; } }
+@keyframes borderBlink2 {
+  0% {
+    border: 2px dashed red; }
+  49% {
+    border: 2px dashed red; }
+  50% {
+    border: 2px dashed black; }
+  99% {
+    border: 2px dashed black; }
+  100% {
+    border: 2px dashed red; } }
 @keyframes backgroundBlink {
   0% {
     background-color: rgba(255, 0, 0, 0.3); }
@@ -451,183 +462,123 @@ body {
     ****************************/ }
     .score-sheet-container .score-sheet[data-turn="1"] .house-number[data-turn="1"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="1"] .scribble[data-turn="1"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="1"] .scribble-circle[data-turn="1"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="1"] [data-turn="1"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="2"] .house-number[data-turn="2"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="2"] .scribble[data-turn="2"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="2"] .scribble-circle[data-turn="2"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="2"] [data-turn="2"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="3"] .house-number[data-turn="3"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="3"] .scribble[data-turn="3"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="3"] .scribble-circle[data-turn="3"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="3"] [data-turn="3"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="4"] .house-number[data-turn="4"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="4"] .scribble[data-turn="4"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="4"] .scribble-circle[data-turn="4"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="4"] [data-turn="4"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="5"] .house-number[data-turn="5"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="5"] .scribble[data-turn="5"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="5"] .scribble-circle[data-turn="5"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="5"] [data-turn="5"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="6"] .house-number[data-turn="6"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="6"] .scribble[data-turn="6"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="6"] .scribble-circle[data-turn="6"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="6"] [data-turn="6"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="7"] .house-number[data-turn="7"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="7"] .scribble[data-turn="7"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="7"] .scribble-circle[data-turn="7"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="7"] [data-turn="7"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="8"] .house-number[data-turn="8"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="8"] .scribble[data-turn="8"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="8"] .scribble-circle[data-turn="8"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="8"] [data-turn="8"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="9"] .house-number[data-turn="9"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="9"] .scribble[data-turn="9"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="9"] .scribble-circle[data-turn="9"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="9"] [data-turn="9"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="10"] .house-number[data-turn="10"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="10"] .scribble[data-turn="10"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="10"] .scribble-circle[data-turn="10"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="10"] [data-turn="10"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="11"] .house-number[data-turn="11"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="11"] .scribble[data-turn="11"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="11"] .scribble-circle[data-turn="11"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="11"] [data-turn="11"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="12"] .house-number[data-turn="12"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="12"] .scribble[data-turn="12"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="12"] .scribble-circle[data-turn="12"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="12"] [data-turn="12"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="13"] .house-number[data-turn="13"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="13"] .scribble[data-turn="13"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="13"] .scribble-circle[data-turn="13"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="13"] [data-turn="13"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="14"] .house-number[data-turn="14"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="14"] .scribble[data-turn="14"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="14"] .scribble-circle[data-turn="14"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="14"] [data-turn="14"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="15"] .house-number[data-turn="15"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="15"] .scribble[data-turn="15"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="15"] .scribble-circle[data-turn="15"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="15"] [data-turn="15"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="16"] .house-number[data-turn="16"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="16"] .scribble[data-turn="16"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="16"] .scribble-circle[data-turn="16"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="16"] [data-turn="16"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="17"] .house-number[data-turn="17"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="17"] .scribble[data-turn="17"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="17"] .scribble-circle[data-turn="17"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="17"] [data-turn="17"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="18"] .house-number[data-turn="18"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="18"] .scribble[data-turn="18"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="18"] .scribble-circle[data-turn="18"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="18"] [data-turn="18"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="19"] .house-number[data-turn="19"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="19"] .scribble[data-turn="19"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="19"] .scribble-circle[data-turn="19"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="19"] [data-turn="19"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="20"] .house-number[data-turn="20"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="20"] .scribble[data-turn="20"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="20"] .scribble-circle[data-turn="20"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="20"] [data-turn="20"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="21"] .house-number[data-turn="21"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="21"] .scribble[data-turn="21"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="21"] .scribble-circle[data-turn="21"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="21"] [data-turn="21"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="22"] .house-number[data-turn="22"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="22"] .scribble[data-turn="22"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="22"] .scribble-circle[data-turn="22"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="22"] [data-turn="22"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="23"] .house-number[data-turn="23"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="23"] .scribble[data-turn="23"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="23"] .scribble-circle[data-turn="23"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="23"] [data-turn="23"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="24"] .house-number[data-turn="24"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="24"] .scribble[data-turn="24"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="24"] .scribble-circle[data-turn="24"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="24"] [data-turn="24"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="25"] .house-number[data-turn="25"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="25"] .scribble[data-turn="25"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="25"] .scribble-circle[data-turn="25"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="25"] [data-turn="25"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="26"] .house-number[data-turn="26"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="26"] .scribble[data-turn="26"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="26"] .scribble-circle[data-turn="26"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="26"] [data-turn="26"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="27"] .house-number[data-turn="27"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="27"] .scribble[data-turn="27"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="27"] .scribble-circle[data-turn="27"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="27"] [data-turn="27"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="28"] .house-number[data-turn="28"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="28"] .scribble[data-turn="28"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="28"] .scribble-circle[data-turn="28"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="28"] [data-turn="28"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="29"] .house-number[data-turn="29"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="29"] .scribble[data-turn="29"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="29"] .scribble-circle[data-turn="29"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="29"] [data-turn="29"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet[data-turn="30"] .house-number[data-turn="30"] {
       color: red; }
-    .score-sheet-container .score-sheet[data-turn="30"] .scribble[data-turn="30"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="30"] .scribble-circle[data-turn="30"] .scribble-path {
+    .score-sheet-container .score-sheet[data-turn="30"] [data-turn="30"] .scribble-path {
       stroke: red; }
     .score-sheet-container .score-sheet .cityname {
       position: absolute;
@@ -789,11 +740,16 @@ body {
       position: absolute;
       height: 180px;
       width: 12px;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      border-radius: 5px; }
       .score-sheet-container .score-sheet .estate-fence.selectable {
         cursor: pointer;
-        background-color: rgba(0, 0, 255, 0.5);
-        border: 2px solid black; }
+        background-color: rgba(255, 0, 0, 0.3);
+        animation: borderBlink 0.9s infinite; }
+      .score-sheet-container .score-sheet .estate-fence.unselectable {
+        cursor: not-allowed; }
+      .score-sheet-container .score-sheet .estate-fence.selectable {
+        animation: borderBlink2 0.9s infinite; }
     .score-sheet-container .score-sheet .estate-fence[data-x="0"][data-y="-1"] {
       left: 351px;
       top: 123px; }
@@ -1168,6 +1124,8 @@ body {
         background-color: rgba(0, 255, 0, 0.4);
         border: 6px solid black;
         border-radius: 6px; }
+        .score-sheet-container .score-sheet .estate.selected.selectable svg {
+          display: none; }
       .score-sheet-container .score-sheet .estate.selectable {
         display: block; }
         .score-sheet-container .score-sheet .estate.selectable svg {

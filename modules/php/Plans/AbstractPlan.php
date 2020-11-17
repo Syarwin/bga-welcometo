@@ -1,6 +1,7 @@
 <?php
 namespace WTO\Plans;
 use \WTO\Game\Globals;
+use \WTO\Helpers\QueryBuilder;
 
 abstract class AbstractPlan
 {
@@ -39,5 +40,33 @@ abstract class AbstractPlan
 
   abstract public function canBeScored($player);
   abstract public function argValidate($player);
-  abstract public function validate($player, $args);
+  public function validate($player, $args){
+    $query = new QueryBuilder('plan_validation');
+    $query->insert([
+      'card_id' => $this->id,
+      'player_id' => $player->getId(),
+      'turn' => Globals::getCurrentTurn(),
+    ]);
+  }
+
+  public function getScores()
+  {
+    $query = new QueryBuilder('plan_validation');
+    $validations = $query->where('card_id', $this->id)->get(false);
+    $turns = [];
+    foreach($validations as $validation){
+      $turns[$validation['player_id']] = $validation['turn'];
+    }
+
+    asort($turns);
+    $firstValue = null;
+    $scores = [];
+    foreach($turns as $pId => $turn){
+      if(is_null($firstValue))
+        $firstValue = $turn;
+      $scores[$pId] = $turn == $firstValue? $this->scores[0] : $this->scores[1];
+    }
+
+    return $scores;
+  }
 }

@@ -55,6 +55,15 @@
   100% { border: 2px dashed white; }
 }
 
+@keyframes borderBlink2 {
+  0%   { border: 2px dashed red; }
+  49%  { border: 2px dashed red; }
+  50%  { border: 2px dashed black; }
+  99% { border: 2px dashed black; }
+  100% { border: 2px dashed red; }
+}
+
+
 @keyframes backgroundBlink {
   0%   { background-color:rgba(255,0,0, 0.3); }
   49%  { background-color:rgba(255,0,0, 0.3); }
@@ -492,13 +501,7 @@ $cardMargin:5px;
       color:red;
     }
 
-    &[data-turn="#{$t}"] .scribble[data-turn="#{$t}"] .scribble-path  {
-      stroke:red;
-    }
-
-    &[data-turn="#{$t}"] .scribble-circle[data-turn="#{$t}"] .scribble-path  {
-      stroke:red;
-    }
+    &[data-turn="#{$t}"] [data-turn="#{$t}"] .scribble-path  { stroke:red; }
   }
 
   /*****************************
@@ -585,11 +588,10 @@ $cardMargin:5px;
       height: 180px;
       width: 12px;
       box-sizing: border-box;
-
+      border-radius:5px;
+      @include highlight;
       &.selectable {
-        cursor:pointer;
-        background-color: rgba(0,0,255,0.5);
-        border:2px solid black;
+        animation:borderBlink2 0.9s infinite;
       }
     }
 
@@ -734,6 +736,10 @@ $cardMargin:5px;
         background-color: rgba(0,255,0,0.4);
         border: 6px solid black;
         border-radius: 6px;
+
+        &.selectable svg {
+          display:none;
+        }
       }
 
       &.selectable {

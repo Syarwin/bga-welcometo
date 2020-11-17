@@ -25,7 +25,7 @@ class Log extends \WTO\Helpers\DB_Manager
    * Utils : where filter with player and current turn
    */
   private function getFilteredQuery($pId){
-    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() );
+    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->orderBy("log_id", "DESC");
   }
 
 ////////////////////////////////

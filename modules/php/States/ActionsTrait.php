@@ -38,6 +38,7 @@ trait ActionsTrait
       throw new UserException(totranslate("You cannot scribble this zone"));
 
     $player->scribbleZone($zone);
+    $player->updateScores();
     StateMachine::nextState("scribbleZone");
   }
 

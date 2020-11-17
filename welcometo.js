@@ -157,6 +157,10 @@ define([
      },
 
 
+     notif_updateScores(args){
+       debug("Notif: updating scores", args);
+       this._scoreSheet.updateScores(args.args.scores);
+     },
 
 
      ///////////////////////////////
@@ -196,7 +200,17 @@ define([
      ////////////////////////////////////////////
      onEnteringStateChooseCards(args){
        this.displayBasicInfo(args);
-       this._constructionCards.promptPlayer(args.selectableStacks, this.onChooseCards.bind(this));
+       if(args.selectableStacks.length > 0){
+         this._constructionCards.promptPlayer(args.selectableStacks, this.onChooseCards.bind(this));
+       } else {
+         // Permit refusal
+         this.gamedatas.gamestate.descriptionmyturn = _("You cannot write a number and must take a permit refusal");
+         this.updatePageTitle();
+
+         let callback = (zone) => this.takeAction("permitRefusal");
+         this._scoreSheet.promptZones("permit-refusal", args.zones, callback);
+         this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
+       }
      },
 
      onChooseCards(choice){
@@ -209,16 +223,6 @@ define([
      },
 
 
-     ////////////////////////////////
-     //////  Permit refusal   ///////
-     ////////////////////////////////
-     onEnteringStatePermitRefusal(args){
-       this.displayBasicInfo(args);
-
-       let callback = (zone) => this.takeAction("permitRefusal");
-       this._scoreSheet.promptZones("permit-refusal", args.zones, callback);
-       this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
-     },
 
      ////////////////////////////////////////////
      ///////   Draw a number on a house   ///////
@@ -412,6 +416,7 @@ define([
        this._connections = [];
 
        this._constructionCards.clearPossible();
+       this._planCards.clearPossible();
        this._scoreSheet.clearPossible();
      },
 
@@ -465,6 +470,7 @@ define([
          ['addScribble', 1000],
          ['addMultipleScribbles', 1000],
          ['newCards', 1000],
+         ['updateScores', 10],
        ];
 
        notifs.forEach(notif => {

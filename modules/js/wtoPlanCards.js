@@ -24,7 +24,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     clearPossible(){
       this._callback = null;
       this._selectablePlans = null;
-      dojo.query(".plan-card-holder").removeClass("unselectable selectable");
+      dojo.query(".plan-card-holder").removeClass("unselectable selectable selected");
     },
 
     // Hightlight selected plan

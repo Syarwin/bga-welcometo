@@ -51,6 +51,13 @@ class Notifications
     ]);
   }
 
+
+  public static function updateScores($player){
+    self::notify($player->getId(), 'updateScores', '', [
+      'scores' => $player->getScores(),
+    ]);
+  }
+
 }
 
 ?>

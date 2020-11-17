@@ -116,6 +116,7 @@ class welcometo extends Table
       'scribbles' => WTO\Scribbles::getOfPlayer($pId),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
       'scores' => WTO\Game\Players::get($pId)->getScores(),
+//      "test" => WTO\PlanCards::getCurrentScores(),
     ];
   }
 

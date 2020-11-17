@@ -63,12 +63,11 @@ $machinestates = [
     "name" => "chooseCards",
     "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
     "type" => "private",
-    'action' => "stChooseCards",
     "args" => "argChooseCards",
-    "possibleactions" => ["chooseCards"],
+    "possibleactions" => ["chooseCards", "refusal"],
     "transitions" => [
       'writeNumber' => ST_WRITE_NUMBER,
-      'refusal' => ST_PERMIT_REFUSAL,
+      'refusal' => ST_CHOOSE_PLAN,
     ]
   ],
 
@@ -87,18 +86,6 @@ $machinestates = [
       TEMP     => ST_ACTION_TEMP,
       BIS      => ST_ACTION_BIS,
       'restart' => ST_CHOOSE_CARDS,
-    ]
-  ],
-
-
-  ST_PERMIT_REFUSAL => [
-    "name" => "permitRefusal",
-    "descriptionmyturn" => clienttranslate('${you} cannot write a number and must take a permit refusal'),
-    "type" => "private",
-    "args" => "argPermitRefusal",
-    "possibleactions" => ["refusal"],
-    "transitions" => [
-      'refusal' => ST_CONFIRM_TURN,
     ]
   ],
 

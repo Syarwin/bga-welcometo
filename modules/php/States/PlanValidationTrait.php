@@ -80,6 +80,7 @@ trait PlanValidationTrait
     StateMachine::checkAction("validatePlan");
     $player = Players::getCurrent();
     $player->getCurrentPlan()->validate($player, $arg);
+    $player->updateScores();
 
     // Move on to next state
     StateMachine::nextState("choosePlan");

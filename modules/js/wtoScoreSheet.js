@@ -165,7 +165,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       // Permit refusal
       for(var i = 0; i < 3; i++){
-        this.clickableTpl('permitRefusal', { x:i }, this.onClickZoneFactory('permitRefusal'));
+        this.clickableTpl('permitRefusal', { x:i }, this.onClickZoneFactory('permit-refusal'));
       }
     },
 
@@ -386,9 +386,30 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         dojo.query(".estate").removeClass("selectable");
         this._selectableSizes = conditionsLeft;
         this._selectableSizes.forEach(size => dojo.query(`[data-size="${size}"`).addClass("selectable") );
+
+        dojo.destroy("cancelEstateSelect");
+        dojo.destroy("confirmEstateSelect");
+        if(this._selectedEstates.length > 0)
+          this.addSecondaryActionButton("cancelEstateSelect", "Undo", () => this.onClickCancelEstates() );
+        if(this._selectableSizes.length == 0)
+          this.addPrimaryActionButton("confirmEstateSelect", "Confirm", () => this.onClickConfirmEstates() );
       },
 
       onClickEstate(estate){
+        let selectedIndex = this._selectedEstates.reduce((foundIndex, e,i) => {
+          return (e == e.x == estate.x && e.y == estate.y && e.size == estate.size)? i : foundIndex;
+        }, -1);
+
+        // If selected, unselect
+        if(selectedIndex !== -1){
+          dojo.query(`.estate[data-size="${estate.size}"][data-x="${estate.x}"][data-y="${estate.y}"]`).removeClass("selected");
+          this._selectedEstates.splice(selectedIndex, 1);
+          this.updateSelectableEstates();
+          return;
+        }
+
+
+        // If not selectable
         if(!this._selectableSizes.includes(estate.size))
           return;
 
@@ -401,17 +422,12 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         });
 
         // Update other estates
-        this.addSecondaryActionButton("cancelEstateSelect", "Undo", () => this.onClickCancelEstates() );
         this.updateSelectableEstates();
-        if(this._selectableSizes.length == 0)
-          this.addPrimaryActionButton("confirmEstateSelect", "Confirm", () => this.onClickConfirmEstates() );
       },
 
       onClickCancelEstates(){
         this._selectedEstates = [];
         dojo.query(".estate").removeClass("selected");
-        dojo.destroy("cancelEstateSelect");
-        dojo.destroy("confirmEstateSelect");
         this.updateSelectableEstates();
       },
 
