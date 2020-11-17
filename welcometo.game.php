@@ -51,6 +51,7 @@ class welcometo extends Table
   use WTO\States\ActionsTrait;
   use WTO\States\PlanValidationTrait;
   use WTO\States\ConfirmWaitTrait;
+  use WTO\States\EndOfGameTrait;
 
   public static $instance = null;
   public function __construct()
@@ -58,13 +59,9 @@ class welcometo extends Table
     parent::__construct();
     self::$instance = $this;
 
-//    $this->plans = new WTOPlans(); TODO ??
-
     self::initGameStateLabels([
-      "min_log" => 10, // TODO ??
       'optionAdvanced' => OPTION_ADVANCED,
       'optionExpert'   => OPTION_EXPERT,
-
       'currentTurn' => GLOBAL_CURRENT_TURN,
     ]);
   }
@@ -116,7 +113,6 @@ class welcometo extends Table
       'scribbles' => WTO\Scribbles::getOfPlayer($pId),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
       'scores' => WTO\Game\Players::get($pId)->getScores(),
-//      "test" => WTO\PlanCards::getCurrentScores(),
     ];
   }
 

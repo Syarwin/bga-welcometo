@@ -352,9 +352,9 @@ class Pieces extends DB_Manager {
 
     // No more pieces in deck & reshuffle is active => form another deck
     if (array_key_exists($fromLocation, static::$autoreshuffleCustom) && count($pieces) < $nbr && static::$autoreshuffle && $deckReform){
-      $missing = $nbr - count($tokens);
+      $missing = $nbr - count($pieces);
       self::reformDeckFromDiscard($fromLocation);
-      $pieces = array_merge($pieces, self::pickForLocation($missing, $fromLocation, $toLocation, $state, false)); // Note: block another deck reform
+      $pieces = $pieces->merge(self::pickForLocation($missing, $fromLocation, $toLocation, $state, false)); // Note: block another deck reform
     }
 
     return $pieces;
@@ -369,10 +369,10 @@ class Pieces extends DB_Manager {
    */
   public static function reformDeckFromDiscard($fromLocation) {
     self::checkLocation($fromLocation);
-    if (!array_id_exists($fromLocation, static::$autoreshuffleCustom))
+    if (!array_key_exists($fromLocation, static::$autoreshuffleCustom))
       throw new \BgaVisibleSystemException("Class Pieces:reformDeckFromDiscard: Unknown discard location for $fromLocation !");
 
-    $discard = static::autoreshuffleCustom[$fromLocation];
+    $discard = static::$autoreshuffleCustom[$fromLocation];
     self::checkLocation($discard);
     self::moveAllInLocation($discard, $fromLocation);
     self::shuffle($fromLocation);

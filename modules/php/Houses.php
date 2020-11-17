@@ -84,6 +84,7 @@ class Houses extends Helpers\DB_Manager
 
 
 
+
   /*
    * getStreets : 2D array of houses/null
    */
@@ -105,7 +106,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * getAvailableLocations of a given number
    */
-  public function getAvailableLocations($player, $number)
+  public function getAvailableLocations($player, $number = null)
   {
     // Init all locations to be available
     $locations = self::getBlankStreets(true);
@@ -118,7 +119,7 @@ class Houses extends Helpers\DB_Manager
         // If the location is empty
         if(is_null($streets[$x][$y])){
           // Check condition with biggest value on left so far
-          $locations[$x][$y] = $number > $maxNumber;
+          $locations[$x][$y] = is_null($number) || $number > $maxNumber;
         } else {
           // Not empty => not available and update max number
           $locations[$x][$y] = false;
@@ -132,7 +133,7 @@ class Houses extends Helpers\DB_Manager
       $minNumber = 18;
       for($y = self::$streetSizes[$x] - 1; $y >= 0; $y--){
         if(is_null($streets[$x][$y])){
-          $locations[$x][$y] = $locations[$x][$y] && $number < $minNumber;
+          $locations[$x][$y] = is_null($number) || ($locations[$x][$y] && $number < $minNumber);
         } else {
           $minNumber = ($streets[$x][$y]['number'] == ROUNDABOUT)? 18 : $streets[$x][$y]['number'];
         }

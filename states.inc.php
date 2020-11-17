@@ -249,28 +249,26 @@ $machinestates = [
     "action" => "stApplyTurn",
     "transitions" => [
       "newTurn" => ST_NEW_TURN,
+      "endGame" => ST_COMPUTE_SCORES,
     ]
   ],
 
 
 
 
-/* TODO : weird
-    8 => array(
-        "name" => "checkEndGameConditions",
-        "description" => clienttranslate('Is it the end?'),
-        "type" => "game",
-        "action" => "stCheckEndGameConditions",
-        "transitions" => array("newTurn" => 2, "computeScores" => 98)
-    ),
-*/
+
+/****************************
+********* END OF GAME *******
+****************************/
 
   ST_COMPUTE_SCORES => [
     "name" => "computeScores",
     "description" => clienttranslate('Let\'s compute the scores and tie breakes'),
     "type" => "game",
     "action" => "stComputeScores",
-    "transitions" => ["endGame" => ST_GAME_END]
+    "transitions" => [
+      "endGame" => ST_GAME_END
+    ]
   ],
 
 

@@ -56,6 +56,7 @@ class Notifications
     self::notify($player->getId(), 'updateScores', '', [
       'scores' => $player->getScores(),
     ]);
+    $player->storeScore();
   }
 
 }

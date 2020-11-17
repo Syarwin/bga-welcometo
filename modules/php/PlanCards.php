@@ -125,8 +125,14 @@ class PlanCards extends Helpers\Pieces
     foreach(self::getCurrentScores() as $stack => $scores){
       $res['plan-' . $stack] = $scores[$player->getId()] ?? 0;
     }
-
+    $res['plan-total'] = $res['plan-0'] + $res['plan-1'] + $res['plan-2'];
     return $res;
+  }
+
+  public function areAllPlansScored($player)
+  {
+    $scores = self::getScore($player);
+    return $scores['plan-0'] > 0 && $scores['plan-1'] > 0 && $scores['plan-2'] > 0;
   }
 
   public function clearTurn($pId)

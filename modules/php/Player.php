@@ -10,6 +10,7 @@ use \WTO\Actions\Temp;
 use \WTO\Actions\Bis;
 use \WTO\Actions\Pool;
 use \WTO\Actions\Surveyor;
+use \WTO\Actions\PermitRefusal;
 
 class Player extends Helpers\DB_Manager
 {
@@ -21,6 +22,7 @@ class Player extends Helpers\DB_Manager
     $this->no = (int) $row['player_no'];
     $this->name = $row['player_name'];
     $this->color = $row['player_color'];
+    $this->score = $row['player_score'];
     $this->eliminated = $row['player_eliminated'] == 1;
     $this->zombie = $row['player_zombie'] == 1;
     $this->state = $row['player_state'];
@@ -32,6 +34,7 @@ class Player extends Helpers\DB_Manager
   private $color;
   private $eliminated = false;
   private $zombie = false;
+  private $score;
 
 
   /////////////////////////////////
@@ -55,20 +58,43 @@ class Player extends Helpers\DB_Manager
       'no'        => $this->no,
       'name'      => $this->name,
       'color'     => $this->color,
+      'score'     => $this->score,
     ];
   }
 
 
-  public function getScores()
+  public function getScores($computeTotal = true)
   {
-    return \array_merge(
+    $data = \array_merge(
       Park::getScore($this),
       Pool::getScore($this),
       Temp::getScore($this),
       Bis::getScore($this),
       RealEstate::getScore($this),
-      PlanCards::getScore($this)
+      PlanCards::getScore($this),
+      PermitRefusal::getScore($this)
     );
+    $data['other-total'] = $data['permit-total']; // TODO + turnaround
+
+    if($computeTotal)
+      $data['total'] = $this->computeScore();
+    return $data;
+  }
+
+  public function computeScore()
+  {
+    // TODO : turnaround
+    $scores = $this->getScores(false);
+    $total = $scores['plan-total'] + $scores['park-total'] + $scores['pool-total'] + $scores['temp-total']
+      + $scores['estate-total-0'] + $scores['estate-total-1'] + $scores['estate-total-2']
+      + $scores['estate-total-3'] + $scores['estate-total-4'] + $scores['estate-total-5']
+      - $scores['bis-total'] - $scores['permit-total'];
+    return $total;
+  }
+
+  public function storeScore()
+  {
+    self::DB()->update(['player_score' => $this->computeScore()])->run($this->id);
   }
 
   public function updateScores()

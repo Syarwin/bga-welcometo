@@ -11,6 +11,8 @@ class ConstructionCards extends Helpers\Pieces
   protected static $table = "construction_cards";
 	protected static $prefix = "card_";
   protected static $customFields = ['number', 'action'];
+  protected static $autoreshuffleCustom = ['deck' => 'discard'];
+  protected static $autoreshuffle = true;
   protected static function cast($card){
     return $card;
   }

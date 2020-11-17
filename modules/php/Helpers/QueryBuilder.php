@@ -355,4 +355,8 @@ class Collection extends \ArrayObject {
   public function assocMap($func){
     return array_map($func, $this->toAssoc());
   }
+
+  public function merge($arr){
+    return new Collection( array_merge($this->toAssoc(), $arr->toAssoc()) );
+  }
 }

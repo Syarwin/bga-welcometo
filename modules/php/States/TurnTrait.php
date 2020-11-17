@@ -64,6 +64,7 @@ trait TurnTrait
    */
   function stApplyTurn()
   {
-    $this->gamestate->nextState("newTurn");
+    $newState = $this->isEndOfGame()? "endGame" : "newTurn";
+    $this->gamestate->nextState($newState);
   }
 }
