@@ -3,7 +3,6 @@ var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
   g_gamethemeurl + "modules/js/nouislider.min.js",
-  g_gamethemeurl + "modules/js/sticky.min.js"
 ], function (dojo, declare, gameui, noUiSlider, Stickyfill) {
   let HORIZONTAL = 0;
   let VERTICAL = 1;
@@ -15,20 +14,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
     constructor() {
       debug("Seting up the layout manager");
 
-/*
-      debug(Stickyfill);
-      Stickyfill.forceSticky();
-      Stickyfill.add($("construction-cards-container-sticky"));
-/*
-      let param = {
-        stickyBitStickyOffset: 60,
-        useFixed: true,
-        useGetBoundingClientRect: true,
-      };
-      stickybits("#construction-cards-container-sticky", param);
-      stickybits("#plans-cards-container-sticky",  param);
-*/
-
       dojo.place(jstpl_layoutControls, 'upperrightmenu', 'first');
       dojo.connect($('layout-button'), 'onclick', () => this.toggleControls() );
       dojo.connect($('layout-control-0'), 'onclick', () => this.setMode(HORIZONTAL, true) );
@@ -39,8 +24,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       this._merged = this.getConfig('merged', true);
 
       if(localStorage.getItem("wtoLayout") == null){
-        dojo.addClass("layout-button", "undefined");
-        this.setMode(HORIZONTAL);
+        dojo.addClass("layout-controls-container", "undefined");
+        this.setMode( dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
       } else {
         this.setMode(localStorage.getItem("wtoLayout"));
       }

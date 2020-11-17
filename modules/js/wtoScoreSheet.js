@@ -244,7 +244,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
      */
     addHouseNumber(house){
       var id = `${house.pId}_house_${house.x}_${house.y}`;
-      house.bis = house.isBis? _("Bis") : "";
+      house.bis = house.isBis? "b" : "";
       this.tpl("houseNumber", house, id);
       dojo.addClass(id, "built");
     },

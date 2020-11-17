@@ -9,7 +9,6 @@ class PlanCards extends Helpers\Pieces
   protected static $table = "plan_cards";
 	protected static $prefix = "card_";
   protected static $autoIncrement = false;
-  protected static $customFields = ['approved'];
   protected static function cast($card){
     if(!isset(self::$plans[$card['id']]))
       throw new \BgaVisibleSystemException("Trying to fetch a plan with no corresponding id : $planId");
@@ -108,6 +107,13 @@ class PlanCards extends Helpers\Pieces
   {
     return self::getCurrent()->map(function($plan){
       return $plan->getUiData();
+    });
+  }
+
+  public function getCurrentValidations()
+  {
+    return self::getCurrent()->map(function($plan){
+      return $plan->getValidations();
     });
   }
 

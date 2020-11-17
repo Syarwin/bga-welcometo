@@ -61,9 +61,23 @@ var jstpl_constructionCard = `
 </div>`;
 
 var jstpl_planCard = `
-<div id="plan-card-\${id}" data-id="\${id}" data-approved="\${approved}" class="plan-card-holder">
-  <div class="plan-card-front"></div>
+<div id="plan-card-\${id}" data-id="\${id}" class="plan-card-holder">
+  <div class="plan-card-front">
+    <div id="plan-card-\${id}-0" class="plan-validation-0">
+      <div class="stamp"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.569079 29.23955" class="hexagone">
+        <path d="M 0.46020736,14.676657 4.7609305,4.654103 14.746088,0.46557276 24.65645,4.3923199 29.106763,14.452272 24.918233,24.512224 14.895678,28.775549 4.9479184,24.736609 Z" />
+      </svg>
+    </div>
+
+    <div id="plan-card-\${id}-1" class="plan-validation-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.569079 29.23955" class="hexagone">
+        <path d="M 0.46020736,14.676657 4.7609305,4.654103 14.746088,0.46557276 24.65645,4.3923199 29.106763,14.452272 24.918233,24.512224 14.895678,28.775549 4.9479184,24.736609 Z" />
+      </svg>
+    </div>
+  </div>
 </div>`;
+
 
 
 /////////////////////

@@ -6,7 +6,6 @@ use \WTO\Helpers\QueryBuilder;
 abstract class AbstractPlan
 {
   protected $id = null;
-  protected $approved = null;
 
   protected $variant;
   protected $stack;
@@ -22,13 +21,11 @@ abstract class AbstractPlan
     if(is_null($card))
       return;
     $this->id = $card['id'];
-    $this->approved = $card['approved'] == 1;
   }
 
   public function getUiData(){
     return [
       'id' => $this->id,
-      'approved' => $this->approved,
     ];
   }
 
@@ -49,7 +46,7 @@ abstract class AbstractPlan
     ]);
   }
 
-  public function getScores()
+  public function getValidations()
   {
     $query = new QueryBuilder('plan_validation');
     $validations = $query->where('card_id', $this->id)->get(false);
@@ -60,11 +57,22 @@ abstract class AbstractPlan
 
     asort($turns);
     $firstValue = null;
-    $scores = [];
+    $validations = [];
     foreach($turns as $pId => $turn){
       if(is_null($firstValue))
         $firstValue = $turn;
-      $scores[$pId] = $turn == $firstValue? $this->scores[0] : $this->scores[1];
+      $validations[$pId] = $turn == $firstValue? 0 : 1;
+    }
+
+    return $validations;
+  }
+
+  public function getScores()
+  {
+    $validations = self::getValidations();
+    $scores = [];
+    foreach($validations as $pId => $val){
+      $scores[$pId] = $this->scores[$val];
     }
 
     return $scores;
