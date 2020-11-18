@@ -41,10 +41,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       gameData.scribbles.forEach(scribble => this.addScribble(scribble, false) );
     },
 
-    newTurn(turn){
-      dojo.attr('score-sheet-' + this.player.id, 'data-turn', turn);
-    },
-
     /*
      * Return a 2D array of the street
      */
@@ -397,7 +393,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
       onClickEstate(estate){
         let selectedIndex = this._selectedEstates.reduce((foundIndex, e,i) => {
-          return (e == e.x == estate.x && e.y == estate.y && e.size == estate.size)? i : foundIndex;
+          return (e.x == estate.x && e.y == estate.y && e.size == estate.size)? i : foundIndex;
         }, -1);
 
         // If selected, unselect

@@ -44,6 +44,13 @@ class Notifications
     ]);
   }
 
+  public static function planScored($player, $planId, $validations){
+    self::notify($player->getId(), "scorePlan", '', [
+      'validation' => $validations[$player->getId()],
+      'planId' => $planId
+    ]);
+  }
+
 
   public static function clearTurn($player){
     self::notify($player->getId(), 'clearTurn', '', [
@@ -56,9 +63,13 @@ class Notifications
     self::notify($player->getId(), 'updateScores', '', [
       'scores' => $player->getScores(),
     ]);
-    $player->storeScore();
   }
 
+  public static function updateAllPlayersScores($scores){
+    self::notifyAll('updateAllPlayersScores', '', [
+      'scores' => $scores,
+    ]);
+  }
 }
 
 ?>

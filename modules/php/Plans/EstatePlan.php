@@ -18,7 +18,8 @@ function subtract_array($array1,$array2){
 
 class EstatePlan extends AbstractPlan
 {
-  public function canBeScored($player){
+  protected function getAvailableEstates($player)
+  {
     $estates = $player->getEstates();
 
     // Remove estates already used
@@ -27,20 +28,33 @@ class EstatePlan extends AbstractPlan
       return is_null($topFences[$estate['x']][$estate['y']]);
     });
 
+    return $estates;
+  }
+
+
+  public function canBeScored($player)
+  {
+    if(!parent::canBeScored($player))
+      return false;
+
+    $estates = $this->getAvailableEstates($player);
     // Compute the size and make the (multiple value) difference
     $sizes = array_map(function($estate){ return $estate['size']; }, $estates);
     $diff = subtract_array($this->conditions, $sizes);
     return empty($diff);
   }
 
-  public function argValidate($player){
+
+  public function argValidate($player)
+  {
     return [
       'conditions' => $this->conditions,
-      'estates' => $player->getEstates(false),
+      'estates' => $this->getAvailableEstates($player),
     ];
   }
 
-  protected function checkValidate($player, $args){
+  protected function checkValidate($player, $args)
+  {
     // Check estates belongs to player
     $estates = $player->getEstates(false);
     foreach($args as $estate){

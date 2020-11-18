@@ -94,7 +94,9 @@ class Player extends Helpers\DB_Manager
 
   public function storeScore()
   {
-    self::DB()->update(['player_score' => $this->computeScore()])->run($this->id);
+    $score = $this->computeScore();
+    self::DB()->update(['player_score' => $score])->run($this->id);
+    return $score;
   }
 
   public function updateScores()

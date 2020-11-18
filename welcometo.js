@@ -54,12 +54,13 @@ define([
       this._isStandard = gamedatas.options.standard;
 
       dojo.place("<div id='customActions' style='display:inline-block'></div>", $("generalactions"), "after");
+      dojo.attr("game_play_area", "data-turn", gamedatas.turn);
 
       // Setup game notifications
       this.setupNotifications();
 
       this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
-      this._planCards = new bgagame.wtoPlanCards(gamedatas);
+      this._planCards = new bgagame.wtoPlanCards(gamedatas, this.player_id);
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -160,6 +161,14 @@ define([
      notif_updateScores(args){
        debug("Notif: updating scores", args);
        this._scoreSheet.updateScores(args.args.scores);
+       this.scoreCtrl[this.player_id].toValue(args.args.scores.total);
+     },
+
+     notif_updateAllPlayersScores(args){
+       debug("Notif: updating all scores", args);
+       for(var pId in args.args.scores){
+         this.scoreCtrl[pId].toValue(args.args.scores[pId]);
+       }
      },
 
 
@@ -169,7 +178,7 @@ define([
      notif_newCards(args){
        debug("Notif: dealing new cards", args);
        this._constructionCards.newTurn(args.args.cards, args.args.turn);
-       this._scoreSheet.newTurn(args.args.turn);
+       dojo.attr("game_play_area", "data-turn", args.args.turn);
      },
 
 
@@ -344,6 +353,7 @@ define([
      notif_clearTurn(args){
        debug("Notif: restarting turn", args);
        this._scoreSheet.clearTurn(args.args.turn);
+       this._planCards.clearTurn(args.args.turn);
      },
 
 
@@ -365,6 +375,11 @@ define([
        this.takeAction("choosePlan", { plan: planId});
      },
 
+
+     notif_scorePlan(args){
+       debug("Notif: scoring plan", args);
+       this._planCards.validateCurrentPlayerPlan(args.args.planId, args.args.validation, true);
+     },
 
      ///////////////////////////////////////////////////
      //////   Choose estates to validate plan   ///////
@@ -471,6 +486,8 @@ define([
          ['addMultipleScribbles', 1000],
          ['newCards', 1000],
          ['updateScores', 10],
+         ['updateAllPlayersScores', 10],
+         ['scorePlan', 1000],
        ];
 
        notifs.forEach(notif => {

@@ -2,6 +2,7 @@
 namespace WTO\States;
 
 use WTO\Game\StateMachine;
+use WTO\Game\Notifications;
 use WTO\Game\Players;
 use WTO\ConstructionCards;
 
@@ -64,6 +65,13 @@ trait TurnTrait
    */
   function stApplyTurn()
   {
+    // Compute, store and notify new scores
+    $scores = [];
+    foreach (Players::getAll() as $player) {
+      $scores[$player->getId()] = $player->storeScore();
+    }
+    Notifications::updateAllPlayersScores($scores);
+
     $newState = $this->isEndOfGame()? "endGame" : "newTurn";
     $this->gamestate->nextState($newState);
   }

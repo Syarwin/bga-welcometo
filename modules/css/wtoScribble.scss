@@ -1,0 +1,74 @@
+/********************************
+*** Hightlight recent actions ***
+********************************/
+@for $t from 1 through 30 {
+  #game_play_area[data-turn="#{$t}"] .house-number[data-turn="#{$t}"] {
+    color:red;
+  }
+
+  #game_play_area[data-turn="#{$t}"] [data-turn="#{$t}"] .scribble-path  { stroke:red; }
+}
+
+
+
+/****************************
+*****************************
+********* SCRIBBLE  *********
+*****************************
+****************************/
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor {
+  width:100%;
+  height:100%;
+  .scribble-path {
+    stroke:black;
+    stroke-linecap:round;
+  }
+
+
+  &.animate .scribble-path {
+    animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-fill-mode: forwards;
+  }
+  @keyframes drawScribble {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+
+.scribble {
+  .scribble-path {
+    stroke-dasharray: 4500;
+    stroke-dashoffset: 0;
+  }
+  &.animate .scribble-path {
+    stroke-dashoffset: 4500;
+  }
+}
+
+
+.scribble-circle {
+  .scribble-path {
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 0;
+  }
+  &.animate .scribble-path {
+    stroke-dashoffset: 1500;
+  }
+}
+
+
+.scribble-line, .scribble-line-hor {
+  .scribble-path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 0;
+  }
+  &.animate .scribble-path {
+    stroke-dashoffset: 300;
+  }
+}
+
+.scribble-line {
+  padding-top:12px;
+}

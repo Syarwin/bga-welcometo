@@ -20,7 +20,7 @@ $gameinfos = [
   'bgg_id' => 233867,
 
 
-  'players' => [1,2,3,4,5,6,7,8,9,10,11,12],
+  'players' => [2,3,4,5,6,7,8,9,10,11,12],
   'suggest_player_number' => null,
   'not_recommend_player_number' => null,
 

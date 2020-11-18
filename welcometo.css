@@ -188,7 +188,7 @@ body {
 
 /*****************************
 ******************************
-*********** CARDS ************
+******** CONSTRUCTIONS *******
 ******************************
 *****************************/
 #construction-cards-container {
@@ -339,6 +339,11 @@ body {
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="17"] .construction-card-front {
         background-position: 100% center; }
 
+/*****************************
+******************************
+*********** PLANS ************
+******************************
+*****************************/
 #plan-cards-container {
   background-color: rgba(255, 255, 255, 0.6);
   padding: 10px; }
@@ -375,41 +380,40 @@ body {
             background-image: url("img/plans_low.jpg"); } }
         #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 {
           position: absolute;
-          width: 56px;
-          height: 56px; }
-          #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 svg, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 svg {
-            width: 100%;
-            height: 100%; }
-            #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 svg path, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 svg path {
-              fill: none;
-              stroke: black;
-              stroke-width: 2;
-              stroke-linecap: round;
-              stroke-miterlimit: 4;
-              stroke-dasharray: none;
-              stroke-linejoin: bevel; }
-        #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 {
-          top: 231px;
-          left: 28px; }
-          #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 .stamp {
+          width: 65px;
+          height: 65px; }
+          #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0::before, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1::before {
+            content: "";
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%; }
+          #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 .stamp, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 .stamp {
             display: none;
             position: absolute;
             top: 0%;
             left: -18%;
-            width: 130%;
-            height: 120%;
+            width: 120%;
+            height: 100%;
             background-image: url("img/stamp.png");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center center; }
+        #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0 {
+          top: 227px;
+          left: 23px; }
         #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 {
-          top: 231px;
-          left: 121px; }
-      #plan-cards-container #plan-cards-container-resizable .plan-card-holder.approved .plan-card-front .plan-validation-0 .stamp {
+          top: 227px;
+          left: 115px; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-validation="0"] .plan-validation-1::before {
+        background: #ece1cd; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-validation="0"] .plan-validation-1 .stamp {
         display: block; }
-      #plan-cards-container #plan-cards-container-resizable .plan-card-holder.approved .plan-card-front .plan-validation-0 path {
-        stroke: none;
-        fill: #ece1cd; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-validation="1"] .plan-validation-0::before {
+        background: #ece1cd; }
+      #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-validation="1"] .plan-validation-0 .stamp {
+        display: block; }
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="0"] .plan-card-front {
         background-position: 0% center; }
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="1"] .plan-card-front {
@@ -467,11 +471,6 @@ body {
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder[data-id="27"] .plan-card-front {
         background-position: 100% center; }
 
-/***********************************
-************************************
-*********** SCORE SHEET ************
-************************************
-***********************************/
 .score-sheet-container {
   width: 1544px;
   height: 1544px; }
@@ -481,9 +480,6 @@ body {
     background-image: url("img/board.png");
     background-size: 100%;
     position: relative;
-    /********************************
-    *** Hightlight recent actions ***
-    ********************************/
     /*****************************
     ******************************
     ********* UPPER PART *********
@@ -498,132 +494,7 @@ body {
     ******************************
     *********** SCORES  **********
     ******************************
-    *****************************/
-    /****************************
-    *****************************
-    ********* SCRIBBLE  *********
-    *****************************
-    ****************************/ }
-    .score-sheet-container .score-sheet[data-turn="1"] .house-number[data-turn="1"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="1"] [data-turn="1"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="2"] .house-number[data-turn="2"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="2"] [data-turn="2"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="3"] .house-number[data-turn="3"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="3"] [data-turn="3"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="4"] .house-number[data-turn="4"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="4"] [data-turn="4"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="5"] .house-number[data-turn="5"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="5"] [data-turn="5"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="6"] .house-number[data-turn="6"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="6"] [data-turn="6"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="7"] .house-number[data-turn="7"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="7"] [data-turn="7"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="8"] .house-number[data-turn="8"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="8"] [data-turn="8"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="9"] .house-number[data-turn="9"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="9"] [data-turn="9"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="10"] .house-number[data-turn="10"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="10"] [data-turn="10"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="11"] .house-number[data-turn="11"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="11"] [data-turn="11"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="12"] .house-number[data-turn="12"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="12"] [data-turn="12"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="13"] .house-number[data-turn="13"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="13"] [data-turn="13"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="14"] .house-number[data-turn="14"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="14"] [data-turn="14"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="15"] .house-number[data-turn="15"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="15"] [data-turn="15"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="16"] .house-number[data-turn="16"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="16"] [data-turn="16"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="17"] .house-number[data-turn="17"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="17"] [data-turn="17"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="18"] .house-number[data-turn="18"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="18"] [data-turn="18"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="19"] .house-number[data-turn="19"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="19"] [data-turn="19"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="20"] .house-number[data-turn="20"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="20"] [data-turn="20"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="21"] .house-number[data-turn="21"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="21"] [data-turn="21"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="22"] .house-number[data-turn="22"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="22"] [data-turn="22"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="23"] .house-number[data-turn="23"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="23"] [data-turn="23"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="24"] .house-number[data-turn="24"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="24"] [data-turn="24"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="25"] .house-number[data-turn="25"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="25"] [data-turn="25"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="26"] .house-number[data-turn="26"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="26"] [data-turn="26"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="27"] .house-number[data-turn="27"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="27"] [data-turn="27"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="28"] .house-number[data-turn="28"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="28"] [data-turn="28"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="29"] .house-number[data-turn="29"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="29"] [data-turn="29"] .scribble-path {
-      stroke: red; }
-    .score-sheet-container .score-sheet[data-turn="30"] .house-number[data-turn="30"] {
-      color: red; }
-    .score-sheet-container .score-sheet[data-turn="30"] [data-turn="30"] .scribble-path {
-      stroke: red; }
+    *****************************/ }
     .score-sheet-container .score-sheet .cityname {
       position: absolute;
       top: 253px;
@@ -1472,35 +1343,227 @@ body {
     .score-sheet-container .score-sheet .score_total {
       top: 1388px;
       left: 1411px; }
-    .score-sheet-container .score-sheet .scribble, .score-sheet-container .score-sheet .scribble-circle, .score-sheet-container .score-sheet .scribble-line, .score-sheet-container .score-sheet .scribble-line-hor {
-      width: 100%;
-      height: 100%; }
-      .score-sheet-container .score-sheet .scribble .scribble-path, .score-sheet-container .score-sheet .scribble-circle .scribble-path, .score-sheet-container .score-sheet .scribble-line .scribble-path, .score-sheet-container .score-sheet .scribble-line-hor .scribble-path {
-        stroke: black;
-        stroke-linecap: round; }
-      .score-sheet-container .score-sheet .scribble.animate .scribble-path, .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path, .score-sheet-container .score-sheet .scribble-line.animate .scribble-path, .score-sheet-container .score-sheet .scribble-line-hor.animate .scribble-path {
-        animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
-        animation-fill-mode: forwards; }
+
+/********************************
+*** Hightlight recent actions ***
+********************************/
+#game_play_area[data-turn="1"] .house-number[data-turn="1"] {
+  color: red; }
+
+#game_play_area[data-turn="1"] [data-turn="1"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="2"] .house-number[data-turn="2"] {
+  color: red; }
+
+#game_play_area[data-turn="2"] [data-turn="2"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="3"] .house-number[data-turn="3"] {
+  color: red; }
+
+#game_play_area[data-turn="3"] [data-turn="3"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="4"] .house-number[data-turn="4"] {
+  color: red; }
+
+#game_play_area[data-turn="4"] [data-turn="4"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="5"] .house-number[data-turn="5"] {
+  color: red; }
+
+#game_play_area[data-turn="5"] [data-turn="5"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="6"] .house-number[data-turn="6"] {
+  color: red; }
+
+#game_play_area[data-turn="6"] [data-turn="6"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="7"] .house-number[data-turn="7"] {
+  color: red; }
+
+#game_play_area[data-turn="7"] [data-turn="7"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="8"] .house-number[data-turn="8"] {
+  color: red; }
+
+#game_play_area[data-turn="8"] [data-turn="8"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="9"] .house-number[data-turn="9"] {
+  color: red; }
+
+#game_play_area[data-turn="9"] [data-turn="9"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="10"] .house-number[data-turn="10"] {
+  color: red; }
+
+#game_play_area[data-turn="10"] [data-turn="10"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="11"] .house-number[data-turn="11"] {
+  color: red; }
+
+#game_play_area[data-turn="11"] [data-turn="11"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="12"] .house-number[data-turn="12"] {
+  color: red; }
+
+#game_play_area[data-turn="12"] [data-turn="12"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="13"] .house-number[data-turn="13"] {
+  color: red; }
+
+#game_play_area[data-turn="13"] [data-turn="13"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="14"] .house-number[data-turn="14"] {
+  color: red; }
+
+#game_play_area[data-turn="14"] [data-turn="14"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="15"] .house-number[data-turn="15"] {
+  color: red; }
+
+#game_play_area[data-turn="15"] [data-turn="15"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="16"] .house-number[data-turn="16"] {
+  color: red; }
+
+#game_play_area[data-turn="16"] [data-turn="16"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="17"] .house-number[data-turn="17"] {
+  color: red; }
+
+#game_play_area[data-turn="17"] [data-turn="17"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="18"] .house-number[data-turn="18"] {
+  color: red; }
+
+#game_play_area[data-turn="18"] [data-turn="18"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="19"] .house-number[data-turn="19"] {
+  color: red; }
+
+#game_play_area[data-turn="19"] [data-turn="19"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="20"] .house-number[data-turn="20"] {
+  color: red; }
+
+#game_play_area[data-turn="20"] [data-turn="20"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="21"] .house-number[data-turn="21"] {
+  color: red; }
+
+#game_play_area[data-turn="21"] [data-turn="21"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="22"] .house-number[data-turn="22"] {
+  color: red; }
+
+#game_play_area[data-turn="22"] [data-turn="22"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="23"] .house-number[data-turn="23"] {
+  color: red; }
+
+#game_play_area[data-turn="23"] [data-turn="23"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="24"] .house-number[data-turn="24"] {
+  color: red; }
+
+#game_play_area[data-turn="24"] [data-turn="24"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="25"] .house-number[data-turn="25"] {
+  color: red; }
+
+#game_play_area[data-turn="25"] [data-turn="25"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="26"] .house-number[data-turn="26"] {
+  color: red; }
+
+#game_play_area[data-turn="26"] [data-turn="26"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="27"] .house-number[data-turn="27"] {
+  color: red; }
+
+#game_play_area[data-turn="27"] [data-turn="27"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="28"] .house-number[data-turn="28"] {
+  color: red; }
+
+#game_play_area[data-turn="28"] [data-turn="28"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="29"] .house-number[data-turn="29"] {
+  color: red; }
+
+#game_play_area[data-turn="29"] [data-turn="29"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="30"] .house-number[data-turn="30"] {
+  color: red; }
+
+#game_play_area[data-turn="30"] [data-turn="30"] .scribble-path {
+  stroke: red; }
+
+/****************************
+*****************************
+********* SCRIBBLE  *********
+*****************************
+****************************/
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor {
+  width: 100%;
+  height: 100%; }
+  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path {
+    stroke: black;
+    stroke-linecap: round; }
+  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path {
+    animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-fill-mode: forwards; }
 @keyframes drawScribble {
   to {
     stroke-dashoffset: 0; } }
-    .score-sheet-container .score-sheet .scribble .scribble-path {
-      stroke-dasharray: 4500;
-      stroke-dashoffset: 0; }
-    .score-sheet-container .score-sheet .scribble.animate .scribble-path {
-      stroke-dashoffset: 4500; }
-    .score-sheet-container .score-sheet .scribble-circle .scribble-path {
-      stroke-dasharray: 1500;
-      stroke-dashoffset: 0; }
-    .score-sheet-container .score-sheet .scribble-circle.animate .scribble-path {
-      stroke-dashoffset: 1500; }
-    .score-sheet-container .score-sheet .scribble-line .scribble-path, .score-sheet-container .score-sheet .scribble-line-hor .scribble-path {
-      stroke-dasharray: 300;
-      stroke-dashoffset: 0; }
-    .score-sheet-container .score-sheet .scribble-line.animate .scribble-path, .score-sheet-container .score-sheet .scribble-line-hor.animate .scribble-path {
-      stroke-dashoffset: 300; }
-    .score-sheet-container .score-sheet .scribble-line {
-      padding-top: 12px; }
+.scribble .scribble-path {
+  stroke-dasharray: 4500;
+  stroke-dashoffset: 0; }
+.scribble.animate .scribble-path {
+  stroke-dashoffset: 4500; }
+
+.scribble-circle .scribble-path {
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 0; }
+.scribble-circle.animate .scribble-path {
+  stroke-dashoffset: 1500; }
+
+.scribble-line .scribble-path, .scribble-line-hor .scribble-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 0; }
+.scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path {
+  stroke-dashoffset: 300; }
+
+.scribble-line {
+  padding-top: 12px; }
 
 /*************************
 **************************

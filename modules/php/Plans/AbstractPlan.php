@@ -1,6 +1,7 @@
 <?php
 namespace WTO\Plans;
 use \WTO\Game\Globals;
+use \WTO\Game\Notifications;
 use \WTO\Helpers\QueryBuilder;
 
 abstract class AbstractPlan
@@ -35,7 +36,13 @@ abstract class AbstractPlan
     return $this->variant == BASIC || Globals::isAdvanced();
   }
 
-  abstract public function canBeScored($player);
+  public function canBeScored($player)
+  {
+    $scores = $this->getScores();
+    return !\array_key_exists($player->getId(), $scores);
+  }
+
+
   abstract public function argValidate($player);
   public function validate($player, $args){
     $query = new QueryBuilder('plan_validation');
@@ -44,6 +51,7 @@ abstract class AbstractPlan
       'player_id' => $player->getId(),
       'turn' => Globals::getCurrentTurn(),
     ]);
+    Notifications::planScored($player, $this->id, $this->getValidations());
   }
 
   public function getValidations()
@@ -61,7 +69,7 @@ abstract class AbstractPlan
     foreach($turns as $pId => $turn){
       if(is_null($firstValue))
         $firstValue = $turn;
-      $validations[$pId] = $turn == $firstValue? 0 : 1;
+      $validations[$pId] = ["rank" => $turn == $firstValue? 0 : 1, "turn" => $turn];
     }
 
     return $validations;
@@ -72,7 +80,7 @@ abstract class AbstractPlan
     $validations = self::getValidations();
     $scores = [];
     foreach($validations as $pId => $val){
-      $scores[$pId] = $this->scores[$val];
+      $scores[$pId] = $this->scores[$val["rank"]];
     }
 
     return $scores;

@@ -1,0 +1,100 @@
+/*************************
+**************************
+********* MODAL  *********
+**************************
+*************************/
+#popin_chooseNumber {
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  background:transparent;
+  padding:0;
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("img/dialog-texture.jpg");
+    box-shadow: -5px 5px 3px 0px rgba(20,20,20,0.6);
+    z-index:-1;
+  }
+
+  &::before {
+    transform: rotate(2deg);
+    transform-origin: top left;
+    z-index: -2;
+    left: -3px;
+    top: 6px;
+  }
+
+  &::after {
+    background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
+    background-position: 5px 5px, top left;
+    background-repeat: no-repeat, repeat;
+    background-size:58px, 60px;
+  }
+
+  h2 {
+    @include handwritten;
+    color:#b74d44;
+    font-size:30px;
+    padding:3px 90px;
+    text-align: center;
+    &::before, &::after {
+      content:"★";
+      margin:5px;
+    }
+  }
+
+  #popin_chooseNumber_close {
+    background-color: #b74d44;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    @include centered;
+    top: -15px;
+    right: -15px;
+    font-size: 100%;
+    color: white !important;
+
+    &:hover {
+      text-decoration: none;
+      color:#CCC !important;
+      transform:scale(1.1);
+    }
+
+    i {
+      margin-top:-2px;
+    }
+  }
+
+  #popin_chooseNumber_contents {
+    min-height:200px;
+    display:flex;
+    justify-content: space-around;
+    margin: 30px 20px;
+
+    div {
+      height:200px;
+      margin:0 10px;
+      width:$cardWidth * 200px / $cardHeight;
+      background-image:url("img/construction_front.jpg");
+      @media (max-width: $breakpoint) { background-image:url("img/construction_front_low.jpg"); }
+      background-size:cover;
+      box-shadow:-2px 2px 3px rgba(20,20,20,0.8);
+      cursor:pointer;
+
+      @for $i from 0 through 17 {
+        &[data-number="#{$i}"] { background-position: $i*100%/17 center; }
+      }
+
+      &:hover {
+        transform:scale(1.05) rotate(2deg);
+      }
+    }
+  }
+}
