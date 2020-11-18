@@ -17,9 +17,6 @@ trait TurnTrait
    */
   function stNewTurn()
   {
-    // Increase turn number
-    $n = (int) self::getGamestateValue('currentTurn') + 1;
-    self::setGamestateValue("currentTurn", $n);
     ConstructionCards::draw();
 
     StateMachine::initPrivateStates(ST_PLAYER_TURN);
@@ -65,12 +62,16 @@ trait TurnTrait
    */
   function stApplyTurn()
   {
-    // Compute, store and notify new scores
-    $scores = [];
+    // Increase turn number
+    $n = (int) self::getGamestateValue('currentTurn') + 1;
+    self::setGamestateValue("currentTurn", $n);
+
+    // Compute, store and notify new scores/datas
     foreach (Players::getAll() as $player) {
-      $scores[$player->getId()] = $player->storeScore();
+      $player->storeScore();
     }
-    Notifications::updateAllPlayersScores($scores);
+
+    Notifications::updatePlayersData();
 
     $newState = $this->isEndOfGame()? "endGame" : "newTurn";
     $this->gamestate->nextState($newState);

@@ -18,27 +18,28 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
  * animate the scribbles
  */
 
-    constructor(player, gameData, parentDiv, gameui) {
+    constructor(player, parentDiv) {
       debug("Construction score sheet", player);
       this.player = player;
       this.streetSizes = [10, 11, 12];
       this._selectableHouses = null;
+      let scoreSheet = player.scoreSheet;
 
       // Create container
-      this.tpl('scoreSheet', { turn: gameData.turn }, parentDiv);
+      this.tpl('scoreSheet', {}, parentDiv);
       this.container = "score-sheet-" + player.id;
 
       // Setup divs
       this.setupUpperSheet();
       this.setupLowerSheet();
       this.setupScores();
-      this.updateScores(gameData.scores);
+      this.updateScores(scoreSheet.scores);
 
       // Add houses number
-      gameData.houses.forEach(house => this.addHouseNumber(house) );
+      scoreSheet.houses.forEach(house => this.addHouseNumber(house) );
 
       // Add scribbles
-      gameData.scribbles.forEach(scribble => this.addScribble(scribble, false) );
+      scoreSheet.scribbles.forEach(scribble => this.addScribble(scribble, false) );
     },
 
     /*

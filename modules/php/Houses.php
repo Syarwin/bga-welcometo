@@ -2,6 +2,7 @@
 namespace WTO;
 use welcometo;
 use WTO\Game\Globals;
+use WTO\Game\Players;
 use WTO\Actions\Surveyor;
 
 /*
@@ -79,7 +80,15 @@ class Houses extends Helpers\DB_Manager
   public function getOfPlayer($player)
   {
     $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
-    return self::DB()->where('player_id', $pId)->get(false)->toArray();
+    $query = self::DB()->where('player_id', $pId);
+
+    try {
+      // Filter out the scribbles of current turn if not current player
+      if(Players::getCurrentId() != $pId)
+        $query = $query->where('turn', '<', Globals::getCurrentTurn());
+    } finally {
+      return $query->get(false)->toArray();
+    }
   }
 
 

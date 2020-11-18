@@ -3,7 +3,7 @@
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber {
+#popin_chooseNumber, #popin_showScoreSheet {
   border: none;
   border-radius: 0px;
   box-shadow: none;
@@ -50,7 +50,7 @@
     }
   }
 
-  #popin_chooseNumber_close {
+  #popin_chooseNumber_close, #popin_showScoreSheet_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -71,7 +71,43 @@
       margin-top:-2px;
     }
   }
+}
 
+
+#popin_showScoreSheet {
+  padding:10px;
+  z-index:2000;
+
+  &::before, &::after {
+    box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
+  }
+
+  &::before {
+    background-image: url("img/dialog-texture2.jpg");
+    transform:rotate(-3deg);
+    top: 56px;
+    left: -21px;
+  }
+
+  &::after {
+    background-image: url("img/staple.png"), url("img/dialog-texture2.jpg");
+  }
+
+  h2 {
+    margin:0px;
+  }
+
+  #popin_showScoreSheet_contents {
+    margin-top:5px;
+    .score-sheet {
+      transform-origin: top left;
+    }
+  }
+}
+
+
+
+#popin_chooseNumber {
   #popin_chooseNumber_contents {
     min-height:200px;
     display:flex;

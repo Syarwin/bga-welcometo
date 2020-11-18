@@ -55,7 +55,7 @@
     background-color: rgba(255, 0, 0, 0.3); } }
 /*****************************
 ******************************
-*********** LAYOUT ***********
+******* CENTRAL PART *********
 ******************************
 *****************************/
 /*
@@ -185,6 +185,23 @@ body {
         flex-flow: row; }
         #welcometo-container[data-mode="1"] #plan-cards-container #plan-cards-container-sticky #plan-cards-container-resizable .plan-card-holder {
           margin-left: 10px; }
+
+/*****************************
+******************************
+******* PLAYER PART *********
+******************************
+*****************************/
+.welcometo-player-board {
+  height: 40px;
+  padding: 0 10px; }
+  .welcometo-player-board .show-streets-button {
+    height: 100%;
+    cursor: pointer; }
+    .welcometo-player-board .show-streets-button:hover {
+      color: grey; }
+    .welcometo-player-board .show-streets-button svg {
+      width: auto;
+      height: 100%; }
 
 /*****************************
 ******************************
@@ -1570,13 +1587,13 @@ body {
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber {
+#popin_chooseNumber, #popin_showScoreSheet {
   border: none;
   border-radius: 0px;
   box-shadow: none;
   background: transparent;
   padding: 0; }
-  #popin_chooseNumber::before, #popin_chooseNumber::after {
+  #popin_chooseNumber::before, #popin_chooseNumber::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after {
     content: "";
     display: block;
     position: absolute;
@@ -1587,28 +1604,28 @@ body {
     background-image: url("img/dialog-texture.jpg");
     box-shadow: -5px 5px 3px 0px rgba(20, 20, 20, 0.6);
     z-index: -1; }
-  #popin_chooseNumber::before {
+  #popin_chooseNumber::before, #popin_showScoreSheet::before {
     transform: rotate(2deg);
     transform-origin: top left;
     z-index: -2;
     left: -3px;
     top: 6px; }
-  #popin_chooseNumber::after {
+  #popin_chooseNumber::after, #popin_showScoreSheet::after {
     background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
     background-position: 5px 5px, top left;
     background-repeat: no-repeat, repeat;
     background-size: 58px, 60px; }
-  #popin_chooseNumber h2 {
+  #popin_chooseNumber h2, #popin_showScoreSheet h2 {
     font-size: x-large;
     font-family: "Caveat";
     color: #b74d44;
     font-size: 30px;
     padding: 3px 90px;
     text-align: center; }
-    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after {
+    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after, #popin_showScoreSheet h2::before, #popin_showScoreSheet h2::after {
       content: "★";
       margin: 5px; }
-  #popin_chooseNumber #popin_chooseNumber_close {
+  #popin_chooseNumber #popin_chooseNumber_close, #popin_chooseNumber #popin_showScoreSheet_close, #popin_showScoreSheet #popin_chooseNumber_close, #popin_showScoreSheet #popin_showScoreSheet_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -1621,65 +1638,85 @@ body {
     right: -15px;
     font-size: 100%;
     color: white !important; }
-    #popin_chooseNumber #popin_chooseNumber_close:hover {
+    #popin_chooseNumber #popin_chooseNumber_close:hover, #popin_chooseNumber #popin_showScoreSheet_close:hover, #popin_showScoreSheet #popin_chooseNumber_close:hover, #popin_showScoreSheet #popin_showScoreSheet_close:hover {
       text-decoration: none;
       color: #CCC !important;
       transform: scale(1.1); }
-    #popin_chooseNumber #popin_chooseNumber_close i {
+    #popin_chooseNumber #popin_chooseNumber_close i, #popin_chooseNumber #popin_showScoreSheet_close i, #popin_showScoreSheet #popin_chooseNumber_close i, #popin_showScoreSheet #popin_showScoreSheet_close i {
       margin-top: -2px; }
-  #popin_chooseNumber #popin_chooseNumber_contents {
-    min-height: 200px;
-    display: flex;
-    justify-content: space-around;
-    margin: 30px 20px; }
-    #popin_chooseNumber #popin_chooseNumber_contents div {
-      height: 200px;
-      margin: 0 10px;
-      width: 131.9230769231px;
-      background-image: url("img/construction_front.jpg");
-      background-size: cover;
-      box-shadow: -2px 2px 3px rgba(20, 20, 20, 0.8);
-      cursor: pointer; }
-      @media (max-width: 1250px) {
-        #popin_chooseNumber #popin_chooseNumber_contents div {
-          background-image: url("img/construction_front_low.jpg"); } }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="0"] {
-        background-position: 0% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="1"] {
-        background-position: 5.8823529412% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="2"] {
-        background-position: 11.7647058824% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="3"] {
-        background-position: 17.6470588235% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="4"] {
-        background-position: 23.5294117647% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="5"] {
-        background-position: 29.4117647059% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="6"] {
-        background-position: 35.2941176471% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="7"] {
-        background-position: 41.1764705882% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="8"] {
-        background-position: 47.0588235294% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="9"] {
-        background-position: 52.9411764706% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="10"] {
-        background-position: 58.8235294118% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="11"] {
-        background-position: 64.7058823529% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="12"] {
-        background-position: 70.5882352941% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="13"] {
-        background-position: 76.4705882353% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="14"] {
-        background-position: 82.3529411765% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="15"] {
-        background-position: 88.2352941176% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="16"] {
-        background-position: 94.1176470588% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div[data-number="17"] {
-        background-position: 100% center; }
-      #popin_chooseNumber #popin_chooseNumber_contents div:hover {
-        transform: scale(1.05) rotate(2deg); }
+
+#popin_showScoreSheet {
+  padding: 10px;
+  z-index: 2000; }
+  #popin_showScoreSheet::before, #popin_showScoreSheet::after {
+    box-shadow: 5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5); }
+  #popin_showScoreSheet::before {
+    background-image: url("img/dialog-texture2.jpg");
+    transform: rotate(-3deg);
+    top: 56px;
+    left: -21px; }
+  #popin_showScoreSheet::after {
+    background-image: url("img/staple.png"), url("img/dialog-texture2.jpg"); }
+  #popin_showScoreSheet h2 {
+    margin: 0px; }
+  #popin_showScoreSheet #popin_showScoreSheet_contents {
+    margin-top: 5px; }
+    #popin_showScoreSheet #popin_showScoreSheet_contents .score-sheet {
+      transform-origin: top left; }
+
+#popin_chooseNumber #popin_chooseNumber_contents {
+  min-height: 200px;
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 20px; }
+  #popin_chooseNumber #popin_chooseNumber_contents div {
+    height: 200px;
+    margin: 0 10px;
+    width: 131.9230769231px;
+    background-image: url("img/construction_front.jpg");
+    background-size: cover;
+    box-shadow: -2px 2px 3px rgba(20, 20, 20, 0.8);
+    cursor: pointer; }
+    @media (max-width: 1250px) {
+      #popin_chooseNumber #popin_chooseNumber_contents div {
+        background-image: url("img/construction_front_low.jpg"); } }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="0"] {
+      background-position: 0% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="1"] {
+      background-position: 5.8823529412% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="2"] {
+      background-position: 11.7647058824% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="3"] {
+      background-position: 17.6470588235% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="4"] {
+      background-position: 23.5294117647% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="5"] {
+      background-position: 29.4117647059% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="6"] {
+      background-position: 35.2941176471% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="7"] {
+      background-position: 41.1764705882% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="8"] {
+      background-position: 47.0588235294% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="9"] {
+      background-position: 52.9411764706% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="10"] {
+      background-position: 58.8235294118% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="11"] {
+      background-position: 64.7058823529% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="12"] {
+      background-position: 70.5882352941% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="13"] {
+      background-position: 76.4705882353% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="14"] {
+      background-position: 82.3529411765% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="15"] {
+      background-position: 88.2352941176% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="16"] {
+      background-position: 94.1176470588% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div[data-number="17"] {
+      background-position: 100% center; }
+    #popin_chooseNumber #popin_chooseNumber_contents div:hover {
+      transform: scale(1.05) rotate(2deg); }
 
 /*# sourceMappingURL=welcometo.css.map */

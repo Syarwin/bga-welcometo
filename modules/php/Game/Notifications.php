@@ -65,9 +65,9 @@ class Notifications
     ]);
   }
 
-  public static function updateAllPlayersScores($scores){
-    self::notifyAll('updateAllPlayersScores', '', [
-      'scores' => $scores,
+  public static function updatePlayersData(){
+    self::notifyAll('updatePlayersData', '', [
+      'players' => Players::getUiData(),
     ]);
   }
 }

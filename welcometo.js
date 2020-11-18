@@ -50,6 +50,8 @@ define([
      *  - mixed gamedatas : contains all datas retrieved by the getAllDatas PHP method.
      */
     setup(gamedatas) {
+dojo.destroy('debug_output'); // Speedup loading page
+
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
 
@@ -62,23 +64,46 @@ define([
       this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
       this._planCards = new bgagame.wtoPlanCards(gamedatas, this.player_id);
 
+      // Setup streets icon
+      Object.values(gamedatas.players).forEach( player => {
+        if(player.id == this.player_id)
+          return;
+
+        dojo.place(this.format_block("jstpl_playerBoard", player), "player_board_" + player.id);
+        this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
+        dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
+      });
+
       // Stop here if spectator
       if(this.isSpectator)
         return;
 
       var player = gamedatas.players[this.player_id];
-      this._scoreSheet = new bgagame.wtoScoreSheet(player, gamedatas, 'player-score-sheet-resizable', this);
-      /*
-      this._scoreSheet.addScribble({
-        id :1,
-        location: "score_temp_0",
-        turn: 1,
-      }, true);
-      */
+      this._scoreSheet = new bgagame.wtoScoreSheet(player, 'player-score-sheet-resizable');
      },
 
 
+     showScoreSheet(pId){
+       debug("Showing scoresheet of player :", pId);
 
+       // Open a modal to ask the number to write
+       var dial = new ebg.popindialog();
+       dial.create('showScoreSheet');
+       dial.setTitle(dojo.string.substitute( _("${player_name}'s scoresheet"), { player_name: this.gamedatas.players[pId].name}) );
+       dojo.query("#popin_showScoreSheet_close i").removeClass("fa-times-circle ").addClass("fa-times");
+       new bgagame.wtoScoreSheet(this.gamedatas.players[pId], 'popin_showScoreSheet_contents');
+
+       let box = $("ebd-body").getBoundingClientRect();
+       let sheetWidth = 1544;
+       let newSheetWidth = box['width']*0.5;
+       let sheetScale = newSheetWidth / sheetWidth;
+       dojo.style("popin_showScoreSheet_contents", "width", newSheetWidth + "px");
+       dojo.query("#popin_showScoreSheet_contents .score-sheet").style("transform", `scale(${sheetScale})`);
+       dojo.query("#popin_showScoreSheet_contents .score-sheet-container").style("width", `${newSheetWidth}px`);
+       dojo.query("#popin_showScoreSheet_contents .score-sheet-container").style("height", `${newSheetWidth}px`);
+
+       dial.show();
+     },
 
      ///////////////////////////////////////
      ////////  Game & client states ////////
@@ -164,13 +189,14 @@ define([
        this.scoreCtrl[this.player_id].toValue(args.args.scores.total);
      },
 
-     notif_updateAllPlayersScores(args){
-       debug("Notif: updating all scores", args);
-       for(var pId in args.args.scores){
-         this.scoreCtrl[pId].toValue(args.args.scores[pId]);
-       }
-     },
 
+     notif_updatePlayersData(args){
+       debug("Notif: updating player's data", args);
+       for(var pId in args.args.players){
+         this.scoreCtrl[pId].toValue(args.args.players[pId].score);
+       }
+       this.gamedatas.players = args.args.players;
+     },
 
      ///////////////////////////////
      //////   Start of turn  ///////
@@ -486,7 +512,7 @@ define([
          ['addMultipleScribbles', 1000],
          ['newCards', 1000],
          ['updateScores', 10],
-         ['updateAllPlayersScores', 10],
+         ['updatePlayersData', 10],
          ['scorePlan', 1000],
        ];
 

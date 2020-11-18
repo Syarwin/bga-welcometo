@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
 use WTO\Game\Globals;
+use WTO\Game\Players;
 
 /*
  * Scribbles
@@ -24,7 +25,12 @@ class Scribbles extends Helpers\Pieces
 
   public function getOfPlayer($pId)
   {
-    return self::getInLocation([$pId, "%"])->toArray();
+    $query = self::getInLocationQ([$pId, "%"]);
+    // Filter out the scribbles of current turn if not current player
+    if(Players::getCurrentId() != $pId)
+      $query = $query->where('turn', '<', Globals::getCurrentTurn());
+
+    return $query->get(false)->toArray();
   }
 
   /*

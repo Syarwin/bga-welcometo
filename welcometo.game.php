@@ -91,7 +91,7 @@ class welcometo extends Table
     WTO\PlanCards::setupNewGame($players);
     WTO\ConstructionCards::setupNewGame($players);
 
-    self::setGameStateValue('currentTurn', 0);
+    self::setGameStateValue('currentTurn', 1);
     $this->activeNextPlayer();
   }
 
@@ -103,17 +103,14 @@ class welcometo extends Table
    */
   protected function getAllDatas()
   {
-    $pId = self::getCurrentPlayerId();
+    $pId = self::getCurrentPId();
     return [
       'players' => WTO\Game\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
       'planCards' => WTO\PlanCards::getUiData(),
       'planValidations' => WTO\PlanCards::getCurrentValidations(),
       'options' => WTO\Game\Globals::getOptions(),
-      'houses' => WTO\Houses::getOfPlayer($pId),
-      'scribbles' => WTO\Scribbles::getOfPlayer($pId),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
-      'scores' => WTO\Game\Players::get($pId)->getScores(),
     ];
   }
 
@@ -186,6 +183,13 @@ class welcometo extends Table
   public static function getCurrentPId(){
     return self::getCurrentPlayerId();
   }
+  /*
+  public static function getCurrentPId($replaceIfSpectator = true){
+    $pId = self::getCurrentPlayerId();
+//    $playersIds = array_keys(self::loadPlayersBasicInfos());
+    $playersIds = WTO\Game\Players::getAll()->map(function($player){ return $player->getId(); });
+    return (in_array($pId, $playersIds) || !$replaceIfSpectator)? $pId : $playersIds[0];
+  }*/
 
   // Exposing protected method translation
   public static function translate($text){

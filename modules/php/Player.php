@@ -59,6 +59,16 @@ class Player extends Helpers\DB_Manager
       'name'      => $this->name,
       'color'     => $this->color,
       'score'     => $this->score,
+      'scoreSheet' => $this->getScoreSheet(),
+    ];
+  }
+
+  public function getScoreSheet()
+  {
+    return [
+      'scores' => $this->getScores(),
+      'houses' => Houses::getOfPlayer($this->id),
+      'scribbles' => Scribbles::getOfPlayer($this->id),
     ];
   }
 
