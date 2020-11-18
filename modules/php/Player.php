@@ -222,7 +222,7 @@ class Player extends Helpers\DB_Manager
       $modifiers = [-2, -1, 1, 2];
       foreach($modifiers as $dx){
         $n = $combination["number"] + $dx;
-        if($n < 1 || $n > 15)
+        if($n < 0 || $n > 17)
           continue;
 
         array_push($numbers, $n);
