@@ -169,7 +169,7 @@ class ConstructionCards extends Helpers\Pieces
   {
     $cards = [];
     foreach (self::getStacks($pId) as $stackId => $stack) {
-      $cards[$stackId] = self::getTopOf($stack, 2)->toArray();
+      $cards[$stackId] = self::getTopOf($stack, 2, false)->toArray();
     }
 
     return $cards;

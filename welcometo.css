@@ -53,6 +53,12 @@
     background-color: rgba(255, 255, 255, 0.3); }
   100% {
     background-color: rgba(255, 0, 0, 0.3); } }
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important; }
+
 /*****************************
 ******************************
 ******* CENTRAL PART *********
@@ -222,7 +228,8 @@ body {
       border: 4px solid transparent;
       border-radius: 4px;
       width: 200px;
-      height: 303.2069970845px; }
+      height: 303.2069970845px;
+      position: relative; }
       #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.unselectable {
         opacity: 0.6;
         cursor: not-allowed; }
@@ -236,18 +243,19 @@ body {
         #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.selected.unselectable {
           opacity: 1;
           cursor: default; }
+      #construction-cards-container #construction-cards-container-resizable .construction-cards-stack.flipped .construction-card-holder {
+        transform: rotateY(180deg); }
     #construction-cards-container #construction-cards-container-resizable.standard .construction-cards-stack {
-      position: relative;
       width: 405px; }
     #construction-cards-container #construction-cards-container-resizable.standard .construction-card-holder {
+      transform-origin: 101.25% 0%; }
+    #construction-cards-container #construction-cards-container-resizable .construction-card-holder {
       position: absolute;
       top: 0;
       left: 0;
-      transform-origin: 101.25% 0%; }
-    #construction-cards-container #construction-cards-container-resizable .construction-card-holder {
       width: 200px;
       height: 303.2069970845px;
-      transition: transform .5s ease-in-out;
+      transition: transform .5s ease-in-out, left .6s ease-in-out, opacity .6s ease-in-out;
       transform-origin: 50% 50%;
       transform-style: preserve-3d; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder.flipped {

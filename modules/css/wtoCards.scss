@@ -24,6 +24,7 @@ $cardMargin:5px;
       border-radius:4px;
       width:$cardWidth;
       height:$cardHeight;
+      position:relative;
 
       &.unselectable {
         opacity:0.6;
@@ -45,26 +46,29 @@ $cardMargin:5px;
           cursor:default;
         }
       }
+
+      &.flipped .construction-card-holder {
+        transform:rotateY(180deg);
+      }
     }
 
     /* Standard mode : changing display for nice flip animation */
     &.standard {
       .construction-cards-stack {
-        position:relative;
         width:2*$cardWidth + $cardMargin;
       }
       .construction-card-holder {
-        position:absolute;
-        top:0;
-        left:0;
         transform-origin: ($cardWidth + $cardMargin / 2) / $cardWidth * 100% 0%;
       }
     }
 
     .construction-card-holder {
+      position:absolute;
+      top:0;
+      left:0;
       width:$cardWidth;
       height:$cardHeight;
-      transition: transform .5s ease-in-out;
+      transition: transform .5s ease-in-out, left .6s ease-in-out, opacity .6s ease-in-out;
       transform-origin: 50% 50%;
       transform-style: preserve-3d;
       &.flipped {

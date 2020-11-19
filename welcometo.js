@@ -58,14 +58,20 @@ dojo.destroy('debug_output'); // Speedup loading page
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
 
+      // Update layout manager data
+      this._layoutManager.setStackMode(this._isStandard);
+
+      // Create a new div for buttons to avoid BGA auto clearing it
       dojo.place("<div id='customActions' style='display:inline-block'></div>", $("generalactions"), "after");
+
+      // Add current turn data to highlight recent moves
       dojo.attr("game_play_area", "data-turn", gamedatas.turn);
 
-      // Setup game notifications
+      // Setup game notifications and user preference listener
       this.setupNotifications();
-
       this.initPreferencesObserver();
 
+      // Create the construction and plan cards
       this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
       this._planCards = new bgagame.wtoPlanCards(gamedatas, this.player_id);
 
@@ -83,6 +89,7 @@ dojo.destroy('debug_output'); // Speedup loading page
       if(this.isSpectator)
         return;
 
+      // Setup the scoresheet
       var player = gamedatas.players[this.player_id];
       this._scoreSheet = new bgagame.wtoScoreSheet(player, 'player-score-sheet-resizable');
      },
@@ -182,7 +189,51 @@ dojo.destroy('debug_output'); // Speedup loading page
       */
      onUpdateActionButtons(stateName, args) {
        debug('Update action buttons: ' + stateName, args); // Make sure it the player's turn
-//TODO handle when someone do something => that remove button
+
+       this.addActionButton("btnTest", "Test", () => {
+         this.notif_newCards({
+   "uid": "5fb64d519e594",
+   "type": "newCards",
+   "log": "",
+   "args": {
+     "cards": [
+       {
+         "id": "69",
+         "location": "deck",
+         "state": "76",
+         "number": "12",
+         "action": "6",
+         "stackId": 0
+       },
+       {
+         "id": "12",
+         "location": "deck",
+         "state": "75",
+         "number": "4",
+         "action": "5",
+         "stackId": 1
+       },
+       {
+         "id": "53",
+         "location": "deck",
+         "state": "74",
+         "number": "9",
+         "action": "2",
+         "stackId": 2
+       }
+     ],
+     "turn": 3
+   },
+   "channelorig": "/table/t207639",
+   "gamenameorig": "welcometo",
+   "time": 1605782865,
+   "move_id": 3,
+   "bIsTableMsg": true,
+   "table_id": "207639"
+ }, null, false, "blue");
+       })
+
+
        if (!this.isCurrentPlayerActive())
          return;
      },
@@ -258,7 +309,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        if(this._isStandard){
          this.takeAction("chooseStack", { stack: choice});
        } else {
-         this.takeAction("chooseStacks", { number: choice[0], action: choice[1] });
+         this.takeAction("chooseStacks", { numberStack: choice[0], actionStack: choice[1] });
        }
      },
 

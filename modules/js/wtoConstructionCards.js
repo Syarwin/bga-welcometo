@@ -89,17 +89,17 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     },
 
 
-    makeStacksSelectable(stacks){
-      dojo.query(".construction-cards-stack").removeClass("selected"); // TODO : add in the clearPossible function instead ?
+    makeStacksSelectable(stacks, flipped){
+      dojo.query(".construction-cards-stack").removeClass("selected flipped"); // TODO : add in the clearPossible function instead ?
       dojo.query(".construction-cards-stack").addClass("unselectable");
       this._selectableStacks = stacks;
-      stacks.forEach(stackId =>  dojo.query("#construction-cards-stack-" + stackId).removeClass("unselectable").addClass("selectable") );
+      stacks.forEach(stackId =>  dojo.query("#construction-cards-stack-" + stackId).removeClass("unselectable").addClass("selectable" + (flipped? " flipped" :"")) );
     },
 
     onClickStack(stackId){
       debug("Clicked on a stack", stackId);
       // Check if selectable
-      if(!this._selectableStacks || !this._selectableStacks.includes(stackId))
+      if((!this._selectableStacks || !this._selectableStacks.includes(stackId)) && this._selectedStackForNonStandard != stackId)
         return;
 
       // Standard mode => return stack id
@@ -114,17 +114,49 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     /////////////  New turn  /////////////
     //////////////////////////////////////
     newTurn(cards, turn){
+      // Clear everything
+      dojo.query(".construction-cards-stack").removeClass("selected selectable unselectable");
+
       cards.forEach(card => {
-        if(!this._isStandard)
-          return; // TODO
+        let oldCard = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type")[0];
 
-        // Animation
-        let toFlip = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type")[0];
-        this.flipCard(toFlip, turn);
+        //// STANDARD MODE : FLIP CARD ////
+        if(this._isStandard){
+          // Flip card animation
+          this.flipCard(oldCard, turn);
 
-        // New card
-        dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
-        dojo.style("construction-card-" + card.id, "z-index", 100 - turn);
+          // New card
+          dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
+          dojo.style("construction-card-" + card.id, "z-index", 100 - turn);
+
+        }
+        //// NON STANDARD MODE : SLIDE LEFT ////
+        else {
+          // Compute x position to make it slide out the left border of window
+          let stack = $('construction-cards-stack-' + card.stackId);
+          let x = (oldCard.offsetLeft + oldCard.offsetWidth + stack.offsetLeft + 30);
+
+          // Create a new card and put it to the left (hidden)
+          var newCard = dojo.place(this.format_block('jstpl_constructionCard', card), stack);
+          dojo.style(newCard, "z-index", 100 - turn);
+          dojo.style(newCard, "opacity", "0");
+          dojo.style(newCard, "left", -x + "px");
+
+          // Slide the old one and then slide the new one
+          dojo.style(oldCard, "left", -x + "px");
+          setTimeout(() => {
+            // Remove flipped class if needed
+            dojo.addClass(stack, 'notransition')
+            dojo.removeClass(stack, "flipped");
+            stack.offsetHeight;
+            dojo.removeClass(stack, 'notransition');
+
+            // Slide new card in
+            dojo.style(newCard, "opacity", "1");
+            dojo.style(newCard, "left", "0px")
+            dojo.destroy(oldCard);
+          }, 800);
+        }
       });
     },
 
@@ -138,11 +170,17 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
      * Expert/solo mode => need two stacks
      */
     onClickStackNonStandard(stackId){
+      // Click again on same card => unselect
+      if(this._selectedStackForNonStandard == stackId){
+        this.unselectFirstStack();
+        return;
+      }
+
       // First stack => ask for a second one
       if(this._selectedStackForNonStandard == null){
         this._selectedStackForNonStandard = stackId;
         // Compute new possible choices for stacks
-        this.makeStacksSelectable(this.getSelectableSecondStacks(stackId));
+        this.makeStacksSelectable(this.getSelectableSecondStacks(stackId), true);
         this.addActionButton('buttonUnselect', _('Unselect'), () => this.unselectFirstStack(), null, false, 'gray');
         dojo.addClass("construction-cards-stack-" + stackId, "selected");
       }

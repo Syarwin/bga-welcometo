@@ -73,6 +73,12 @@ $breakpoint:1250px;
   100% { background-color:rgba(255,0,0, 0.3); }
 }
 
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
 
 @import 'modules/css/nouislider.css';
 @import 'modules/css/welcometo.variables';

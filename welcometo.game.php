@@ -183,13 +183,6 @@ class welcometo extends Table
   public static function getCurrentPId(){
     return self::getCurrentPlayerId();
   }
-  /*
-  public static function getCurrentPId($replaceIfSpectator = true){
-    $pId = self::getCurrentPlayerId();
-//    $playersIds = array_keys(self::loadPlayersBasicInfos());
-    $playersIds = WTO\Game\Players::getAll()->map(function($player){ return $player->getId(); });
-    return (in_array($pId, $playersIds) || !$replaceIfSpectator)? $pId : $playersIds[0];
-  }*/
 
   // Exposing protected method translation
   public static function translate($text){

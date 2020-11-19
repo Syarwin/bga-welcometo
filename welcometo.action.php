@@ -58,8 +58,8 @@ class action_welcometo extends APP_GameAction
   public function chooseStacks()
   {
     self::setAjaxMode();
-    $number = self::getArg("number", AT_posint, true);
-    $action = self::getArg("action", AT_posint, true);
+    $number = self::getArg("numberStack", AT_posint, true);
+    $action = self::getArg("actionStack", AT_posint, true);
     $this->game->chooseCards([$number, $action]);
     self::ajaxResponse();
   }
