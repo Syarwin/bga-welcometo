@@ -45,6 +45,7 @@ abstract class AbstractPlan
 
 
   abstract public function argValidate($player);
+  
   public function validate($player, $args){
     $query = new QueryBuilder('plan_validation');
     $query->insert([

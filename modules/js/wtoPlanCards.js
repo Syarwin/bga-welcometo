@@ -72,7 +72,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
 
         var high = [], low = [];
         for(var pId in validations){
-          var name = this._gamedatas.players[pId].name;
+          var name = pId == -1? _("Solo") : this._gamedatas.players[pId].name;
           if(validations[pId].rank == 0)
             high.push(name);
           else

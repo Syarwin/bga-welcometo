@@ -119,7 +119,6 @@ class ConstructionCards extends Helpers\Pieces
   public function draw($playerId = null)
   {
     $drawnCards = [];
-    $soloCardDrawn = false;
     foreach (self::getStacks($playerId) as $stackId => $stack) {
       ///// Cleaning stack /////
       if(Globals::isStandard()){
@@ -138,9 +137,9 @@ class ConstructionCards extends Helpers\Pieces
 
       // Drawing the solo card ? Re-draw another card immediately
       if ($drawnCard['action'] == SOLO) {
-        self::move($drawCard['id'], 'removed');
+        self::move($drawnCard['id'], 'removed');
         $drawnCard = self::pickOneForLocation($fromLocation, $stack);
-        $soloCardDrawn = true;
+        self::soloCardDrawn();
       }
 
       $drawnCard['stackId'] = $stackId;
@@ -148,13 +147,26 @@ class ConstructionCards extends Helpers\Pieces
     }
 
     Notifications::newCards($playerId, $drawnCards);
-
-    return [
-      'drawnCards' => $drawnCards,
-      'soloCardDrawn' => $soloCardDrawn
-    ];
   }
 
+
+  /*
+   * Triggered when the solo card is drawn
+   */
+  public function soloCardDrawn(){
+    Notifications::soloCard();
+
+    // Validate all plans with a mock id of -1
+    foreach(PlanCards::getCurrent() as $plan){
+      $query = new Helpers\QueryBuilder('plan_validation');
+      $query->insert([
+        'card_id' => $plan->getId(),
+        'player_id' => -1,
+        'turn' => Globals::getCurrentTurn() - 1,
+      ]);
+    }
+    Notifications::updatePlayersData();
+  }
 
   ////////////////////////////////////
   ////////////////////////////////////

@@ -208,6 +208,16 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
+     notif_soloCard(args){
+       debug("Notif: the solo card has been drawn");
+       var dial = new ebg.popindialog();
+       dial.create('showSoloCard');
+       dial.setTitle(_("Solo card was drawn"));
+       dojo.query("#popin_showSoloCard_close i").removeClass("fa-times-circle ").addClass("fa-times");
+       dial.show();
+       setTimeout(() => dial.destroy(), 4000);
+     },
+
      /////////////////////////////////////
      //////   Display basic info   ///////
      /////////////////////////////////////
@@ -568,6 +578,7 @@ dojo.destroy('debug_output'); // Speedup loading page
          ['updateScores', 10],
          ['updatePlayersData', 10],
          ['scorePlan', 1000],
+         ['soloCard', 4000],
        ];
 
        notifs.forEach(notif => {

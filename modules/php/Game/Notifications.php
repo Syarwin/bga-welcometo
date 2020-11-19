@@ -13,6 +13,10 @@ class Notifications
     welcometo::get()->notifyPlayer($pId, $name, $msg, $data);
   }
 
+  public static function soloCard(){
+    self::notifyAll('soloCard', clienttranslate('The solo card was drawn'), []);
+  }
+
   public static function newCards($pId, $cards){
     $data = [
       'cards' => $cards,
@@ -45,9 +49,9 @@ class Notifications
     ]);
   }
 
-  public static function planScored($player, $planId, $validations){
-    self::notify($player->getId(), "scorePlan", '', [
-      'validation' => $validations[$player->getId()],
+  public static function planScored($pId, $planId, $validations){
+    self::notify($pId, "scorePlan", '', [
+      'validation' => $validations[$pId],
       'planId' => $planId
     ]);
   }

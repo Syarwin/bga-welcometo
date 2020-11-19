@@ -3,7 +3,7 @@
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber, #popin_showScoreSheet {
+#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard {
   border: none;
   border-radius: 0px;
   box-shadow: none;
@@ -50,7 +50,7 @@
     }
   }
 
-  #popin_chooseNumber_close, #popin_showScoreSheet_close {
+  #popin_chooseNumber_close, #popin_showScoreSheet_close, #popin_showSoloCard_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -132,5 +132,18 @@
         transform:scale(1.05) rotate(2deg);
       }
     }
+  }
+}
+
+
+
+#popin_showSoloCard {
+  #popin_showSoloCard_contents {
+    height: 400px;
+    background-image: url("img/solo.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin: 10px;
   }
 }

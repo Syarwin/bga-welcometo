@@ -1595,13 +1595,13 @@ body {
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber, #popin_showScoreSheet {
+#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard {
   border: none;
   border-radius: 0px;
   box-shadow: none;
   background: transparent;
   padding: 0; }
-  #popin_chooseNumber::before, #popin_chooseNumber::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after {
+  #popin_chooseNumber::before, #popin_chooseNumber::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after, #popin_showSoloCard::before, #popin_showSoloCard::after {
     content: "";
     display: block;
     position: absolute;
@@ -1612,28 +1612,28 @@ body {
     background-image: url("img/dialog-texture.jpg");
     box-shadow: -5px 5px 3px 0px rgba(20, 20, 20, 0.6);
     z-index: -1; }
-  #popin_chooseNumber::before, #popin_showScoreSheet::before {
+  #popin_chooseNumber::before, #popin_showScoreSheet::before, #popin_showSoloCard::before {
     transform: rotate(2deg);
     transform-origin: top left;
     z-index: -2;
     left: -3px;
     top: 6px; }
-  #popin_chooseNumber::after, #popin_showScoreSheet::after {
+  #popin_chooseNumber::after, #popin_showScoreSheet::after, #popin_showSoloCard::after {
     background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
     background-position: 5px 5px, top left;
     background-repeat: no-repeat, repeat;
     background-size: 58px, 60px; }
-  #popin_chooseNumber h2, #popin_showScoreSheet h2 {
+  #popin_chooseNumber h2, #popin_showScoreSheet h2, #popin_showSoloCard h2 {
     font-size: x-large;
     font-family: "Caveat";
     color: #b74d44;
     font-size: 30px;
     padding: 3px 90px;
     text-align: center; }
-    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after, #popin_showScoreSheet h2::before, #popin_showScoreSheet h2::after {
+    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after, #popin_showScoreSheet h2::before, #popin_showScoreSheet h2::after, #popin_showSoloCard h2::before, #popin_showSoloCard h2::after {
       content: "★";
       margin: 5px; }
-  #popin_chooseNumber #popin_chooseNumber_close, #popin_chooseNumber #popin_showScoreSheet_close, #popin_showScoreSheet #popin_chooseNumber_close, #popin_showScoreSheet #popin_showScoreSheet_close {
+  #popin_chooseNumber #popin_chooseNumber_close, #popin_chooseNumber #popin_showScoreSheet_close, #popin_chooseNumber #popin_showSoloCard_close, #popin_showScoreSheet #popin_chooseNumber_close, #popin_showScoreSheet #popin_showScoreSheet_close, #popin_showScoreSheet #popin_showSoloCard_close, #popin_showSoloCard #popin_chooseNumber_close, #popin_showSoloCard #popin_showScoreSheet_close, #popin_showSoloCard #popin_showSoloCard_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -1646,11 +1646,11 @@ body {
     right: -15px;
     font-size: 100%;
     color: white !important; }
-    #popin_chooseNumber #popin_chooseNumber_close:hover, #popin_chooseNumber #popin_showScoreSheet_close:hover, #popin_showScoreSheet #popin_chooseNumber_close:hover, #popin_showScoreSheet #popin_showScoreSheet_close:hover {
+    #popin_chooseNumber #popin_chooseNumber_close:hover, #popin_chooseNumber #popin_showScoreSheet_close:hover, #popin_chooseNumber #popin_showSoloCard_close:hover, #popin_showScoreSheet #popin_chooseNumber_close:hover, #popin_showScoreSheet #popin_showScoreSheet_close:hover, #popin_showScoreSheet #popin_showSoloCard_close:hover, #popin_showSoloCard #popin_chooseNumber_close:hover, #popin_showSoloCard #popin_showScoreSheet_close:hover, #popin_showSoloCard #popin_showSoloCard_close:hover {
       text-decoration: none;
       color: #CCC !important;
       transform: scale(1.1); }
-    #popin_chooseNumber #popin_chooseNumber_close i, #popin_chooseNumber #popin_showScoreSheet_close i, #popin_showScoreSheet #popin_chooseNumber_close i, #popin_showScoreSheet #popin_showScoreSheet_close i {
+    #popin_chooseNumber #popin_chooseNumber_close i, #popin_chooseNumber #popin_showScoreSheet_close i, #popin_chooseNumber #popin_showSoloCard_close i, #popin_showScoreSheet #popin_chooseNumber_close i, #popin_showScoreSheet #popin_showScoreSheet_close i, #popin_showScoreSheet #popin_showSoloCard_close i, #popin_showSoloCard #popin_chooseNumber_close i, #popin_showSoloCard #popin_showScoreSheet_close i, #popin_showSoloCard #popin_showSoloCard_close i {
       margin-top: -2px; }
 
 #popin_showScoreSheet {
@@ -1726,5 +1726,13 @@ body {
       background-position: 100% center; }
     #popin_chooseNumber #popin_chooseNumber_contents div:hover {
       transform: scale(1.05) rotate(2deg); }
+
+#popin_showSoloCard #popin_showSoloCard_contents {
+  height: 400px;
+  background-image: url("img/solo.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  margin: 10px; }
 
 /*# sourceMappingURL=welcometo.css.map */

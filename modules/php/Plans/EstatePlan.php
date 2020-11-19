@@ -75,7 +75,6 @@ class EstatePlan extends AbstractPlan
   public function validate($player, $args){
     // Check estates
     $this->checkValidate($player, $args);
-
     $scribbles = [];
     foreach($args as $estate){
       for($y = $estate['y']; $y < $estate['y'] + $estate['size']; $y++){
