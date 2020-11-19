@@ -29,6 +29,9 @@ define([
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
     g_gamethemeurl + "modules/js/wtoPlanCards.js",
 ], function (dojo, declare) {
+  let AUTOMATIC = 101;
+  let ENABLED = 2;
+
   return declare("bgagame.welcometo", ebg.core.gamegui, {
     /*
      * Constructor
@@ -60,6 +63,8 @@ dojo.destroy('debug_output'); // Speedup loading page
 
       // Setup game notifications
       this.setupNotifications();
+
+      this.initPreferencesObserver();
 
       this._constructionCards = new bgagame.wtoConstructionCards(gamedatas);
       this._planCards = new bgagame.wtoPlanCards(gamedatas, this.player_id);
@@ -292,19 +297,36 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
-     //////////////////////////////////////
-     ////////   Generic zones   ///////////
-     //////////////////////////////////////
-     /*
-      * Generic handling of most zones : estate score, pool, parks, ...
-      */
-     promptZones(type, args){
-       this.displayBasicInfo(args);
-       this.addPassActionButton();
-       this._scoreSheet.promptZones(type, args.zones, (zone) => {
-         this.takeAction('scribbleZone', zone);
-       });
-     },
+    //////////////////////////////////////
+    ////////   Generic zones   ///////////
+    //////////////////////////////////////
+    /*
+     * Generic handling of most zones : estate score, pool, parks, ...
+     */
+    promptZones(type, args, automatic){
+      this.displayBasicInfo(args);
+
+      // Automatic some action with user preference
+      if(automatic && args.zones.length == 1 && this.prefs[AUTOMATIC].value == ENABLED){
+        this.singleZoneSelect(args.zones)
+        return;
+      }
+
+      this.addPassActionButton();
+      this._scoreSheet.promptZones(type, args.zones,  (zone) => {
+        this.takeAction('scribbleZone', zone);
+      });
+    },
+
+    singleZoneSelect(zones){
+      var zone = { x : zones[0][0] };
+      if(zones[0].length == 2)
+        zone.y = zones[0][1];
+
+      this._scoreSheet.clearPossible();
+      this.takeAction('scribbleZone', zone);
+    },
+
 
      // Estate
      onEnteringStateActionSurveyor(args){
@@ -318,13 +340,15 @@ dojo.destroy('debug_output'); // Speedup loading page
 
      // Parks
      onEnteringStateActionPark(args){
-       this.promptZones("park", args);
+       this.promptZones("park", args, true);
+       this.addPrimaryActionButton("btnBuildPark", _("Build park"), () => this.singleZoneSelect(args.zones));
      },
 
      // Pools
      onEnteringStateActionPool(args){
-       this.promptZones("score-pool", args);
        this._scoreSheet.promptPool(args.lastHouse);
+       this.promptZones("score-pool", args, true);
+       this.addPrimaryActionButton("btnBuildPool", _("Build pool"), () => this.singleZoneSelect(args.zones));
      },
 
 
@@ -493,6 +517,43 @@ dojo.destroy('debug_output'); // Speedup loading page
      onScreenWidthChange () {
        this._layoutManager.onScreenWidthChange();
      },
+
+
+     /*
+      * Preference polyfill
+      */
+     setPreferenceValue(number, newValue) {
+ 			var optionSel = 'option[value="' + newValue + '"]'
+ 			dojo.query('#preference_control_' + number + ' > ' +	optionSel
+         +	', #preference_fontrol_' +number + ' > ' +	optionSel)
+ 				.attr('selected', true)
+ 			var select = $('preference_control_' + number)
+ 			if (dojo.isIE) {
+ 				select.fireEvent('onchange')
+ 			} else {
+ 				var event = document.createEvent('HTMLEvents')
+ 				event.initEvent('change', false, true)
+ 				select.dispatchEvent(event)
+ 			}
+ 		},
+
+ 		initPreferencesObserver() {
+ 			dojo.query('.preference_control').on(
+ 				'change', (e) => {
+ 					var match = e.target.id.match(/^preference_control_(\d+)$/)
+ 					if (!match) {
+ 						return
+ 					}
+ 					var pref = match[1]
+ 					var newValue = e.target.value
+ 					this.prefs[pref].value = newValue
+ 					this.onPreferenceChange(pref, newValue)
+ 			})
+ 		},
+
+    onPreferenceChange(pref, newValue){
+
+    },
 
      ///////////////////////////////////////////////////
      //////   Reaction to cometD notifications   ///////

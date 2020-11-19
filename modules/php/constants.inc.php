@@ -43,6 +43,16 @@ define('ON', 1);
 
 define('OPTION_EXPERT', 101);
 
+
+
+/*
+ * User preference
+ */
+define('AUTOMATIC', 101);
+define('DISABLED', 1);
+define('ENABLED', 2);
+
+
 /*
  * Global game variables
  */

@@ -55,3 +55,14 @@ $game_options = [
     ]
   ]
 ];
+
+$game_preferences = [
+  AUTOMATIC => [
+    'name' => totranslate('Automatic pool and park actions'),
+    'needReload' => false,
+    'values' => [
+      DISABLED  => ['name' => totranslate('Disabled')],
+      ENABLED   => ['name' => totranslate('Enabled')],
+    ]
+  ],
+];
