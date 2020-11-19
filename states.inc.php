@@ -181,13 +181,14 @@ $machinestates = [
 
   ST_CHOOSE_PLAN => [
     "name" => "choosePlan",
-    "descriptionmyturn" => clienttranslate('${you} must select a plan to validate'),
+    "descriptionmyturn" => clienttranslate('${you} may select a plan to validate'),
     "type" => "private",
     "action" => "stChoosePlan",
     "args" => "argChoosePlan",
-    "possibleactions" => ["choosePlan", "restart"],
+    "possibleactions" => ["choosePlan", "pass", "restart"],
     "transitions" => [
       'none' => ST_CONFIRM_TURN,
+      'pass' => ST_CONFIRM_TURN,
       'validatePlan' => ST_VALIDATE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]

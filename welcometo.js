@@ -182,63 +182,6 @@ dojo.destroy('debug_output'); // Speedup loading page
 
 
 
-     /*
-      * onUpdateActionButtons:
-      * 	called by BGA framework before onEnteringState
-      *  in this method you can manage "action buttons" that are displayed in the action status bar (ie: the HTML links in the status bar).
-      */
-     onUpdateActionButtons(stateName, args) {
-       debug('Update action buttons: ' + stateName, args); // Make sure it the player's turn
-
-       this.addActionButton("btnTest", "Test", () => {
-         this.notif_newCards({
-   "uid": "5fb64d519e594",
-   "type": "newCards",
-   "log": "",
-   "args": {
-     "cards": [
-       {
-         "id": "69",
-         "location": "deck",
-         "state": "76",
-         "number": "12",
-         "action": "6",
-         "stackId": 0
-       },
-       {
-         "id": "12",
-         "location": "deck",
-         "state": "75",
-         "number": "4",
-         "action": "5",
-         "stackId": 1
-       },
-       {
-         "id": "53",
-         "location": "deck",
-         "state": "74",
-         "number": "9",
-         "action": "2",
-         "stackId": 2
-       }
-     ],
-     "turn": 3
-   },
-   "channelorig": "/table/t207639",
-   "gamenameorig": "welcometo",
-   "time": 1605782865,
-   "move_id": 3,
-   "bIsTableMsg": true,
-   "table_id": "207639"
- }, null, false, "blue");
-       })
-
-
-       if (!this.isCurrentPlayerActive())
-         return;
-     },
-
-
      notif_updateScores(args){
        debug("Notif: updating scores", args);
        this._scoreSheet.updateScores(args.args.scores);
@@ -252,6 +195,7 @@ dojo.destroy('debug_output'); // Speedup loading page
          this.scoreCtrl[pId].toValue(args.args.players[pId].score);
        }
        this.gamedatas.players = args.args.players;
+       this._planCards.updateValidations(args.args.planValidations);
      },
 
      ///////////////////////////////
@@ -280,9 +224,6 @@ dojo.destroy('debug_output'); // Speedup loading page
        if(args.selectedPlans && args.selectedPlans.length > 0){
          this._planCards.highlight(args.selectedPlans);
        }
-
-       // TODO Hightlight scribbles/action from current turn
-       // dojo.query(...) args.turn...
      },
 
 
@@ -291,9 +232,9 @@ dojo.destroy('debug_output'); // Speedup loading page
      ////////////////////////////////////////////
      onEnteringStateChooseCards(args){
        this.displayBasicInfo(args);
-       if(args.selectableStacks.length > 0){
-         this._constructionCards.promptPlayer(args.selectableStacks, this.onChooseCards.bind(this));
-       } else {
+       this._constructionCards.promptPlayer(args.selectableStacks, this.onChooseCards.bind(this));
+
+       if(args.selectableStacks.length == 0){
          // Permit refusal
          this.gamedatas.gamestate.descriptionmyturn = _("You cannot write a number and must take a permit refusal");
          this.updatePageTitle();
@@ -469,6 +410,7 @@ dojo.destroy('debug_output'); // Speedup loading page
      onEnteringStateChoosePlan(args){
        this.displayBasicInfo(args);
        this._planCards.promptPlayer(args.selectablePlans, this.onChoosePlan.bind(this));
+       this.addPassActionButton();
      },
 
      onChoosePlan(planId){

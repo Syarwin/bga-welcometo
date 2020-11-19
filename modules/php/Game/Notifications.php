@@ -1,6 +1,7 @@
 <?php
 namespace WTO\Game;
 use welcometo;
+use \WTO\PlanCards;
 
 class Notifications
 {
@@ -68,6 +69,7 @@ class Notifications
   public static function updatePlayersData(){
     self::notifyAll('updatePlayersData', '', [
       'players' => Players::getUiData(),
+      'planValidations' => PlanCards::getCurrentValidations(),
     ]);
   }
 }

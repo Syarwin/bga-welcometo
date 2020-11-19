@@ -1,6 +1,7 @@
 <?php
 namespace WTO\Plans;
 use \WTO\Game\Globals;
+use \WTO\Game\Players;
 use \WTO\Game\Notifications;
 use \WTO\Helpers\QueryBuilder;
 
@@ -57,9 +58,15 @@ abstract class AbstractPlan
   public function getValidations()
   {
     $query = new QueryBuilder('plan_validation');
-    $validations = $query->where('card_id', $this->id)->get(false);
+    $query = $query->where('card_id', $this->id);
+
+    $validations = $query->get(false);
     $turns = [];
     foreach($validations as $validation){
+      // Filter out the validations of current turn if not current player
+      if($validation['player_id'] != Players::getCurrentId() && $validation['turn'] == Globals::getCurrentTurn())
+        continue;
+
       $turns[$validation['player_id']] = $validation['turn'];
     }
 

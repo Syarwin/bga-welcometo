@@ -61,6 +61,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     //////////////////////////////////////
     ////////  Display scored plan ////////
     //////////////////////////////////////
+    updateValidations(validations){
+      this._validations = validations;
+      this.updateValidationMarks();
+    },
+
     updateValidationMarks(){
       this._validations.forEach((validations, i) => {
         var id = "plan-card-" + this._planIds[i];
