@@ -29,8 +29,15 @@ define([
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
     g_gamethemeurl + "modules/js/wtoPlanCards.js",
 ], function (dojo, declare) {
-  let AUTOMATIC = 101;
-  let ENABLED = 2;
+  const AUTOMATIC = 101;
+  const DISABLED = 1;
+  const ENABLED = 2;
+
+  const CONFIRM = 102;
+  const CONFIRM_TIMER = 1;
+  const CONFIRM_ENABLED = 2;
+  const CONFIRM_DISABLED = 3;
+
 
   return declare("bgagame.welcometo", ebg.core.gamegui, {
     /*
@@ -384,36 +391,6 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
-     ///////////////////////////////////////
-     ///////////////////////////////////////
-     /////////   Confirm/undo turn   ///////
-     ///////////////////////////////////////
-     ///////////////////////////////////////
-     onEnteringStateConfirmTurn(args){
-       this.displayBasicInfo(args);
-       this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), 'onClickConfirmTurn');
-     },
-
-     onClickConfirmTurn(){
-       this.takeAction("confirmTurn");
-     },
-
-     onClickCancelTurn(){
-       this.takeAction("cancelTurn");
-     },
-
-     notif_clearTurn(args){
-       debug("Notif: restarting turn", args);
-       this._scoreSheet.clearTurn(args.args.turn);
-       this._planCards.clearTurn(args.args.turn);
-     },
-
-
-     onEnteringStateWaitOthers(args){
-       this.displayBasicInfo(args);
-     },
-
-
      ///////////////////////////////////////////////////
      //////   Choose city plans for validation   ///////
      //////////////////////////////////////////////////
@@ -448,11 +425,89 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
+     ///////////////////////////////////////
+     ///////////////////////////////////////
+     /////////   Confirm/undo turn   ///////
+     ///////////////////////////////////////
+     ///////////////////////////////////////
+     onEnteringStateConfirmTurn(args){
+       this.displayBasicInfo(args);
+       this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), 'onClickConfirmTurn');
+       this.startActionTimer('buttonConfirmAction');
+     },
+
+     onClickConfirmTurn(){
+       this.takeAction("confirmTurn");
+     },
+
+     onClickCancelTurn(){
+       this.takeAction("cancelTurn");
+     },
+
+     notif_clearTurn(args){
+       debug("Notif: restarting turn", args);
+       this._scoreSheet.clearTurn(args.args.turn);
+       this._planCards.clearTurn(args.args.turn);
+     },
+
+
+     onEnteringStateWaitOthers(args){
+       this.displayBasicInfo(args);
+     },
+
+
+     startActionTimer(buttonId) {
+       var button = $(buttonId);
+       var isReadOnly = this.isReadOnly();
+       var prefValue = (this.prefs[CONFIRM] || {}).value;
+       if (button == null || isReadOnly || prefValue == CONFIRM_ENABLED) {
+         debug('Ignoring startActionTimer(' + buttonId + ')', 'readOnly=' + isReadOnly, 'prefValue=' + prefValue);
+         return;
+       }
+
+       // If confirm disabled, click on button
+       if (prefValue == CONFIRM_DISABLED) {
+         button.click();
+         return;
+       }
+
+       this.actionTimerLabel = button.innerHTML;
+       this.actionTimerSeconds = 10;
+       this.actionTimerFunction = () => {
+         var button = $(buttonId);
+         if (button == null) {
+           this.stopActionTimer();
+         } else if (this.actionTimerSeconds-- > 1) {
+           debug('Timer ' + buttonId + ' has ' + this.actionTimerSeconds + ' seconds left');
+           button.innerHTML = this.actionTimerLabel + ' (' + this.actionTimerSeconds + ')';
+         } else {
+           debug('Timer ' + buttonId + ' execute');
+           button.click();
+         }
+       };
+       this.actionTimerFunction();
+       this.actionTimerId = window.setInterval(this.actionTimerFunction, 1000);
+       debug('Timer #' + this.actionTimerId + ' ' + buttonId + ' start');
+     },
+
+     stopActionTimer() {
+       if (this.actionTimerId != null) {
+         debug('Timer #' + this.actionTimerId + ' stop');
+         window.clearInterval(this.actionTimerId);
+         delete this.actionTimerId;
+       }
+     },
+
+
      ////////////////////////////////////////////
      ////////////////////////////////////////////
      //////////////   Utils   ///////////////////
      ////////////////////////////////////////////
      ////////////////////////////////////////////
+     isReadOnly() {
+       return this.isSpectator || typeof g_replayFrom != 'undefined' || g_archive_mode;
+     },
+
      /*
  		 * Make an AJAX call with automatic lock
  		 */

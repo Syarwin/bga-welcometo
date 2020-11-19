@@ -52,6 +52,11 @@ define('AUTOMATIC', 101);
 define('DISABLED', 1);
 define('ENABLED', 2);
 
+define('CONFIRM', 102);
+define('CONFIRM_TIMER', 1);
+define('CONFIRM_ENABLED', 2);
+define('CONFIRM_DISABLED', 3);
+
 
 /*
  * Global game variables

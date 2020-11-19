@@ -65,4 +65,14 @@ $game_preferences = [
       ENABLED   => ['name' => totranslate('Enabled')],
     ]
   ],
+
+  CONFIRM => [
+    'name' => totranslate('Turn confirmation'),
+    'needReload' => false,
+    'values' => [
+      CONFIRM_TIMER     => ['name' => totranslate('Enabled with timer')],
+      CONFIRM_ENABLED   => ['name' => totranslate('Enabled')],
+      CONFIRM_DISABLED  => ['name' => totranslate('Disabled')],
+    ]
+  ],
 ];
