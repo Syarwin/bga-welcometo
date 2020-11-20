@@ -136,6 +136,7 @@ $machinestates = [
     "name" => "actionPark",
     "descriptionmyturn" => clienttranslate('${you} may build a park'),
     "type" => "private",
+    "action" => "stActionPark",
     "args" => "argActionPark",
     "possibleactions" => ["scribbleZone", "pass", "restart"],
     "transitions" => [

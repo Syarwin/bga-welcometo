@@ -67,6 +67,15 @@ trait ActionsTrait
   ///////////////////////////
   ///////// PARKS ///////////
   ///////////////////////////
+  function stActionPark($player)
+  {
+    $zones = Park::getAvailableZones($player);
+    if(empty($zones)){
+      StateMachine::nextState("pass");
+      return true;
+    }
+  }
+
   function argActionPark($player)
   {
     $data = $this->argPrivatePlayerTurn($player);

@@ -128,6 +128,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           this.flipCard(oldCard, turn);
 
           // New card
+          if($("construction-card-" + card.id))
+            dojo.destroy("construction-card-" + card.id);
           dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
           dojo.style("construction-card-" + card.id, "z-index", 100 - turn);
 
