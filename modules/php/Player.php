@@ -3,6 +3,7 @@ namespace WTO;
 use WTO\Game\Log;
 use WTO\Game\Notifications;
 use WTO\Game\Globals;
+use WTO\Game\Players;
 
 use \WTO\Actions\RealEstate;
 use \WTO\Actions\Park;
@@ -194,6 +195,15 @@ class Player extends Helpers\DB_Manager
 ///////// START OF TURN /////////
 /////////////////////////////////
 /////////////////////////////////
+
+  // EXPERT MODE : give the unused card to next player
+  public function giveThirdCardToNextPlayer()
+  {
+      $stacks = $this->getSelectedCards();
+      $pId = Players::getNextId($this);
+      ConstructionCards::prepareCardsForNextTurn($this->id, $stacks, $pId);
+  }
+
   // Restart the turn by clearing all log, houses, scribbles.
   public function restartTurn()
   {

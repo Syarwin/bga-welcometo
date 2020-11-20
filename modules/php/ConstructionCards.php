@@ -69,7 +69,7 @@ class ConstructionCards extends Helpers\Pieces
       }
       else if(Globals::isExpert()){
         // Expert mode : pre-draft one card per player
-        foreach($players as $playerId){
+        foreach($players as $playerId => $t){
           self::pickForLocation(1, 'deck', "for_{$playerId}");
         }
       }
@@ -132,7 +132,7 @@ class ConstructionCards extends Helpers\Pieces
 
       ///// Drawing new card /////
       // In expert mode, the first card was drafter by another player in prev turn
-      $fromLocation = ($stackId == 0 && Globals::isExpert())? "for_{$this->playerId}" : "deck";
+      $fromLocation = ($stackId == 0 && Globals::isExpert())? "for_{$playerId}" : "deck";
       $drawnCard = self::pickOneForLocation($fromLocation, $stack);
 
       // Drawing the solo card ? Re-draw another card immediately
@@ -166,6 +166,21 @@ class ConstructionCards extends Helpers\Pieces
       ]);
     }
     Notifications::updatePlayersData();
+  }
+
+
+
+  /*
+   * In expert mode, put the non-used card on a custom location for next player
+   */
+  public function prepareCardsForNextTurn($pId, $stacks, $nextPId){
+    foreach (self::getStacks($pId) as $stackId => $stack) {
+      if(in_array($stackId, $stacks))
+        continue;
+
+      self::moveAllInLocation($stack, "for_$nextPId");
+      Notifications::giveThirdCardToNextPlayer($pId, $stackId, $nextPId);
+    }
   }
 
   ////////////////////////////////////

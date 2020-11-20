@@ -337,7 +337,8 @@ class Collection extends \ArrayObject {
   }
 
   public function first(){
-    return $this->toArray()[0];
+    $arr = $this->toArray();
+    return isset($arr[0])? $arr[0] : null;
   }
 
   public function toArray(){

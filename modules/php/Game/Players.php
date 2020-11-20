@@ -150,6 +150,12 @@ class Players extends \WTO\Helpers\DB_Manager
     return self::get(self::getCurrentId());
   }
 
+  public function getNextId($player)
+  {
+    $table = welcometo::get()->getNextPlayerTable();
+    return $table[$player->getId()];
+  }
+
   /*
    * Return the number of players
    */

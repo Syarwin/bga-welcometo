@@ -1,6 +1,7 @@
 <?php
 namespace WTO\States;
 
+use WTO\Game\Globals;
 use WTO\Game\StateMachine;
 use WTO\Game\Notifications;
 use WTO\Game\Players;
@@ -17,7 +18,15 @@ trait TurnTrait
    */
   function stNewTurn()
   {
-    ConstructionCards::draw();
+    // Standard mode => draw 3 cards that are the same for all player
+    if(Globals::isStandard())
+      ConstructionCards::draw();
+    // Non standard mode => draw 3 cards for each player
+    else {
+      foreach(Players::getAll() as $pId => $player){
+        ConstructionCards::draw($pId);
+      }
+    }
 
     StateMachine::initPrivateStates(ST_PLAYER_TURN);
     $this->gamestate->nextState("playerTurn");
@@ -62,6 +71,14 @@ trait TurnTrait
    */
   function stApplyTurn()
   {
+    // In expert mode, prepare non-used cards for next player
+    if(Globals::isExpert()){
+      foreach(Players::getAll() as $player){
+        $player->giveThirdCardToNextPlayer();
+      }
+    }
+
+
     // Increase turn number
     $n = (int) self::getGamestateValue('currentTurn') + 1;
     self::setGamestateValue("currentTurn", $n);

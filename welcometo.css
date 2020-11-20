@@ -216,7 +216,8 @@ body {
 *****************************/
 #construction-cards-container {
   background-color: rgba(255, 255, 255, 0.6);
-  padding: 10px; }
+  padding: 10px;
+  z-index: 10; }
   #construction-cards-container #construction-cards-container-resizable {
     display: flex;
     flex-grow: 1;

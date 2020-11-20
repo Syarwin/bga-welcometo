@@ -30,6 +30,13 @@ class Notifications
     }
   }
 
+  public static function giveThirdCardToNextPlayer($pId, $stackId, $nextPId){
+    self::notify($pId, 'giveCard', '', [
+      'stack' => $stackId,
+      'pId' => $nextPId,
+    ]);
+  }
+
 
   public static function writeNumber($player, $house){
     self::notify($player->getId(), 'writeNumber', '', [
@@ -49,9 +56,9 @@ class Notifications
     ]);
   }
 
-  public static function planScored($pId, $planId, $validations){
-    self::notify($pId, "scorePlan", '', [
-      'validation' => $validations[$pId],
+  public static function planScored($player, $planId, $validations){
+    self::notify($player->getId(), "scorePlan", '', [
+      'validation' => $validations[$player->getId()],
       'planId' => $planId
     ]);
   }

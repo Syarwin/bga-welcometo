@@ -118,7 +118,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       dojo.query(".construction-cards-stack").removeClass("selected selectable unselectable");
 
       cards.forEach(card => {
-        let oldCard = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type")[0];
+        let cardsInStack = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type");
+        // NULL only happens in EXPERT MODE
+        let oldCard = cardsInStack.length == 0? null : cardsInStack[0];
 
         //// STANDARD MODE : FLIP CARD ////
         if(this._isStandard){
@@ -134,7 +136,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         else {
           // Compute x position to make it slide out the left border of window
           let stack = $('construction-cards-stack-' + card.stackId);
-          let x = (oldCard.offsetLeft + oldCard.offsetWidth + stack.offsetLeft + 30);
+          let x = (stack.offsetWidth + stack.offsetLeft + 30);
 
           // Create a new card and put it to the left (hidden)
           var newCard = dojo.place(this.format_block('jstpl_constructionCard', card), stack);
@@ -143,7 +145,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           dojo.style(newCard, "left", -x + "px");
 
           // Slide the old one and then slide the new one
-          dojo.style(oldCard, "left", -x + "px");
+          if(oldCard) dojo.style(oldCard, "left", -x + "px");
           setTimeout(() => {
             // Remove flipped class if needed
             dojo.addClass(stack, 'notransition')
@@ -154,12 +156,19 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
             // Slide new card in
             dojo.style(newCard, "opacity", "1");
             dojo.style(newCard, "left", "0px")
-            dojo.destroy(oldCard);
+            if(oldCard)
+              dojo.destroy(oldCard);
           }, 800);
         }
       });
     },
 
+
+    giveCard(stack, pId){
+      let oldCard = dojo.query("#construction-cards-stack-" + stack + " .construction-card-holder:last-of-type")[0];
+      dojo.addClass(oldCard, 'notransition')
+      this.slideToObjectAndDestroy(oldCard, "overall_player_board_" + pId, 1000);
+    },
 
 
     ////////////////////////////////////////////////////////

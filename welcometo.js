@@ -215,6 +215,14 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
+     // EXPERT MODE
+     notif_giveCard(args){
+       debug("Notif: giving card to next player", args);
+       this._constructionCards.giveCard(args.args.stack, args.args.pId);
+     },
+
+
+     // SOLO MODE
      notif_soloCard(args){
        debug("Notif: the solo card has been drawn");
        var dial = new ebg.popindialog();
@@ -630,6 +638,7 @@ dojo.destroy('debug_output'); // Speedup loading page
          ['addScribble', 1000],
          ['addMultipleScribbles', 1000],
          ['newCards', 1000],
+         ['giveCard', 1000],
          ['updateScores', 10],
          ['updatePlayersData', 10],
          ['scorePlan', 1000],
