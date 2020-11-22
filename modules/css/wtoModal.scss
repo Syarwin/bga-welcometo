@@ -1,0 +1,309 @@
+/*************************
+**************************
+********* MODAL  *********
+**************************
+*************************/
+#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview {
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  background:transparent;
+  padding:0;
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("img/dialog-texture.jpg");
+    box-shadow: -5px 5px 3px 0px rgba(20,20,20,0.6);
+    z-index:-1;
+  }
+
+  &::before {
+    transform: rotate(2deg);
+    transform-origin: top left;
+    z-index: -2;
+    left: -3px;
+    top: 6px;
+  }
+
+  &::after {
+    background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
+    background-position: 5px 5px, top left;
+    background-repeat: no-repeat, repeat;
+    background-size:58px, 60px;
+  }
+
+  h2 {
+    @include handwritten;
+    color:#b74d44;
+    font-size:30px;
+    padding:3px 90px;
+    text-align: center;
+    &::before, &::after {
+      content:"★";
+      margin:5px;
+    }
+  }
+
+  #popin_chooseNumber_close, #popin_showScoreSheet_close, #popin_showSoloCard_close, #popin_showOverview_close {
+    background-color: #b74d44;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    @include centered;
+    top: -15px;
+    right: -15px;
+    font-size: 100%;
+    color: white !important;
+
+    &:hover {
+      text-decoration: none;
+      color:#CCC !important;
+      transform:scale(1.1);
+    }
+
+    i {
+      margin-top:-2px;
+    }
+  }
+}
+
+
+#popin_showScoreSheet {
+  padding:10px;
+  z-index:2000;
+
+  &::before, &::after {
+    box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
+  }
+
+  &::before {
+    background-image: url("img/dialog-texture2.jpg");
+    transform:rotate(-3deg);
+    top: 56px;
+    left: -21px;
+  }
+
+  &::after {
+    background-image: url("img/staple.png"), url("img/dialog-texture2.jpg");
+  }
+
+  h2 {
+    margin:0px;
+  }
+
+  #popin_showScoreSheet_contents {
+    margin-top:5px;
+    .score-sheet {
+      transform-origin: top left;
+    }
+  }
+}
+
+
+
+#popin_chooseNumber {
+  #popin_chooseNumber_contents {
+    min-height:200px;
+    display:flex;
+    justify-content: space-around;
+    margin: 30px 20px;
+
+    div {
+      height:200px;
+      margin:0 10px;
+      width:$cardWidth * 200px / $cardHeight;
+      background-image:url("img/construction_front.jpg");
+      @media (max-width: $breakpoint) { background-image:url("img/construction_front_low.jpg"); }
+      background-size:cover;
+      box-shadow:-2px 2px 3px rgba(20,20,20,0.8);
+      cursor:pointer;
+
+      @for $i from 0 through 17 {
+        &[data-number="#{$i}"] { background-position: $i*100%/17 center; }
+      }
+
+      &:hover {
+        transform:scale(1.05) rotate(2deg);
+      }
+    }
+  }
+}
+
+
+
+#popin_showSoloCard {
+  #popin_showSoloCard_contents {
+    height: 400px;
+    background-image: url("img/solo.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    margin: 10px;
+  }
+}
+
+
+
+
+#popin_showOverview {
+  padding:10px;
+  z-index:2000;
+  padding:0;
+
+  &::before, &::after {
+    box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
+  }
+
+
+  &::before {
+    background-image: url("img/dialog-texture2.jpg");
+    transform: rotate(-2deg);
+    top: 17px;
+    left: -15px;
+  }
+
+  &::after {
+    background-image: url("img/dialog-texture2.jpg");
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 60px;
+  }
+
+  h2 {
+    display:none;
+  }
+
+  #popin_showOverview_close {
+    top: -30px;
+    right: -15px;
+  }
+
+  #popin_showOverview_contents {
+    table {
+      th {
+        min-width:70px;
+        height:70px;
+        vertical-align: middle;
+        text-align: center;
+        border-right:1px solid rgba(0,0,0,0.2);
+        &:last-of-type {
+          border-right:none;
+        }
+
+        & > div {
+          width:62px;
+          height:62px;
+          display:inline-block;
+        }
+
+        &#overview-park div, &#overview-pool div, &#overview-temp div, &#overview-estates div, &#overview-bis div {
+          background-image:url("img/actions.png");
+          background-size:cover;
+        }
+        &#overview-estates div { background-position:20% center;}
+        &#overview-park div { background-position:40% center;}
+        &#overview-pool div { background-position:60% center;}
+        &#overview-temp div { background-position:80% center;}
+        &#overview-bis div { background-position:100% center;}
+
+        &#overview-houses div {
+          width:56px;
+          height:56px;
+          background-image:url("img/house.png");
+          background-size:cover;
+        }
+
+        &#overview-plan-1, &#overview-plan-2 , &#overview-plan-3 {
+          @include handwritten;
+          color:#b74d44;
+          font-size: 30px;
+          font-weight: bold;
+        }
+
+        &#overview-other div {
+          width:50px;
+          height:50px;
+          background-image:url("img/refusal.png");
+          background-size:cover;
+        }
+
+        &#overview-user {
+          width:auto;
+        }
+
+        &#overview-total, &#overview-user {
+          font-size: 40px;
+        }
+      }
+
+      tbody {
+        tr {
+          height:50px;
+
+          td {
+            vertical-align: middle;
+            text-align: center;
+            padding:5px 8px;
+            @include handwritten;
+
+            border-right:1px solid rgba(0,0,0,0.2);
+            &:last-of-type {
+              border-right:none;
+            }
+
+            &.overview-house {
+              span:first-child {
+                position:relative;
+                top:-5px;
+              }
+
+              span:last-child {
+                position:relative;
+                top:5px;
+              }
+            }
+
+            i {
+              color: #555;
+              font-size: 14px;
+              margin-left: 7px;
+            }
+
+            &.overview-temp {
+              padding:0px;
+              display:flex;
+              flex-flow: column;
+              background:linear-gradient(to top left, transparent calc(50% - 1px), rgba(0,0,0,0.2), transparent calc(50% + 1px) );
+
+              div:first-child {
+                text-align: left;
+                position: relative;
+                top: 3px;
+                left: 3px;
+                svg {
+                  width:17px;
+                  height:17px
+                }
+              }
+              div:last-child {
+                text-align: right;
+                position: relative;
+                top: -3px;
+                left: -5px;
+              }
+            }
+          }
+        }
+        tr:nth-of-type(2n+1) {
+          background-image:url("img/dialog-texture3.jpg");
+        }
+      }
+    }
+  }
+}

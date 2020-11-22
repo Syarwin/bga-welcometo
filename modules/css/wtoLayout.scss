@@ -220,6 +220,27 @@ body {
 
   .show-streets-button {
     height:100%;
+    width:50px;
+    cursor:pointer;
+    &:hover {
+      color:grey;
+    }
+
+    svg {
+      width:auto;
+      height:100%;
+    }
+  }
+
+
+  #show-overview {
+    height:100%;
+    width:50px;
+
+    &:hover {
+      color:grey;
+    }
+
     cursor:pointer;
     &:hover {
       color:grey;

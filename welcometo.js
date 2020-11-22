@@ -84,8 +84,11 @@ dojo.destroy('debug_output'); // Speedup loading page
 
       // Setup streets icon
       Object.values(gamedatas.players).forEach( player => {
-        if(player.id == this.player_id)
+        if(player.id == this.player_id){
+          dojo.place(jstpl_currentPlayerBoard, "player_board_" + player.id);;
+          dojo.connect($("show-overview"), "onclick", () => this.showOverview() );
           return;
+        }
 
         dojo.place(this.format_block("jstpl_playerBoard", player), "player_board_" + player.id);
         this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
@@ -100,6 +103,46 @@ dojo.destroy('debug_output'); // Speedup loading page
       var player = gamedatas.players[this.player_id];
       this._scoreSheet = new bgagame.wtoScoreSheet(player, 'player-score-sheet-resizable');
      },
+
+
+     showOverview(){
+       debug("Showing overview:");
+
+       // Open a modal to ask the number to write
+       var dial = new ebg.popindialog();
+       dial.create('showOverview');
+       dial.setTitle(_("Overview"));
+       dojo.query("#popin_showOverview_close i").removeClass("fa-times-circle ").addClass("fa-times");
+       dojo.place(jstpl_overview, 'popin_showOverview_contents');
+
+       for(var pId in this.gamedatas.players){
+         let player = this.gamedatas.players[pId];
+         var scores = player.scoreSheet.scores;
+         var nTemp = player.scoreSheet.scribbles.reduce((n, scribble) => n + (scribble.type == "score-temp"? 1 : 0), 0);
+         var nPermit = player.scoreSheet.scribbles.reduce((n, scribble) => n + (scribble.type == "permit-refusal"? 1 : 0), 0);
+         var data = {
+           'playerName' : player.name,
+           'houses' : player.scoreSheet.houses.length,
+           'plan0' : scores['plan-0']? (scores['plan-0'] + '<i class="fa fa-star"></i>') : "-",
+           'plan1' : scores['plan-1']? (scores['plan-1'] + '<i class="fa fa-star"></i>') : "-",
+           'plan2' : scores['plan-2']? (scores['plan-2'] + '<i class="fa fa-star"></i>') : "-",
+           'park' : scores['park-total'],
+           'pool' : scores['pool-total'],
+           'tempNumber' : nTemp,
+           'tempScore' : scores['temp-total'],
+           'estates' : scores['estate-total-0'] + scores['estate-total-1'] + scores['estate-total-2']
+                      + scores['estate-total-3'] + scores['estate-total-4'] + scores['estate-total-5'],
+           'bis' : -scores['bis-total'],
+           'permitScore' : scores['permit-total'],
+           'permitNumber' : nPermit,
+           'total' : scores['total']
+         };
+         dojo.place(this.format_block('jstpl_overviewRow', data), 'player-overview-body');
+       }
+
+       dial.show();
+     },
+
 
 
      showScoreSheet(pId){
@@ -504,6 +547,14 @@ dojo.destroy('debug_output'); // Speedup loading page
          window.clearInterval(this.actionTimerId);
          delete this.actionTimerId;
        }
+     },
+
+
+     /////////////////////////////////
+     /////////   End of game   ///////
+     /////////////////////////////////
+     onEnteringStateComputeScores(args){
+       this.showOverview();
      },
 
 

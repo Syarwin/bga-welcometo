@@ -96,6 +96,70 @@ var jstpl_playerBoard = `
 </div>`;
 
 
+var jstpl_currentPlayerBoard = `
+<div class="welcometo-player-board">
+  <div id="show-overview">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <g class="fa-group">
+        <path class="fa-secondary" fill="currentColor" d="M0 192v272a48 48 0 0 0 48 48h352a48 48 0 0 0 48-48V192zm324.13 141.91a11.92 11.92 0 0 1-3.53 6.89L281 379.4l9.4 54.6a12 12 0 0 1-17.4 12.6l-49-25.8-48.9 25.8a12 12 0 0 1-17.4-12.6l9.4-54.6-39.6-38.6a12 12 0 0 1 6.6-20.5l54.7-8 24.5-49.6a12 12 0 0 1 21.5 0l24.5 49.6 54.7 8a12 12 0 0 1 10.13 13.61zM304 128h32a16 16 0 0 0 16-16V16a16 16 0 0 0-16-16h-32a16 16 0 0 0-16 16v96a16 16 0 0 0 16 16zm-192 0h32a16 16 0 0 0 16-16V16a16 16 0 0 0-16-16h-32a16 16 0 0 0-16 16v96a16 16 0 0 0 16 16z" opacity="0.4"></path>
+        <path class="fa-primary" fill="currentColor" d="M314 320.3l-54.7-8-24.5-49.6a12 12 0 0 0-21.5 0l-24.5 49.6-54.7 8a12 12 0 0 0-6.6 20.5l39.6 38.6-9.4 54.6a12 12 0 0 0 17.4 12.6l48.9-25.8 49 25.8a12 12 0 0 0 17.4-12.6l-9.4-54.6 39.6-38.6a12 12 0 0 0-6.6-20.5zM400 64h-48v48a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V64H160v48a16 16 0 0 1-16 16h-32a16 16 0 0 1-16-16V64H48a48 48 0 0 0-48 48v80h448v-80a48 48 0 0 0-48-48z"></path>
+      </g>
+    </svg>
+  </div>
+</div>`;
+
+
+////// OVERVIEW ///////
+var jstpl_overview = `
+<table id='players-overview'>
+  <thead>
+    <tr>
+      <th id="overview-user"><i class="fa fa-user"></i></th>
+      <th id="overview-houses"><div></div></th>
+      <th id="overview-plan-1">n°1</th>
+      <th id="overview-plan-2">n°2</th>
+      <th id="overview-plan-3">n°3</th>
+      <th id="overview-park"><div></div></th>
+      <th id="overview-pool"><div></div></th>
+      <th id="overview-temp"><div></div></th>
+      <th id="overview-estates"><div></div></th>
+      <th id="overview-bis"><div></div></th>
+      <th id="overview-other"><div></div></th>
+      <th id="overview-total"><i class="fa fa-star"></i></th>
+    </tr>
+  </thead>
+  <tbody id="player-overview-body"></tbody>
+</table>
+`;
+
+
+var jstpl_overviewRow = `
+<tr>
+  <td>\${playerName}</td>
+  <td class="overview-house"><span>\${houses}</span> / <span>33</span></td>
+  <td>\${plan0}</td>
+  <td>\${plan1}</td>
+  <td>\${plan2}</td>
+  <td>\${park}<i class="fa fa-star"></i></td>
+  <td>\${pool}<i class="fa fa-star"></i></td>
+  <td class="overview-temp">
+    <div>\${tempNumber}
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.378898 45.777344">
+        <path style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 11.43164,0 -1.0625,5.216797 -10.04297,0.0957 0.19336,7.822266 H 8.53515 L 7.375,18.658201 H 0 l 0.27148,7.648437 h 5.60157 l -3.2793,18.710937 5.45703,0.759766 3.86328,-19.314453 28.29688,0.193359 3.76757,19.121094 5.31055,-0.964844 -3.57227,-18.447265 6.66211,-0.0957 V 18.640625 H 44.26758 L 43.01172,13.039063 H 52.3789 V 5.119141 l -10.62304,0.09766 -0.96485,-4.830078 -5.50586,0.869141 0.86914,3.863281 -20.47265,0.09766 0.77148,-4.154297 z m 26.17187,12.845704 1.0625,5.214843 -25.30273,0.289063 1.1582,-5.408203 z"
+           id="path817"
+           inkscape:connector-curvature="0" />
+      </svg>
+    </div>
+    <div>\${tempScore}<i class="fa fa-star"></i></div>
+  </td>
+  <td>\${estates}<i class="fa fa-star"></i></td>
+  <td>\${bis}<i class="fa fa-star"></i></td>
+  <td>\${permitScore}<i class="fa fa-star"></i> (\${permitNumber}) </td>
+  <td>\${total}</td>
+</tr>
+`;
+
 /////////////////////
 ////// CARDS  ///////
 /////////////////////
