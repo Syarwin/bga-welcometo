@@ -33,6 +33,12 @@ class Scribbles extends Helpers\Pieces
     return $query->get(false)->toArray();
   }
 
+  public function hasScribbleSomething($pId)
+  {
+    return self::getInLocationQ([$pId, "%"])->where('turn', Globals::getCurrentTurn())->count() > 0;
+  }
+
+
   /*
    * clearTurn : remove all houses written by player during this turn
    */
@@ -48,6 +54,11 @@ class Scribbles extends Helpers\Pieces
   public static function add($pId, $type, $zone)
   {
     $location = array_merge([$pId, $type], $zone);
+    // Sanity check : already exists ?
+    $scribble = self::getTopOf($location);
+    if(!is_null($scribble))
+      return false;
+
     $id = self::create([ [
       'location' => $location,
       'turn' => Globals::getCurrentTurn(),

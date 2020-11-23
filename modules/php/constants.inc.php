@@ -25,6 +25,7 @@ define('ST_VALIDATE_PLAN', 31);
 define('ST_CONFIRM_TURN', 40);
 define('ST_WAIT_OTHERS', 41);
 
+define('ST_ROUNDABOUT', 50);
 
 
 

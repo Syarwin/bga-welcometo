@@ -37,7 +37,7 @@ class Players extends \WTO\Helpers\DB_Manager
 
     $pIds = array_keys($players);
 
-    if(false){
+    if(true){
     Houses::add($pIds[0], 2, [0,0], false);
     Houses::add($pIds[0], 2, [0,1], false);
     Houses::add($pIds[0], 3, [0,2], false);
@@ -66,10 +66,10 @@ class Players extends \WTO\Helpers\DB_Manager
     Houses::add($pIds[0], 1, [2,0], false);
     Houses::add($pIds[0], 3, [2,1], false);
     Houses::add($pIds[0], 4, [2,2], false);
-    Houses::add($pIds[0], 5, [2,3], false);
-    Houses::add($pIds[0], 7, [2,4], false);
-    Houses::add($pIds[0], 8, [2,5], false);
-    Houses::add($pIds[0], 9, [2,6], false);
+//    Houses::add($pIds[0], 5, [2,3], false);
+//    Houses::add($pIds[0], 7, [2,4], false);
+//    Houses::add($pIds[0], 8, [2,5], false);
+//    Houses::add($pIds[0], 9, [2,6], false);
     Houses::add($pIds[0], 11, [2,7], false);
 
     Scribbles::add($pIds[0], 'score-estate', [2,0]);

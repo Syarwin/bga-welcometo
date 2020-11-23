@@ -1,12 +1,13 @@
 /********************************
 *** Hightlight recent actions ***
 ********************************/
-@for $t from 1 through 30 {
+@for $t from 1 through 33 {
   #game_play_area[data-turn="#{$t}"] .house-number[data-turn="#{$t}"] {
     color:red;
   }
 
   #game_play_area[data-turn="#{$t}"] [data-turn="#{$t}"] .scribble-path  { stroke:red; }
+  #game_play_area[data-turn="#{$t}"] [data-turn="#{$t}"] .roundabout-dot  { fill:red; }
 }
 
 
@@ -16,7 +17,7 @@
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor {
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout {
   width:100%;
   height:100%;
   .scribble-path {
@@ -71,4 +72,44 @@
 
 .scribble-line {
   padding-top:12px;
+}
+
+
+.scribble-roundabout {
+  height:81%;
+
+  .roundabout-circle {
+    fill:none;
+    stroke-width:3;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0;
+  }
+  &.animate .roundabout-circle {
+    stroke-dashoffset: 150;
+  }
+
+  .roundabout-dot {
+    stroke:none !important;
+    fill:black;
+  }
+
+  &.animate .roundabout-dot {
+    animation: drawDot 3s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-fill-mode: forwards;
+    transform-origin: 44.3px 118.5px;;
+  }
+
+  @keyframes drawDot {
+    0% {
+      opacity:0;
+    }
+    50% {
+      opacity:0;
+      transform:scale(2.5);
+    }
+    100% {
+      opacity:100%;
+      transform:none;
+    }
+  }
 }

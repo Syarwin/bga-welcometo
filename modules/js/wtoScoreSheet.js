@@ -9,6 +9,8 @@ function arrayEquals(a, b) {
 }
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
+  const ROUNDABOUT = 100;
+
   return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
 /****************************************
 ********** Score sheet class ************
@@ -103,6 +105,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       dojo.query(`.scribble-circle[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line-hor[data-turn="${turn}"]`).forEach(dojo.destroy);
+      dojo.query(`.scribble-roundabout[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////
@@ -163,6 +166,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       // Permit refusal
       for(var i = 0; i < 3; i++){
         this.clickableTpl('permitRefusal', { x:i }, this.onClickZoneFactory('permit-refusal'));
+      }
+
+      // Roundabout
+      for(var i = 0; i < 2; i++){
+        this.tpl('scoreRoundabout', { x:i });
       }
     },
 
@@ -239,11 +247,25 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     /*
      * Add a number to a house
      */
-    addHouseNumber(house){
+    addHouseNumber(house, animation){
       var id = `${house.pId}_house_${house.x}_${house.y}`;
-      house.bis = house.isBis? "b" : "";
-      this.tpl("houseNumber", house, id);
-      dojo.addClass(id, "built");
+
+      // Advanced variant : roundabout
+      if(house.number == ROUNDABOUT){
+        var div = this.tpl("scribbleRoundabout", house, id);
+        dojo.addClass(id, "built");
+
+        if(animation){
+          playSound("welcometo_scribble");
+          div.classList.add("animate");
+        }
+      }
+      // Classic number
+      else {
+        house.bis = house.isBis? "b" : "";
+        this.tpl("houseNumber", house, id);
+        dojo.addClass(id, "built");
+      }
     },
 
 

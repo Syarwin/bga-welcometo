@@ -56,9 +56,13 @@ class Zone
 
     foreach($scribbles as $scribble){
       if(static::$dim == 1){
-        $zones[$scribble['x']] = $scribble;
+        if(array_key_exists($scribble['x'], $zones)){
+          $zones[$scribble['x']] = $scribble;
+        }
       } else {
-        $zones[$scribble['x']][$scribble['y']] = $scribble;
+        if(array_key_exists($scribble['x'], $zones) && array_key_exists($scribble['y'], $zones[$scribble['x']])){
+          $zones[$scribble['x']][$scribble['y']] = $scribble;
+        }
       }
     }
     return $zones;

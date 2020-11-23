@@ -377,6 +377,22 @@
       }
     }
 
+
+    /////////// ROUNDABOUT ////////////
+    .score-roundabout {
+      position: absolute;
+      height: 53px;
+      width: 50px;
+      box-sizing: border-box;
+
+      @for $x from 1 through 2 {
+        &[data-x="#{$x - 1}"] {
+          top: nth($scoreRoundabout, $x);
+          left: 1311px;
+        }
+      }
+    }
+
     /*****************************
     ******************************
     *********** SCORES  **********

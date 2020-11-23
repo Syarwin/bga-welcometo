@@ -311,6 +311,10 @@ dojo.destroy('debug_output'); // Speedup loading page
          this._scoreSheet.promptZones("permit-refusal", args.zones, callback);
          this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
        }
+
+       if(args.canBuildRoundabout){
+         this.addPrimaryActionButton("btnPermitRefusal", _("Build a roundabout"), () => this.takeAction("roundabout"));
+       }
      },
 
      onChooseCards(choice){
@@ -340,8 +344,24 @@ dojo.destroy('debug_output'); // Speedup loading page
 
      notif_writeNumber(args){
        debug("Notif: writing a number on a house", args);
+       this._scoreSheet.addHouseNumber(args.args.house, true);
+     },
+
+
+     ///////////////////////////////////
+     /////////   Roundabout   //////////
+     ///////////////////////////////////
+     onEnteringStateBuildRoundabout(args){
+       this.onEnteringStateWriteNumber(args);
+       this.addPassActionButton();
+     },
+
+/*
+     notif_writeNumber(args){
+       debug("Notif: writing a number on a house", args);
        this._scoreSheet.addHouseNumber(args.args.house);
      },
+*/
 
      ////////////////////////////////////////////
      ////////////////////////////////////////////

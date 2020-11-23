@@ -126,7 +126,7 @@ class Player extends Helpers\DB_Manager
    */
   public function hasSomethingToCancel()
   {
-    return !empty(Log::getLastActions($this->id));
+    return !empty(Log::getLastActions($this->id)) || Scribbles::hasScribbleSomething($this->id);
   }
 
   /*
@@ -311,7 +311,7 @@ class Player extends Helpers\DB_Manager
   /*
    * Generic zone scribbling that handle almost all actions
    */
-   public function scribbleZone($zone)
+   public function scribbleZone($zone, $type = null)
    {
      // Compute the name of the zone depending on the state
      $stateId = $this->getState();
@@ -323,11 +323,16 @@ class Player extends Helpers\DB_Manager
        ST_ACTION_BIS    => "score-bis",
        ST_ACTION_POOL   => "score-pool",
        ST_ACTION_PARK   => "park",
-     ];
 
-     // TODO : add sanity checks
-     $scribble = Scribbles::add($this->id, $locations[$stateId], $zone);
-     Notifications::addScribble($this, $scribble);
+       ST_ROUNDABOUT => "score-roundabout",
+     ];
+     $type = $type ?? $locations[$stateId];
+
+
+     $scribble = Scribbles::add($this->id, $type, $zone);
+     if($scribble !== false){
+       Notifications::addScribble($this, $scribble);
+     }
 
      // If building a pool, add another scribble on the pool itself
      if($stateId == ST_ACTION_POOL){

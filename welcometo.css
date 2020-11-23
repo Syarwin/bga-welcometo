@@ -1295,6 +1295,17 @@ body {
       .score-sheet-container .score-sheet .permit-refusal[data-x="2"] {
         top: 1254px;
         left: 1312px; }
+    .score-sheet-container .score-sheet .score-roundabout {
+      position: absolute;
+      height: 53px;
+      width: 50px;
+      box-sizing: border-box; }
+      .score-sheet-container .score-sheet .score-roundabout[data-x="0"] {
+        top: 948px;
+        left: 1311px; }
+      .score-sheet-container .score-sheet .score-roundabout[data-x="1"] {
+        top: 1007px;
+        left: 1311px; }
     .score-sheet-container .score-sheet .score-counter {
       position: absolute;
       width: 68px;
@@ -1391,11 +1402,17 @@ body {
 #game_play_area[data-turn="1"] [data-turn="1"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="1"] [data-turn="1"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="2"] .house-number[data-turn="2"] {
   color: red; }
 
 #game_play_area[data-turn="2"] [data-turn="2"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="2"] [data-turn="2"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="3"] .house-number[data-turn="3"] {
   color: red; }
@@ -1403,11 +1420,17 @@ body {
 #game_play_area[data-turn="3"] [data-turn="3"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="3"] [data-turn="3"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="4"] .house-number[data-turn="4"] {
   color: red; }
 
 #game_play_area[data-turn="4"] [data-turn="4"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="4"] [data-turn="4"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="5"] .house-number[data-turn="5"] {
   color: red; }
@@ -1415,11 +1438,17 @@ body {
 #game_play_area[data-turn="5"] [data-turn="5"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="5"] [data-turn="5"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="6"] .house-number[data-turn="6"] {
   color: red; }
 
 #game_play_area[data-turn="6"] [data-turn="6"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="6"] [data-turn="6"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="7"] .house-number[data-turn="7"] {
   color: red; }
@@ -1427,11 +1456,17 @@ body {
 #game_play_area[data-turn="7"] [data-turn="7"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="7"] [data-turn="7"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="8"] .house-number[data-turn="8"] {
   color: red; }
 
 #game_play_area[data-turn="8"] [data-turn="8"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="8"] [data-turn="8"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="9"] .house-number[data-turn="9"] {
   color: red; }
@@ -1439,11 +1474,17 @@ body {
 #game_play_area[data-turn="9"] [data-turn="9"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="9"] [data-turn="9"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="10"] .house-number[data-turn="10"] {
   color: red; }
 
 #game_play_area[data-turn="10"] [data-turn="10"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="10"] [data-turn="10"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="11"] .house-number[data-turn="11"] {
   color: red; }
@@ -1451,11 +1492,17 @@ body {
 #game_play_area[data-turn="11"] [data-turn="11"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="11"] [data-turn="11"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="12"] .house-number[data-turn="12"] {
   color: red; }
 
 #game_play_area[data-turn="12"] [data-turn="12"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="12"] [data-turn="12"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="13"] .house-number[data-turn="13"] {
   color: red; }
@@ -1463,11 +1510,17 @@ body {
 #game_play_area[data-turn="13"] [data-turn="13"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="13"] [data-turn="13"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="14"] .house-number[data-turn="14"] {
   color: red; }
 
 #game_play_area[data-turn="14"] [data-turn="14"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="14"] [data-turn="14"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="15"] .house-number[data-turn="15"] {
   color: red; }
@@ -1475,11 +1528,17 @@ body {
 #game_play_area[data-turn="15"] [data-turn="15"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="15"] [data-turn="15"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="16"] .house-number[data-turn="16"] {
   color: red; }
 
 #game_play_area[data-turn="16"] [data-turn="16"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="16"] [data-turn="16"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="17"] .house-number[data-turn="17"] {
   color: red; }
@@ -1487,11 +1546,17 @@ body {
 #game_play_area[data-turn="17"] [data-turn="17"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="17"] [data-turn="17"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="18"] .house-number[data-turn="18"] {
   color: red; }
 
 #game_play_area[data-turn="18"] [data-turn="18"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="18"] [data-turn="18"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="19"] .house-number[data-turn="19"] {
   color: red; }
@@ -1499,11 +1564,17 @@ body {
 #game_play_area[data-turn="19"] [data-turn="19"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="19"] [data-turn="19"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="20"] .house-number[data-turn="20"] {
   color: red; }
 
 #game_play_area[data-turn="20"] [data-turn="20"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="20"] [data-turn="20"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="21"] .house-number[data-turn="21"] {
   color: red; }
@@ -1511,11 +1582,17 @@ body {
 #game_play_area[data-turn="21"] [data-turn="21"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="21"] [data-turn="21"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="22"] .house-number[data-turn="22"] {
   color: red; }
 
 #game_play_area[data-turn="22"] [data-turn="22"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="22"] [data-turn="22"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="23"] .house-number[data-turn="23"] {
   color: red; }
@@ -1523,11 +1600,17 @@ body {
 #game_play_area[data-turn="23"] [data-turn="23"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="23"] [data-turn="23"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="24"] .house-number[data-turn="24"] {
   color: red; }
 
 #game_play_area[data-turn="24"] [data-turn="24"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="24"] [data-turn="24"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="25"] .house-number[data-turn="25"] {
   color: red; }
@@ -1535,11 +1618,17 @@ body {
 #game_play_area[data-turn="25"] [data-turn="25"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="25"] [data-turn="25"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="26"] .house-number[data-turn="26"] {
   color: red; }
 
 #game_play_area[data-turn="26"] [data-turn="26"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="26"] [data-turn="26"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="27"] .house-number[data-turn="27"] {
   color: red; }
@@ -1547,11 +1636,17 @@ body {
 #game_play_area[data-turn="27"] [data-turn="27"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="27"] [data-turn="27"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="28"] .house-number[data-turn="28"] {
   color: red; }
 
 #game_play_area[data-turn="28"] [data-turn="28"] .scribble-path {
   stroke: red; }
+
+#game_play_area[data-turn="28"] [data-turn="28"] .roundabout-dot {
+  fill: red; }
 
 #game_play_area[data-turn="29"] .house-number[data-turn="29"] {
   color: red; }
@@ -1559,24 +1654,57 @@ body {
 #game_play_area[data-turn="29"] [data-turn="29"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="29"] [data-turn="29"] .roundabout-dot {
+  fill: red; }
+
 #game_play_area[data-turn="30"] .house-number[data-turn="30"] {
   color: red; }
 
 #game_play_area[data-turn="30"] [data-turn="30"] .scribble-path {
   stroke: red; }
 
+#game_play_area[data-turn="30"] [data-turn="30"] .roundabout-dot {
+  fill: red; }
+
+#game_play_area[data-turn="31"] .house-number[data-turn="31"] {
+  color: red; }
+
+#game_play_area[data-turn="31"] [data-turn="31"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="31"] [data-turn="31"] .roundabout-dot {
+  fill: red; }
+
+#game_play_area[data-turn="32"] .house-number[data-turn="32"] {
+  color: red; }
+
+#game_play_area[data-turn="32"] [data-turn="32"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="32"] [data-turn="32"] .roundabout-dot {
+  fill: red; }
+
+#game_play_area[data-turn="33"] .house-number[data-turn="33"] {
+  color: red; }
+
+#game_play_area[data-turn="33"] [data-turn="33"] .scribble-path {
+  stroke: red; }
+
+#game_play_area[data-turn="33"] [data-turn="33"] .roundabout-dot {
+  fill: red; }
+
 /****************************
 *****************************
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor {
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout {
   width: 100%;
   height: 100%; }
-  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path {
+  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path, .scribble-roundabout .scribble-path {
     stroke: black;
     stroke-linecap: round; }
-  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path {
+  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path, .scribble-roundabout.animate .scribble-path {
     animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards; }
 @keyframes drawScribble {
@@ -1603,6 +1731,31 @@ body {
 .scribble-line {
   padding-top: 12px; }
 
+.scribble-roundabout {
+  height: 81%; }
+  .scribble-roundabout .roundabout-circle {
+    fill: none;
+    stroke-width: 3;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0; }
+  .scribble-roundabout.animate .roundabout-circle {
+    stroke-dashoffset: 150; }
+  .scribble-roundabout .roundabout-dot {
+    stroke: none !important;
+    fill: black; }
+  .scribble-roundabout.animate .roundabout-dot {
+    animation: drawDot 3s cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-fill-mode: forwards;
+    transform-origin: 44.3px 118.5px; }
+@keyframes drawDot {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 0;
+    transform: scale(2.5); }
+  100% {
+    opacity: 100%;
+    transform: none; } }
 /*************************
 **************************
 ********* MODAL  *********

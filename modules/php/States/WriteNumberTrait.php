@@ -8,6 +8,7 @@ use \WTO\Actions\Bis;
 use \WTO\Actions\Pool;
 use \WTO\Actions\Surveyor;
 use \WTO\Actions\PermitRefusal;
+use \WTO\Actions\Roundabout;
 
 use \WTO\Game\Players;
 use \WTO\Game\Globals;
@@ -31,6 +32,14 @@ trait WriteNumberTrait
     if(empty($data['selectableStacks'])){
       $data['zones'] = PermitRefusal::getAvailableZones($player);
     }
+
+    // Advanced variant : can build roundabout
+    if(Globals::isAdvanced()){
+      $zones = Roundabout::getAvailableZones($player);
+      if(!empty($zones) && is_null($player->getLastHouse()))
+        $data['canBuildRoundabout'] = true;
+    }
+
     return $data;
   }
 
@@ -83,10 +92,18 @@ trait WriteNumberTrait
   {
     // Sanity checks
     StateMachine::checkAction("writeNumber");
+
+    // Advanced variant : roundabout
+    if($number == ROUNDABOUT){
+        $this->buildRoundabout($pos);
+        return;
+    }
+
     $player = Players::getCurrent();
     $args = self::argWriteNumber($player);
     if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
       throw new UserException(totranslate("You cannot write this number in this house"));
+
 
     // Write the number on the house
     $player->writeNumber($number, $pos);
@@ -96,4 +113,50 @@ trait WriteNumberTrait
     $combination = $player->getCombination();
     StateMachine::nextState($combination["action"]);
   }
+
+
+  ///////////////////////////////
+  ///////// ROUNDABOUT //////////
+  ///////////////////////////////
+  function roundabout()
+  {
+    StateMachine::nextState("roundabout");
+  }
+
+
+  function argRoundabout($player)
+  {
+    $data = $this->argPrivatePlayerTurn($player);
+    $data["numbers"] = [
+      ROUNDABOUT => $player->getAvailableHousesForNumber(null)
+    ];
+    return $data;
+  }
+
+
+  function buildRoundabout($pos)
+  {
+    // Sanity check
+    $player = Players::getCurrent();
+    $args = self::argRoundabout($player);
+    if(!in_array($pos, $args['numbers'][ROUNDABOUT]))
+      throw new UserException(totranslate("You cannot build a roundabout in this house box"));
+
+    $zones = Roundabout::getAvailableZones($player);
+    if(empty($zones))
+      throw new UserException(totranslate("You already built your two roundabout"));
+
+
+
+    // Write the number on the house
+    $player->writeNumber(ROUNDABOUT, $pos);
+    $player->scribbleZone([$pos[0], $pos[1] - 1], "estate-fence");
+    $player->scribbleZone($pos, "estate-fence");
+    $player->scribbleZone($zones[0], "estate-fence");
+    $player->scribbleZone($zones[0]);
+    $player->updateScores();
+
+    StateMachine::nextState("built");
+  }
+
 }
