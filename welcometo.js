@@ -134,6 +134,7 @@ dojo.destroy('debug_output'); // Speedup loading page
         let modalWidth = 720;
         let newModalWidth = box['width']*0.8;
         let modalScale = newModalWidth / modalWidth;
+        if(modalScale > 1) modalScale = 1;
         dojo.style("popin_showHelpSheet", "transform", `scale(${modalScale})`);
 
         dial.show();
@@ -183,6 +184,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        let modalWidth = 860;
        let newModalWidth = box['width']*0.8;
        let modalScale = newModalWidth / modalWidth;
+       if(modalScale > 1) modalScale = 1;
        dojo.style("popin_showOverview", "transform", `scale(${modalScale})`);
 
 
@@ -337,7 +339,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        }
 
        if(args.selectedCards){
-         this._constructionCards.highlight(args.selectedCards);
+         this._constructionCards.highlight(args.selectedCards, args.cancelable? this.onClickCancelTurn.bind(this) : null);
        }
 
        if(args.selectedPlans && args.selectedPlans.length > 0){
@@ -364,7 +366,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        }
 
        if(args.canBuildRoundabout){
-         this.addPrimaryActionButton("btnPermitRefusal", _("Build a roundabout"), () => this.takeAction("roundabout"));
+         this.addPrimaryActionButton("btnRoundabout", _("Build a roundabout"), () => this.takeAction("roundabout"));
        }
      },
 
@@ -407,12 +409,6 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.addPassActionButton();
      },
 
-/*
-     notif_writeNumber(args){
-       debug("Notif: writing a number on a house", args);
-       this._scoreSheet.addHouseNumber(args.args.house);
-     },
-*/
 
      ////////////////////////////////////////////
      ////////////////////////////////////////////

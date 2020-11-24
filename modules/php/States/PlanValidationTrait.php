@@ -61,9 +61,7 @@ trait PlanValidationTrait
   {
     $plan = $player->getCurrentPlan();
     if($plan->isAutomatic()){
-      $plan->validate($player, []);
-
-      StateMachine::nextState("choosePlan");
+      $this->validatePlan([]);
       return true; // Skip this state
     }
   }

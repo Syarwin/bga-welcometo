@@ -138,7 +138,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
 
 
     onScreenWidthChange(){
-      debug(this._isStandard);
       /*
       dojo.style('page-content', 'zoom', '');
       dojo.style('page-title', 'zoom', '');

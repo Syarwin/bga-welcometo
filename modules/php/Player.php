@@ -12,6 +12,7 @@ use \WTO\Actions\Bis;
 use \WTO\Actions\Pool;
 use \WTO\Actions\Surveyor;
 use \WTO\Actions\PermitRefusal;
+use \WTO\Actions\Roundabout;
 
 class Player extends Helpers\DB_Manager
 {
@@ -83,9 +84,10 @@ class Player extends Helpers\DB_Manager
       Bis::getScore($this),
       RealEstate::getScore($this),
       PlanCards::getScore($this),
-      PermitRefusal::getScore($this)
+      PermitRefusal::getScore($this),
+      Roundabout::getScore($this)
     );
-    $data['other-total'] = $data['permit-total']; // TODO + turnaround
+    $data['other-total'] = $data['permit-total'] + $data['roundabout-total'];
 
     if($computeTotal)
       $data['total'] = $this->computeScore();
@@ -99,7 +101,7 @@ class Player extends Helpers\DB_Manager
     $total = $scores['plan-total'] + $scores['park-total'] + $scores['pool-total'] + $scores['temp-total']
       + $scores['estate-total-0'] + $scores['estate-total-1'] + $scores['estate-total-2']
       + $scores['estate-total-3'] + $scores['estate-total-4'] + $scores['estate-total-5']
-      - $scores['bis-total'] - $scores['permit-total'];
+      - $scores['bis-total'] - $scores['permit-total'] - $scores['roundabout-total'];
     return $total;
   }
 

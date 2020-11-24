@@ -37,7 +37,7 @@ class Players extends \WTO\Helpers\DB_Manager
 
     $pIds = array_keys($players);
 
-    if(false){
+    if(true){
     Houses::add($pIds[0], 2, [0,0], false);
     Houses::add($pIds[0], 2, [0,1], false);
     Houses::add($pIds[0], 3, [0,2], false);

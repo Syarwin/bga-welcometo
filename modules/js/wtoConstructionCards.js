@@ -39,11 +39,14 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       this._callback = null;
       this._possibleChoices = null;
       this._selectableStacks = null;
+      this._highlighted = null;
       dojo.query(".construction-cards-stack").removeClass("unselectable selectable");
     },
 
     // Hightlight selected stack(s)
-    highlight(stack){
+    highlight(stack, callback){
+      this._callback = callback;
+      this._highlighted = stack;
       dojo.query(".construction-cards-stack").addClass("unselectable");
       if(this._isStandard){
         dojo.addClass('construction-cards-stack-' + stack, 'selected');
@@ -99,8 +102,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     onClickStack(stackId){
       debug("Clicked on a stack", stackId);
       // Check if selectable
-      if((!this._selectableStacks || !this._selectableStacks.includes(stackId)) && this._selectedStackForNonStandard != stackId)
+      if((!this._selectableStacks || !this._selectableStacks.includes(stackId)) && this._selectedStackForNonStandard != stackId){
+        // Clicked on a selected card => callback to restart turn
+        if(this._highlighted != null && this._callback != null && (
+            (this._isStandard && this._highlighted == stackId)
+          ||(!this._isStandard && this._highlighted.includes(stackId))
+        ))
+          this._callback();
         return;
+      }
 
       // Standard mode => return stack id
       if(this._isStandard)
