@@ -15,13 +15,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       debug("Seting up the layout manager");
       this._isStandard = true;
 
-      dojo.place(jstpl_layoutControls, 'upperrightmenu', 'first');
-      dojo.connect($('layout-button'), 'onclick', () => this.toggleControls() );
-      dojo.connect($('layout-control-0'), 'onclick', () => this.setMode(HORIZONTAL, true) );
-      dojo.connect($('layout-control-1'), 'onclick', () => this.setMode(VERTICAL, true) );
-
       this._firstHandle = this.getConfig('firstHandle', 20);
       this._secondHandle = this.getConfig('secondHandle', 90);
+      this._scoreSheetZoom = this.getConfig('scoreSheetZoom', 100);
       this._merged = this.getConfig('merged', true);
 
       if(localStorage.getItem("wtoLayout") == null){
@@ -30,8 +26,19 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       } else {
         this.setMode(localStorage.getItem("wtoLayout"));
       }
+    },
 
-      var range = document.getElementById('layout-control-range');
+    init(){
+      dojo.connect($('layout-settings'), 'onclick', () => this.toggleControls() );
+      dojo.connect($('layout-control-0'), 'onclick', () => this.setMode(HORIZONTAL, true) );
+      dojo.connect($('layout-control-1'), 'onclick', () => this.setMode(VERTICAL, true) );
+      this.setMode(this._mode);
+
+
+      /*
+       * Double slider to choose the ratios
+       */
+      var range = document.getElementById('layout-control-ratios-range');
       noUiSlider.create(range, {
         start: [this._firstHandle, this._secondHandle],
         step:1,
@@ -43,7 +50,23 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
         },
       });
       range.noUiSlider.on('slide', (arg) => this.setHandles(parseInt(arg[0]), parseInt(arg[1])) );
+
+      /*
+       * Simple slider to show the zoom of scoresheet
+       */
+      var range2 = document.getElementById('layout-control-scoresheet-zoom-range');
+      noUiSlider.create(range2, {
+        start: [this._scoreSheetZoom],
+        step:1,
+        padding:5,
+        range: {
+          'min': [0],
+          'max': [105]
+        },
+      });
+      range2.noUiSlider.on('slide', (arg) => this.setScoreSheetZoom(parseInt(arg[0])) );
     },
+
 
     setStackMode(isStandard){
       this._isStandard = isStandard;
@@ -62,7 +85,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
         localStorage.setItem('wtoLayout', mode);
 
       dojo.attr("overall-content", "data-mode", mode);
-      dojo.attr("layout-controls", "data-mode", mode);
+      if($("layout-controls-container"))
+        dojo.attr("layout-controls-container", "data-mode", mode);
       dojo.attr("welcometo-container", "data-mode", mode);
       this.onScreenWidthChange();
     },
@@ -79,6 +103,14 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       localStorage.setItem("secondHangle", b);
       this.onScreenWidthChange();
     },
+
+    setScoreSheetZoom(a){
+      this._scoreSheetZoom = a;
+      localStorage.setItem("wtoLayout", HORIZONTAL);
+      localStorage.setItem("scoreSheetZoom", a);
+      this.onScreenWidthChange();
+    },
+
 
     onScreenWidthChange(){
       debug(this._isStandard);
@@ -100,9 +132,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       let firstHandle = this._isStandard? this._firstHandle : 0.6*this._firstHandle;
 
       let sheetWidth = 1544;
-      let sheetRatio = (this._secondHandle - firstHandle) / 100;
-      let newSheetWidth = sheetRatio*box['width'];
-      let sheetScale = sheetRatio*box['width'] / sheetWidth;
+      let sheetZoom = this._scoreSheetZoom / 100;
+      let sheetRatio =  (this._secondHandle - firstHandle) / 100;
+      let newSheetWidth = sheetZoom*sheetRatio*box['width'];
+      let sheetScale = newSheetWidth / sheetWidth;
       dojo.style("player-score-sheet-resizable", "transform", `scale(${sheetScale})`);
       dojo.style("player-score-sheet", "width", `${newSheetWidth}px`);
       dojo.style("player-score-sheet", "height", `${newSheetWidth}px`);
@@ -115,6 +148,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       dojo.style('construction-cards-container-resizable', 'transform', `scale(${cardsScale})`);
       dojo.style('construction-cards-container-resizable', 'width', `${cardsWidth}px`);
       dojo.style('construction-cards-container-sticky', 'height', `${cardsHeight * cardsScale}px`);
+      dojo.style('construction-cards-container-sticky', 'width', `${newCardsWidth}px`);
       dojo.style('construction-cards-container', 'width', `${newCardsWidth}px`);
 
       let plansWidth = 236;

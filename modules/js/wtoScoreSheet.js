@@ -240,6 +240,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           });
         });
         dial.show();
+        dojo.connect($("popin_chooseNumber_underlay"), "click", () => dial.destroy() );
       }
     },
 
@@ -262,7 +263,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       }
       // Classic number
       else {
-        house.bis = house.isBis? "b" : "";
+        house.bis = house.isBis? "<span>b</span>" : "";
         this.tpl("houseNumber", house, id);
         dojo.addClass(id, "built");
       }

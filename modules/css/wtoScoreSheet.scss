@@ -45,7 +45,14 @@
           @include handwritten;
           @include centered;
           font-size:55px;
-          line-height:61px
+          line-height:61px;
+
+          span {
+            font-size: 40px;
+            font-family: Times;
+            font-style: italic;
+            margin-left: 2px;
+          }
         }
       }
 

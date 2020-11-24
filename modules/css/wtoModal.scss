@@ -3,7 +3,7 @@
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview {
+#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview, #popin_showHelpSheet {
   border: none;
   border-radius: 0px;
   box-shadow: none;
@@ -50,7 +50,7 @@
     }
   }
 
-  #popin_chooseNumber_close, #popin_showScoreSheet_close, #popin_showSoloCard_close, #popin_showOverview_close {
+  #popin_chooseNumber_close, #popin_showScoreSheet_close, #popin_showSoloCard_close, #popin_showOverview_close,  #popin_showHelpSheet_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -305,5 +305,35 @@
         }
       }
     }
+  }
+}
+
+
+
+#popin_showHelpSheet {
+  &::before {
+    background-image: url("img/dialog-texture2.jpg");
+    transform: rotate(-2deg);
+    top: 17px;
+    left: -15px;
+  }
+
+  &::after {
+    background-image: url("img/dialog-texture2.jpg");
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 60px;
+  }
+
+  h2 {
+    display:none;
+  }
+
+  #popin_showHelpSheet_contents {
+    background:url("img/help_card.png");
+    height: 520px;
+    width: 700px;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 }

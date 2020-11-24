@@ -64,55 +64,6 @@
 ******* CENTRAL PART *********
 ******************************
 *****************************/
-/*
- * Controls in the top bar
- */
-#layout-controls-container {
-  position: relative; }
-  #layout-controls-container.undefined svg path {
-    animation: blinkColor linear 0.9s infinite; }
-  #layout-controls-container.layoutControlsHidden #layout-button path {
-    fill: #777; }
-  #layout-controls-container.layoutControlsHidden #layout-controls {
-    display: none; }
-  #layout-controls-container svg#layout-button {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    position: relative;
-    top: 17px; }
-    #layout-controls-container svg#layout-button path {
-      fill: black; }
-  #layout-controls-container #layout-controls {
-    position: absolute;
-    z-index: 1;
-    top: 55px;
-    right: -73px;
-    background-color: #e7e9e8;
-    padding: 8px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px -2px #385088;
-    text-align: left; }
-    #layout-controls-container #layout-controls .button-group {
-      display: flex;
-      justify-content: center; }
-      #layout-controls-container #layout-controls .button-group .bgabutton {
-        border-radius: 0px; }
-        #layout-controls-container #layout-controls .button-group .bgabutton:first-of-type {
-          border-top-left-radius: 6px;
-          border-bottom-left-radius: 6px; }
-        #layout-controls-container #layout-controls .button-group .bgabutton:last-of-type {
-          border-top-right-radius: 6px;
-          border-bottom-right-radius: 6px; }
-    #layout-controls-container #layout-controls[data-mode="0"] #layout-control-0 {
-      background-color: #4871b6;
-      color: white; }
-    #layout-controls-container #layout-controls[data-mode="0"] #layout-control-range {
-      width: 95%; }
-    #layout-controls-container #layout-controls[data-mode="1"] #layout-control-1 {
-      background-color: #4871b6;
-      color: white; }
-
 /********************
 * HORIZONTAL LAYOUT *
 ********************/
@@ -199,7 +150,9 @@ body {
 *****************************/
 .welcometo-player-board {
   height: 40px;
-  padding: 0 10px; }
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-around; }
   .welcometo-player-board .show-streets-button {
     height: 100%;
     width: 50px;
@@ -209,17 +162,60 @@ body {
     .welcometo-player-board .show-streets-button svg {
       width: auto;
       height: 100%; }
-  .welcometo-player-board #show-overview {
+  .welcometo-player-board #show-overview, .welcometo-player-board #layout-settings, .welcometo-player-board #show-helpsheet {
     height: 100%;
     width: 50px;
     cursor: pointer; }
-    .welcometo-player-board #show-overview:hover {
+    .welcometo-player-board #show-overview:hover, .welcometo-player-board #layout-settings:hover, .welcometo-player-board #show-helpsheet:hover {
       color: grey; }
-    .welcometo-player-board #show-overview:hover {
+    .welcometo-player-board #show-overview:hover, .welcometo-player-board #layout-settings:hover, .welcometo-player-board #show-helpsheet:hover {
       color: grey; }
-    .welcometo-player-board #show-overview svg {
+    .welcometo-player-board #show-overview svg, .welcometo-player-board #layout-settings svg, .welcometo-player-board #show-helpsheet svg {
       width: auto;
       height: 100%; }
+  .welcometo-player-board #layout-settings .fa-primary {
+    transform-origin: 216px 255px;
+    transition: transform 1s; }
+  .welcometo-player-board #layout-settings:hover .fa-primary {
+    transform: rotate(180deg); }
+
+/*
+ * Controls in the top bar
+ */
+#layout-controls-container {
+  position: relative; }
+  #layout-controls-container.layoutControlsHidden {
+    display: none;
+    /*
+        #layout-button path {
+          fill:#777;
+        }
+    */ }
+  #layout-controls-container .button-group {
+    display: flex;
+    justify-content: center; }
+    #layout-controls-container .button-group .bgabutton {
+      border-radius: 0px; }
+      #layout-controls-container .button-group .bgabutton:first-of-type {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; }
+      #layout-controls-container .button-group .bgabutton:last-of-type {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px; }
+  #layout-controls-container[data-mode="0"] #layout-control-0 {
+    background-color: #4871b6;
+    color: white; }
+  #layout-controls-container[data-mode="0"] #layout-control-ratios-range, #layout-controls-container[data-mode="0"] #layout-control-scoresheet-zoom-range {
+    width: 95%;
+    margin: 5px auto; }
+  #layout-controls-container[data-mode="0"] #layout-control-scoresheet-zoom-range {
+    width: 85%;
+    margin-top: 20px; }
+  #layout-controls-container[data-mode="1"] #layout-control-1 {
+    background-color: #4871b6;
+    color: white; }
+  #layout-controls-container[data-mode="1"] #layout-control-ratios-range, #layout-controls-container[data-mode="1"] #layout-control-scoresheet-zoom-range {
+    display: none; }
 
 /*****************************
 ******************************
@@ -565,6 +561,11 @@ body {
           text-align: center;
           font-size: 55px;
           line-height: 61px; }
+          .score-sheet-container .score-sheet .house.built .house-number span {
+            font-size: 40px;
+            font-family: Times;
+            font-style: italic;
+            margin-left: 2px; }
       .score-sheet-container .score-sheet .house[data-x="0"][data-y="0"] {
         left: 374px;
         top: 186px; }
@@ -1761,13 +1762,13 @@ body {
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview {
+#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview, #popin_showHelpSheet {
   border: none;
   border-radius: 0px;
   box-shadow: none;
   background: transparent;
   padding: 0; }
-  #popin_chooseNumber::before, #popin_chooseNumber::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after, #popin_showSoloCard::before, #popin_showSoloCard::after, #popin_showOverview::before, #popin_showOverview::after {
+  #popin_chooseNumber::before, #popin_chooseNumber::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after, #popin_showSoloCard::before, #popin_showSoloCard::after, #popin_showOverview::before, #popin_showOverview::after, #popin_showHelpSheet::before, #popin_showHelpSheet::after {
     content: "";
     display: block;
     position: absolute;
@@ -1778,28 +1779,28 @@ body {
     background-image: url("img/dialog-texture.jpg");
     box-shadow: -5px 5px 3px 0px rgba(20, 20, 20, 0.6);
     z-index: -1; }
-  #popin_chooseNumber::before, #popin_showScoreSheet::before, #popin_showSoloCard::before, #popin_showOverview::before {
+  #popin_chooseNumber::before, #popin_showScoreSheet::before, #popin_showSoloCard::before, #popin_showOverview::before, #popin_showHelpSheet::before {
     transform: rotate(2deg);
     transform-origin: top left;
     z-index: -2;
     left: -3px;
     top: 6px; }
-  #popin_chooseNumber::after, #popin_showScoreSheet::after, #popin_showSoloCard::after, #popin_showOverview::after {
+  #popin_chooseNumber::after, #popin_showScoreSheet::after, #popin_showSoloCard::after, #popin_showOverview::after, #popin_showHelpSheet::after {
     background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
     background-position: 5px 5px, top left;
     background-repeat: no-repeat, repeat;
     background-size: 58px, 60px; }
-  #popin_chooseNumber h2, #popin_showScoreSheet h2, #popin_showSoloCard h2, #popin_showOverview h2 {
+  #popin_chooseNumber h2, #popin_showScoreSheet h2, #popin_showSoloCard h2, #popin_showOverview h2, #popin_showHelpSheet h2 {
     font-size: x-large;
     font-family: "Caveat";
     color: #b74d44;
     font-size: 30px;
     padding: 3px 90px;
     text-align: center; }
-    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after, #popin_showScoreSheet h2::before, #popin_showScoreSheet h2::after, #popin_showSoloCard h2::before, #popin_showSoloCard h2::after, #popin_showOverview h2::before, #popin_showOverview h2::after {
+    #popin_chooseNumber h2::before, #popin_chooseNumber h2::after, #popin_showScoreSheet h2::before, #popin_showScoreSheet h2::after, #popin_showSoloCard h2::before, #popin_showSoloCard h2::after, #popin_showOverview h2::before, #popin_showOverview h2::after, #popin_showHelpSheet h2::before, #popin_showHelpSheet h2::after {
       content: "★";
       margin: 5px; }
-  #popin_chooseNumber #popin_chooseNumber_close, #popin_chooseNumber #popin_showScoreSheet_close, #popin_chooseNumber #popin_showSoloCard_close, #popin_chooseNumber #popin_showOverview_close, #popin_showScoreSheet #popin_chooseNumber_close, #popin_showScoreSheet #popin_showScoreSheet_close, #popin_showScoreSheet #popin_showSoloCard_close, #popin_showScoreSheet #popin_showOverview_close, #popin_showSoloCard #popin_chooseNumber_close, #popin_showSoloCard #popin_showScoreSheet_close, #popin_showSoloCard #popin_showSoloCard_close, #popin_showSoloCard #popin_showOverview_close, #popin_showOverview #popin_chooseNumber_close, #popin_showOverview #popin_showScoreSheet_close, #popin_showOverview #popin_showSoloCard_close, #popin_showOverview #popin_showOverview_close {
+  #popin_chooseNumber #popin_chooseNumber_close, #popin_chooseNumber #popin_showScoreSheet_close, #popin_chooseNumber #popin_showSoloCard_close, #popin_chooseNumber #popin_showOverview_close, #popin_chooseNumber #popin_showHelpSheet_close, #popin_showScoreSheet #popin_chooseNumber_close, #popin_showScoreSheet #popin_showScoreSheet_close, #popin_showScoreSheet #popin_showSoloCard_close, #popin_showScoreSheet #popin_showOverview_close, #popin_showScoreSheet #popin_showHelpSheet_close, #popin_showSoloCard #popin_chooseNumber_close, #popin_showSoloCard #popin_showScoreSheet_close, #popin_showSoloCard #popin_showSoloCard_close, #popin_showSoloCard #popin_showOverview_close, #popin_showSoloCard #popin_showHelpSheet_close, #popin_showOverview #popin_chooseNumber_close, #popin_showOverview #popin_showScoreSheet_close, #popin_showOverview #popin_showSoloCard_close, #popin_showOverview #popin_showOverview_close, #popin_showOverview #popin_showHelpSheet_close, #popin_showHelpSheet #popin_chooseNumber_close, #popin_showHelpSheet #popin_showScoreSheet_close, #popin_showHelpSheet #popin_showSoloCard_close, #popin_showHelpSheet #popin_showOverview_close, #popin_showHelpSheet #popin_showHelpSheet_close {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
@@ -1812,11 +1813,11 @@ body {
     right: -15px;
     font-size: 100%;
     color: white !important; }
-    #popin_chooseNumber #popin_chooseNumber_close:hover, #popin_chooseNumber #popin_showScoreSheet_close:hover, #popin_chooseNumber #popin_showSoloCard_close:hover, #popin_chooseNumber #popin_showOverview_close:hover, #popin_showScoreSheet #popin_chooseNumber_close:hover, #popin_showScoreSheet #popin_showScoreSheet_close:hover, #popin_showScoreSheet #popin_showSoloCard_close:hover, #popin_showScoreSheet #popin_showOverview_close:hover, #popin_showSoloCard #popin_chooseNumber_close:hover, #popin_showSoloCard #popin_showScoreSheet_close:hover, #popin_showSoloCard #popin_showSoloCard_close:hover, #popin_showSoloCard #popin_showOverview_close:hover, #popin_showOverview #popin_chooseNumber_close:hover, #popin_showOverview #popin_showScoreSheet_close:hover, #popin_showOverview #popin_showSoloCard_close:hover, #popin_showOverview #popin_showOverview_close:hover {
+    #popin_chooseNumber #popin_chooseNumber_close:hover, #popin_chooseNumber #popin_showScoreSheet_close:hover, #popin_chooseNumber #popin_showSoloCard_close:hover, #popin_chooseNumber #popin_showOverview_close:hover, #popin_chooseNumber #popin_showHelpSheet_close:hover, #popin_showScoreSheet #popin_chooseNumber_close:hover, #popin_showScoreSheet #popin_showScoreSheet_close:hover, #popin_showScoreSheet #popin_showSoloCard_close:hover, #popin_showScoreSheet #popin_showOverview_close:hover, #popin_showScoreSheet #popin_showHelpSheet_close:hover, #popin_showSoloCard #popin_chooseNumber_close:hover, #popin_showSoloCard #popin_showScoreSheet_close:hover, #popin_showSoloCard #popin_showSoloCard_close:hover, #popin_showSoloCard #popin_showOverview_close:hover, #popin_showSoloCard #popin_showHelpSheet_close:hover, #popin_showOverview #popin_chooseNumber_close:hover, #popin_showOverview #popin_showScoreSheet_close:hover, #popin_showOverview #popin_showSoloCard_close:hover, #popin_showOverview #popin_showOverview_close:hover, #popin_showOverview #popin_showHelpSheet_close:hover, #popin_showHelpSheet #popin_chooseNumber_close:hover, #popin_showHelpSheet #popin_showScoreSheet_close:hover, #popin_showHelpSheet #popin_showSoloCard_close:hover, #popin_showHelpSheet #popin_showOverview_close:hover, #popin_showHelpSheet #popin_showHelpSheet_close:hover {
       text-decoration: none;
       color: #CCC !important;
       transform: scale(1.1); }
-    #popin_chooseNumber #popin_chooseNumber_close i, #popin_chooseNumber #popin_showScoreSheet_close i, #popin_chooseNumber #popin_showSoloCard_close i, #popin_chooseNumber #popin_showOverview_close i, #popin_showScoreSheet #popin_chooseNumber_close i, #popin_showScoreSheet #popin_showScoreSheet_close i, #popin_showScoreSheet #popin_showSoloCard_close i, #popin_showScoreSheet #popin_showOverview_close i, #popin_showSoloCard #popin_chooseNumber_close i, #popin_showSoloCard #popin_showScoreSheet_close i, #popin_showSoloCard #popin_showSoloCard_close i, #popin_showSoloCard #popin_showOverview_close i, #popin_showOverview #popin_chooseNumber_close i, #popin_showOverview #popin_showScoreSheet_close i, #popin_showOverview #popin_showSoloCard_close i, #popin_showOverview #popin_showOverview_close i {
+    #popin_chooseNumber #popin_chooseNumber_close i, #popin_chooseNumber #popin_showScoreSheet_close i, #popin_chooseNumber #popin_showSoloCard_close i, #popin_chooseNumber #popin_showOverview_close i, #popin_chooseNumber #popin_showHelpSheet_close i, #popin_showScoreSheet #popin_chooseNumber_close i, #popin_showScoreSheet #popin_showScoreSheet_close i, #popin_showScoreSheet #popin_showSoloCard_close i, #popin_showScoreSheet #popin_showOverview_close i, #popin_showScoreSheet #popin_showHelpSheet_close i, #popin_showSoloCard #popin_chooseNumber_close i, #popin_showSoloCard #popin_showScoreSheet_close i, #popin_showSoloCard #popin_showSoloCard_close i, #popin_showSoloCard #popin_showOverview_close i, #popin_showSoloCard #popin_showHelpSheet_close i, #popin_showOverview #popin_chooseNumber_close i, #popin_showOverview #popin_showScoreSheet_close i, #popin_showOverview #popin_showSoloCard_close i, #popin_showOverview #popin_showOverview_close i, #popin_showOverview #popin_showHelpSheet_close i, #popin_showHelpSheet #popin_chooseNumber_close i, #popin_showHelpSheet #popin_showScoreSheet_close i, #popin_showHelpSheet #popin_showSoloCard_close i, #popin_showHelpSheet #popin_showOverview_close i, #popin_showHelpSheet #popin_showHelpSheet_close i {
       margin-top: -2px; }
 
 #popin_showScoreSheet {
@@ -2008,5 +2009,24 @@ body {
           left: -5px; }
   #popin_showOverview #popin_showOverview_contents table tbody tr:nth-of-type(2n+1) {
     background-image: url("img/dialog-texture3.jpg"); }
+
+#popin_showHelpSheet::before {
+  background-image: url("img/dialog-texture2.jpg");
+  transform: rotate(-2deg);
+  top: 17px;
+  left: -15px; }
+#popin_showHelpSheet::after {
+  background-image: url("img/dialog-texture2.jpg");
+  background-position: top left;
+  background-repeat: repeat;
+  background-size: 60px; }
+#popin_showHelpSheet h2 {
+  display: none; }
+#popin_showHelpSheet #popin_showHelpSheet_contents {
+  background: url("img/help_card.png");
+  height: 520px;
+  width: 700px;
+  background-size: contain;
+  background-repeat: no-repeat; }
 
 /*# sourceMappingURL=welcometo.css.map */

@@ -1,0 +1,118 @@
+/*****************************
+******************************
+******* PLAYER PART *********
+******************************
+*****************************/
+.welcometo-player-board {
+  height:40px;
+  padding:0 10px;
+  display:flex;
+  justify-content: space-around;
+
+  .show-streets-button {
+    height:100%;
+    width:50px;
+    cursor:pointer;
+    &:hover {
+      color:grey;
+    }
+
+    svg {
+      width:auto;
+      height:100%;
+    }
+  }
+
+
+  #show-overview, #layout-settings, #show-helpsheet {
+    height:100%;
+    width:50px;
+
+    &:hover {
+      color:grey;
+    }
+
+    cursor:pointer;
+    &:hover {
+      color:grey;
+    }
+
+    svg {
+      width:auto;
+      height:100%;
+    }
+  }
+
+  #layout-settings{
+    .fa-primary {
+      transform-origin: 216px 255px;
+      transition: transform 1s;
+    }
+
+    &:hover .fa-primary {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+
+/*
+ * Controls in the top bar
+ */
+#layout-controls-container {
+  position:relative;
+
+  &.layoutControlsHidden {
+    display:none;
+
+/*
+    #layout-button path {
+      fill:#777;
+    }
+*/
+  }
+
+  .button-group {
+    display:flex;
+    justify-content: center;
+    .bgabutton {
+      border-radius:0px;
+      &:first-of-type {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+      }
+      &:last-of-type {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+
+  &[data-mode="0"] {
+    #layout-control-0 {
+      background-color:#4871b6;
+      color:white;
+    }
+
+    #layout-control-ratios-range, #layout-control-scoresheet-zoom-range {
+      width:95%;
+      margin: 5px auto;
+    }
+
+    #layout-control-scoresheet-zoom-range {
+      width:85%;
+      margin-top:20px;
+    }
+  }
+
+  &[data-mode="1"]{
+    #layout-control-1 {
+      background-color:#4871b6;
+      color:white;
+    }
+
+    #layout-control-ratios-range, #layout-control-scoresheet-zoom-range {
+      display:none;
+    }
+  }
+}

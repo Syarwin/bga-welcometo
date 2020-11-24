@@ -86,7 +86,9 @@ dojo.destroy('debug_output'); // Speedup loading page
       Object.values(gamedatas.players).forEach( player => {
         if(player.id == this.player_id){
           dojo.place(jstpl_currentPlayerBoard, "player_board_" + player.id);;
+          this._layoutManager.init(); // Hack needed because player board are not ready on constructor
           dojo.connect($("show-overview"), "onclick", () => this.showOverview() );
+          dojo.connect($("show-helpsheet"), "onclick", () => this.showHelpSheet() );
           return;
         }
 
@@ -105,6 +107,32 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
+
+     ///////////////////////////////////
+     ///////////////////////////////////
+     /////////////  Modals /////////////
+     ///////////////////////////////////
+     ///////////////////////////////////
+
+      /*
+       * Dsiplay a table with a nice overview of current situation for everyone
+       */
+      showHelpSheet(){
+        debug("Showing helpsheet:");
+
+        // Open a modal to ask the number to write
+        var dial = new ebg.popindialog();
+        dial.create('showHelpSheet');
+        dial.setTitle(_("Helpsheet"));
+        dojo.query("#popin_showHelpSheet_close i").removeClass("fa-times-circle ").addClass("fa-times");
+        dial.show();
+        dojo.connect($("popin_showHelpSheet_underlay"), "click", () => dial.destroy() );
+      },
+
+
+     /*
+      * Display a table with a nice overview of current situation for everyone
+      */
      showOverview(){
        debug("Showing overview:");
 
@@ -141,10 +169,14 @@ dojo.destroy('debug_output'); // Speedup loading page
        }
 
        dial.show();
+       dojo.connect($("popin_showOverview_underlay"), "click", () => dial.destroy() );
      },
 
 
 
+     /*
+      * Display the scoresheet of a player
+      */
      showScoreSheet(pId){
        debug("Showing scoresheet of player :", pId);
 
@@ -165,6 +197,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        dojo.query("#popin_showScoreSheet_contents .score-sheet-container").style("height", `${newSheetWidth}px`);
 
        dial.show();
+       dojo.connect($("popin_showScoreSheet_underlay"), "click", () => dial.destroy() );
      },
 
      ///////////////////////////////////////

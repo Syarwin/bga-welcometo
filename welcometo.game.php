@@ -123,9 +123,7 @@ class welcometo extends Table
    */
   public function getGameProgression()
   {
-		// TODO
-//    return count($this->board->getPlacedPieces()) / 100;
-    return 0.3;
+    return 100 * self::getGameStateValue('currentTurn') / 33;
   }
 
 

@@ -110,6 +110,7 @@ class Player extends Helpers\DB_Manager
     return $score;
   }
 
+
   public function updateScores()
   {
     Notifications::updateScores($this);
