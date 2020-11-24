@@ -85,7 +85,11 @@ dojo.destroy('debug_output'); // Speedup loading page
       // Setup streets icon
       Object.values(gamedatas.players).forEach( player => {
         if(player.id == this.player_id){
-          dojo.place(jstpl_currentPlayerBoard, "player_board_" + player.id);;
+          dojo.place(this.format_block("jstpl_currentPlayerBoard", {
+            "horizontal" : _("Horizontal"),
+            "vertical" : _("Vertical"),
+          }), "player_board_" + player.id);;
+
           this._layoutManager.init(); // Hack needed because player board are not ready on constructor
           dojo.connect($("show-overview"), "onclick", () => this.showOverview() );
           dojo.connect($("show-helpsheet"), "onclick", () => this.showHelpSheet() );
@@ -125,6 +129,13 @@ dojo.destroy('debug_output'); // Speedup loading page
         dial.create('showHelpSheet');
         dial.setTitle(_("Helpsheet"));
         dojo.query("#popin_showHelpSheet_close i").removeClass("fa-times-circle ").addClass("fa-times");
+
+        let box = $("ebd-body").getBoundingClientRect();
+        let modalWidth = 720;
+        let newModalWidth = box['width']*0.8;
+        let modalScale = newModalWidth / modalWidth;
+        dojo.style("popin_showHelpSheet", "transform", `scale(${modalScale})`);
+
         dial.show();
         dojo.connect($("popin_showHelpSheet_underlay"), "click", () => dial.destroy() );
       },
@@ -167,6 +178,13 @@ dojo.destroy('debug_output'); // Speedup loading page
          };
          dojo.place(this.format_block('jstpl_overviewRow', data), 'player-overview-body');
        }
+
+       let box = $("ebd-body").getBoundingClientRect();
+       let modalWidth = 860;
+       let newModalWidth = box['width']*0.8;
+       let modalScale = newModalWidth / modalWidth;
+       dojo.style("popin_showOverview", "transform", `scale(${modalScale})`);
+
 
        dial.show();
        dojo.connect($("popin_showOverview_underlay"), "click", () => dial.destroy() );

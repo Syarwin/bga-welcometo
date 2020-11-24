@@ -9,7 +9,8 @@
   box-shadow: none;
   background:transparent;
   padding:0;
-
+  transform-origin: top left;
+  
   &::before, &::after {
     content: "";
     display: block;

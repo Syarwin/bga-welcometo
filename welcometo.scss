@@ -80,7 +80,6 @@ $breakpoint:1250px;
   transition: none !important;
 }
 
-@import 'modules/css/nouislider.css';
 @import 'modules/css/welcometo.variables';
 
 @import 'modules/css/wtoLayout';
@@ -89,3 +88,5 @@ $breakpoint:1250px;
 @import 'modules/css/wtoScoreSheet';
 @import 'modules/css/wtoScribble';
 @import 'modules/css/wtoModal';
+
+@import 'modules/css/nouislider';

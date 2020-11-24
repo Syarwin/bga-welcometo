@@ -3,6 +3,10 @@
 ******* PLAYER PART *********
 ******************************
 *****************************/
+.player-board {
+  z-index:100;
+}
+
 .welcometo-player-board {
   height:40px;
   padding:0 10px;
@@ -112,6 +116,38 @@
     }
 
     #layout-control-ratios-range, #layout-control-scoresheet-zoom-range {
+      display:none;
+    }
+  }
+
+
+  #layout-control-merged-switch {
+    display:flex;
+    justify-content: space-around;
+
+    input[type="radio"] {
+      display:none;
+    }
+
+    input[type="radio"]:checked+label svg { color: #4871b6; }
+
+    label {
+      width:25%;
+
+      svg {
+        width:100%;
+        height:auto;
+
+        cursor:pointer;
+        &:hover {
+          color:grey;
+        }
+      }
+    }
+  }
+
+  &[data-mode="0"] {
+    #layout-control-merged-switch {
       display:none;
     }
   }

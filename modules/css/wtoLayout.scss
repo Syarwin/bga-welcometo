@@ -75,14 +75,7 @@ body {
 * VERTICAL LAYOUT *
 ******************/
 #welcometo-container[data-mode="1"] {
-  display:grid;
-  grid-template-columns: auto auto;
-
   #construction-cards-container {
-    grid-row: 1;
-    grid-column: 1 / span 1;
-    margin:0;
-
     #construction-cards-container-sticky {
       position:initial;
 
@@ -90,25 +83,11 @@ body {
         transform-origin: top left;
         display:flex;
         flex-flow:row;
-
-        .construction-cards-stack {
-          margin-right:10px;
-        }
       }
     }
   }
 
-  #player-score-sheet {
-    grid-row: 2;
-    grid-column: 1 / span 2;
-    transform-origin: top left;
-  }
-
   #plan-cards-container {
-    margin:0;
-    position:relative;
-    grid-row: 1;
-    grid-column: 2  / span 1;
     #plan-cards-container-sticky {
       position:initial;
 
@@ -116,11 +95,63 @@ body {
         transform-origin: top left;
         display:flex;
         flex-flow:row;
-
-        .plan-card-holder {
-          margin-left:10px;
-        }
       }
+    }
+  }
+
+
+  //// MERGED ////
+  &[data-merged="0"] {
+    display:grid;
+    grid-template-columns: auto auto;
+
+    #construction-cards-container {
+      grid-row: 1;
+      grid-column: 1 / span 1;
+      margin:0;
+
+      #construction-cards-container-sticky #construction-cards-container-resizable .construction-cards-stack {
+        margin-right:10px;
+      }
+    }
+
+    #player-score-sheet {
+      grid-row: 2;
+      grid-column: 1 / span 2;
+      transform-origin: top left;
+    }
+
+    #plan-cards-container {
+      margin:0;
+      position:relative;
+      grid-row: 1;
+      grid-column: 2  / span 1;
+      #plan-cards-container-sticky  #plan-cards-container-resizable .plan-card-holder {
+        margin-left:10px;
+      }
+    }
+  }
+
+
+  //// STACKED ////
+  &[data-merged="1"], &[data-merged="2"] {
+    display:flex;
+    flex-flow:column;
+
+    #plan-cards-container {
+      display: flex;
+      justify-content: space-around;
+      margin-left:0px;
+    }
+  }
+
+  &[data-merged="1"] {
+    #plan-cards-container {
+      order:2;
+    }
+
+    #player-score-sheet {
+      order:3;
     }
   }
 }

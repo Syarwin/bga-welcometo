@@ -7,6 +7,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
   let HORIZONTAL = 0;
   let VERTICAL = 1;
 
+  let MERGED = 0;
+  let STACKED = 1;
+  let STACKED_BOTTOM = 2;
+
   return declare("bgagame.wtoLayout", ebg.core.gamegui, {
 /*********************************
 ********* Layout Manager *********
@@ -18,7 +22,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       this._firstHandle = this.getConfig('firstHandle', 20);
       this._secondHandle = this.getConfig('secondHandle', 90);
       this._scoreSheetZoom = this.getConfig('scoreSheetZoom', 100);
-      this._merged = this.getConfig('merged', true);
+      this._mergedMode = this.getConfig('mergedMode', MERGED);
 
       if(localStorage.getItem("wtoLayout") == null){
         dojo.addClass("layout-controls-container", "undefined");
@@ -26,6 +30,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       } else {
         this.setMode(localStorage.getItem("wtoLayout"));
       }
+
+      this.setMergedMode(this._mergedMode);
     },
 
     init(){
@@ -34,6 +40,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       dojo.connect($('layout-control-1'), 'onclick', () => this.setMode(VERTICAL, true) );
       this.setMode(this._mode);
 
+      dojo.query("#layout-controls-container input[type=radio]").connect("click", (ev) => this.setMergedMode(ev.target.value) );
 
       /*
        * Double slider to choose the ratios
@@ -93,6 +100,16 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
 
     toggleControls(){
       dojo.toggleClass('layout-controls-container', 'layoutControlsHidden')
+
+      // Hacking BGA framework
+      if(dojo.hasClass("ebd-body", "mobile_version")){
+        dojo.query(".player-board").forEach(elt => {
+          if(elt.style.height != "auto"){
+            dojo.style(elt, "min-height", elt.style.height);
+            elt.style.height = "auto";
+          }
+        });
+      }
     },
 
     setHandles(a,b){
@@ -108,6 +125,14 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       this._scoreSheetZoom = a;
       localStorage.setItem("wtoLayout", HORIZONTAL);
       localStorage.setItem("scoreSheetZoom", a);
+      this.onScreenWidthChange();
+    },
+
+    setMergedMode(a){
+      this._mergedMode = a;
+      localStorage.setItem("wtoLayout", VERTICAL);
+      localStorage.setItem("mergedMode", a);
+      dojo.attr("welcometo-container", "data-merged", a);
       this.onScreenWidthChange();
     },
 
@@ -177,7 +202,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       let plansWidth = 654;
       let cardsHeight = 312;
 
-      if(this._merged){
+      if(this._mergedMode == MERGED){
         let totalWidth = cardsWidth + plansWidth;
         let cardsScale = (box['width'] - 40) / totalWidth;
         dojo.style('construction-cards-container', 'width', `${cardsWidth * cardsScale}px`);
@@ -191,6 +216,21 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
         dojo.style('plan-cards-container-resizable', 'transform', `scale(${cardsScale})`);
         dojo.style('plan-cards-container-sticky', 'height', `${cardsHeight * cardsScale}px`);
         dojo.style('plan-cards-container-sticky', 'width', `${plansWidth * cardsScale}px`);
+      }
+      else {
+        let cardsScale = (box['width'] - 20) / cardsWidth;
+        dojo.style('construction-cards-container', 'width', `${cardsWidth * cardsScale}px`);
+        dojo.style('construction-cards-container-resizable', 'width', `${cardsWidth}px`);
+        dojo.style('construction-cards-container-resizable', 'transform', `scale(${cardsScale})`);
+        dojo.style('construction-cards-container-sticky', 'width', `${cardsWidth * cardsScale}px`);
+        dojo.style('construction-cards-container-sticky', 'height',`${cardsHeight * cardsScale}px`);
+
+        let plansScale = 0.7 * (box['width'] - 20) / plansWidth;
+        dojo.style('plan-cards-container', 'width', `${box['width']}px`);
+        dojo.style('plan-cards-container-resizable', 'width', `${plansWidth}px`);
+        dojo.style('plan-cards-container-resizable', 'transform', `scale(${plansScale})`);
+        dojo.style('plan-cards-container-sticky', 'height', `${cardsHeight * plansScale}px`);
+        dojo.style('plan-cards-container-sticky', 'width', `${plansWidth * plansScale}px`);
       }
     },
   });
