@@ -57,9 +57,15 @@ trait PlanValidationTrait
   //////////////////////////////////
   //////// PLAN VALIDATION /////////
   //////////////////////////////////
-  function stValidatePlan()
+  function stValidatePlan($player)
   {
+    $plan = $player->getCurrentPlan();
+    if($plan->isAutomatic()){
+      $plan->validate($player, []);
 
+      StateMachine::nextState("choosePlan");
+      return true; // Skip this state
+    }
   }
 
   /*
@@ -79,7 +85,11 @@ trait PlanValidationTrait
     // Sanity checks
     StateMachine::checkAction("validatePlan");
     $player = Players::getCurrent();
-    $player->getCurrentPlan()->validate($player, $arg);
+    $plan = $player->getCurrentPlan();
+    if(!$plan->canBeScored($player))
+      throw new UserException(totranslate("Conditions are not fullfiled"));
+
+    $plan->validate($player, $arg);
     $player->updateScores();
 
     // Move on to next state

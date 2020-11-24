@@ -1,5 +1,6 @@
 <?php
 namespace WTO\Actions;
+use \WTO\Scribbles;
 
 /*
  * Bis : manage everything related to bis
@@ -32,5 +33,19 @@ class Pool extends Zone
       $free = $zone[0];
 
     return ['pool-total' => self::$scores[$free] ];
+  }
+
+
+  public function getCompleted($player)
+  {
+    $pools = [0, 0, 0];
+    foreach(Scribbles::getOfPlayer($player) as $scribble){
+      if($scribble['type'] == 'pool')
+        $pools[$scribble['x']]++;
+    }
+    $streets = [];
+    for($i = 0; $i < 3; $i++)
+      $streets[$i] = $pools[$i] == 3;
+    return $streets;
   }
 }

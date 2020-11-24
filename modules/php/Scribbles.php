@@ -23,8 +23,9 @@ class Scribbles extends Helpers\Pieces
     ];
   }
 
-  public function getOfPlayer($pId)
+  public function getOfPlayer($player)
   {
+    $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
     $query = self::getInLocationQ([$pId, "%"]);
     // Filter out the scribbles of current turn if not current player
     if(Players::getCurrentId() != $pId)

@@ -48,19 +48,18 @@ class PlanCards extends Helpers\Pieces
     [BASIC, 3, [11, 6], 'Estate', [1,2,2,3] ],
     [BASIC, 3, [13, 7], 'Estate', [2,3,5] ],
 
-/*
-    [ADVANCED, 1, [8, 4], 'FullStreet', 3],
-    [ADVANCED, 1, [6, 3], 'FullStreet', 1],
+
+    [ADVANCED, 1, [8, 4], 'FullStreet', 2],
+    [ADVANCED, 1, [6, 3], 'FullStreet', 0],
     [ADVANCED, 1, [8, 3], 'FiveBis', null],
     [ADVANCED, 1, [6, 3], 'SevenTemp', null],
     [ADVANCED, 1, [7, 4], 'Extremities', null],
 
     [ADVANCED, 2, [7, 4], 'Decorative', ['park'] ],
-    [ADVANCED, 2, [10,5], 'FullStreet', null],
+    [ADVANCED, 2, [10,5], 'CompleteStreet', null],
     [ADVANCED, 2, [7, 4], 'Decorative', ['pool'] ],
-    [ADVANCED, 2, [10, 5], 'Decorative', ['pool&park', 3] ],
-    [ADVANCED, 2, [8, 3], 'Decorative', ['pool&park', 2] ],
-*/
+    [ADVANCED, 2, [10, 5], 'Decorative', ['pool&park', 2] ],
+    [ADVANCED, 2, [8, 3], 'Decorative', ['pool&park', 1] ],
   ];
 
 
@@ -78,7 +77,7 @@ class PlanCards extends Helpers\Pieces
 
   public function getCurrent()
   {
-    return self::getInLocation(['stack', '%']);
+    return self::getInLocationQ(['stack', '%'])->orderBy('location')->get(false);
   }
 
   public function setupNewGame($players)
@@ -94,6 +93,7 @@ class PlanCards extends Helpers\Pieces
       }
     }
     self::create($cards);
+
 
     // Pick the three projects
     for($i = 1; $i <= 3; $i++){

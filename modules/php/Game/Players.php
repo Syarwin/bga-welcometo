@@ -37,7 +37,7 @@ class Players extends \WTO\Helpers\DB_Manager
 
     $pIds = array_keys($players);
 
-    if(true){
+    if(false){
     Houses::add($pIds[0], 2, [0,0], false);
     Houses::add($pIds[0], 2, [0,1], false);
     Houses::add($pIds[0], 3, [0,2], false);
@@ -53,6 +53,7 @@ class Players extends \WTO\Helpers\DB_Manager
     Houses::add($pIds[0], 1, [1,0], false);
     Houses::add($pIds[0], 2, [1,1], false);
     Houses::add($pIds[0], 3, [1,2], false);
+
     Houses::add($pIds[0], 4, [1,3], false);
     Houses::add($pIds[0], 7, [1,4], false);
     Houses::add($pIds[0], 8, [1,5], false);
@@ -62,15 +63,27 @@ class Players extends \WTO\Helpers\DB_Manager
     Houses::add($pIds[0], 12, [1,9], false);
     Houses::add($pIds[0], 13, [1,10], false);
 
+  Scribbles::add($pIds[0], 'pool', [1,0]);
+  Scribbles::add($pIds[0], 'pool', [1,3]);
+  Scribbles::add($pIds[0], 'pool', [1,7]);
+
+
 
     Houses::add($pIds[0], 1, [2,0], false);
     Houses::add($pIds[0], 3, [2,1], false);
+    Scribbles::add($pIds[0], 'pool', [2,1]);
     Houses::add($pIds[0], 4, [2,2], false);
-//    Houses::add($pIds[0], 5, [2,3], false);
-//    Houses::add($pIds[0], 7, [2,4], false);
-//    Houses::add($pIds[0], 8, [2,5], false);
-//    Houses::add($pIds[0], 9, [2,6], false);
-    Houses::add($pIds[0], 11, [2,7], false);
+    Houses::add($pIds[0], 5, [2,3], true);
+    Houses::add($pIds[0], 7, [2,4], true);
+    Houses::add($pIds[0], 8, [2,5], false);
+    Houses::add($pIds[0], 9, [2,6], true);
+    Scribbles::add($pIds[0], 'pool', [2,6]);
+    Houses::add($pIds[0], 11, [2,7], true);
+//    Houses::add($pIds[0], 12, [2,8], false);
+    Houses::add($pIds[0], 13, [2,9], true);
+    Houses::add($pIds[0], 14, [2,10], false);
+    Scribbles::add($pIds[0], 'pool', [2,10]);
+    Houses::add($pIds[0], 15, [2,11], false);
 
     Scribbles::add($pIds[0], 'score-estate', [2,0]);
     Scribbles::add($pIds[0], 'score-estate', [2,1]);
@@ -91,11 +104,12 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'park', [0,2]);
 
     Scribbles::add($pIds[0], 'park', [1,0]);
-    Scribbles::add($pIds[0], 'park', [1,1]);
-    Scribbles::add($pIds[0], 'park', [1,2]);
 
     Scribbles::add($pIds[0], 'park', [2,0]);
     Scribbles::add($pIds[0], 'park', [2,1]);
+    Scribbles::add($pIds[0], 'park', [2,2]);
+    Scribbles::add($pIds[0], 'park', [2,3]);
+    Scribbles::add($pIds[0], 'park', [2,4]);
 
     Scribbles::add($pIds[0], 'score-pool', [0]);
     Scribbles::add($pIds[0], 'score-pool', [1]);
@@ -107,6 +121,9 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-temp', [1]);
     Scribbles::add($pIds[0], 'score-temp', [2]);
     Scribbles::add($pIds[0], 'score-temp', [3]);
+    Scribbles::add($pIds[0], 'score-temp', [4]);
+    Scribbles::add($pIds[0], 'score-temp', [5]);
+    Scribbles::add($pIds[0], 'score-temp', [6]);
 
     Scribbles::add($pIds[0], 'score-bis', [0]);
     Scribbles::add($pIds[0], 'score-bis', [1]);

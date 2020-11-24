@@ -286,6 +286,10 @@ class Player extends Helpers\DB_Manager
   /////////////////////////////////
   ///////// WRITE NUMBER //////////
   /////////////////////////////////
+  public function getStreets(){
+    return Houses::getStreets($this);
+  }
+
   /*
    * Given a number, return the list of possible houses to be written on it
    */

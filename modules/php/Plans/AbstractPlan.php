@@ -3,6 +3,7 @@ namespace WTO\Plans;
 use \WTO\Game\Globals;
 use \WTO\Game\Players;
 use \WTO\Game\Notifications;
+use \WTO\Game\UserException;
 use \WTO\Helpers\QueryBuilder;
 
 abstract class AbstractPlan
@@ -13,6 +14,7 @@ abstract class AbstractPlan
   protected $stack;
   protected $scores;
   protected $conditions;
+  protected $automatic = false;
 
   public function __construct($info, $card = null){
     $this->variant = $info[0];
@@ -43,9 +45,16 @@ abstract class AbstractPlan
     return !\array_key_exists($player->getId(), $scores);
   }
 
+  public function isAutomatic()
+  {
+    return $this->automatic;
+  }
 
-  abstract public function argValidate($player);
-  
+
+  public function argValidate($player){
+    return [];
+  }
+
   public function validate($player, $args){
     $query = new QueryBuilder('plan_validation');
     $query->insert([

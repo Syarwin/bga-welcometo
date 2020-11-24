@@ -91,6 +91,7 @@ class welcometo extends Table
     WTO\PlanCards::setupNewGame($players);
     WTO\ConstructionCards::setupNewGame($players);
 
+
     self::setGameStateValue('currentTurn', 1);
     $this->activeNextPlayer();
   }
