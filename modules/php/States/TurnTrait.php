@@ -6,6 +6,7 @@ use WTO\Game\StateMachine;
 use WTO\Game\Notifications;
 use WTO\Game\Players;
 use WTO\ConstructionCards;
+use WTO\PlanCards;
 use \WTO\Helpers\QueryBuilder;
 
 /*
@@ -20,31 +21,21 @@ trait TurnTrait
   function stNewTurn()
   {
     // Discard used cards
-    if(Globals::isStandard())
-      ConstructionCards::discard();
-    // Non standard mode => draw 3 cards for each player
-    else {
-      foreach(Players::getAll() as $pId => $player){
-        ConstructionCards::discard($pId);
-      }
+    ConstructionCards::discard();
+
+
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
     }
 
     // Reshuffle if asked
-    $query = new QueryBuilder('plan_validation');
-    $reshuffle = $query->where('turn', '=', Globals::getCurrentTurn() - 1)->where('reshuffle', 1)->count();
-    if($reshuffle > 0){
+    if(PlanCards::askedForReshuffle()){
       ConstructionCards::reshuffle();
     }
 
-    // Standard mode => draw 3 cards that are the same for all player
-    if(Globals::isStandard())
-      ConstructionCards::draw();
-    // Non standard mode => draw 3 cards for each player
-    else {
-      foreach(Players::getAll() as $pId => $player){
-        ConstructionCards::draw($pId);
-      }
-    }
+    // Draw new cards
+    ConstructionCards::draw();
 
     StateMachine::initPrivateStates(ST_PLAYER_TURN);
     $this->gamestate->nextState("playerTurn");

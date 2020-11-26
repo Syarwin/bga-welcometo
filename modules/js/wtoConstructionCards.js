@@ -135,29 +135,25 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         //// STANDARD MODE : FLIP CARD ////
         if(this._isStandard){
           // Flip card animation
-          this.flipCard(oldCard, turn);
+          if(oldCard)
+            this.flipCard(oldCard, turn);
 
           // New card
           if($("construction-card-" + card.id))
             dojo.destroy("construction-card-" + card.id);
-          dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
+          var newCard = dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + card.stackId);
           dojo.style("construction-card-" + card.id, "z-index", 100 - turn);
 
+          // First card in this stack ? => slide from left
+          if(!oldCard)
+            this.slideFromLeft(newCard);
         }
         //// NON STANDARD MODE : SLIDE LEFT ////
         else {
           // Compute x position to make it slide out the left border of window
-          let stack = $('construction-cards-stack-' + card.stackId);
-          let x = (stack.offsetWidth + stack.offsetLeft + 30);
+          let stack = $("construction-cards-stack-" + card.stackId);
+          this.slideToLeftAndDestroy(oldCard)
 
-          // Create a new card and put it to the left (hidden)
-          var newCard = dojo.place(this.format_block('jstpl_constructionCard', card), stack);
-          dojo.style(newCard, "z-index", 100 - turn);
-          dojo.style(newCard, "opacity", "0");
-          dojo.style(newCard, "left", -x + "px");
-
-          // Slide the old one and then slide the new one
-          if(oldCard) dojo.style(oldCard, "left", -x + "px");
           setTimeout(() => {
             // Remove flipped class if needed
             dojo.addClass(stack, 'notransition')
@@ -165,16 +161,45 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
             stack.offsetHeight;
             dojo.removeClass(stack, 'notransition');
 
-            // Slide new card in
-            dojo.style(newCard, "opacity", "1");
-            dojo.style(newCard, "left", "0px")
-            if(oldCard)
-              dojo.destroy(oldCard);
+            // Create a new card and put it to the left (hidden)
+            var newCard = dojo.place(this.format_block('jstpl_constructionCard', card), stack);
+            dojo.style(newCard, "z-index", 100 - turn);
+            this.slideFromLeft(newCard);
           }, 800);
         }
       });
     },
 
+    slideFromLeft(elem){
+      let stack = elem.parentNode;
+      let x = (elem.offsetWidth + stack.offsetWidth + stack.offsetLeft + 30);
+      dojo.addClass(elem, 'notransition')
+      dojo.style(elem, "opacity", "0");
+      dojo.style(elem, "left", -x + "px");
+      elem.offsetHeight;
+      dojo.removeClass(elem, 'notransition');
+
+      dojo.style(elem, "opacity", "1");
+      dojo.style(elem, "left", "0px")
+    },
+
+
+    slideToLeftAndDestroy(elem){
+      if(elem == null)
+        return;
+
+      let stack = elem.parentNode;
+      let x = (elem.offsetWidth + stack.offsetWidth + stack.offsetLeft + 30);
+
+      dojo.style(elem, "left", -x + "px");
+      setTimeout(() => {
+        dojo.destroy(elem);
+      }, 800);
+    },
+
+    discard(){
+      dojo.query(".construction-card-holder").forEach(elem => this.slideToLeftAndDestroy(elem));
+    },
 
     giveCard(stack, pId){
       let oldCard = dojo.query("#construction-cards-stack-" + stack + " .construction-card-holder:last-of-type")[0];

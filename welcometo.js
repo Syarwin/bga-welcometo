@@ -98,7 +98,7 @@ dojo.destroy('debug_output'); // Speedup loading page
       });
 
       // Hack needed because player board are not ready on constructor
-      this._layoutManager.init(this._isStandard); 
+      this._layoutManager.init(this._isStandard);
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -108,7 +108,6 @@ dojo.destroy('debug_output'); // Speedup loading page
       var player = gamedatas.players[this.player_id];
       this._scoreSheet = new bgagame.wtoScoreSheet(player, 'player-score-sheet-resizable');
      },
-
 
 
      ///////////////////////////////////
@@ -535,6 +534,12 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.addPassActionButton();
      },
 
+     notif_reshuffle(args){
+       debug("Notif: reshuffling cards", args);
+       this._constructionCards.discard();
+     },
+
+
      ///////////////////////////////////////////////////
      //////   Choose estates to validate plan   ///////
      //////////////////////////////////////////////////
@@ -795,6 +800,7 @@ dojo.destroy('debug_output'); // Speedup loading page
          ['addScribble', 1000],
          ['addMultipleScribbles', 1000],
          ['newCards', 1000],
+         ['reshuffle', 1000],
          ['giveCard', 1000],
          ['updateScores', 10],
          ['updatePlayersData', 10],

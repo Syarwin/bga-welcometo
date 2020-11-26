@@ -104,7 +104,7 @@ trait PlanValidationTrait
   {
     $query = new QueryBuilder('plan_validation');
     $previous = $query->where('turn', '<', Globals::getCurrentTurn())->count();
-    if($previous > 0){
+    if($previous > 0 || Globals::isSolo()){
       StateMachine::nextState("reshuffle");
       return true;
     }

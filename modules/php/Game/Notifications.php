@@ -30,6 +30,11 @@ class Notifications
     }
   }
 
+  public static function reshuffle(){
+    self::notifyAll('reshuffle', clienttranslate("First player who completed a goal asked for reshuffling the cards"), []);
+  }
+
+
   public static function giveThirdCardToNextPlayer($pId, $stackId, $nextPId){
     self::notify($pId, 'giveCard', '', [
       'stack' => $stackId,

@@ -87,3 +87,6 @@
   3h - Moved icon to player board, add helpcard + tie break
   3h - Layout controls
   30min - Fixing automatic plan validation + restart turn when clicking on selected cards
+
+25-26/11 :
+  2h - add resshufle option for first validated plan

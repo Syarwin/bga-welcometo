@@ -1,6 +1,8 @@
 <?php
 namespace WTO;
 use WTO\Game\Globals;
+use WTO\Helpers\QueryBuilder;
+
 /*
  * Plan Cards
  */
@@ -146,4 +148,14 @@ class PlanCards extends Helpers\Pieces
     $query->delete()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->run();
   }
 
+
+  public function askedForReshuffle($getPlayerId = false)
+  {
+    $query = new QueryBuilder('plan_validation');
+    $reshuffle = $query->where('turn', '=', Globals::getCurrentTurn() - 1)->where('reshuffle', 1)->get(false);
+    if($reshuffle->empty())
+      return false;
+
+    return $getPlayerId? $reshuffle->first()['player_id'] : true;
+  }
 }

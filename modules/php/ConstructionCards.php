@@ -2,7 +2,9 @@
 namespace WTO;
 use WTO\Game\Globals;
 use WTO\Game\Notifications;
+use WTO\Game\Players;
 use \WTO\Helpers\QueryBuilder;
+use welcometo;
 
 /*
  * Construction Cards
@@ -62,7 +64,7 @@ class ConstructionCards extends Helpers\Pieces
 
     if(Globals::isStandard()){
       // Standard mode : set-up an initial card in each stack, new turn will bring the second one.
-      self::draw(null, true);
+      self::draw();
     } else {
       if(Globals::isSolo()){
         // Solo mode setup : add the solo card on the bottom half
@@ -112,15 +114,40 @@ class ConstructionCards extends Helpers\Pieces
 
 
   /*
+   * Call the corresponding method either :
+   *   - without arg is standard mode
+   *   - once by player if non-standard mode
+   */
+  protected function callWithRightArguments($method){
+    // Standard mode => draw 3 cards that are the same for all player
+    if(Globals::isStandard())
+      self::$method();
+    // Non standard mode => draw 3 cards for each player
+    else {
+      foreach(Players::getAll() as $pId => $player){
+        self::$method($pId);
+      }
+    }
+  }
+
+
+
+  /*
    * Discard previous cards
    */
-  public function discard($playerId = null)
+  public function discard()
+  {
+    self::callWithRightArguments("discardAux");
+  }
+
+  protected function discardAux($playerId = null, $discardAll = false)
   {
     foreach (self::getStacks($playerId) as $stackId => $stack) {
       if(Globals::isStandard()){
         // Standard mode : Discard last flipped card if any, flip the current construction card if any, draw a new card
-        self::moveAllInLocation($stack, 'discard', 1);
-        self::moveAllInLocation($stack, $stack,    0, 1);
+        self::moveAllInLocation($stack, 'discard', $discardAll? 2 : 1);
+        if(!$discardAll)
+          self::moveAllInLocation($stack, $stack,    0, 1);
       } else {
         // Discard all previously drawn cards
         self::moveAllInLocation($stack, 'discard', 0);
@@ -135,7 +162,12 @@ class ConstructionCards extends Helpers\Pieces
    *   - only once with $playerId = null if in standard or solo mode
    *   - once per player's id in expert mode
    */
-  public function draw($playerId = null)
+  public function draw()
+  {
+     return self::callWithRightArguments("drawAux");
+  }
+
+  protected function drawAux($playerId = null)
   {
     $drawnCards = [];
     foreach (self::getStacks($playerId) as $stackId => $stack) {
@@ -196,7 +228,21 @@ class ConstructionCards extends Helpers\Pieces
    * Allow to reshuffle cards once someone finish a plan
    */
   public function reshuffle(){
+    self::callWithRightArguments("reshuffleAux");
+    Notifications::reshuffle();
     self::reformDeckFromDiscard("deck");
+
+
+    // Change the turn temporarily to have correct zindex
+    $n = Globals::getCurrentTurn();
+    welcometo::get()->setGamestateValue("currentTurn", $n - 1);
+    self::draw();
+    self::discard();
+    welcometo::get()->setGamestateValue("currentTurn", $n);
+  }
+
+  protected function reshuffleAux($playerId = null){
+    self::discardAux($playerId, true);
   }
 
   ////////////////////////////////////

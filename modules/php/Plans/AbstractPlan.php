@@ -58,6 +58,12 @@ abstract class AbstractPlan extends \APP_DbObject
   }
 
   public function validate($player, $args){
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
+    }
+
+
     $query = new QueryBuilder('plan_validation');
     $query->insert([
       'card_id' => $this->id,

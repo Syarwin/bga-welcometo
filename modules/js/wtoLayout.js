@@ -19,7 +19,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       debug("Seting up the layout manager");
       this._isStandard = true;
 
-      this._mode = this.getConfig("wtoLayout", dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
       this._firstHandle = this.getConfig('firstHandle', 20);
       this._secondHandle = this.getConfig('secondHandle', 90);
       this._scoreSheetZoom = this.getConfig('scoreSheetZoom', 100);
@@ -34,7 +33,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       this._isStandard = isStandard;
       dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
 
-      this.setMode(this._mode);
+      this._mode = this.getConfig("wtoLayout", dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
+      this.setMode(this._mode, false);
       this.setMergedMode(this._mergedMode);
 
       dojo.query("#layout-controls-container input[type=radio]").connect("click", (ev) => this.setMergedMode(ev.target.value) );

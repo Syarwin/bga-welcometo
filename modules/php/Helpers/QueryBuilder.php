@@ -336,6 +336,10 @@ class Collection extends \ArrayObject {
     return array_keys($this->getArrayCopy());
   }
 
+  public function empty(){
+    return empty($this->getArrayCopy());
+  }
+
   public function first(){
     $arr = $this->toArray();
     return isset($arr[0])? $arr[0] : null;
