@@ -65,9 +65,6 @@ dojo.destroy('debug_output'); // Speedup loading page
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
 
-      // Update layout manager data
-      this._layoutManager.setStackMode(this._isStandard);
-
       // Create a new div for buttons to avoid BGA auto clearing it
       dojo.place("<div id='customActions' style='display:inline-block'></div>", $("generalactions"), "after");
 
@@ -90,7 +87,6 @@ dojo.destroy('debug_output'); // Speedup loading page
             "vertical" : _("Vertical"),
           }), "player_board_" + player.id);;
 
-          this._layoutManager.init(); // Hack needed because player board are not ready on constructor
           dojo.connect($("show-overview"), "onclick", () => this.showOverview() );
           dojo.connect($("show-helpsheet"), "onclick", () => this.showHelpSheet() );
           return;
@@ -100,6 +96,9 @@ dojo.destroy('debug_output'); // Speedup loading page
         this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
         dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
       });
+
+      // Hack needed because player board are not ready on constructor
+      this._layoutManager.init(this._isStandard); 
 
       // Stop here if spectator
       if(this.isSpectator)
@@ -529,6 +528,13 @@ dojo.destroy('debug_output'); // Speedup loading page
        this._planCards.validateCurrentPlayerPlan(args.args.planId, args.args.validation, true);
      },
 
+
+
+     onEnteringStateAskReshuffle(args){
+       this.addPrimaryActionButton("btnReshuffle", _("Reshuffle"), () => this.takeAction('reshuffle') );
+       this.addPassActionButton();
+     },
+
      ///////////////////////////////////////////////////
      //////   Choose estates to validate plan   ///////
      //////////////////////////////////////////////////
@@ -617,12 +623,41 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
+     ////////////////////////////////
+     /////////   Apply turn   ///////
+     ////////////////////////////////
+     /*
+     getCasinoPlacementAnimation: function (playerId, casinoId) {
+         var animationHTML = this.format_block('animation', { 'avatar_url': this.getPlayerAvatar(playerId), 'player_id': playerId, 'avenue': this.casinos_placement_dict[casinoId].avenue, 'street': this.casinos_placement_dict[casinoId].street });
+         dojo.place(animationHTML, `city_${this.player_id}`);
+         return dojo.fadeOut({
+             node: `animation_${playerId}`,
+             duration: this.animationTiming,
+             delay: 0,
+             easing: dojo.fx.easing.quintIn,
+             beforeBegin: function (node) { dojo.removeClass(node, "hidden"); },
+             onEnd: function (node) { dojo.destroy(node); }
+         })
+     },
+*/
+     // test_animation: function () {
+     //     var animations = [{ 'casinoId': 13, 'playerId': 2316488 }, { 'casinoId': 27, 'playerId': 2316489 }];
+     //     var toPlay = [];
+     //     for (let index = 0; index < animations.length; index++) {
+     //         var animation = animations[index];
+     //         toPlay.push(this.getCasinoPlacementAnimation(animation.playerId, animation.casinoId));
+     //     }
+     //     dojo.fx.chain(toPlay).play();
+     // },
+
+
      /////////////////////////////////
      /////////   End of game   ///////
      /////////////////////////////////
      onEnteringStateComputeScores(args){
        this.showOverview();
      },
+
 
 
      ////////////////////////////////////////////
@@ -737,6 +772,10 @@ dojo.destroy('debug_output'); // Speedup loading page
 
     onPreferenceChange(pref, newValue){
 
+    },
+
+    getPlayerAvatar(pId) {
+      return $('avatar_' + pId)? dojo.attr('avatar_' + pId, 'src') : '';
     },
 
      ///////////////////////////////////////////////////

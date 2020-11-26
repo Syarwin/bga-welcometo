@@ -24,7 +24,7 @@
 </div>
 
 <audio id="audiosrc_o_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.ogg" autobuffer></audio>
-<audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/scribble.mp3" autobuffer></audio>
+<audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.mp3" autobuffer></audio>
 
 
 
@@ -63,7 +63,6 @@
   </clipPath>
 </svg>
 
-<link ref="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.min.css" type="text/css" />
 <script type="text/javascript">
 
 ///// ICON IN PLAYER BOARD /////
@@ -270,6 +269,8 @@ var jstpl_estate = `
     <rect width="100%" height="100%" />
   </svg>
 </div>`;
+
+var jstpl_animation = '<div id="animation_${player_id}" class="animation avenue${avenue} street${street} hidden"><img src="${avatar_url}" class="animation_avatar"></img><div class="animation_icon"></img></div>';
 
 
 //// BOTTOM PART ////

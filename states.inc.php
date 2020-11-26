@@ -219,7 +219,20 @@ $machinestates = [
     "possibleactions" => ["validatePlan", "restart"],
     "transitions" => [
       'restart' => ST_CHOOSE_CARDS,
-      'choosePlan' => ST_CHOOSE_PLAN,
+      'reshuffle' => ST_ASK_RESHUFFLE,
+    ]
+  ],
+
+
+  ST_ASK_RESHUFFLE => [
+    "name" => "askReshuffle",
+    "descriptionmyturn" => clienttranslate('${you} may reshuffle the deck of cards'),
+    "type" => "private",
+    "action" => "stAskReshuffle",
+    "possibleactions" => ["pass", "reshuffle"],
+    "transitions" => [
+      'pass' => ST_CHOOSE_PLAN,
+      'reshuffle' => ST_CHOOSE_PLAN,
     ]
   ],
 

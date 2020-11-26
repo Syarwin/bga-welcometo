@@ -94,7 +94,6 @@ class PlanCards extends Helpers\Pieces
     }
     self::create($cards);
 
-
     // Pick the three projects
     for($i = 1; $i <= 3; $i++){
       self::shuffle(['deck', $i]);

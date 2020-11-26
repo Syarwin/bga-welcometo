@@ -2,6 +2,7 @@
 namespace WTO;
 use WTO\Game\Globals;
 use WTO\Game\Notifications;
+use \WTO\Helpers\QueryBuilder;
 
 /*
  * Construction Cards
@@ -110,6 +111,24 @@ class ConstructionCards extends Helpers\Pieces
   }
 
 
+  /*
+   * Discard previous cards
+   */
+  public function discard($playerId = null)
+  {
+    foreach (self::getStacks($playerId) as $stackId => $stack) {
+      if(Globals::isStandard()){
+        // Standard mode : Discard last flipped card if any, flip the current construction card if any, draw a new card
+        self::moveAllInLocation($stack, 'discard', 1);
+        self::moveAllInLocation($stack, $stack,    0, 1);
+      } else {
+        // Discard all previously drawn cards
+        self::moveAllInLocation($stack, 'discard', 0);
+      }
+    }
+  }
+
+
 
   /*
    * Draw a new set of cards for new turn. Will be called either :
@@ -120,16 +139,6 @@ class ConstructionCards extends Helpers\Pieces
   {
     $drawnCards = [];
     foreach (self::getStacks($playerId) as $stackId => $stack) {
-      ///// Cleaning stack /////
-      if(Globals::isStandard()){
-        // Standard mode : Discard last flipped card if any, flip the current construction card if any, draw a new card
-        self::moveAllInLocation($stack, 'discard', 1);
-        self::moveAllInLocation($stack, $stack,    0, 1);
-      } else {
-        // Discard all previously drawn cards
-        self::moveAllInLocation($stack, 'discard', 0); // TODO : remove 0 ?
-      }
-
       ///// Drawing new card /////
       // In expert mode, the first card was drafter by another player in prev turn
       $fromLocation = ($stackId == 0 && Globals::isExpert())? "for_{$playerId}" : "deck";
@@ -181,6 +190,13 @@ class ConstructionCards extends Helpers\Pieces
       self::moveAllInLocation($stack, "for_$nextPId");
       Notifications::giveThirdCardToNextPlayer($pId, $stackId, $nextPId);
     }
+  }
+
+  /*
+   * Allow to reshuffle cards once someone finish a plan
+   */
+  public function reshuffle(){
+    self::reformDeckFromDiscard("deck");
   }
 
   ////////////////////////////////////

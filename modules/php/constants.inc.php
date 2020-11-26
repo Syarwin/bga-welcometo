@@ -21,6 +21,7 @@ define('ST_ACTION_TEMP', 27);
 
 define('ST_CHOOSE_PLAN', 30);
 define('ST_VALIDATE_PLAN', 31);
+define('ST_ASK_RESHUFFLE', 32);
 
 define('ST_CONFIRM_TURN', 40);
 define('ST_WAIT_OTHERS', 41);

@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `plan_validation` (
   `card_id` int(10) unsigned NOT NULL,
   `player_id` int(10) NOT NULL,
   `turn` int(10) NOT NULL,
+  `reshuffle` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
 

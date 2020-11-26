@@ -13,6 +13,6 @@ class SevenTempPlan extends AbstractPlan
 
     // Get empty locations
     $zones = Temp::getAvailableZones($player);
-    return empty($zones) || $zones[0] > 6;
+    return empty($zones) || $zones[0][0] > 6;
   }
 }

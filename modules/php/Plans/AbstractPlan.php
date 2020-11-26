@@ -5,8 +5,10 @@ use \WTO\Game\Players;
 use \WTO\Game\Notifications;
 use \WTO\Game\UserException;
 use \WTO\Helpers\QueryBuilder;
+use welcometo;
 
-abstract class AbstractPlan
+// TODO : remove
+abstract class AbstractPlan extends \APP_DbObject
 {
   protected $id = null;
 
@@ -63,6 +65,20 @@ abstract class AbstractPlan
       'turn' => Globals::getCurrentTurn(),
     ]);
     Notifications::planScored($player, $this->id, $this->getValidations());
+  }
+
+  public function askForReshuffle($player){
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
+    }
+
+    $query = new QueryBuilder('plan_validation');
+    $query->update(['reshuffle' => true])->where([
+      ['card_id', $this->id],
+      ['player_id', $player->getId()],
+      ['turn', Globals::getCurrentTurn()],
+    ])->run();
   }
 
   public function getValidations()

@@ -16,7 +16,7 @@ class DecorativePlan extends AbstractPlan
 
     switch($this->conditions[0]){
       case 'park';
-        return count(Park::getAvailableZones($player)) < 1;
+        return count(Park::getAvailableZones($player, false)) <= 1;
 
       case 'pool':
         $pools = Pool::getCompleted($player);

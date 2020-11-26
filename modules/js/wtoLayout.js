@@ -19,26 +19,23 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       debug("Seting up the layout manager");
       this._isStandard = true;
 
+      this._mode = this.getConfig("wtoLayout", dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
       this._firstHandle = this.getConfig('firstHandle', 20);
       this._secondHandle = this.getConfig('secondHandle', 90);
       this._scoreSheetZoom = this.getConfig('scoreSheetZoom', 100);
       this._mergedMode = this.getConfig('mergedMode', MERGED);
-
-      if(localStorage.getItem("wtoLayout") == null){
-        dojo.addClass("layout-controls-container", "undefined");
-        this.setMode( dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
-      } else {
-        this.setMode(localStorage.getItem("wtoLayout"));
-      }
-
-      this.setMergedMode(this._mergedMode);
     },
 
-    init(){
+    init(isStandard){
       dojo.connect($('layout-settings'), 'onclick', () => this.toggleControls() );
       dojo.connect($('layout-control-0'), 'onclick', () => this.setMode(HORIZONTAL, true) );
       dojo.connect($('layout-control-1'), 'onclick', () => this.setMode(VERTICAL, true) );
+
+      this._isStandard = isStandard;
+      dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
+
       this.setMode(this._mode);
+      this.setMergedMode(this._mergedMode);
 
       dojo.query("#layout-controls-container input[type=radio]").connect("click", (ev) => this.setMergedMode(ev.target.value) );
 
@@ -74,12 +71,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       range2.noUiSlider.on('slide', (arg) => this.setScoreSheetZoom(parseInt(arg[0])) );
     },
 
-
-    setStackMode(isStandard){
-      this._isStandard = isStandard;
-      dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
-      this.onScreenWidthChange();
-    },
 
 
     getConfig(value, v){

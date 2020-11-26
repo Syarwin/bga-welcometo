@@ -6,6 +6,7 @@ use \WTO\Game\Globals;
 use \WTO\Game\Log;
 use \WTO\Game\StateMachine;
 use \WTO\Game\UserException;
+use \WTO\Helpers\QueryBuilder;
 
 /*
  * Handle the plans validation
@@ -91,6 +92,34 @@ trait PlanValidationTrait
     $player->updateScores();
 
     // Move on to next state
-    StateMachine::nextState("choosePlan");
+    StateMachine::nextState("reshuffle");
   }
+
+
+
+  /////////////////////////////
+  //////// RESHUFFLE  /////////
+  /////////////////////////////
+  function stAskReshuffle($player)
+  {
+    $query = new QueryBuilder('plan_validation');
+    $previous = $query->where('turn', '<', Globals::getCurrentTurn())->count();
+    if($previous > 0){
+      StateMachine::nextState("reshuffle");
+      return true;
+    }
+  }
+
+
+  function reshuffle()
+  {
+    StateMachine::checkAction("reshuffle");
+    $player = Players::getCurrent();
+    $plan = $player->getCurrentPlan();
+    $plan->askForReshuffle($player);
+
+    // Move on to next state
+    StateMachine::nextState("reshuffle");
+  }
+
 }
