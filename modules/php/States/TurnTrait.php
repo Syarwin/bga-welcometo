@@ -30,7 +30,7 @@ trait TurnTrait
     }
 
     // Reshuffle if asked
-    if(PlanCards::askedForReshuffle()){
+    if(true || PlanCards::askedForReshuffle()){
       ConstructionCards::reshuffle();
     }
 
