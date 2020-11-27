@@ -236,8 +236,19 @@ class ConstructionCards extends Helpers\Pieces
     // Change the turn temporarily to have correct zindex
     $n = Globals::getCurrentTurn();
     welcometo::get()->setGamestateValue("currentTurn", $n - 1);
-    self::draw();
-    self::discard();
+
+    // Draw fresh new cards
+    if(Globals::isStandard()){
+      self::draw();
+      self::discard();
+    }
+    else if(Globals::isExpert()){
+      foreach(Players::getAll() as $pId => $player){
+        self::pickForLocation(1, 'deck', "for_{$pId}");
+      }
+    }
+
+    // Reset turn to correct value
     welcometo::get()->setGamestateValue("currentTurn", $n);
   }
 
