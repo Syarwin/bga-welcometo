@@ -74,7 +74,7 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'pool', [2,1]);
     Houses::add($pIds[0], 4, [2,2], false);
     Houses::add($pIds[0], 5, [2,3], true);
-    Houses::add($pIds[0], 7, [2,4], true);
+    Houses::add($pIds[0], ROUNDABOUT, [2,4], true);
     Houses::add($pIds[0], 8, [2,5], false);
     Houses::add($pIds[0], 9, [2,6], true);
     Scribbles::add($pIds[0], 'pool', [2,6]);
@@ -95,6 +95,7 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'estate-fence', [0,5]);
     Scribbles::add($pIds[0], 'estate-fence', [1,3]);
     Scribbles::add($pIds[0], 'estate-fence', [1,6]);
+    Scribbles::add($pIds[0], 'estate-fence', [2,3]);
     Scribbles::add($pIds[0], 'estate-fence', [2,4]);
     Scribbles::add($pIds[0], 'estate-fence', [2,7]);
 

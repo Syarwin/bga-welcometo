@@ -2,6 +2,8 @@ var isDebug = window.location.host == 'studio.boardgamearena.com' || window.loca
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
+  const marks = [0, 1, 5, 0, 0, 2, 0, 3, 6, 0, 7, 1, 0, 4, 0, 2, 0, 0, 3, 0, 5, 0, 0, 1, 4, 7, 0, 6, 2, 0, 3, 5, 0, 2];
+
   return declare("bgagame.wtoConstructionCards", ebg.core.gamegui, {
 /****************************************
 ******* Constructions cards class *******
@@ -19,9 +21,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       if(this._isStandard)
         dojo.addClass("construction-cards-container-resizable", "standard");
 
-      // Display the cards
+      let markedStack = Math.floor(Math.random() * 3);
       gamedatas.constructionCards.forEach((stack, i) => {
         stack.forEach((card,j) => {
+          card.mark = i == markedStack && j == 0? marks[gamedatas.turn] : 0;
           dojo.place(this.format_block('jstpl_constructionCard', card), 'construction-cards-stack-' + i);
           dojo.style("construction-card-" + card.id, "z-index", 100);
           if(j == 0 && this._isStandard){ // Flip first card
@@ -127,7 +130,13 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       // Clear everything
       dojo.query(".construction-cards-stack").removeClass("selected selectable unselectable");
 
+      // Marks ?
+      let markedStack = Math.floor(Math.random() * 3);
+      debug(markedStack,marks[turn]);
       cards.forEach(card => {
+        // Add small mark
+        card.mark = card.stackId == markedStack? marks[turn] : 0;
+
         let cardsInStack = dojo.query("#construction-cards-stack-" + card.stackId + " .construction-card-holder:last-of-type");
         // NULL only happens in EXPERT MODE
         let oldCard = cardsInStack.length == 0? null : cardsInStack[0];

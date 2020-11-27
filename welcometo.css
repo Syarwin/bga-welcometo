@@ -316,7 +316,17 @@ body {
         justify-content: center;
         align-items: center;
         text-align: center; }
+        #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-back .mark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url("img/construction_back_marks.png");
+          background-size: cover; }
         #construction-cards-container #construction-cards-container-resizable .construction-card-holder .construction-card-back .action {
+          position: relative;
+          z-index: 2;
           width: 170px;
           height: 170px;
           background-image: url("img/actions.png");
@@ -401,6 +411,22 @@ body {
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="16"] .construction-card-front {
         background-position: 94.1176470588% center; }
       #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-number="17"] .construction-card-front {
+        background-position: 100% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="0"] .construction-card-back .mark {
+        display: none; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="1"] .construction-card-back .mark {
+        background-position: 0% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="2"] .construction-card-back .mark {
+        background-position: 16.6666666667% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="3"] .construction-card-back .mark {
+        background-position: 33.3333333333% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="4"] .construction-card-back .mark {
+        background-position: 50% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="5"] .construction-card-back .mark {
+        background-position: 66.6666666667% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="6"] .construction-card-back .mark {
+        background-position: 83.3333333333% center; }
+      #construction-cards-container #construction-cards-container-resizable .construction-card-holder[data-mark="7"] .construction-card-back .mark {
         background-position: 100% center; }
 
 /*****************************

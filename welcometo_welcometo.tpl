@@ -203,8 +203,9 @@ var jstpl_overviewRow = `
 ////// CARDS  ///////
 /////////////////////
 var jstpl_constructionCard = `
-<div id="construction-card-\${id}" data-action="\${action}" data-number="\${number}" class="construction-card-holder">
+<div id="construction-card-\${id}" data-action="\${action}" data-number="\${number}" data-mark="\${mark}" class="construction-card-holder">
   <div class="construction-card-back">
+    <div class="mark"></div>
     <div class="action"></div>
   </div>
   <div class="construction-card-front">

@@ -37,7 +37,6 @@ $machinestates = [
     "action" => "stNewTurn",
     "transitions" => [
       "playerTurn" => ST_PLAYER_TURN,
-//      "checkEndGameConditions" => 8 TODO WEIRD
     ]
   ],
 

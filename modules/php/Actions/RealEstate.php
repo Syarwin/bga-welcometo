@@ -22,8 +22,7 @@ class RealEstate extends Zone
       $start = 0;
       $full = true;
       for($j = 0; $j < count($streets[$i]); $j++){
-        // TODO : handle turnaround
-        if(is_null($streets[$i][$j])){
+        if(is_null($streets[$i][$j]) || $streets[$i][$j]['number'] == ROUNDABOUT){
           $full = false;
         }
 

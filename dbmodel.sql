@@ -64,3 +64,5 @@ CREATE TABLE IF NOT EXISTS `houses` (
 
 
 ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
+
+ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;

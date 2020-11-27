@@ -96,7 +96,6 @@ class Player extends Helpers\DB_Manager
 
   public function computeScore()
   {
-    // TODO : turnaround
     $scores = $this->getScores(false);
     $total = $scores['plan-total'] + $scores['park-total'] + $scores['pool-total'] + $scores['temp-total']
       + $scores['estate-total-0'] + $scores['estate-total-1'] + $scores['estate-total-2']
@@ -165,7 +164,9 @@ class Player extends Helpers\DB_Manager
   public function getCurrentPlan()
   {
     $selectedPlanAction = Log::getLastAction('selectPlan', $this->id);
-    // TODO : add sanity check
+    if(is_null($selectedPlanAction))
+      throw new \BgaVisibleSystemException("No current plan selected");
+
     return PlanCards::get($selectedPlanAction['arg']);
   }
 
@@ -355,7 +356,6 @@ class Player extends Helpers\DB_Manager
    */
   public function getAvailableNumbersForBis()
   {
-    // TODO : handle fences !
     $result = [];
     for($i = 0; $i <= 17; $i++){
       $houses = Houses::getAvailableLocationsForBis($this, $i);

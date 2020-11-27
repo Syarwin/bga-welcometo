@@ -66,6 +66,24 @@ class Log extends \WTO\Helpers\DB_Manager
   }
 
 
+
+  /*
+   * getCancelMoveIds : get all cancelled move IDs from BGA gamelog, used for styling the notifications on page reload
+   */
+  public function getCancelMoveIds()
+  {
+    // TODO : remove
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;");
+    }
+
+
+    $moveIds = self::getObjectListFromDb("SELECT `gamelog_move_id` FROM gamelog WHERE `cancel` = 1 ORDER BY 1", true);
+    return array_map('intval', $moveIds);
+  }
+
+
 /////////////////////////////////
 /////////////////////////////////
 //////////   Setters   //////////
