@@ -61,7 +61,7 @@ define([
      */
     setup(gamedatas) {
 dojo.destroy('debug_output'); // Speedup loading page
-
+ 
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
 

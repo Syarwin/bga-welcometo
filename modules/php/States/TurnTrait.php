@@ -37,6 +37,12 @@ trait TurnTrait
     // Draw new cards
     ConstructionCards::draw();
 
+    // Add time
+    foreach (Players::getAll() as $player) {
+      self::giveExtraTime($player->getId());
+    }
+
+
     StateMachine::initPrivateStates(ST_PLAYER_TURN);
     $this->gamestate->nextState("playerTurn");
   }

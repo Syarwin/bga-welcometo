@@ -130,7 +130,7 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-bis', [2]);
     Scribbles::add($pIds[0], 'score-bis', [3]);
 
-    Scribbles::add($pIds[1], 'score-temp', [0]);
+//    Scribbles::add($pIds[1], 'score-temp', [0]);
     }
   }
 

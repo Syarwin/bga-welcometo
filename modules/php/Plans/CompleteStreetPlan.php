@@ -11,6 +11,16 @@ class CompleteStreetPlan extends AbstractPlan
 {
   protected $automatic = true;
 
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $this->desc = [
+      clienttranslate("To fulfill this City Plan, the player must build all of the parks, all of the pools, and one roundabout in the same street."),
+    ];
+  }
+
+
+
   public function canBeScored($player)
   {
     if(!parent::canBeScored($player))

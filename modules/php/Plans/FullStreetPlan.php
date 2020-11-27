@@ -8,6 +8,14 @@ use \WTO\Actions\TopFence;
 class FullStreetPlan extends AbstractPlan
 {
   protected $automatic = true;
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $this->desc = [
+      clienttranslate("To fulfill this City Plan, all houses must be built on the required street."),
+    ];
+  }
+
 
   public function canBeScored($player)
   {

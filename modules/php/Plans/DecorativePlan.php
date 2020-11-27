@@ -8,6 +8,23 @@ class DecorativePlan extends AbstractPlan
 {
   protected $automatic = true;
 
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $type = $this->conditions[0];
+    if($type == 'park'){
+      $this->desc = [ clienttranslate("To fulfill this City Plan, two streets must have all of the parks built.") ];
+    }
+
+    else if($type == 'pool'){
+      $this->desc = [ clienttranslate("To fulfill this City Plan, two streets must have all of the pools built.") ];
+    }
+
+    else if($type == 'pool&park'){
+      $this->desc = [  clienttranslate("To fulfill this City Plan, all of the parks AND all of the pools on the required street must be built.") ];
+    }
+  }
+
   public function canBeScored($player)
   {
     if(!parent::canBeScored($player))

@@ -11,6 +11,7 @@ use welcometo;
 abstract class AbstractPlan extends \APP_DbObject
 {
   protected $id = null;
+  protected $desc = [];
 
   protected $variant;
   protected $stack;
@@ -32,6 +33,7 @@ abstract class AbstractPlan extends \APP_DbObject
   public function getUiData(){
     return [
       'id' => $this->id,
+      'desc' => $this->desc,
     ];
   }
 

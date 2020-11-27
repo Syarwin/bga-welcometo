@@ -5,6 +5,13 @@ use \WTO\Houses;
 class FiveBisPlan extends AbstractPlan
 {
   protected $automatic = true;
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $this->desc = [
+      clienttranslate("To fulfill this City Plan, 5 duplicate houses' numers (bis) must be built on the same street."),
+    ];
+  }
 
   public function canBeScored($player)
   {

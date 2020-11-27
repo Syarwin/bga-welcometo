@@ -405,7 +405,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         // Update selectable estates
         dojo.query(".estate").removeClass("selectable");
         this._selectableSizes = conditionsLeft;
-        this._selectableSizes.forEach(size => dojo.query(`[data-size="${size}"`).addClass("selectable") );
+        this._selectableSizes.forEach(size => dojo.query(`[data-size="${size}"]`).addClass("selectable") );
 
         dojo.destroy("cancelEstateSelect");
         dojo.destroy("confirmEstateSelect");

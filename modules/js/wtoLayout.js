@@ -19,10 +19,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       debug("Seting up the layout manager");
       this._isStandard = true;
 
-      this._firstHandle = this.getConfig('firstHandle', 20);
-      this._secondHandle = this.getConfig('secondHandle', 90);
-      this._scoreSheetZoom = this.getConfig('scoreSheetZoom', 100);
-      this._mergedMode = this.getConfig('mergedMode', MERGED);
+      this._firstHandle = this.getConfig('welcometoFirstHandle', 20);
+      this._secondHandle = this.getConfig('welcometoSecondHandle', 90);
+      this._scoreSheetZoom = this.getConfig('welcometoScoreSheetZoom', 100);
+      this._mergedMode = this.getConfig('welcometoMergedMode', MERGED);
+
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+      console.log(vw, vh);
+      this._mode = this.getConfig("welcometoLayout", vw > 1.1*vh? HORIZONTAL : VERTICAL);
     },
 
     init(isStandard){
@@ -33,9 +38,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       this._isStandard = isStandard;
       dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
 
-      this._mode = this.getConfig("wtoLayout", dojo.hasClass("ebd-body", "mobile_version")? VERTICAL : HORIZONTAL);
       this.setMode(this._mode, false);
-      this.setMergedMode(this._mergedMode);
+      if(this._mode == VERTICAL)
+        this.setMergedMode(this._mergedMode);
 
       dojo.query("#layout-controls-container input[type=radio]").connect("click", (ev) => this.setMergedMode(ev.target.value) );
 
@@ -80,7 +85,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
     setMode(mode, writeInStorage){
       this._mode = mode;
       if(writeInStorage)
-        localStorage.setItem('wtoLayout', mode);
+        localStorage.setItem('welcometoLayout', mode);
 
       dojo.attr("overall-content", "data-mode", mode);
       if($("layout-controls-container"))
@@ -106,23 +111,23 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
     setHandles(a,b){
       this._firstHandle = a;
       this._secondHandle = b;
-      localStorage.setItem("wtoLayout", HORIZONTAL);
-      localStorage.setItem("firstHandle", a);
-      localStorage.setItem("secondHangle", b);
+      localStorage.setItem("welcometoLayout", HORIZONTAL);
+      localStorage.setItem("welcometoFirstHandle", a);
+      localStorage.setItem("welcometoSecondHangle", b);
       this.onScreenWidthChange();
     },
 
     setScoreSheetZoom(a){
       this._scoreSheetZoom = a;
-      localStorage.setItem("wtoLayout", HORIZONTAL);
-      localStorage.setItem("scoreSheetZoom", a);
+      localStorage.setItem("welcometoLayout", HORIZONTAL);
+      localStorage.setItem("welcometoScoreSheetZoom", a);
       this.onScreenWidthChange();
     },
 
     setMergedMode(a){
       this._mergedMode = a;
-      localStorage.setItem("wtoLayout", VERTICAL);
-      localStorage.setItem("mergedMode", a);
+      localStorage.setItem("welcometoLayout", VERTICAL);
+      localStorage.setItem("welcometoMergedMode", a);
       dojo.attr("welcometo-container", "data-merged", a);
       this.onScreenWidthChange();
     },

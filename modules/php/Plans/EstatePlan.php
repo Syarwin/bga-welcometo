@@ -18,6 +18,16 @@ function subtract_array($array1,$array2){
 
 class EstatePlan extends AbstractPlan
 {
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $this->desc = [
+      clienttranslate("To fullfill this City Plan, the player must complete all the required housing estates."),
+      clienttranslate("The estates do not have to be in the same street. There is no restriction to the location of a Plan's estates."),
+    ];
+  }
+
+
   protected function getAvailableEstates($player)
   {
     $estates = $player->getEstates();

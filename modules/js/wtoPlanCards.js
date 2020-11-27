@@ -20,9 +20,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       // Display the cards
       gamedatas.planCards.forEach(plan => {
         this._planIds.push(plan.id);
-        dojo.place(this.format_block('jstpl_planCard', plan), 'plan-cards-container-resizable');
+        var div = dojo.place(this.format_block('jstpl_planCard', plan), 'plan-cards-container-resizable');
         dojo.connect($('plan-card-' + plan.id), 'click', () => this.onClickPlan(plan.id));
-        // TODO : add tooltips
+
+        let desc = plan.desc.map(t => _(t)).join("\n");
+        this.addTooltip(div.id, desc, '');
       });
 
       this.updateValidationMarks();

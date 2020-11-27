@@ -7,6 +7,13 @@ use \WTO\Actions\TopFence;
 class ExtremitiesPlan extends AbstractPlan
 {
   protected $automatic = true;
+  public function __construct($info, $card = null){
+    parent::__construct($info, $card);
+
+    $this->desc = [
+      clienttranslate("To fulfill this City Plan, the first and last house of each street must be built."),
+    ];
+  }
 
   protected $pos = [
     [0,0], [0,9],
