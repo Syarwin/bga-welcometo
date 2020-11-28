@@ -459,5 +459,131 @@
 
     // TOTAL //
     .score_total {  top:1388px;  left:1411px; }
+
+
+
+    /*****************************
+    ******************************
+    ******* PIN ANIMATIONS  ******
+    ******************************
+    *****************************/
+    .scoresheet-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1544px;
+      height: 1544px;
+      background: rgba(0,0,0,0.3);
+      opacity:0;
+      display:none;
+      z-index:2;
+
+      &.fadein {
+        display:block;
+        animation: 0.7s ease-in-out fadeIn;
+        animation-fill-mode: forwards;
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+      }
+      &.fadeout {
+        display:block;
+        animation: 1s ease-in-out fadeOut;
+        animation-fill-mode: forwards;
+        @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+      }
+    }
+
+
+    .scoresheet-pin {
+      z-index:3;
+      position:absolute;
+      width:167px;
+      height:160px;
+      transform-origin: bottom center;
+
+      .pin-avatar {
+        position: absolute;
+        top: 35px;
+        left: 10px;
+        width: 92px;
+        height: 88px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: rgba(200,200,200,0.9);
+      }
+
+
+      .pin-frame {
+        position:absolute;
+        top:0;
+        left:0;
+        width:167px;
+        height:160px;
+        background:url("img/pin-more.png");
+        background-size:cover;
+        background-repeat: no-repeat;
+      }
+
+      .pin-number {
+        position: absolute;
+        right: 0;
+        top: 37px;
+        width: 46px;
+        height: 85px;
+        color: white;
+        font-size: 60px;
+        font-family: "Bebas";
+        @include centered;
+      }
+
+      &[data-n="0"]{
+        width:112px;
+        .pin-frame {
+          background-image:url("img/pin.png");
+          width:112px;
+        }
+        .pin-number {
+          display:none;
+        }
+      }
+
+
+      &.popin {
+        animation: 0.7s ease-in-out popIn;
+        animation-fill-mode: forwards;
+        @keyframes popIn {
+          0% {
+            transform: translateY(0) scale(0.1);
+            opacity:0;
+          }
+          30% {
+            opacity:1;
+          }
+          70% {
+            transform: translateY(-30px) scale(1.1);
+          }
+          100% {
+            transform:scale(1);
+          }
+        }
+      }
+
+      &.popout {
+        animation: 1s ease-in-out popOut;
+        animation-fill-mode: forwards;
+        @keyframes popOut {
+          0% {
+            transform:scale(1);
+          }
+          30% {
+            transform: translateY(-30px) scale(1.1);
+            opacity:1;
+          }
+          80% { opacity:0; }
+          100% {
+            transform: translateY(0) scale(0.1);
+          }
+        }
+      }
+    }
   }
 }

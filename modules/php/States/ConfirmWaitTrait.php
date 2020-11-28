@@ -25,6 +25,7 @@ trait ConfirmWaitTrait
     $player = Players::getCurrent();
     $player->restartTurn();
     $player->updateScores();
+
     $this->gamestate->setPlayersMultiactive([$player->getId()], '');
     StateMachine::nextState("restart");
   }

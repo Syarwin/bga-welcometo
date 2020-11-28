@@ -19,6 +19,10 @@ class StateMachine extends \APP_DbObject
     return self::getGame()->gamestate;
   }
 
+  private static function updateMoveId($pId)
+  {
+    self::getGamestate()->setPlayersMultiactive([$pId], '');    
+  }
 
 
   /*
@@ -155,6 +159,8 @@ class StateMachine extends \APP_DbObject
 
     $newState = $states[$newStateId];
     self::setPrivateState($pId, $newStateId);
+    self::updateMoveId($pId);
+
     $player = Players::get($pId);
 
     // Call action if it exists

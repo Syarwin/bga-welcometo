@@ -92,6 +92,21 @@ class welcometo extends Table
     WTO\ConstructionCards::setupNewGame($players);
 
 
+    // TODO : remove
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;");
+    }
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `log` LIKE 'move_id'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `log` ADD `move_id` INT(11);");
+    }
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
+    }
+
+
     self::setGameStateValue('currentTurn', 1);
     $this->activeNextPlayer();
   }
@@ -112,6 +127,7 @@ class welcometo extends Table
       'planValidations' => WTO\PlanCards::getCurrentValidations(),
       'options' => WTO\Game\Globals::getOptions(),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
+      'cancelMoveIds' => WTO\Game\Log::getCancelMoveIds(),
     ];
   }
 
@@ -125,6 +141,7 @@ class welcometo extends Table
   {
     return 100 * self::getGameStateValue('currentTurn') / 33;
   }
+
 
 
 

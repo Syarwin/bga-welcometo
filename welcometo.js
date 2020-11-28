@@ -39,7 +39,47 @@ define([
   const CONFIRM_DISABLED = 3;
 
 
+  var dockedlog_to_move_id = {};
+  var customlog_to_move_id = {};
+  function override_onPlaceLogOnChannel(msg) {
+    debug(msg);
+
+    // [Undocumented] Called by BGA framework on any notification message
+    // Handle cancelling log messages for restart turn
+    var currentLogId = this.next_log_id;
+    this.inherited(override_onPlaceLogOnChannel, arguments);
+
+    if (msg.move_id && this.next_log_id != currentLogId) {
+      var moveId = +msg.move_id;
+      dockedlog_to_move_id[currentLogId] = moveId;
+      this.checkLogCancel(moveId);
+    }
+
+    if(msg.args.moveId){
+      debug("test");
+      dockedlog_to_move_id[currentLogId] = msg.args.moveId;
+      this.checkLogCancel(moveId);
+    }
+  }
+
+  // [Undocumented] Called by BGA framework when loading progress changes
+  // Call our onLoadComplete() when fully loaded
+  function override_setLoader(value, max) {
+    this.inherited(override_setLoader, arguments);
+    if (!this.isLoadingComplete && value >= 100) {
+      this.isLoadingComplete = true;
+      this.onLoadingComplete();
+    }
+  }
+
+
   return declare("bgagame.welcometo", ebg.core.gamegui, {
+    /*
+     * [Undocumented] Override BGA framework functions
+     */
+    setLoader: override_setLoader,
+    onPlaceLogOnChannel: override_onPlaceLogOnChannel,
+
     /*
      * Constructor
      */
@@ -61,7 +101,7 @@ define([
      */
     setup(gamedatas) {
 dojo.destroy('debug_output'); // Speedup loading page
- 
+
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
 
@@ -107,6 +147,423 @@ dojo.destroy('debug_output'); // Speedup loading page
       // Setup the scoresheet
       var player = gamedatas.players[this.player_id];
       this._scoreSheet = new bgagame.wtoScoreSheet(player, 'player-score-sheet-resizable');
+     },
+
+
+     onLoadingComplete: function () {
+       debug('Loading complete');
+
+       // Handle previously cancelled moves
+       this.cancelLogs(this.gamedatas.cancelMoveIds);
+     },
+
+
+     onUpdateActionButtons(){
+       /*
+        this.addPrimaryActionButton('btnTest', "Test overlay", () => {
+            var players = {
+                "2322020": {
+                  "id": 2322020,
+                  "no": 1,
+                  "name": "Tisaac0",
+                  "color": "0000ff",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322020",
+                        "number": 3,
+                        "x": 0,
+                        "y": 2,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": [
+                      {
+                        "id": "1",
+                        "pId": "2322020",
+                        "type": "estate-fence",
+                        "x": "0",
+                        "y": "2",
+                        "turn": "1"
+                      }
+                    ]
+                  },
+                  "ack": "ack"
+                },
+                "2322021": {
+                  "id": 2322021,
+                  "no": 6,
+                  "name": "Tisaac1",
+                  "color": "",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322021",
+                        "number": 3,
+                        "x": 0,
+                        "y": 2,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": []
+                  },
+                  "ack": "wait"
+                },
+                "2322022": {
+                  "id": 2322022,
+                  "no": 4,
+                  "name": "Tisaac2",
+                  "color": "ffa500",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322022",
+                        "number": 3,
+                        "x": 2,
+                        "y": 2,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": [
+                      {
+                        "id": "4",
+                        "pId": "2322022",
+                        "type": "estate-fence",
+                        "x": "2",
+                        "y": "3",
+                        "turn": "1"
+                      }
+                    ]
+                  },
+                  "ack": "wait"
+                },
+                "2322023": {
+                  "id": 2322023,
+                  "no": 2,
+                  "name": "Tisaac3",
+                  "color": "ff0000",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322023",
+                        "number": 7,
+                        "x": 1,
+                        "y": 6,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": [
+                      {
+                        "id": "2",
+                        "pId": "2322023",
+                        "type": "score-estate",
+                        "x": "4",
+                        "y": "0",
+                        "turn": "1"
+                      }
+                    ]
+                  },
+                  "ack": "wait"
+                },
+                "2322024": {
+                  "id": 2322024,
+                  "no": 5,
+                  "name": "Tisaac4",
+                  "color": "773300",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322024",
+                        "number": 3,
+                        "x": 0,
+                        "y": 2,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": [
+                      {
+                        "id": "5",
+                        "pId": "2322024",
+                        "type": "estate-fence",
+                        "x": "0",
+                        "y": "2",
+                        "turn": "1"
+                      }
+                    ]
+                  },
+                  "ack": "wait"
+                },
+                "2322025": {
+                  "id": 2322025,
+                  "no": 3,
+                  "name": "Tisaac5",
+                  "color": "008000",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322025",
+                        "number": 7,
+                        "x": 1,
+                        "y": 6,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": [
+                      {
+                        "id": "3",
+                        "pId": "2322025",
+                        "type": "score-estate",
+                        "x": "4",
+                        "y": "0",
+                        "turn": "1"
+                      }
+                    ]
+                  },
+                  "ack": "wait"
+                },
+                "2322026": {
+                  "id": 2322026,
+                  "no": 7,
+                  "name": "Tisaac6",
+                  "color": "",
+                  "score": "0",
+                  "scoreSheet": {
+                    "scores": {
+                      "park-0": 0,
+                      "park-1": 0,
+                      "park-2": 0,
+                      "park-total": 0,
+                      "pool-total": 0,
+                      "temp-total": 0,
+                      "bis-total": 0,
+                      "estate-mult-0": 0,
+                      "estate-mult-1": 0,
+                      "estate-mult-2": 0,
+                      "estate-mult-3": 0,
+                      "estate-mult-4": 0,
+                      "estate-mult-5": 0,
+                      "estate-total-0": 0,
+                      "estate-total-1": 0,
+                      "estate-total-2": 0,
+                      "estate-total-3": 0,
+                      "estate-total-4": 0,
+                      "estate-total-5": 0,
+                      "plan-0": 0,
+                      "plan-1": 0,
+                      "plan-2": 0,
+                      "plan-total": 0,
+                      "permit-total": 0,
+                      "roundabout-total": 0,
+                      "other-total": 0,
+                      "total": 0
+                    },
+                    "houses": [
+                      {
+                        "pId": "2322026",
+                        "number": 7,
+                        "x": 2,
+                        "y": 8,
+                        "isBis": false,
+                        "turn": 1
+                      }
+                    ],
+                    "scribbles": []
+                  },
+                  "ack": "wait"
+                }
+              };
+
+          var turn = 1;
+
+          this._scoreSheet.showLastActions(players, turn);
+        });
+        */
      },
 
 
@@ -264,9 +721,9 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.onEnteringState(state.name, this.gamedatas.gamestate);
      },
 
-     notif_newPrivateState(args){
+     notif_newPrivateState(n){
        this.onLeavingState(this.gamedatas.gamestate.name);
-       this.setupPrivateState(args.args.state, args.args.args);
+       this.setupPrivateState(n.args.state, n.args.args);
      },
 
      /*
@@ -283,41 +740,42 @@ dojo.destroy('debug_output'); // Speedup loading page
 
 
 
-     notif_updateScores(args){
-       debug("Notif: updating scores", args);
-       this._scoreSheet.updateScores(args.args.scores);
-       this.scoreCtrl[this.player_id].toValue(args.args.scores.total);
+     notif_updateScores(n){
+       debug("Notif: updating scores", n);
+       this._scoreSheet.updateScores(n.args.scores);
+       this.scoreCtrl[this.player_id].toValue(n.args.scores.total);
      },
 
 
-     notif_updatePlayersData(args){
-       debug("Notif: updating player's data", args);
-       for(var pId in args.args.players){
-         this.scoreCtrl[pId].toValue(args.args.players[pId].score);
+     notif_updatePlayersData(n){
+       debug("Notif: updating player's data", n);
+       for(var pId in n.args.players){
+         this.scoreCtrl[pId].toValue(n.args.players[pId].score);
        }
-       this.gamedatas.players = args.args.players;
-       this._planCards.updateValidations(args.args.planValidations);
+       this.gamedatas.players = n.args.players;
+       this._planCards.updateValidations(n.args.planValidations);
+       this._scoreSheet.showLastActions(n.args.players, n.args.turn);
      },
 
      ///////////////////////////////
      //////   Start of turn  ///////
      ///////////////////////////////
-     notif_newCards(args){
-       debug("Notif: dealing new cards", args);
-       this._constructionCards.newTurn(args.args.cards, args.args.turn);
-       dojo.attr("game_play_area", "data-turn", args.args.turn);
+     notif_newCards(n){
+       debug("Notif: dealing new cards", n);
+       this._constructionCards.newTurn(n.args.cards, n.args.turn);
+       dojo.attr("game_play_area", "data-turn", n.args.turn);
      },
 
 
      // EXPERT MODE
-     notif_giveCard(args){
-       debug("Notif: giving card to next player", args);
-       this._constructionCards.giveCard(args.args.stack, args.args.pId);
+     notif_giveCard(n){
+       debug("Notif: giving card to next player", n);
+       this._constructionCards.giveCard(n.args.stack, n.args.pId);
      },
 
 
      // SOLO MODE
-     notif_soloCard(args){
+     notif_soloCard(n){
        debug("Notif: the solo card has been drawn");
        var dial = new ebg.popindialog();
        dial.create('showSoloCard');
@@ -393,9 +851,9 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.clearPossible();
      },
 
-     notif_writeNumber(args){
-       debug("Notif: writing a number on a house", args);
-       this._scoreSheet.addHouseNumber(args.args.house, true);
+     notif_writeNumber(n){
+       debug("Notif: writing a number on a house", n);
+       this._scoreSheet.addHouseNumber(n.args.house, true);
      },
 
 
@@ -480,15 +938,15 @@ dojo.destroy('debug_output'); // Speedup loading page
      /*
       * Add a scribble to a zone
       */
-     notif_addScribble(args){
-       debug("Notif: scribbling a zone", args);
-       this._scoreSheet.addScribble(args.args.scribble, true);
+     notif_addScribble(n){
+       debug("Notif: scribbling a zone", n);
+       this._scoreSheet.addScribble(n.args.scribble, true);
      },
 
 
-     notif_addMultipleScribbles(args){
-       debug("Notif: scribbling several zones", args);
-       args.args.scribbles.forEach(scribble => this._scoreSheet.addScribble(scribble, true) );
+     notif_addMultipleScribbles(n){
+       debug("Notif: scribbling several zones", n);
+       n.args.scribbles.forEach(scribble => this._scoreSheet.addScribble(scribble, true) );
      },
 
 
@@ -522,9 +980,9 @@ dojo.destroy('debug_output'); // Speedup loading page
      },
 
 
-     notif_scorePlan(args){
-       debug("Notif: scoring plan", args);
-       this._planCards.validateCurrentPlayerPlan(args.args.planId, args.args.validation, true);
+     notif_scorePlan(n){
+       debug("Notif: scoring plan", n);
+       this._planCards.validateCurrentPlayerPlan(n.args.planId, n.args.validation, true);
      },
 
 
@@ -534,8 +992,8 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.addPassActionButton();
      },
 
-     notif_reshuffle(args){
-       debug("Notif: reshuffling cards", args);
+     notif_reshuffle(n){
+       debug("Notif: reshuffling cards", n);
        this._constructionCards.discard();
      },
 
@@ -573,10 +1031,11 @@ dojo.destroy('debug_output'); // Speedup loading page
        this.takeAction("cancelTurn");
      },
 
-     notif_clearTurn(args){
-       debug("Notif: restarting turn", args);
-       this._scoreSheet.clearTurn(args.args.turn);
-       this._planCards.clearTurn(args.args.turn);
+     notif_clearTurn(n){
+       debug("Notif: restarting turn", n);
+       this._scoreSheet.clearTurn(n.args.turn);
+       this._planCards.clearTurn(n.args.turn);
+       this.cancelLogs(n.args.moveIds);
      },
 
 
@@ -779,8 +1238,57 @@ dojo.destroy('debug_output'); // Speedup loading page
 
     },
 
-    getPlayerAvatar(pId) {
-      return $('avatar_' + pId)? dojo.attr('avatar_' + pId, 'src') : '';
+
+
+    /*
+     * cancelLogs:
+     *   strikes all log messages related to the given array of move IDs
+     */
+    checkLogCancel(moveId){
+      debug("Cancelled ids : ", this.gamedatas.cancelMoveIds)
+      if (this.gamedatas.cancelMoveIds != null && this.gamedatas.cancelMoveIds.includes(moveId)) {
+        this.cancelLogs([moveId]);
+      }
+    },
+
+    cancelLogs (moveIds) {
+      if (Array.isArray(moveIds)) {
+        debug('Cancel log messages for move IDs', moveIds);
+        debug(customlog_to_move_id);
+
+        var elements = [];
+        // Desktop logs
+        for (var logId in this.log_to_move_id) {
+          var moveId = +this.log_to_move_id[logId];
+          if (moveIds.includes(moveId)) {
+            elements.push($('log_' + logId));
+          }
+        }
+        // Custom logs
+        for (var logId in customlog_to_move_id) {
+          var moveId = +customlog_to_move_id[logId];
+          if (moveIds.includes(moveId)) {
+            elements.push($('log_' + logId));
+          }
+        }
+
+
+        // Mobile logs
+        for (var logId in dockedlog_to_move_id) {
+          var moveId = +dockedlog_to_move_id[logId];
+          if (moveIds.includes(moveId)) {
+            elements.push($('dockedlog_' + logId));
+          }
+        }
+
+        debug(elements);
+        // Add strikethrough
+        elements.forEach(e => {
+          if (e != null) {
+            dojo.addClass(e, 'cancel');
+          }
+        });
+      }
     },
 
      ///////////////////////////////////////////////////
@@ -803,7 +1311,7 @@ dojo.destroy('debug_output'); // Speedup loading page
          ['reshuffle', 1000],
          ['giveCard', 1000],
          ['updateScores', 10],
-         ['updatePlayersData', 10],
+         ['updatePlayersData', 2000],
          ['scorePlan', 1000],
          ['soloCard', 4000],
        ];

@@ -15,6 +15,7 @@ use \WTO\Game\Globals;
 use \WTO\Game\Log;
 use \WTO\Game\StateMachine;
 use \WTO\Game\UserException;
+use \WTO\Game\Notifications;
 
 /*
  * Handle the choose cards / write number stuff
@@ -54,6 +55,13 @@ trait WriteNumberTrait
 
     // Do the action (logging the choice for rest of the turn)
     $player->chooseCards($stack);
+
+    $combination = $player->getCombination();
+    Notifications::messageTo($player, clienttranslate('You choose the combination : ${number} & ${action}'), [
+      'i18n' => ['action'],
+      'action' => ACTION_NAMES[$combination["action"]],
+      'number' => $combination["number"],
+    ]);
 
     // Move on to next state
     StateMachine::nextState("writeNumber");

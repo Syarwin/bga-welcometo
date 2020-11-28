@@ -6,12 +6,27 @@ use \WTO\PlanCards;
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
+    $data['moveId'] = Globals::getMoveId();
+    $data['i18n'] = ['moveId'];
     welcometo::get()->notifyAllPlayers($name, $msg, $data);
   }
 
   protected static function notify($pId, $name, $msg, $data){
+    $data['moveId'] = Globals::getMoveId();
+    $data['i18n'] = ['moveId'];
     welcometo::get()->notifyPlayer($pId, $name, $msg, $data);
   }
+
+  public static function message($txt, $args = []){
+    self::notifyAll('message', $txt, $args);
+  }
+
+  public static function messageTo($player, $txt, $args = []){
+    $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
+    self::notify($pId, 'message', $txt, $args);
+  }
+
+
 
   public static function soloCard(){
     self::notifyAll('soloCard', clienttranslate('The solo card was drawn'), []);
@@ -69,9 +84,10 @@ class Notifications
   }
 
 
-  public static function clearTurn($player){
-    self::notify($player->getId(), 'clearTurn', '', [
+  public static function clearTurn($player, $moveIds){
+    self::notify($player->getId(), 'clearTurn', clienttranslate('You restart your turn'), [
       'turn' => Globals::getCurrentTurn(),
+      'moveIds' => $moveIds,
     ]);
   }
 
@@ -86,6 +102,7 @@ class Notifications
     self::notifyAll('updatePlayersData', '', [
       'players' => Players::getUiData(),
       'planValidations' => PlanCards::getCurrentValidations(),
+      'turn' => Globals::getCurrentTurn() - 1, // Already incremented turn before calling this notif
     ]);
   }
 }

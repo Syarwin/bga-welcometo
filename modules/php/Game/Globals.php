@@ -4,8 +4,14 @@ use welcometo;
 /*
  * Globals
  */
-class Globals
+class Globals extends \APP_DbObject
 {
+  public static function getMoveId()
+  {
+    return self::getUniqueValueFromDB("SELECT global_value FROM global WHERE global_id = 3");
+  }
+
+
   public static function isAdvanced()
   {
     return boolval(welcometo::get()->getGameStateValue("optionAdvanced"));

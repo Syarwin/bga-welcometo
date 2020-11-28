@@ -39,8 +39,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
       dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
 
       this.setMode(this._mode, false);
-      if(this._mode == VERTICAL)
-        this.setMergedMode(this._mergedMode);
+      this.setMergedMode(this._mergedMode);
 
       dojo.query("#layout-controls-container input[type=radio]").connect("click", (ev) => this.setMergedMode(ev.target.value) );
 
@@ -126,7 +125,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
 
     setMergedMode(a){
       this._mergedMode = a;
-      localStorage.setItem("welcometoLayout", VERTICAL);
       localStorage.setItem("welcometoMergedMode", a);
       dojo.attr("welcometo-container", "data-merged", a);
       this.onScreenWidthChange();

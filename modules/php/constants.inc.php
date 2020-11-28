@@ -74,6 +74,16 @@ define('TEMP', 5);
 define('BIS', 6);
 define('SOLO', 7);
 
+define('ACTION_NAMES', [
+  SURVEYOR => clienttranslate("Surveyor"),
+  ESTATE   => clienttranslate("Real Estate Agent"),
+  PARK     => clienttranslate("Landscaper"),
+  POOL     => clienttranslate("Pool Manufacturer"),
+  TEMP     => clienttranslate("Temp agency"),
+  BIS      => clienttranslate("Bis")
+]);
+
+
 define('ROUNDABOUT', 100);
 
 /*

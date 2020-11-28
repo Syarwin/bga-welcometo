@@ -19,6 +19,12 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap; }
+@font-face {
+  font-family: 'Bebas';
+  src: url("img/font/BebasNeue-Regular.woff2") format("woff2"), url("img/font/BebasNeue-Regular.woff") format("woff"), url("img/font/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; }
 @keyframes borderBlink {
   0% {
     border: 2px dashed white; }
@@ -57,6 +63,19 @@
   -moz-transition: none !important;
   -o-transition: none !important;
   transition: none !important; }
+
+/* Cancelled notification messages */
+.log.cancel {
+  color: #c62828 !important;
+  text-decoration: line-through; }
+
+/* Desktop logs */
+.log.cancel .roundedbox {
+  background-color: rgba(239, 154, 154, 0.6); }
+
+/* Mobile logs */
+.log.cancel.roundedbox {
+  background-color: #ef9a9a; }
 
 /*****************************
 ******************************
@@ -583,6 +602,11 @@ body {
     /*****************************
     ******************************
     *********** SCORES  **********
+    ******************************
+    *****************************/
+    /*****************************
+    ******************************
+    ******* PIN ANIMATIONS  ******
     ******************************
     *****************************/ }
     .score-sheet-container .score-sheet .cityname {
@@ -1449,7 +1473,104 @@ body {
     .score-sheet-container .score-sheet .score_total {
       top: 1388px;
       left: 1411px; }
-
+    .score-sheet-container .score-sheet .scoresheet-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1544px;
+      height: 1544px;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      display: none;
+      z-index: 2; }
+      .score-sheet-container .score-sheet .scoresheet-overlay.fadein {
+        display: block;
+        animation: 0.7s ease-in-out fadeIn;
+        animation-fill-mode: forwards; }
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+      .score-sheet-container .score-sheet .scoresheet-overlay.fadeout {
+        display: block;
+        animation: 1s ease-in-out fadeOut;
+        animation-fill-mode: forwards; }
+@keyframes fadeOut {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+    .score-sheet-container .score-sheet .scoresheet-pin {
+      z-index: 3;
+      position: absolute;
+      width: 167px;
+      height: 160px;
+      transform-origin: bottom center; }
+      .score-sheet-container .score-sheet .scoresheet-pin .pin-avatar {
+        position: absolute;
+        top: 35px;
+        left: 10px;
+        width: 92px;
+        height: 88px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: rgba(200, 200, 200, 0.9); }
+      .score-sheet-container .score-sheet .scoresheet-pin .pin-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 167px;
+        height: 160px;
+        background: url("img/pin-more.png");
+        background-size: cover;
+        background-repeat: no-repeat; }
+      .score-sheet-container .score-sheet .scoresheet-pin .pin-number {
+        position: absolute;
+        right: 0;
+        top: 37px;
+        width: 46px;
+        height: 85px;
+        color: white;
+        font-size: 60px;
+        font-family: "Bebas";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center; }
+      .score-sheet-container .score-sheet .scoresheet-pin[data-n="0"] {
+        width: 112px; }
+        .score-sheet-container .score-sheet .scoresheet-pin[data-n="0"] .pin-frame {
+          background-image: url("img/pin.png");
+          width: 112px; }
+        .score-sheet-container .score-sheet .scoresheet-pin[data-n="0"] .pin-number {
+          display: none; }
+      .score-sheet-container .score-sheet .scoresheet-pin.popin {
+        animation: 0.7s ease-in-out popIn;
+        animation-fill-mode: forwards; }
+@keyframes popIn {
+  0% {
+    transform: translateY(0) scale(0.1);
+    opacity: 0; }
+  30% {
+    opacity: 1; }
+  70% {
+    transform: translateY(-30px) scale(1.1); }
+  100% {
+    transform: scale(1); } }
+      .score-sheet-container .score-sheet .scoresheet-pin.popout {
+        animation: 1s ease-in-out popOut;
+        animation-fill-mode: forwards; }
+@keyframes popOut {
+  0% {
+    transform: scale(1); }
+  30% {
+    transform: translateY(-30px) scale(1.1);
+    opacity: 1; }
+  80% {
+    opacity: 0; }
+  100% {
+    transform: translateY(0) scale(0.1); } }
 /********************************
 *** Hightlight recent actions ***
 ********************************/

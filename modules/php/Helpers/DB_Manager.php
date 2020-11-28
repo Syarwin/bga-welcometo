@@ -1,7 +1,7 @@
 <?php
 namespace WTO\Helpers;
 
-class DB_Manager {
+class DB_Manager extends \APP_DbObject {
 	protected static $table = null;
   protected static $primary = null;
   protected static function cast($row){ return $row; }

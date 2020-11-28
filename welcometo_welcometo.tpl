@@ -26,6 +26,9 @@
 <audio id="audiosrc_o_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.ogg" autobuffer></audio>
 <audio id="audiosrc_welcometo_scribble" src="{GAMETHEMEURL}/img/sound/scribble.mp3" autobuffer></audio>
 
+<audio id="audiosrc_o_welcometo_pin" src="{GAMETHEMEURL}/img/sound/pin.ogg" autobuffer></audio>
+<audio id="audiosrc_welcometo_pin" src="{GAMETHEMEURL}/img/sound/pin.mp3" autobuffer></audio>
+
 
 
 
@@ -64,6 +67,16 @@
 </svg>
 
 <script type="text/javascript">
+
+///// END OF TURN ANIMATION /////
+var jstpl_pin = `
+<div class="scoresheet-pin" data-x="\${x}" data-y="\${y}" data-n="\${n}">
+  <div class="pin-avatar"></div>
+  <div class="pin-frame"></div>
+  <div class="pin-number">\${n}</div>
+</div>
+`;
+
 
 ///// ICON IN PLAYER BOARD /////
 var jstpl_playerBoard = `
@@ -235,7 +248,9 @@ var jstpl_planCard = `
 /////////////////////
 var jstpl_scoreSheet = `
 <div class="score-sheet-container">
-  <div id="score-sheet-\${pId}" class="score-sheet"></div>
+  <div id="score-sheet-\${pId}" class="score-sheet">
+    <div class="scoresheet-overlay"></div>
+  </div>
 </div>`;
 
 

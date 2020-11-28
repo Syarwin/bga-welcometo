@@ -504,5 +504,80 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       }
     },
 
+/******************************
+*******************************
+********** OVERLAY ************
+*******************************
+******************************/
+    showLastActions(players, turn){
+      // Fade in the overlay
+      var overlay = dojo.query("#score-sheet-" + this.player.id + " .scoresheet-overlay")[0];
+      dojo.addClass(overlay, "fadein");
+
+      // Play sound
+      playSound("welcometo_pin");
+
+      // Add pins
+      var pins = this.computePins(players, turn);
+      pins.forEach((pin, i) => setTimeout(() => {
+        this.addPin(pin);
+      }), 400 + i*200);
+
+      // Fade out overlay
+      setTimeout(() => dojo.addClass(overlay, "fadeout"), 4000);
+      setTimeout(() => dojo.removeClass(overlay, "fadein fadeout"), 5000);
+    },
+
+    /*
+     * Compute the pins depending on last actions of players
+     *  a pin is : x,y, pId (first player built in this location), n (number of other players that built here)
+     */
+    computePins(players, turn){
+      var pins = [];
+      for(var pId in players){
+        if(pId == this.player.id)
+          continue;
+
+        players[pId].scoreSheet.houses.forEach(house => {
+          if(house.turn == turn){
+            var pin = pins.find(p => p.x == house.x && p.y == house.y);
+            // First time we get this location => add it
+            if(typeof pin == "undefined"){
+              pins.push({
+                x:house.x,
+                y:house.y,
+                pId:pId,
+                n:0,
+              });
+            }
+            // Otherwise, increments n
+            else
+              pin.n++;
+          }
+        });
+      }
+      return pins;
+    },
+
+
+    addPin(pin){
+      var pinDiv = dojo.place(this.format_block("jstpl_pin", pin), "score-sheet-" + this.player.id);
+      dojo.style(pinDiv.querySelector(".pin-avatar"), "background-image", "url('" + this.getPlayerAvatar(pin.pId) + "')");
+
+      var id = `${this.player.id}_house_${pin.x}_${pin.y}`;
+      dojo.style(pinDiv, "left", dojo.style(id, "left") - 20 + "px");
+      dojo.style(pinDiv, "top", dojo.style(id, "top") - 180 + "px");
+      dojo.addClass(pinDiv, "popin");
+
+
+      setTimeout(() => {
+        dojo.addClass(pinDiv, "popout");
+        setTimeout( () => dojo.destroy(pinDiv), 1000);
+      }, 4000);
+    },
+
+    getPlayerAvatar(pId) {
+      return $('avatar_' + pId)? dojo.attr('avatar_' + pId, 'src') : 'https://en.studio.boardgamearena.com:8083/data/avatar/noimage.png';
+    },
   });
 });
