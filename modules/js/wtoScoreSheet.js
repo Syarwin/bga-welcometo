@@ -101,11 +101,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         dojo.destroy(elt);
       });
 
+      dojo.query(`.scribble-roundabout[data-turn="${turn}"]`).forEach(elt => {
+        dojo.removeClass(elt.parentNode, "built");
+        dojo.destroy(elt);
+      });
+
       dojo.query(`.scribble[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-circle[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line-hor[data-turn="${turn}"]`).forEach(dojo.destroy);
-      dojo.query(`.scribble-roundabout[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////

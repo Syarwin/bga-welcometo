@@ -28,7 +28,7 @@ class Houses extends Helpers\DB_Manager
 
   public function getLast($pId)
   {
-    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->get(true);
+    return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->orderBy("id","DESC")->limit(1)->get(true);
   }
 
   /*
