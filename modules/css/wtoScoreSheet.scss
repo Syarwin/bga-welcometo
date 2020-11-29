@@ -102,6 +102,7 @@
       width: 12px;
       box-sizing: border-box;
       border-radius:5px;
+      border-width:2px;
       @include highlight;
       &.selectable {
         animation:borderBlink2 0.9s infinite;

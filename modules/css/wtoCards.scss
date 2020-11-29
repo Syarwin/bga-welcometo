@@ -191,9 +191,12 @@ $cardMargin:5px;
 
       &.selectable {
         cursor:pointer;
+        animation:borderBlink 0.9s infinite;
+        border-width:4px;
         &:hover {
           transform:scale(1.02);
           border-color:red;
+          animation:none;
         }
       }
 

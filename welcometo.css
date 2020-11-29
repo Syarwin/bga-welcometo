@@ -27,15 +27,17 @@
   font-display: swap; }
 @keyframes borderBlink {
   0% {
-    border: 2px dashed white; }
+    border-color: white;
+    border-style: dashed; }
   49% {
-    border: 2px dashed white; }
+    border-color: white; }
   50% {
-    border: 2px dashed black; }
+    border-color: black; }
   99% {
-    border: 2px dashed black; }
+    border-color: black; }
   100% {
-    border: 2px dashed white; } }
+    border-color: white;
+    border-style: dashed; } }
 @keyframes borderBlink2 {
   0% {
     border: 2px dashed red; }
@@ -469,10 +471,13 @@ body {
         opacity: 0.6;
         cursor: not-allowed; }
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder.selectable {
-        cursor: pointer; }
+        cursor: pointer;
+        animation: borderBlink 0.9s infinite;
+        border-width: 4px; }
         #plan-cards-container #plan-cards-container-resizable .plan-card-holder.selectable:hover {
           transform: scale(1.02);
-          border-color: red; }
+          border-color: red;
+          animation: none; }
       #plan-cards-container #plan-cards-container-resizable .plan-card-holder.selected {
         border-color: red; }
         #plan-cards-container #plan-cards-container-resizable .plan-card-holder.selected.unselectable {
@@ -775,7 +780,8 @@ body {
       height: 180px;
       width: 12px;
       box-sizing: border-box;
-      border-radius: 5px; }
+      border-radius: 5px;
+      border-width: 2px; }
       .score-sheet-container .score-sheet .estate-fence.selectable {
         cursor: pointer;
         background-color: rgba(255, 0, 0, 0.3);

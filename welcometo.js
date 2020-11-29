@@ -562,7 +562,7 @@ dojo.destroy('debug_output'); // Speedup loading page
      onEnteringStateChoosePlan(args){
        this.displayBasicInfo(args);
        this._planCards.promptPlayer(args.selectablePlans, this.onChoosePlan.bind(this));
-       this.addPassActionButton();
+       this.addDangerActionButton("buttonPassAction", _("Pass"), 'onClickPassAction');
      },
 
      onChoosePlan(planId){

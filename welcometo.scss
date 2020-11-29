@@ -60,11 +60,11 @@ $breakpoint:1250px;
 }
 
 @keyframes borderBlink {
-  0%   { border: 2px dashed white; }
-  49%  { border: 2px dashed white; }
-  50%  { border: 2px dashed black; }
-  99% { border: 2px dashed black; }
-  100% { border: 2px dashed white; }
+  0%   { border-color: white; border-style: dashed; }
+  49%  { border-color: white; }
+  50%  { border-color: black; }
+  99% { border-color: black; }
+  100% { border-color:white; border-style: dashed; }
 }
 
 @keyframes borderBlink2 {
