@@ -56,13 +56,6 @@ trait WriteNumberTrait
     // Do the action (logging the choice for rest of the turn)
     $player->chooseCards($stack);
 
-    $combination = $player->getCombination();
-    Notifications::messageTo($player, clienttranslate('You choose the combination : ${number} & ${action}'), [
-      'i18n' => ['action'],
-      'action' => ACTION_NAMES[$combination["action"]],
-      'number' => $combination["number"],
-    ]);
-
     // Move on to next state
     StateMachine::nextState("writeNumber");
   }
@@ -158,10 +151,10 @@ trait WriteNumberTrait
 
     // Write the number on the house
     $player->writeNumber(ROUNDABOUT, $pos);
-    $player->scribbleZone([$pos[0], $pos[1] - 1], "estate-fence");
-    $player->scribbleZone($pos, "estate-fence");
-    $player->scribbleZone($zones[0], "estate-fence");
-    $player->scribbleZone($zones[0]);
+    $player->scribbleZone([$pos[0], $pos[1] - 1], "estate-fence", true);
+    $player->scribbleZone($pos, "estate-fence", true);
+    $player->scribbleZone($zones[0], "estate-fence", true);
+    $player->scribbleZone($zones[0], null, true);
     $player->updateScores();
 
     StateMachine::nextState("built");

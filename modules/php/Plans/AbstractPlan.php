@@ -66,7 +66,7 @@ abstract class AbstractPlan extends \APP_DbObject
       'player_id' => $player->getId(),
       'turn' => Globals::getCurrentTurn(),
     ]);
-    Notifications::planScored($player, $this->id, $this->getValidations());
+    Notifications::planScored($player, $this, $this->getValidations());
   }
 
   public function askForReshuffle($player){

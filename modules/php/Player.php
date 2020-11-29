@@ -284,6 +284,7 @@ class Player extends Helpers\DB_Manager
   public function chooseCards($stack)
   {
     Log::insert($this->id, 'selectCard', $stack);
+    Notifications::chooseCards($this);
   }
 
 
@@ -319,7 +320,7 @@ class Player extends Helpers\DB_Manager
   /*
    * Generic zone scribbling that handle almost all actions
    */
-   public function scribbleZone($zone, $type = null)
+   public function scribbleZone($zone, $type = null, $silent = false)
    {
      // Compute the name of the zone depending on the state
      $stateId = $this->getState();
@@ -339,7 +340,7 @@ class Player extends Helpers\DB_Manager
 
      $scribble = Scribbles::add($this->id, $type, $zone);
      if($scribble !== false){
-       Notifications::addScribble($this, $scribble);
+       Notifications::addScribble($this, $scribble, $silent);
      }
 
      // If building a pool, add another scribble on the pool itself
