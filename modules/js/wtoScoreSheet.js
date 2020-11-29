@@ -8,7 +8,7 @@ function arrayEquals(a, b) {
     a.every((val, index) => val === b[index]);
 }
 
-define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
+define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modules/js/wtoModal.js"], function (dojo, declare) {
   const ROUNDABOUT = 100;
 
   return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
@@ -230,11 +230,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         // Only one number, we can call the callback directly
         this._callback(numbers[0], house.x, house.y);
       } else {
+
         // Open a modal to ask the number to write
-        var dial = new ebg.popindialog();
-        dial.create('chooseNumber');
-        dial.setTitle(_("Choose the number you want to write"));
-        dojo.query("#popin_chooseNumber_close i").removeClass("fa-times-circle ").addClass("fa-times");
+        var dial = new bgagame.wtoModal("chooseNumber", {
+          class:"welcometo_popin",
+          closeIcon:'fa-times',
+          title:_("Choose the number you want to write"),
+          openAnimation:true,
+          openAnimationTarget:`${house.pId}_house_${house.x}_${house.y}`,
+        });
 
         numbers.forEach(number => {
           var div = dojo.place(`<div class='number-choice' data-number='${number}'></div>`, 'popin_chooseNumber_contents');
@@ -244,7 +248,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           });
         });
         dial.show();
-        dojo.connect($("popin_chooseNumber_underlay"), "click", () => dial.destroy() );
       }
     },
 

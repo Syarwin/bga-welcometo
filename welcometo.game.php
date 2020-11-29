@@ -91,7 +91,18 @@ class welcometo extends Table
     WTO\PlanCards::setupNewGame($players);
     WTO\ConstructionCards::setupNewGame($players);
 
+    self::setGameStateValue('currentTurn', 1);
+    $this->activeNextPlayer();
+  }
 
+
+  /*
+   * getAllDatas:
+   *  Gather all informations about current game situation (visible by the current player).
+   *  The method is called each time the game interface is displayed to a player, ie: when the game starts and when a player refreshes the game page (F5)
+   */
+  protected function getAllDatas()
+  {
     // TODO : remove
     $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
     if(is_null($result)){
@@ -105,20 +116,9 @@ class welcometo extends Table
     if(is_null($result)){
       self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
     }
+    
 
 
-    self::setGameStateValue('currentTurn', 1);
-    $this->activeNextPlayer();
-  }
-
-
-  /*
-   * getAllDatas:
-   *  Gather all informations about current game situation (visible by the current player).
-   *  The method is called each time the game interface is displayed to a player, ie: when the game starts and when a player refreshes the game page (F5)
-   */
-  protected function getAllDatas()
-  {
     $pId = self::getCurrentPId();
     return [
       'players' => WTO\Game\Players::getUiData(),
@@ -188,6 +188,20 @@ class welcometo extends Table
    */
   public function upgradeTableDb($from_version)
   {
+    // TODO : remove
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;");
+    }
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `log` LIKE 'move_id'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `log` ADD `move_id` INT(11);");
+    }
+    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
+    if(is_null($result)){
+      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
+    }
+
   }
 
 

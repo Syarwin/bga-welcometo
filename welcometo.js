@@ -24,6 +24,7 @@ define([
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/stock",
+    g_gamethemeurl + "modules/js/wtoModal.js",
     g_gamethemeurl + "modules/js/wtoLayout.js",
     g_gamethemeurl + "modules/js/wtoScoreSheet.js",
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
@@ -160,410 +161,9 @@ dojo.destroy('debug_output'); // Speedup loading page
 
      onUpdateActionButtons(){
        /*
-        this.addPrimaryActionButton('btnTest', "Test overlay", () => {
-            var players = {
-                "2322020": {
-                  "id": 2322020,
-                  "no": 1,
-                  "name": "Tisaac0",
-                  "color": "0000ff",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322020",
-                        "number": 3,
-                        "x": 0,
-                        "y": 2,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": [
-                      {
-                        "id": "1",
-                        "pId": "2322020",
-                        "type": "estate-fence",
-                        "x": "0",
-                        "y": "2",
-                        "turn": "1"
-                      }
-                    ]
-                  },
-                  "ack": "ack"
-                },
-                "2322021": {
-                  "id": 2322021,
-                  "no": 6,
-                  "name": "Tisaac1",
-                  "color": "",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322021",
-                        "number": 3,
-                        "x": 0,
-                        "y": 2,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": []
-                  },
-                  "ack": "wait"
-                },
-                "2322022": {
-                  "id": 2322022,
-                  "no": 4,
-                  "name": "Tisaac2",
-                  "color": "ffa500",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322022",
-                        "number": 3,
-                        "x": 2,
-                        "y": 2,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": [
-                      {
-                        "id": "4",
-                        "pId": "2322022",
-                        "type": "estate-fence",
-                        "x": "2",
-                        "y": "3",
-                        "turn": "1"
-                      }
-                    ]
-                  },
-                  "ack": "wait"
-                },
-                "2322023": {
-                  "id": 2322023,
-                  "no": 2,
-                  "name": "Tisaac3",
-                  "color": "ff0000",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322023",
-                        "number": 7,
-                        "x": 1,
-                        "y": 6,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": [
-                      {
-                        "id": "2",
-                        "pId": "2322023",
-                        "type": "score-estate",
-                        "x": "4",
-                        "y": "0",
-                        "turn": "1"
-                      }
-                    ]
-                  },
-                  "ack": "wait"
-                },
-                "2322024": {
-                  "id": 2322024,
-                  "no": 5,
-                  "name": "Tisaac4",
-                  "color": "773300",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322024",
-                        "number": 3,
-                        "x": 0,
-                        "y": 2,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": [
-                      {
-                        "id": "5",
-                        "pId": "2322024",
-                        "type": "estate-fence",
-                        "x": "0",
-                        "y": "2",
-                        "turn": "1"
-                      }
-                    ]
-                  },
-                  "ack": "wait"
-                },
-                "2322025": {
-                  "id": 2322025,
-                  "no": 3,
-                  "name": "Tisaac5",
-                  "color": "008000",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322025",
-                        "number": 7,
-                        "x": 1,
-                        "y": 6,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": [
-                      {
-                        "id": "3",
-                        "pId": "2322025",
-                        "type": "score-estate",
-                        "x": "4",
-                        "y": "0",
-                        "turn": "1"
-                      }
-                    ]
-                  },
-                  "ack": "wait"
-                },
-                "2322026": {
-                  "id": 2322026,
-                  "no": 7,
-                  "name": "Tisaac6",
-                  "color": "",
-                  "score": "0",
-                  "scoreSheet": {
-                    "scores": {
-                      "park-0": 0,
-                      "park-1": 0,
-                      "park-2": 0,
-                      "park-total": 0,
-                      "pool-total": 0,
-                      "temp-total": 0,
-                      "bis-total": 0,
-                      "estate-mult-0": 0,
-                      "estate-mult-1": 0,
-                      "estate-mult-2": 0,
-                      "estate-mult-3": 0,
-                      "estate-mult-4": 0,
-                      "estate-mult-5": 0,
-                      "estate-total-0": 0,
-                      "estate-total-1": 0,
-                      "estate-total-2": 0,
-                      "estate-total-3": 0,
-                      "estate-total-4": 0,
-                      "estate-total-5": 0,
-                      "plan-0": 0,
-                      "plan-1": 0,
-                      "plan-2": 0,
-                      "plan-total": 0,
-                      "permit-total": 0,
-                      "roundabout-total": 0,
-                      "other-total": 0,
-                      "total": 0
-                    },
-                    "houses": [
-                      {
-                        "pId": "2322026",
-                        "number": 7,
-                        "x": 2,
-                        "y": 8,
-                        "isBis": false,
-                        "turn": 1
-                      }
-                    ],
-                    "scribbles": []
-                  },
-                  "ack": "wait"
-                }
-              };
-
-          var turn = 1;
-
-          this._scoreSheet.showLastActions(players, turn);
-        });
-        */
+       this.addPrimaryActionButton('btnTest2', "Test modal", () => {
+       });
+       */
      },
 
 
@@ -578,22 +178,13 @@ dojo.destroy('debug_output'); // Speedup loading page
        */
       showHelpSheet(){
         debug("Showing helpsheet:");
-
-        // Open a modal to ask the number to write
-        var dial = new ebg.popindialog();
-        dial.create('showHelpSheet');
-        dial.setTitle(_("Helpsheet"));
-        dojo.query("#popin_showHelpSheet_close i").removeClass("fa-times-circle ").addClass("fa-times");
-
-        let box = $("ebd-body").getBoundingClientRect();
-        let modalWidth = 720;
-        let newModalWidth = box['width']*0.8;
-        let modalScale = newModalWidth / modalWidth;
-        if(modalScale > 1) modalScale = 1;
-        dojo.style("popin_showHelpSheet", "transform", `scale(${modalScale})`);
-
-        dial.show();
-        dojo.connect($("popin_showHelpSheet_underlay"), "click", () => dial.destroy() );
+        new bgagame.wtoModal("showHelpSheet", {
+          autoShow:true,
+          class:"welcometo_popin",
+          closeIcon:'fa-times',
+          openAnimation:true,
+          openAnimationTarget:"show-helpsheet",
+        });
       },
 
 
@@ -602,13 +193,14 @@ dojo.destroy('debug_output'); // Speedup loading page
       */
      showOverview(){
        debug("Showing overview:");
+       var dial = new bgagame.wtoModal("showOverview", {
+         class:"welcometo_popin",
+         closeIcon:'fa-times',
+         openAnimation:true,
+         openAnimationTarget:"show-overview",
+         contents:jstpl_overview,
+       });
 
-       // Open a modal to ask the number to write
-       var dial = new ebg.popindialog();
-       dial.create('showOverview');
-       dial.setTitle(_("Overview"));
-       dojo.query("#popin_showOverview_close i").removeClass("fa-times-circle ").addClass("fa-times");
-       dojo.place(jstpl_overview, 'popin_showOverview_contents');
 
        for(var pId in this.gamedatas.players){
          let player = this.gamedatas.players[pId];
@@ -628,7 +220,7 @@ dojo.destroy('debug_output'); // Speedup loading page
            'estates' : scores['estate-total-0'] + scores['estate-total-1'] + scores['estate-total-2']
                       + scores['estate-total-3'] + scores['estate-total-4'] + scores['estate-total-5'],
            'bis' : -scores['bis-total'],
-           'permitScore' : scores['permit-total'],
+           'permitScore' : -scores['permit-total'],
            'permitNumber' : nPermit,
            'total' : scores['total']
          };
@@ -642,9 +234,7 @@ dojo.destroy('debug_output'); // Speedup loading page
        if(modalScale > 1) modalScale = 1;
        dojo.style("popin_showOverview", "transform", `scale(${modalScale})`);
 
-
        dial.show();
-       dojo.connect($("popin_showOverview_underlay"), "click", () => dial.destroy() );
      },
 
 
@@ -655,11 +245,13 @@ dojo.destroy('debug_output'); // Speedup loading page
      showScoreSheet(pId){
        debug("Showing scoresheet of player :", pId);
 
-       // Open a modal to ask the number to write
-       var dial = new ebg.popindialog();
-       dial.create('showScoreSheet');
-       dial.setTitle(dojo.string.substitute( _("${player_name}'s scoresheet"), { player_name: this.gamedatas.players[pId].name}) );
-       dojo.query("#popin_showScoreSheet_close i").removeClass("fa-times-circle ").addClass("fa-times");
+       var dial = new bgagame.wtoModal("showScoreSheet", {
+         class:"welcometo_popin",
+         title: dojo.string.substitute( _("${player_name}'s scoresheet"), { player_name: this.gamedatas.players[pId].name}),
+         closeIcon:'fa-times',
+         verticalAlign:'flex-start',
+       });
+
        new bgagame.wtoScoreSheet(this.gamedatas.players[pId], 'popin_showScoreSheet_contents');
 
        let box = $("ebd-body").getBoundingClientRect();
@@ -672,7 +264,6 @@ dojo.destroy('debug_output'); // Speedup loading page
        dojo.query("#popin_showScoreSheet_contents .score-sheet-container").style("height", `${newSheetWidth}px`);
 
        dial.show();
-       dojo.connect($("popin_showScoreSheet_underlay"), "click", () => dial.destroy() );
      },
 
      ///////////////////////////////////////

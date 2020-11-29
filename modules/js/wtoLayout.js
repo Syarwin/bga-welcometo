@@ -1,9 +1,9 @@
 var isDebug = window.location.host == 'studio.boardgamearena.com' || window.location.hash.indexOf('debug') > -1;
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
-define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
+define(["dojo", "dojo/_base/declare",
   g_gamethemeurl + "modules/js/nouislider.min.js",
-], function (dojo, declare, gameui, noUiSlider, Stickyfill) {
+], function (dojo, declare, noUiSlider) {
   let HORIZONTAL = 0;
   let VERTICAL = 1;
 
@@ -11,7 +11,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",
   let STACKED = 1;
   let STACKED_BOTTOM = 2;
 
-  return declare("bgagame.wtoLayout", ebg.core.gamegui, {
+  return declare("bgagame.wtoLayout", null, {
 /*********************************
 ********* Layout Manager *********
 *********************************/

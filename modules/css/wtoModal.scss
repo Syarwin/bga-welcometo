@@ -1,16 +1,14 @@
+
+
 /*************************
 **************************
 ********* MODAL  *********
 **************************
 *************************/
-#popin_chooseNumber, #popin_showScoreSheet, #popin_showSoloCard, #popin_showOverview, #popin_showHelpSheet {
-  border: none;
-  border-radius: 0px;
-  box-shadow: none;
-  background:transparent;
-  padding:0;
-  transform-origin: top left;
-  
+.welcometo_popin {
+  width:80%;
+  position:relative;
+
   &::before, &::after {
     content: "";
     display: block;
@@ -51,12 +49,13 @@
     }
   }
 
-  #popin_chooseNumber_close, #popin_showScoreSheet_close, #popin_showSoloCard_close, #popin_showOverview_close,  #popin_showHelpSheet_close {
+  .welcometo_popin_closeicon {
     background-color: #b74d44;
     border-radius: 50%;
     width: 45px;
     height: 45px;
     @include centered;
+    position:absolute;
     top: -15px;
     right: -15px;
     font-size: 100%;
@@ -78,6 +77,8 @@
 #popin_showScoreSheet {
   padding:10px;
   z-index:2000;
+  width:50%;
+  margin-top:100px;
 
   &::before, &::after {
     box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
@@ -109,6 +110,7 @@
 
 
 #popin_chooseNumber {
+  width:auto;
   #popin_chooseNumber_contents {
     min-height:200px;
     display:flex;
@@ -117,7 +119,7 @@
 
     div {
       height:200px;
-      margin:0 10px;
+      margin:0 20px;
       width:$cardWidth * 200px / $cardHeight;
       background-image:url("img/construction_front.jpg");
       @media (max-width: $breakpoint) { background-image:url("img/construction_front_low.jpg"); }
@@ -153,9 +155,9 @@
 
 
 #popin_showOverview {
-  padding:10px;
   z-index:2000;
   padding:0;
+  width:860px;
 
   &::before, &::after {
     box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
@@ -176,10 +178,6 @@
     background-size: 60px;
   }
 
-  h2 {
-    display:none;
-  }
-
   #popin_showOverview_close {
     top: -30px;
     right: -15px;
@@ -187,6 +185,8 @@
 
   #popin_showOverview_contents {
     table {
+      width:100%;
+
       th {
         min-width:70px;
         height:70px;
@@ -312,6 +312,8 @@
 
 
 #popin_showHelpSheet {
+  max-width:730px;
+
   &::before {
     background-image: url("img/dialog-texture2.jpg");
     transform: rotate(-2deg);
@@ -326,14 +328,11 @@
     background-size: 60px;
   }
 
-  h2 {
-    display:none;
-  }
-
   #popin_showHelpSheet_contents {
     background:url("img/help_card.png");
-    height: 520px;
-    width: 700px;
+    height: 0;
+    width: 100%;
+    padding-bottom:72%;
     background-size: contain;
     background-repeat: no-repeat;
   }
