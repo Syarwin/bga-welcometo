@@ -3,6 +3,7 @@ namespace WTO\States;
 
 use WTO\Game\StateMachine;
 use WTO\Game\Players;
+use WTO\Game\Stats;
 use WTO\Houses;
 use WTO\PlanCards;
 use WTO\Actions\PermitRefusal;
@@ -13,12 +14,16 @@ use WTO\Actions\PermitRefusal;
 
 trait EndOfGameTrait
 {
-  function isEndOfGame()
+  function isEndOfGame($returnTypeOfEOG = false)
   {
     foreach(Players::getAll() as $player){
       $freeSpots = Houses::getAvailableLocations($player);
       $areAllPlansScored = PlanCards::areAllPlansScored($player);
       $freePermitRefusalZones = PermitRefusal::getAvailableZones($player);
+
+      if($returnTypeOfEOG && empty($freeSpots)) return 'all_houses_ending';
+      if($returnTypeOfEOG && $areAllPlansScored) return 'projects_ending';
+      if($returnTypeOfEOG && empty($freePermitRefusalZones)) return 'permit_refusal_ending';
 
       if(empty($freeSpots) || $areAllPlansScored || empty($freePermitRefusalZones))
         return true;
@@ -58,6 +63,10 @@ trait EndOfGameTrait
     foreach(array_keys($scoresAux) as $i => $pId){
       Players::DB()->update(['player_score_aux' => $i])->run($pId);
     }
+
+    // Stats
+    $endOfGameType = self::isEndOfGame(true);
+    Stats::endOfGame($endOfGameType);
 
     $this->gamestate->nextState("endGame");
   }

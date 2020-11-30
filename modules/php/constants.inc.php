@@ -95,20 +95,57 @@ define('ADVANCED', 2);
 /*
  * Stats
  */
-define('STAT_TURNS', 100);
-define('STAT_EOG_REFUSAL', 101);
-define('STAT_EOG_PROJECTS', 102);
-define('STAT_EOG_HOUSES', 103);
+define('STAT_TURNS', 105);
+define('STAT_EOG_REFUSAL', 106);
+define('STAT_EOG_PROJECTS', 107);
+define('STAT_EOG_HOUSES', 108);
 
-define('STAT_HOUSES', 10);
-define('STAT_REFUSAL', 11);
-define('STAT_PROJECTS', 15);
-define('STAT_NOEFFECT', 16);
 
-define('STAT_SURVEYOR', 17);
-define('STAT_REAL_ESTATE', 18);
-define('STAT_LANDSCAPER', 19);
+define('STAT_HOUSES', 30);
+define('STAT_ROUNDABOUTS', 31);
+define('STAT_EMPTY_SLOT', 32);
+define('STAT_REFUSAL', 33);
+define('STAT_PROJECTS_FIRST', 34);
+define('STAT_PROJECTS_SECOND', 35);
 
-define('STAT_POOLS', 20);
-define('STAT_TEMPORARY_WORKERS', 21);
-define('STAT_BIS', 22);
+define('STAT_SURVEYOR_SELECTED', 40);
+define('STAT_SURVEYOR_USED', 41);
+
+define('STAT_REAL_ESTATE_SELECTED', 42);
+define('STAT_REAL_ESTATE_USED', 43);
+
+define('STAT_LANDSCAPER_SELECTED', 44);
+define('STAT_LANDSCAPER_USED', 45);
+
+define('STAT_POOLS_SELECTED', 46);
+define('STAT_POOLS_USED', 47);
+
+define('STAT_TEMPORARY_WORKERS_SELECTED', 48);
+define('STAT_TEMPORARY_WORKERS_USED', 49);
+
+define('STAT_BIS_SELECTED', 50);
+define('STAT_BIS_USED', 51);
+
+
+define('STAT_ESTATE_1', 60);
+define('STAT_ESTATE_2', 61);
+define('STAT_ESTATE_3', 62);
+define('STAT_ESTATE_4', 63);
+define('STAT_ESTATE_5', 64);
+define('STAT_ESTATE_6', 65);
+
+
+define('STAT_SCORING_PLAN', 70);
+define('STAT_SCORING_PARK', 71);
+define('STAT_SCORING_POOL', 72);
+define('STAT_SCORING_TEMP', 73);
+define('STAT_SCORING_ESTATE_1', 74);
+define('STAT_SCORING_ESTATE_2', 75);
+define('STAT_SCORING_ESTATE_3', 76);
+define('STAT_SCORING_ESTATE_4', 77);
+define('STAT_SCORING_ESTATE_5', 78);
+define('STAT_SCORING_ESTATE_6', 79);
+define('STAT_SCORING_ESTATE_TOTAL', 80);
+define('STAT_SCORING_BIS', 81);
+define('STAT_SCORING_ROUNDABOUT', 82);
+define('STAT_SCORING_PERMIT_REFUSAL', 83);

@@ -5,6 +5,7 @@ use WTO\Game\Globals;
 use WTO\Game\StateMachine;
 use WTO\Game\Notifications;
 use WTO\Game\Players;
+use WTO\Game\Stats;
 use WTO\ConstructionCards;
 use WTO\PlanCards;
 use \WTO\Helpers\QueryBuilder;
@@ -24,11 +25,6 @@ trait TurnTrait
     ConstructionCards::discard();
 
 
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
-    }
-
     // Reshuffle if asked
     if(PlanCards::askedForReshuffle()){
       ConstructionCards::reshuffle();
@@ -36,6 +32,9 @@ trait TurnTrait
 
     // Draw new cards
     ConstructionCards::draw();
+
+    // Set stat
+    Stats::newTurn();
 
     // Add time
     foreach (Players::getAll() as $player) {
@@ -104,6 +103,7 @@ trait TurnTrait
     }
 
     Notifications::updatePlayersData();
+    Stats::updatePlayersData();
 
     $newState = $this->isEndOfGame()? "endGame" : "newTurn";
     $this->gamestate->nextState($newState);

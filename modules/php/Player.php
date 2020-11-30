@@ -1,6 +1,7 @@
 <?php
 namespace WTO;
 use WTO\Game\Log;
+use WTO\Game\Stats;
 use WTO\Game\Notifications;
 use WTO\Game\Globals;
 use WTO\Game\Players;
@@ -97,9 +98,7 @@ class Player extends Helpers\DB_Manager
   public function computeScore()
   {
     $scores = $this->getScores(false);
-    $total = $scores['plan-total'] + $scores['park-total'] + $scores['pool-total'] + $scores['temp-total']
-      + $scores['estate-total-0'] + $scores['estate-total-1'] + $scores['estate-total-2']
-      + $scores['estate-total-3'] + $scores['estate-total-4'] + $scores['estate-total-5']
+    $total = $scores['plan-total'] + $scores['park-total'] + $scores['pool-total'] + $scores['temp-total'] + $scores['estate-total']
       - $scores['bis-total'] - $scores['permit-total'] - $scores['roundabout-total'];
     return $total;
   }
@@ -285,6 +284,7 @@ class Player extends Helpers\DB_Manager
   {
     Log::insert($this->id, 'selectCard', $stack);
     Notifications::chooseCards($this);
+    Stats::chooseCards($this);
   }
 
 
@@ -310,6 +310,7 @@ class Player extends Helpers\DB_Manager
   {
     $house = Houses::add($this->id, $number, $pos, $isBis);
     Notifications::writeNumber($this, $house);
+    Stats::writeNumber($this, $house);
   }
 
 
@@ -341,13 +342,14 @@ class Player extends Helpers\DB_Manager
      $scribble = Scribbles::add($this->id, $type, $zone);
      if($scribble !== false){
        Notifications::addScribble($this, $scribble, $silent);
+       Stats::addScribble($this, $scribble, $silent);
      }
 
      // If building a pool, add another scribble on the pool itself
      if($stateId == ST_ACTION_POOL){
        $house = $this->getLastHouse();
        $scribble = Scribbles::add($this->id, "pool", [ $house['x'], $house['y'] ]);
-       Notifications::addScribble($this, $scribble);
+       Notifications::addScribble($this, $scribble, true);
      }
    }
 

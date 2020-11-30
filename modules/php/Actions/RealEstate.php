@@ -46,7 +46,7 @@ class RealEstate extends Zone
     return $estates;
   }
 
-  public function getMultipliers($player)
+  public function getAssocSizeNumber($player)
   {
     $mult = [0,0,0,0,0,0];
     foreach(self::getEstates($player) as $estate){
@@ -75,10 +75,10 @@ class RealEstate extends Zone
       $free[$zone[0]] = $zone[1];
 
     // Compute the number of estates of each size
-    $mult = self::getMultipliers($player);
+    $mult = self::getAssocSizeNumber($player);
 
     // Return scores
-    return [
+    $scores = [
       'estate-mult-0' => $mult[0],
       'estate-mult-1' => $mult[1],
       'estate-mult-2' => $mult[2],
@@ -93,5 +93,8 @@ class RealEstate extends Zone
       'estate-total-4' => $mult[4]*self::$scores[4][$free[4]],
       'estate-total-5' => $mult[5]*self::$scores[5][$free[5]],
     ];
+    $scores['estate-total'] =  $scores['estate-total-0'] + $scores['estate-total-1'] + $scores['estate-total-2'] + $scores['estate-total-3'] + $scores['estate-total-4'] + $scores['estate-total-5'];
+
+    return $scores;
   }
 }

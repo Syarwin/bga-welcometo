@@ -99,6 +99,10 @@ class Log extends \WTO\Helpers\DB_Manager
       if(!is_null($action["moveId"])){
         array_push($moveIds, $action["moveId"]);
       }
+
+      if($action['action'] == "changeStat"){
+        Stats::inc($action['arg']['name'], $action['pId'], -$action['arg']['value'], false);
+      }
     }
 
     if (!empty($moveIds)) {
