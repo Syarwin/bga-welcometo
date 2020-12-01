@@ -211,6 +211,7 @@ dojo.destroy('debug_output'); // Speedup loading page
         contents:jstpl_overview,
       });
 
+      this.addTooltip("overview-temp", _("The majority displayed here match only what players did until previous turn"), '');
 
       for(var pId in this.gamedatas.players){
         let player = this.gamedatas.players[pId];

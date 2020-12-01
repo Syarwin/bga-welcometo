@@ -23,7 +23,7 @@ class Zone
    */
   public function getOfPlayer($player)
   {
-    return Scribbles::getInLocation([$player->getId(), static::$type, "%"]);
+    return Scribbles::getOfPlayer($player, static::$type."_%");
   }
 
   /*

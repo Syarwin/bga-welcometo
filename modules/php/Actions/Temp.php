@@ -16,7 +16,8 @@ class Temp extends Zone
   protected static $ordering = null;
   protected static function computeCounters(){
     $tempCounters = [];
-    foreach(Scribbles::getInLocation(["%", "score-temp", "%"])->toArray() as $scribble){
+    $scribbles = Scribbles::getInLocationQ(["%", "score-temp", "%"])->where('turn', '<', Globals::getCurrentTurn())->get(false)->toArray();
+    foreach($scribbles as $scribble){
       if(!isset($tempCounters[$scribble['pId']]))
         $tempCounters[$scribble['pId']] = 0;
       $tempCounters[$scribble['pId']]++;

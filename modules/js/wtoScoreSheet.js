@@ -177,7 +177,9 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       dojo.query(".estate").forEach(dojo.destroy);
       this._selectedEstates = [];
       this._selectableSizes = null;
-      this._callback = null;
+      this._callbackHouse = null;
+      this._callbackZone = null;
+      this._callbackEstate = null;
     },
 
 
@@ -281,7 +283,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
      *   numbers is an array of possible number to write with associated locations
      */
     promptNumbers(numbers, callback){
-      this._callback = callback;
+      this._callbackHouse = callback;
       var streets = this.getBlankStreets();
       for(let number in numbers){
         numbers[number].forEach(house => streets[house[0]][house[1]].push(number));
@@ -315,7 +317,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       var numbers = this._selectableHouses[house.x][house.y];
       if(numbers.length == 1){
         // Only one number, we can call the callback directly
-        this._callback(numbers[0], house.x, house.y);
+        this._callbackHouse(numbers[0], house.x, house.y);
       } else {
 
         // Open a modal to ask the number to write
@@ -331,7 +333,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
           var div = dojo.place(`<div class='number-choice' data-number='${number}'></div>`, 'popin_chooseNumber_contents');
           dojo.connect(div, 'onclick', () => {
             dial.destroy();
-            this._callback(number, house.x, house.y);
+            this._callbackHouse(number, house.x, house.y);
           });
         });
         dial.show();
@@ -344,7 +346,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
      */
     addHouseNumber(house, animation){
       var id = `${house.pId}_house_${house.x}_${house.y}`;
-      if(dojo.addClass(id, 'built'))
+      if(dojo.hasClass(id, 'built'))
         return;
 
       // Advanced variant : roundabout
@@ -396,7 +398,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
      *   type is the type of zone (pool, estate, park)
      */
     promptZones(type, zones, callback){
-      this._callback = callback;
+      this._callbackZone = callback;
       this._selectableZones = zones;
       this._zoneType = type;
 
@@ -430,7 +432,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
          if(!this.selectableZone(type, zone))
           return;
 
-          this._callback(zone);
+          this._callbackZone(zone);
           this.clearPossible();
         };
      },
@@ -483,7 +485,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
 
         // Init selection
         this._plan = plan;
-        this._callback = callback;
+        this._callbackEstate = callback;
         this._selectedEstates = [];
         this.updateSelectableEstates();
       },
@@ -551,7 +553,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       },
 
       onClickConfirmEstates(){
-        this._callback(this._selectedEstates);
+        this._callbackEstate(this._selectedEstates);
         this.clearPossible();
       },
 

@@ -2180,7 +2180,8 @@ body {
       #popin_showOverview #popin_showOverview_contents table th#overview-pool div {
         background-position: 60% center; }
       #popin_showOverview #popin_showOverview_contents table th#overview-temp div {
-        background-position: 80% center; }
+        background-position: 80% center;
+        text-align: right; }
       #popin_showOverview #popin_showOverview_contents table th#overview-bis div {
         background-position: 100% center; }
       #popin_showOverview #popin_showOverview_contents table th#overview-houses div {
