@@ -65,7 +65,7 @@ class Stats
   }
 
   public static function writeNumber($player, $house){
-    $name = $house['number'] == ROUNDABOUT? 'roundabout_built_number' : 'houses_built_number';
+    $name = $house['number'] == ROUNDABOUT? 'roundabouts_built_number' : 'houses_built_number';
     self::inc($name, $player);
     self::inc("empty_slots_number", $player, -1);
   }

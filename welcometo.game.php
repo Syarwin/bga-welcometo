@@ -116,7 +116,7 @@ class welcometo extends Table
     if(is_null($result)){
       self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
     }
-    
+
 
 
     $pId = self::getCurrentPId();
@@ -128,6 +128,8 @@ class welcometo extends Table
       'options' => WTO\Game\Globals::getOptions(),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
       'cancelMoveIds' => WTO\Game\Log::getCancelMoveIds(),
+      'nextPlayerTable' => $this->getNextPlayerTable(),
+      'prevPlayerTable' => $this->getPrevPlayerTable(),
     ];
   }
 

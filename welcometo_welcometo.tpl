@@ -246,12 +246,20 @@ var jstpl_planCard = `
 /////////////////////
 //// SCORE SHEET ////
 /////////////////////
-var jstpl_scoreSheet = `
-<div class="score-sheet-container">
-  <div id="score-sheet-\${pId}" class="score-sheet">
-    <div class="scoresheet-overlay"></div>
+var jstpl_scoreSheetContainer = `<div id="score-sheet-container-\${id}" class="score-sheet-container" data-slideshow="\${slideshow}">
+  <div class='slideshow-left'>
+    <div class="arrow"></div>
+  </div>
+  <div id="score-sheet-holder-\${id}" class="score-sheet-holder"></div>
+  <div class='slideshow-right'>
+    <div class="arrow"></div>
   </div>
 </div>`;
+var jstpl_scoreSheet = `
+  <div id="score-sheet-\${id}-\${pId}" class="score-sheet">
+    <div class="scoresheet-overlay"></div>
+  </div>
+`;
 
 
 //// TOP PART ////
@@ -286,7 +294,6 @@ var jstpl_estate = `
   </svg>
 </div>`;
 
-var jstpl_animation = '<div id="animation_${player_id}" class="animation avenue${avenue} street${street} hidden"><img src="${avatar_url}" class="animation_avatar"></img><div class="animation_icon"></img></div>';
 
 
 //// BOTTOM PART ////

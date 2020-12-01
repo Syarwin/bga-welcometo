@@ -587,13 +587,62 @@ body {
 
 .score-sheet-container {
   width: 1544px;
-  height: 1544px; }
+  height: 1544px;
+  position: relative; }
+  .score-sheet-container[data-slideshow="0"] .slideshow-left, .score-sheet-container[data-slideshow="0"] .slideshow-right {
+    display: none; }
+  .score-sheet-container .slideshow-left, .score-sheet-container .slideshow-right {
+    position: absolute;
+    height: 100%;
+    width: 70px;
+    z-index: 3;
+    top: 0;
+    cursor: pointer; }
+    .score-sheet-container .slideshow-left .arrow, .score-sheet-container .slideshow-right .arrow {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      margin-top: -15px;
+      top: 50%;
+      display: block;
+      border-width: 5px 5px 0 0;
+      border-style: solid;
+      border-color: #fafafa;
+      opacity: 0.35;
+      outline: 0;
+      z-index: 4; }
+      .score-sheet-container .slideshow-left .arrow:hover, .score-sheet-container .slideshow-right .arrow:hover {
+        opacity: 1;
+        border-color: white; }
+    .score-sheet-container .slideshow-left:hover .arrow, .score-sheet-container .slideshow-right:hover .arrow {
+      opacity: 1;
+      border-color: white; }
+  .score-sheet-container .slideshow-left {
+    left: 0;
+    background: linear-gradient(90deg, #282828 0%, rgba(255, 255, 255, 0) 100%); }
+    .score-sheet-container .slideshow-left .arrow {
+      left: 25px;
+      transform: rotate(-135deg); }
+  .score-sheet-container .slideshow-right {
+    right: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #282828 100%); }
+    .score-sheet-container .slideshow-right .arrow {
+      right: 25px;
+      transform: rotate(45deg); }
+  .score-sheet-container .score-sheet-holder {
+    width: 1544px;
+    height: 1544px;
+    position: relative;
+    overflow: hidden;
+    transform-origin: top left; }
   .score-sheet-container .score-sheet {
     width: 1544px;
     height: 1544px;
     background-image: url("img/board.png");
     background-size: 100%;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     /*****************************
     ******************************
     ********* UPPER PART *********

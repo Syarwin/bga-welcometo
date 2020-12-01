@@ -11,7 +11,7 @@ define(["dojo", "dojo/_base/declare",
   let STACKED = 1;
   let STACKED_BOTTOM = 2;
 
-  return declare("bgagame.wtoLayout", null, {
+  return declare("welcometo.layout", null, {
 /*********************************
 ********* Layout Manager *********
 *********************************/

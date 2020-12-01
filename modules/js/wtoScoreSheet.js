@@ -8,10 +8,10 @@ function arrayEquals(a, b) {
     a.every((val, index) => val === b[index]);
 }
 
-define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modules/js/wtoModal.js"], function (dojo, declare) {
+define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui", g_gamethemeurl + "modules/js/Game/modal.js"], function (dojo, declare) {
   const ROUNDABOUT = 100;
 
-  return declare("bgagame.wtoScoreSheet", ebg.core.gamegui, {
+  return declare("welcometo.scoreSheet", ebg.core.gamegui, {
 /****************************************
 ********** Score sheet class ************
 *****************************************
@@ -19,27 +19,105 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
  * handle the clicks event to ask user to select a house
  * animate the scribbles
  */
+    gamedatas:{},
+    id:'main',
+    pId:null,
+    cId:null,
+    slideshow:false,
+    updateTitle:false,
+    streetSizes:[10, 11, 12],
+    _selectableHouses:null,
 
-    constructor(player, parentDiv) {
-      debug("Construction score sheet", player);
-      this.player = player;
-      this.streetSizes = [10, 11, 12];
-      this._selectableHouses = null;
-      let scoreSheet = player.scoreSheet;
+    constructor(args) {
+      debug("Construction score sheet", args);
+      dojo.safeMixin(this, args);
+
+      this.pId = this.pId == null? this.gamedatas.nextPlayerTable[0] : this.pId;
+
+      var n = Object.keys(this.gamedatas.players).length;
+      if(n == 1 || (n == 2 && this.cId != null))
+        this.slideshow = false;
 
       // Create container
-      this.tpl('scoreSheet', {}, parentDiv);
-      this.container = "score-sheet-" + player.id;
+      let container = this.tpl('scoreSheetContainer', {
+        id: this.id,
+        slideshow : this.slideshow? 1 : 0,
+      }, this.parentDiv);
+
+      if(this.slideshow){
+        dojo.connect(container.querySelector(".slideshow-left"), 'click', () => this.slide('left'));
+        dojo.connect(container.querySelector(".slideshow-right"), 'click', () => this.slide('right'));
+      }
+
+      this.createScoreSheet();
+    },
+
+    getNextPId(pId, direction){
+      let table = direction == 'right'? this.gamedatas.nextPlayerTable : this.gamedatas.prevPlayerTable;
+      return table[pId];
+    },
+
+
+    slide(direction){
+      let pId = this.getNextPId(this.pId, direction);
+      if(pId == this.cId)
+        pId = this.getNextPId(pId, direction);
+
+      this.slideTo(pId, direction);
+    },
+
+
+    slideTo(pId, direction){
+      if(this.pId == pId)
+        return;
+
+      let oldPId = this.pId;
+      this.pId = pId;
+      this.createScoreSheet();
+
+      let x = (direction == 'right'? -1 : 1 )*1544;
+      let anim = dojo.fx.combine([
+        dojo.animateProperty({
+          node:"score-sheet-" + this.id + "-" + oldPId,
+          properties: { left: { start:0, end:x}},
+          duration:750,
+        }),
+        dojo.animateProperty({
+          node:"score-sheet-" + this.id + "-" + this.pId,
+          properties: { left: { start:-x, end:0}},
+          duration:750,
+        }),
+      ]);
+      dojo.connect(anim, "onEnd", () => dojo.destroy("score-sheet-" + this.id + "-" + oldPId) );
+      anim.play();
+
+      if(this.updateTitle){
+        setTimeout( () => {
+          let title = dojo.string.substitute( _("${player_name}'s scoresheet"), { player_name: this.gamedatas.players[this.pId].name});
+          $("popin_showScoreSheet_title").innerHTML = title;
+        }, 400);
+      }
+    },
+
+    createScoreSheet(){
+      this.tpl('scoreSheet', {id: this.id}, "score-sheet-holder-" + this.id);
+      this.container = "score-sheet-" + this.id + "-" + this.pId;
 
       // Setup divs
       this.setupUpperSheet();
       this.setupLowerSheet();
       this.setupScores();
-      this.updateScores(scoreSheet.scores);
 
+      this.updateScoreSheet();
+    },
+
+    updateScoreSheet(){
+      let scoreSheet = this.gamedatas.players[this.pId].scoreSheet;
+
+      // Update scores
+      this.updateScores(scoreSheet.scores);
       // Add houses number
       scoreSheet.houses.forEach(house => this.addHouseNumber(house) );
-
       // Add scribbles
       scoreSheet.scribbles.forEach(scribble => this.addScribble(scribble, false) );
     },
@@ -60,10 +138,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
      * Create an tpl using format_block and connect click event
      */
     tpl(tplName, data, container, clickCallback){
-      data.pId = this.player.id;
+      data.pId = this.pId;
       container = container || this.container;
       var elem = dojo.place(this.format_block('jstpl_' + tplName, data), container);
-      if(clickCallback){
+      if(clickCallback && !this.slideshow){
         dojo.connect(elem, 'click', () => clickCallback(data));
       }
       return elem;
@@ -117,7 +195,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
     ////////////////////////
     setupUpperSheet(){
       // City name
-      this.tpl("cityName", this.player);
+      this.tpl("cityName", this.gamedatas.players[this.pId]);
 
       // Streets
       var houses = [10, 11, 12];
@@ -211,7 +289,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
       streets.forEach((street,x) => {
         street.forEach((house,y) => {
           if(house.length > 0)
-            dojo.query(`#${this.player.id}_house_${x}_${y}`).removeClass("unselectable").addClass("selectable");
+            dojo.query(`#${this.pId}_house_${x}_${y}`).removeClass("unselectable").addClass("selectable");
         });
       });
     },
@@ -232,7 +310,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
       } else {
 
         // Open a modal to ask the number to write
-        var dial = new bgagame.wtoModal("chooseNumber", {
+        var dial = new customgame.modal("chooseNumber", {
           class:"welcometo_popin",
           closeIcon:'fa-times',
           title:_("Choose the number you want to write"),
@@ -257,6 +335,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
      */
     addHouseNumber(house, animation){
       var id = `${house.pId}_house_${house.x}_${house.y}`;
+      if(dojo.addClass(id, 'built'))
+        return;
 
       // Advanced variant : roundabout
       if(house.number == ROUNDABOUT){
@@ -350,7 +430,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
      /////// Scribble ////////
      /////////////////////////
      addScribble(scribble, animation){
-       var location = this.player.id + "_" + scribble.type + "_" + scribble.x;
+      if($("scribble-" + scribble.id))
+        return;
+
+       var location = this.pId + "_" + scribble.type + "_" + scribble.x;
        if(scribble.y != null)
         location += "_" + scribble.y;
 
@@ -379,8 +462,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
       promptPlayerEstates(plan, callback){
         // Create estates
         plan.estates.forEach(estate => {
-          let leftFence = this.player.id + "_estate-fence_" + estate.x + "_" + (estate.y - 1);
-          let rightFence = this.player.id + "_estate-fence_" + estate.x + "_" + (estate.y + estate.size - 1);
+          let leftFence = this.pId + "_estate-fence_" + estate.x + "_" + (estate.y - 1);
+          let rightFence = this.pId + "_estate-fence_" + estate.x + "_" + (estate.y + estate.size - 1);
           estate.left = dojo.style(leftFence, "left") + dojo.style(leftFence, "width");
           estate.top = dojo.style(leftFence, "top");
           estate.width = dojo.style(rightFence, "left") - dojo.style(leftFence, "left") - dojo.style(leftFence, "width");
@@ -496,7 +579,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
       ids.forEach(id => {
         this.tpl('scoreCounter', {id : id});
         this._counters[id] = new ebg.counter();
-        this._counters[id].create(this.player.id + "_score_" + id);
+        this._counters[id].create(this.pId + "_score_" + id);
       });
     },
 
@@ -518,7 +601,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
 ******************************/
     showLastActions(players, turn){
       // Fade in the overlay
-      var overlay = dojo.query("#score-sheet-" + this.player.id + " .scoresheet-overlay")[0];
+      var overlay = dojo.query("#score-sheet-" + this.id + "-" + this.pId + " .scoresheet-overlay")[0];
       dojo.addClass(overlay, "fadein");
 
       // Play sound
@@ -542,7 +625,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
     computePins(players, turn){
       var pins = [];
       for(var pId in players){
-        if(pId == this.player.id)
+        if(pId == this.pId)
           continue;
 
         players[pId].scoreSheet.houses.forEach(house => {
@@ -568,10 +651,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui", g_gamethemeurl + "modul
 
 
     addPin(pin){
-      var pinDiv = dojo.place(this.format_block("jstpl_pin", pin), "score-sheet-" + this.player.id);
+      var pinDiv = dojo.place(this.format_block("jstpl_pin", pin), "score-sheet-" + this.id + "-" + this.pId);
       dojo.style(pinDiv.querySelector(".pin-avatar"), "background-image", "url('" + this.getPlayerAvatar(pin.pId) + "')");
 
-      var id = `${this.player.id}_house_${pin.x}_${pin.y}`;
+      var id = `${this.pId}_house_${pin.x}_${pin.y}`;
       dojo.style(pinDiv, "left", dojo.style(id, "left") - 20 + "px");
       dojo.style(pinDiv, "top", dojo.style(id, "top") - 180 + "px");
       dojo.addClass(pinDiv, "popin");

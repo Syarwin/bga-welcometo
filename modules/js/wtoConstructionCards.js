@@ -4,7 +4,7 @@ var debug = isDebug ? console.info.bind(window.console) : function () { };
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
   const marks = [0, 1, 5, 0, 0, 2, 0, 3, 6, 0, 7, 1, 0, 4, 0, 2, 0, 0, 3, 0, 5, 0, 0, 1, 4, 7, 0, 6, 2, 0, 3, 5, 0, 2, 1, 5, 0, 0, 2, 0, 3, 6, 0, 7];
 
-  return declare("bgagame.wtoConstructionCards", ebg.core.gamegui, {
+  return declare("welcometo.constructionCards", ebg.core.gamegui, {
 /****************************************
 ******* Constructions cards class *******
 *****************************************

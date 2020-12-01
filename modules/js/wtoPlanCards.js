@@ -2,7 +2,7 @@ var isDebug = window.location.host == 'studio.boardgamearena.com' || window.loca
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, declare) {
-  return declare("bgagame.wtoPlanCards", ebg.core.gamegui, {
+  return declare("welcometo.planCards", ebg.core.gamegui, {
 /****************************************
 ********* City Plan cards class *********
 *****************************************

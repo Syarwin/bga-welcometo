@@ -1,14 +1,86 @@
 
+$scoreSheetSize:1544px;
+
 .score-sheet-container {
-  width: 1544px;
-  height:1544px;
+  width: $scoreSheetSize;
+  height:$scoreSheetSize;
+  position:relative;
+
+  &[data-slideshow="0"] {
+    .slideshow-left, .slideshow-right {
+      display:none;
+    }
+  }
+
+  .slideshow-left, .slideshow-right {
+    position: absolute;
+    height: 100%;
+    width: 70px;
+    z-index: 3;
+    top:0;
+    cursor: pointer;
+
+    .arrow {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      margin-top: -15px;
+      top: 50%;
+      display: block;
+      border-width: 5px 5px 0 0;
+      border-style: solid;
+      border-color: #fafafa;
+      opacity: 0.35;
+      outline: 0;
+      z-index: 4;
+
+      &:hover {
+        opacity:1;
+        border-color: white;
+      }
+    }
+    &:hover .arrow {
+      opacity:1;
+      border-color: white;
+    }
+  }
+
+  .slideshow-left {
+    left:0;
+    background: linear-gradient(90deg, rgb(40, 40, 40) 0%, rgba(255,255,255,0) 100%);
+    .arrow {
+      left: 25px;
+      transform: rotate(-135deg);
+    }
+  }
+
+  .slideshow-right {
+    right:0;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgb(40, 40, 40) 100%);
+    .arrow {
+      right: 25px;
+      transform: rotate(45deg);
+    }
+  }
+
+
+  .score-sheet-holder {
+    width: $scoreSheetSize;
+    height:$scoreSheetSize;
+    position:relative;
+    overflow: hidden;
+    transform-origin: top left;
+  }
+
 
   .score-sheet {
-    width: 1544px;
-    height:1544px;
+    width: $scoreSheetSize;
+    height:$scoreSheetSize;
     background-image: url("img/board.png");
     background-size: 100%;
-    position: relative;
+    position: absolute;
+    top:0;
+    left:0;
 
   /*****************************
   ******************************

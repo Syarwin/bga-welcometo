@@ -58,7 +58,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "dojox/fx/ext-dojo/complex"], f
 
 
 
-  return declare("bgagame.wtoModal", null, {
+  return declare("customgame.modal", null, {
     constructor(id, config){
       if(typeof id == "undefined"){
         console.error("You need an ID to create a modal");
@@ -142,8 +142,9 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "dojox/fx/ext-dojo/complex"], f
         dojo.connect($("popin_" + this.id + "_close"), "click", () => this[this.closeAction]() );
       }
       if(this.closeWhenClickOnUnderlay){
-        dojo.connect($("popin_" + this.id + "_underlay"), "click", () => this[this.closeAction]() );
+//        dojo.connect($("popin_" + this.id + "_underlay"), "click", () => this[this.closeAction]() );
         dojo.connect($("popin_" + this.id + "_wrapper"), "click", () => this[this.closeAction]() );
+        dojo.connect($("popin_" + this.id), "click", (evt) => evt.stopPropagation() );
       }
     },
 
