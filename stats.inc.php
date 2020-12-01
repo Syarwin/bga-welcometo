@@ -25,6 +25,12 @@ $stats_type = [
       "type" => "int"
     ],
 
+    "ending" => [
+      "id" => STAT_EOG,
+      "name" => totranslate("Permit refusal ending"),
+      "type" => "int"
+    ],
+/*
     "permit_refusal_ending" => [
       "id" => STAT_EOG_REFUSAL,
       "name" => totranslate("Permit refusal ending"),
@@ -42,8 +48,18 @@ $stats_type = [
       "name" => totranslate("All houses built ending"),
       "type" => "bool"
     ],
+*/
   ],
 
+  "value_labels" => [
+  		STAT_EOG => [
+  			0 => totranslate("None"),
+  			1 => totranslate("Permit refusal ending"),
+  			2 => totranslate("Three plans completed ending"),
+  			3 => totranslate("All houses built ending"),
+  			4 => totranslate("End of deck ending (solo mode)"),
+  		]
+  ],
 
   "player" => [
     "houses_built_number" => [

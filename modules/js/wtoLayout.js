@@ -2,7 +2,7 @@ var isDebug = window.location.host == 'studio.boardgamearena.com' || window.loca
 var debug = isDebug ? console.info.bind(window.console) : function () { };
 
 define(["dojo", "dojo/_base/declare",
-  g_gamethemeurl + "modules/js/nouislider.min.js",
+  g_gamethemeurl + "modules/js/vendor/nouislider.min.js",
 ], function (dojo, declare, noUiSlider) {
   let HORIZONTAL = 0;
   let VERTICAL = 1;
@@ -10,6 +10,12 @@ define(["dojo", "dojo/_base/declare",
   let MERGED = 0;
   let STACKED = 1;
   let STACKED_BOTTOM = 2;
+
+  function getDefaultMode(){
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+    return vw > 1.1*vh? HORIZONTAL : VERTICAL;
+  }
 
   return declare("welcometo.layout", null, {
 /*********************************
@@ -23,17 +29,23 @@ define(["dojo", "dojo/_base/declare",
       this._secondHandle = this.getConfig('welcometoSecondHandle', 90);
       this._scoreSheetZoom = this.getConfig('welcometoScoreSheetZoom', 100);
       this._mergedMode = this.getConfig('welcometoMergedMode', MERGED);
+      this._mode = this.getConfig("welcometoLayout", getDefaultMode());
+    },
 
-      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-      console.log(vw, vh);
-      this._mode = this.getConfig("welcometoLayout", vw > 1.1*vh? HORIZONTAL : VERTICAL);
+    reset(){
+      this._ratioSlider.noUiSlider.set([20, 90]);
+      this._zoomSlider.noUiSlider.set(100);
+      this.setMergedMode(MERGED);
+      this.setHandles(20,90);
+      this.setScoreSheetZoom(100);
+      this.setMode(getDefaultMode(), true);
     },
 
     init(isStandard){
       dojo.connect($('layout-settings'), 'onclick', () => this.toggleControls() );
       dojo.connect($('layout-control-0'), 'onclick', () => this.setMode(HORIZONTAL, true) );
       dojo.connect($('layout-control-1'), 'onclick', () => this.setMode(VERTICAL, true) );
+      dojo.connect($('layout-reset'), 'onclick', () => this.reset() );
 
       this._isStandard = isStandard;
       dojo.attr("construction-cards-container", "data-standard", this._isStandard? 1 : 0);
@@ -46,8 +58,8 @@ define(["dojo", "dojo/_base/declare",
       /*
        * Double slider to choose the ratios
        */
-      var range = document.getElementById('layout-control-ratios-range');
-      noUiSlider.create(range, {
+      this._ratioSlider = document.getElementById('layout-control-ratios-range');
+      noUiSlider.create(this._ratioSlider, {
         start: [this._firstHandle, this._secondHandle],
         step:1,
         margin:40,
@@ -57,13 +69,13 @@ define(["dojo", "dojo/_base/declare",
           'max': [100]
         },
       });
-      range.noUiSlider.on('slide', (arg) => this.setHandles(parseInt(arg[0]), parseInt(arg[1])) );
+      this._ratioSlider.noUiSlider.on('slide', (arg) => this.setHandles(parseInt(arg[0]), parseInt(arg[1])) );
 
       /*
        * Simple slider to show the zoom of scoresheet
        */
-      var range2 = document.getElementById('layout-control-scoresheet-zoom-range');
-      noUiSlider.create(range2, {
+      this._zoomSlider = document.getElementById('layout-control-scoresheet-zoom-range');
+      noUiSlider.create(this._zoomSlider, {
         start: [this._scoreSheetZoom],
         step:1,
         padding:5,
@@ -72,7 +84,7 @@ define(["dojo", "dojo/_base/declare",
           'max': [105]
         },
       });
-      range2.noUiSlider.on('slide', (arg) => this.setScoreSheetZoom(parseInt(arg[0])) );
+      this._zoomSlider.noUiSlider.on('slide', (arg) => this.setScoreSheetZoom(parseInt(arg[0])) );
     },
 
 

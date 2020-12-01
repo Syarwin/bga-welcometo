@@ -31,9 +31,7 @@ class Stats
     $stats = welcometo::get()->getStatTypes();
 
     self::init('table', 'turns_number');
-    self::init('table', 'permit_refusal_ending', false);
-    self::init('table', 'projects_ending', false);
-    self::init('table', 'all_houses_ending', false);
+    self::init('table', 'ending', 0);
 
     foreach ($stats['player'] as $key => $value) {
       if($value['id'] > 10 && $value['type'] == 'int' && $key != 'empty_slots_number')
@@ -48,7 +46,7 @@ class Stats
   }
 
   public static function endOfGame($type){
-    self::set(true, $type);
+    self::set($type, "ending");
   }
 
   public static function chooseCards($player){

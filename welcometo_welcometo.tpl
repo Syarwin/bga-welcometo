@@ -157,6 +157,8 @@ var jstpl_currentPlayerBoard = `
         </svg>
       </label>
     </div>
+
+    <div class="bgabutton bgabutton_blue" id="layout-reset">\${reset}</div>
 </div>
 `;
 

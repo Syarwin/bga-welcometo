@@ -75,4 +75,14 @@ $game_preferences = [
       CONFIRM_DISABLED  => ['name' => totranslate('Disabled')],
     ]
   ],
+
+  END_OF_TURN_ANIMATION => [
+    'name' => totranslate('End of turn animation'),
+    'needReload' => false,
+    'values' => [
+      ENABLED   => ['name' => totranslate('Enabled')],
+      DISABLED  => ['name' => totranslate('Disabled')],
+    ]
+  ],
+
 ];

@@ -66,6 +66,7 @@ trait WriteNumberTrait
   ///////////////////////
   function permitRefusal()
   {
+    StateMachine::checkAction("refusal");
     $player = Players::getCurrent();
 
     // Write the next available spot in the score sheet
@@ -73,7 +74,7 @@ trait WriteNumberTrait
     if(empty($zones))
       throw new UserException(totranslate("You cannot take a permit refusal if a pair of construction cards is playable"));
 
-    $player->scribbleZone($zones[0]);
+    $player->scribbleZone($zones[0], "permit-refusal");
     $player->updateScores();
 
     StateMachine::nextState("refusal");
@@ -86,6 +87,11 @@ trait WriteNumberTrait
   {
     $data = $this->argPrivatePlayerTurn($player);
     $data["numbers"] = $player->getAvailableNumbers();
+
+    // Edge case : don't force a player to use a temp card to build a house
+    if(!isset($data['numbers'][$player->getCombination()['number']])){
+      $data["refusal"] = PermitRefusal::getAvailableZones($player);
+    }
     return $data;
   }
 

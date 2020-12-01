@@ -8,7 +8,10 @@ function arrayEquals(a, b) {
     a.every((val, index) => val === b[index]);
 }
 
-define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui", g_gamethemeurl + "modules/js/Game/modal.js"], function (dojo, declare) {
+define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
+  g_gamethemeurl + "modules/js/Game/modal.js",
+  g_gamethemeurl + "modules/js/vendor/hammer.min.js",
+], function (dojo, declare) {
   const ROUNDABOUT = 100;
 
   return declare("welcometo.scoreSheet", ebg.core.gamegui, {
@@ -47,6 +50,12 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui", g_gametheme
       if(this.slideshow){
         dojo.connect(container.querySelector(".slideshow-left"), 'click', () => this.slide('left'));
         dojo.connect(container.querySelector(".slideshow-right"), 'click', () => this.slide('right'));
+
+        var mc = new Hammer(container);
+        mc.on("swipeleft swiperight", (ev)=> {
+          if(ev.type == 'swipeleft')  this.slide('right');
+          if(ev.type == 'swiperight')  this.slide('left');
+        });
       }
 
       this.createScoreSheet();
@@ -500,9 +509,9 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui", g_gametheme
         dojo.destroy("cancelEstateSelect");
         dojo.destroy("confirmEstateSelect");
         if(this._selectedEstates.length > 0)
-          this.addSecondaryActionButton("cancelEstateSelect", "Undo", () => this.onClickCancelEstates() );
+          this.addSecondaryActionButton("cancelEstateSelect", _("Undo"), () => this.onClickCancelEstates() );
         if(this._selectableSizes.length == 0)
-          this.addPrimaryActionButton("confirmEstateSelect", "Confirm", () => this.onClickConfirmEstates() );
+          this.addPrimaryActionButton("confirmEstateSelect", _("Confirm"), () => this.onClickConfirmEstates() );
       },
 
       onClickEstate(estate){

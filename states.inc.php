@@ -77,7 +77,7 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} must write a number on a house'),
     "type" => "private",
     "args" => "argWriteNumber",
-    "possibleactions" => ["writeNumber", "restart"],
+    "possibleactions" => ["writeNumber", "restart", "refusal"],
     "transitions" => [
       SURVEYOR => ST_ACTION_SURVEYOR,
       ESTATE   => ST_ACTION_ESTATE,
@@ -85,6 +85,7 @@ $machinestates = [
       POOL     => ST_ACTION_POOL,
       TEMP     => ST_ACTION_TEMP,
       BIS      => ST_ACTION_BIS,
+      'refusal' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
   ],

@@ -4,8 +4,10 @@ namespace WTO\States;
 use WTO\Game\StateMachine;
 use WTO\Game\Players;
 use WTO\Game\Stats;
+use WTO\Game\Globals;
 use WTO\Houses;
 use WTO\PlanCards;
+use WTO\ConstructionCards;
 use WTO\Actions\PermitRefusal;
 
 /*
@@ -20,12 +22,15 @@ trait EndOfGameTrait
       $freeSpots = Houses::getAvailableLocations($player);
       $areAllPlansScored = PlanCards::areAllPlansScored($player);
       $freePermitRefusalZones = PermitRefusal::getAvailableZones($player);
+      $cardsInDeck = ConstructionCards::getInLocation('deck');
 
-      if($returnTypeOfEOG && empty($freeSpots)) return 'all_houses_ending';
-      if($returnTypeOfEOG && $areAllPlansScored) return 'projects_ending';
-      if($returnTypeOfEOG && empty($freePermitRefusalZones)) return 'permit_refusal_ending';
+      if($returnTypeOfEOG && empty($freeSpots)) return 1;
+      if($returnTypeOfEOG && $areAllPlansScored) return 2;
+      if($returnTypeOfEOG && empty($freePermitRefusalZones)) return 3;
+      if($returnTypeOfEOG && $cardsInDeck->empty() && Globals::isSolo()) return 4;
 
-      if(empty($freeSpots) || $areAllPlansScored || empty($freePermitRefusalZones))
+
+      if(empty($freeSpots) || $areAllPlansScored || empty($freePermitRefusalZones) || ($cardsInDeck->empty() && Globals::isSolo()))
         return true;
     }
 

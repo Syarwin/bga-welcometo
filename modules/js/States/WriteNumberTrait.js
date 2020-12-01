@@ -46,6 +46,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onEnteringStateWriteNumber(args){
       this.displayBasicInfo(args);
       this._scoreSheet.promptNumbers(args.numbers, this.onChooseNumber.bind(this));
+
+      if(args.refusal){
+        let callback = (zone) => this.takeAction("permitRefusal");
+        this._scoreSheet.promptZones("permit-refusal", args.refusal, callback);
+        this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
+      }
     },
 
     onChooseNumber(number, x, y){

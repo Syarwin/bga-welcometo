@@ -59,6 +59,8 @@ define('CONFIRM_TIMER', 1);
 define('CONFIRM_ENABLED', 2);
 define('CONFIRM_DISABLED', 3);
 
+define('END_OF_TURN_ANIMATION', 103);
+
 
 /*
  * Global game variables
@@ -96,9 +98,7 @@ define('ADVANCED', 2);
  * Stats
  */
 define('STAT_TURNS', 105);
-define('STAT_EOG_REFUSAL', 106);
-define('STAT_EOG_PROJECTS', 107);
-define('STAT_EOG_HOUSES', 108);
+define('STAT_EOG', 109);
 
 
 define('STAT_HOUSES', 30);

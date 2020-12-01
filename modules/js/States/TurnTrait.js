@@ -1,10 +1,15 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
+  const END_OF_TURN_ANIMATION = 103;
+  const DISABLED = 1;
+  const ENABLED = 2;
+
   return declare("welcometo.turnTrait", null, {
     constructor(){
       this._notifications.push(
         ['newCards', 1000],
         ['giveCard', 1000],
-        ['soloCard', 4000]
+        ['soloCard', 4000],
+        ['updatePlayersData',  null]
       );
     },
 
@@ -36,6 +41,28 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dial.show();
       setTimeout(() => dial.destroy(), 4000);
     },
+
+
+    /////////////////////////////
+    //////   End of turn  ///////
+    /////////////////////////////
+    notif_updatePlayersData(n){
+      debug("Notif: updating player's data", n);
+      for(var pId in n.args.players){
+        this.scoreCtrl[pId].toValue(n.args.players[pId].score);
+      }
+      this.gamedatas.players = n.args.players;
+      this._scoreSheet.updateScoreSheet();
+      this._planCards.updateValidations(n.args.planValidations);
+
+      var notifDuration = 10;
+      if(Object.keys(n.args.players).length > 1 && this.prefs[END_OF_TURN_ANIMATION].value == ENABLED){
+        notifDuration = 2000;
+        this._scoreSheet.showLastActions(n.args.players, n.args.turn);
+      }
+      this.notifqueue.setSynchronousDuration(notifDuration);
+    },
+
 
     /////////////////////////////////
     /////////   End of game   ///////

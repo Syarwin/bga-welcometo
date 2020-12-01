@@ -23,7 +23,6 @@ define([
     "dojo", "dojo/_base/declare",
     "ebg/core/gamegui",
     "ebg/counter",
-    "ebg/stock",
     g_gamethemeurl + "modules/js/Game/game.js",
     g_gamethemeurl + "modules/js/Game/modal.js",
 
@@ -38,6 +37,7 @@ define([
     g_gamethemeurl + "modules/js/wtoConstructionCards.js",
     g_gamethemeurl + "modules/js/wtoPlanCards.js",
 ], function (dojo, declare) {
+
   return declare("bgagame.welcometo", [
     customgame.game,
     welcometo.actionsTrait,
@@ -55,8 +55,7 @@ define([
       this._layoutManager = new welcometo.layout();
 
       this._notifications.push(
-        ['updateScores', 10],
-        ['updatePlayersData', 2000]
+        ['updateScores', 10]
       );
     },
 
@@ -91,6 +90,7 @@ dojo.destroy('debug_output'); // Speedup loading page
       var iconsElt = this.format_block("jstpl_currentPlayerBoard", {
         "horizontal" : _("Horizontal"),
         "vertical" : _("Vertical"),
+        "reset" : _("Reset"),
       });
 
       Object.values(gamedatas.players).forEach( player => {
@@ -155,18 +155,6 @@ dojo.destroy('debug_output'); // Speedup loading page
        debug("Notif: updating scores", n);
        this._scoreSheet.updateScores(n.args.scores);
        this.scoreCtrl[this.player_id].toValue(n.args.scores.total);
-     },
-
-
-     notif_updatePlayersData(n){
-       debug("Notif: updating player's data", n);
-       for(var pId in n.args.players){
-         this.scoreCtrl[pId].toValue(n.args.players[pId].score);
-       }
-       this.gamedatas.players = n.args.players;
-       this._scoreSheet.updateScoreSheet();
-       this._planCards.updateValidations(n.args.planValidations);
-       this._scoreSheet.showLastActions(n.args.players, n.args.turn);
      },
 
 

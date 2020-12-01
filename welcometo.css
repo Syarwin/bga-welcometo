@@ -217,7 +217,8 @@ body {
  * Controls in the top bar
  */
 #layout-controls-container {
-  position: relative; }
+  position: relative;
+  text-align: center; }
   #layout-controls-container.layoutControlsHidden {
     display: none;
     /*
@@ -669,14 +670,14 @@ body {
       left: 92px;
       width: 207px;
       height: 70px;
-      font-size: 32px;
       word-break: break-all;
       font-size: x-large;
       font-family: "Caveat";
       display: flex;
       justify-content: center;
       align-items: center;
-      text-align: center; }
+      text-align: center;
+      font-size: 32px; }
     .score-sheet-container .score-sheet .house {
       position: absolute;
       width: 70px;
