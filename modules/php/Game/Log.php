@@ -76,12 +76,21 @@ class Log extends \WTO\Helpers\DB_Manager
 
 
   /*
-   * getCancelMoveIds : get all cancelled move IDs from BGA gamelog, used for styling the notifications on page reload
+   * getCancelMoveIds : get all cancelled notifs IDs from BGA gamelog, used for styling the notifications on page reload
    */
-  public function getCancelMoveIds()
+  protected function extractNotifIds($notifications){
+    $notificationUIds = [];
+    foreach($notifications as $notification){
+      $data = \json_decode($notification, true);
+      array_push($notificationUIds, $data[0]['uid']);
+    }
+    return $notificationUIds;
+  }
+
+
+  public function getCanceledNotifIds()
   {
-    $moveIds = self::getObjectListFromDb("SELECT `gamelog_move_id` FROM gamelog WHERE `cancel` = 1 ORDER BY 1", true);
-    return array_map('intval', $moveIds);
+    return self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog WHERE `cancel` = 1", true));
   }
 
 
@@ -93,8 +102,9 @@ class Log extends \WTO\Helpers\DB_Manager
 /////////////////////////////////
   public static function clearTurn($pId)
   {
-    // Cancel the game notifications
     $moveIds = [];
+
+    // Cancel the game notifications
     foreach(self::getFilteredQuery($pId)->get(false) as $action){
       if(!is_null($action["moveId"])){
         array_push($moveIds, $action["moveId"]);
@@ -105,13 +115,16 @@ class Log extends \WTO\Helpers\DB_Manager
       }
     }
 
+    $notifIds = [];
     if (!empty($moveIds)) {
-      self::DbQuery("UPDATE gamelog SET `cancel` = 1 WHERE `gamelog_move_id` IN (" . implode(',', $moveIds) . ")");
+      $whereClause = "WHERE `gamelog_move_id` IN (" . implode(',', $moveIds) . ")";
+      $notifIds = self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog $whereClause", true));
+      self::DbQuery("UPDATE gamelog SET `cancel` = 1 $whereClause");
     }
 
     // Clear the log
     self::getFilteredQuery($pId)->delete()->run();
 
-    return $moveIds;
+    return $notifIds;
   }
 }

@@ -210,11 +210,11 @@ class Player extends Helpers\DB_Manager
   // Restart the turn by clearing all log, houses, scribbles.
   public function restartTurn()
   {
-    $moveIds = Log::clearTurn($this->id);
+    $notifIds = Log::clearTurn($this->id);
     Houses::clearTurn($this->id);
     Scribbles::clearTurn($this->id);
     PlanCards::clearTurn($this->id);
-    Notifications::clearTurn($this, $moveIds);
+    Notifications::clearTurn($this, $notifIds);
   }
 
 

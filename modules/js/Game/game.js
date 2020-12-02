@@ -12,8 +12,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
         ['newPrivateState', 1],
       ];
 
-      this._dockedlog_to_move_id = {};
-      this._customlog_to_move_id = {};
+      this._notif_uid_to_log_id = {};
+      this._last_notif = null;
     },
 
 
@@ -28,11 +28,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
         this.onLoadingComplete();
       }
     },
+
     onLoadingComplete(){
       debug('Loading complete');
 
-      // Handle previously cancelled moves
-      this.cancelLogs(this.gamedatas.cancelMoveIds);
+      this.cancelLogs(this.gamedatas.canceledNotifIds);
     },
 
 
@@ -44,6 +44,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     setup(gamedatas) {
       this.setupNotifications();
       this.initPreferencesObserver();
+      dojo.connect(this.notifqueue, "addToLog", () => {
+        this.checkLogCancel(this._last_notif);
+      });
      },
 
 
@@ -274,72 +277,32 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      * Handle cancelling log messages for restart turn
      */
     onPlaceLogOnChannel(msg){
-      var currentLogId = this.next_log_id;
+      var currentLogId = this.notifqueue.next_log_id;
       this.inherited(arguments);
-
-      if (msg.move_id && this.next_log_id != currentLogId) {
-        var moveId = +msg.move_id;
-        this._dockedlog_to_move_id[currentLogId] = moveId;
-        this.checkLogCancel(moveId);
-      }
-
-      if(msg.args.moveId){
-        debug("test");
-        this._customlog_to_move_id[currentLogId] = msg.args.moveId;
-        this.checkLogCancel(moveId);
-      }
+      this._notif_uid_to_log_id[msg.uid] = currentLogId;
+      this._last_notif = msg.uid;
     },
+
 
 
     /*
      * cancelLogs:
-     *   strikes all log messages related to the given array of move IDs
+     *   strikes all log messages related to the given array of notif ids
      */
-    checkLogCancel(moveId){
-      debug("Cancelled ids : ", this.gamedatas.cancelMoveIds)
-      if (this.gamedatas.cancelMoveIds != null && this.gamedatas.cancelMoveIds.includes(moveId)) {
-        this.cancelLogs([moveId]);
+    checkLogCancel(notifId){
+      if (this.gamedatas.canceledNotifIds != null && this.gamedatas.canceledNotifIds.includes(notifId)) {
+        this.cancelLogs([notifId]);
       }
     },
 
-    cancelLogs (moveIds) {
-      if (Array.isArray(moveIds)) {
-        debug('Cancel log messages for move IDs', moveIds);
-        debug(this._customlog_to_move_id);
-
-        var elements = [];
-        // Desktop logs
-        for (var logId in this.log_to_move_id) {
-          var moveId = +this.log_to_move_id[logId];
-          if (moveIds.includes(moveId)) {
-            elements.push($('log_' + logId));
-          }
+    cancelLogs(notifIds) {
+      notifIds.forEach(uid => {
+        if(this._notif_uid_to_log_id.hasOwnProperty(uid)){
+          let logId = this._notif_uid_to_log_id[uid];
+          if($('log_' + logId))
+            dojo.addClass('log_' + logId, "cancel");
         }
-        // Custom logs
-        for (var logId in this._customlog_to_move_id) {
-          var moveId = +this._customlog_to_move_id[logId];
-          if (moveIds.includes(moveId)) {
-            elements.push($('log_' + logId));
-          }
-        }
-
-
-        // Mobile logs
-        for (var logId in this._dockedlog_to_move_id) {
-          var moveId = +this._dockedlog_to_move_id[logId];
-          if (moveIds.includes(moveId)) {
-            elements.push($('dockedlog_' + logId));
-          }
-        }
-
-        debug(elements);
-        // Add strikethrough
-        elements.forEach(e => {
-          if (e != null) {
-            dojo.addClass(e, 'cancel');
-          }
-        });
-      }
+      });
     },
   });
 });

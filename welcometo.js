@@ -94,14 +94,20 @@ dojo.destroy('debug_output'); // Speedup loading page
       });
 
       Object.values(gamedatas.players).forEach( player => {
+        dojo.place(this.format_block("jstpl_playerBoard", player), "player_board_" + player.id);
+        this.addTooltip("plan-status-1-" + player.id, _("Status of City Plan n°1"), "");
+        this.addTooltip("plan-status-2-" + player.id, _("Status of City Plan n°2"), "");
+        this.addTooltip("plan-status-3-" + player.id, _("Status of City Plan n°3"), "");
+        this.addTooltip("houses-status-container-" + player.id, _("Number of houses built"), "");
+        this.addTooltip("refusal-status-container-" + player.id, _("Number of permit refusals"), "");
+
         if(player.id == this.player_id){
           dojo.place(iconsElt, "player_board_" + player.id);
-          return;
+        } else {
+          dojo.place(this.format_block("jstpl_spyIcon", player), "player_board_" + player.id);
+          this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
+          dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
         }
-
-        dojo.place(this.format_block("jstpl_playerBoard", player), "player_board_" + player.id);
-        this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
-        dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
       });
 
       // Stop here if spectator
@@ -124,13 +130,52 @@ dojo.destroy('debug_output'); // Speedup loading page
         parentDiv:'player-score-sheet-resizable',
         slideshow:this.isSpectator,
       });
+
+      // Update player panel counters
+      this.updatePlayersData();
      },
 
+     updatePlayersData(){
+       this._scoreSheet.updateScoreSheet();
+       this._planCards.updateValidations();
 
+       for(var pId in this.gamedatas.players){
+         let player = this.gamedatas.players[pId];
+         var nPermit = player.scoreSheet.scribbles.reduce((n, scribble) => n + (scribble.type == "permit-refusal"? 1 : 0), 0);
+         $('permit-refusal-status-' + pId).innerHTML = nPermit;
+         $('houses-built-status-' + pId).innerHTML = player.scoreSheet.houses.length;
+      }
+     },
+
+     onScreenWidthChange(){
+       this._layoutManager.onScreenWidthChange();
+     },
 
      onUpdateActionButtons(){
        /*
        this.addPrimaryActionButton('btnTest2', "Test modal", () => {
+         this.notif_scorePlan({
+  "uid": "5fc648eeb890f",
+  "type": "scorePlan",
+  "log": "You validate plan n°${stack}",
+  "args": {
+    "validation": {
+      "rank": 0,
+      "turn": "1"
+    },
+    "planId": "16",
+    "stack": 3,
+    "moveId": "6",
+    "i18n": [
+      "moveId"
+    ]
+  },
+  "synchro": 0,
+  "channelorig": "/player/p2322021",
+  "gamenameorig": "welcometo",
+  "time": 1606830318,
+  "bIsTableMsg": false
+});
        });
        */
      },

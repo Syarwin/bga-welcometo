@@ -83,7 +83,7 @@ class Houses extends Helpers\DB_Manager
     $query = self::DB()->where('player_id', $pId);
 
     try {
-      // Filter out the scribbles of current turn if not current player
+      // Filter out the houses of current turn if not current player
       if(Players::getCurrentId() != $pId)
         $query = $query->where('turn', '<', Globals::getCurrentTurn());
     } finally {

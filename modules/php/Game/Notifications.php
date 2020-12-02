@@ -6,14 +6,10 @@ use \WTO\PlanCards;
 class Notifications
 {
   protected static function notifyAll($name, $msg, $data){
-    $data['moveId'] = Globals::getMoveId();
-    $data['i18n'] = ['moveId'];
     welcometo::get()->notifyAllPlayers($name, $msg, $data);
   }
 
   protected static function notify($pId, $name, $msg, $data){
-    $data['moveId'] = Globals::getMoveId();
-    $data['i18n'] = ['moveId'];
     welcometo::get()->notifyPlayer($pId, $name, $msg, $data);
   }
 
@@ -129,10 +125,10 @@ class Notifications
   }
 
 
-  public static function clearTurn($player, $moveIds){
+  public static function clearTurn($player, $notifIds){
     self::notify($player->getId(), 'clearTurn', clienttranslate('You restart your turn'), [
       'turn' => Globals::getCurrentTurn(),
-      'moveIds' => $moveIds,
+      'notifIds' => $notifIds,
     ]);
   }
 

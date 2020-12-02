@@ -199,6 +199,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       dojo.query(`.scribble-circle[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line[data-turn="${turn}"]`).forEach(dojo.destroy);
       dojo.query(`.scribble-line-hor[data-turn="${turn}"]`).forEach(dojo.destroy);
+      dojo.query(`.scribble-checkmark[data-turn="${turn}"]`).forEach(dojo.destroy);
     },
 
     ////////////////////////

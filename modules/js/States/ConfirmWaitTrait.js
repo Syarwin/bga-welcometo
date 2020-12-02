@@ -42,7 +42,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug("Notif: restarting turn", n);
       this._scoreSheet.clearTurn(n.args.turn);
       this._planCards.clearTurn(n.args.turn);
-      this.cancelLogs(n.args.moveIds);
+      this.cancelLogs(n.args.notifIds);
     },
 
 

@@ -5,17 +5,21 @@
 *****************************/
 .player-board {
   z-index:100;
-}
 
-.welcometo-player-board {
-  height:40px;
-  padding:0 10px;
-  display:flex;
-  justify-content: space-around;
+  .player-name {
+    margin-left: 50px;
+    margin-right: 65px;
 
+    a {
+      word-wrap: break-word;
+    }
+  }
   .show-streets-button {
-    height:100%;
-    width:50px;
+    position:absolute;
+    top:0;
+    right:36px;
+    height:40px;
+    width:25px;
     cursor:pointer;
     &:hover {
       color:grey;
@@ -26,10 +30,158 @@
       height:100%;
     }
   }
+}
 
+.welcometo-player-board {
+  padding:0;
+  display:flex;
+  justify-content: space-around;
+  flex-wrap:wrap;
+
+
+  .plans-status {
+    width:120px;
+    height:100%;
+    display: flex;
+    justify-content: space-around;
+
+    div {
+      width:30px;
+      height:40px;
+      border-radius:6px;
+      border:1px solid #555;
+      font-size: 35px;
+      font-family: "Bebas";
+      @include centered;
+      box-shadow:1px 1px 1px black;
+
+      &.plan-status-1 { background-color:#b0c2c2; }
+      &.plan-status-2 { background-color:#ecda9c; }
+      &.plan-status-3 { background-color:#d4afa9; }
+    }
+  }
+
+  .houses-status {
+    position:relative;
+    width:45px;
+    height:45px;
+    font-family: "Bebas";
+
+    svg {
+      position:absolute;
+      width:45px;
+      height:45px;
+      path {
+        fill: rgba(0,0,0,0.4);
+        stroke: black;
+        stroke-width: 10;
+      }
+    }
+    div {
+      position:absolute;
+    }
+
+    div:nth-of-type(1) {
+      top:11px;
+      left: 9px;
+      font-size: 18px;
+      width: 15px;
+      text-align: center;
+    }
+    div:nth-of-type(2) {
+      top: 21px;
+      left: 19px;
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(to top left, transparent calc(50% - 1px), #222, transparent calc(50% + 1px));
+    }
+    div:nth-of-type(3) {
+      bottom:0px;
+      right:7px;
+      font-size:14px;
+      color:#222;
+    }
+  }
+
+
+  .refusal-status {
+    position:relative;
+    width:45px;
+    height:45px;
+    font-family: "Bebas";
+
+    svg {
+      position:absolute;
+      width:45px;
+      height:45px;
+      path {
+        stroke:black;
+        fill:rgba(255,0,0,0.5);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    }
+    div {
+      position:absolute;
+    }
+
+    div:nth-of-type(1) {
+      top: 9px;
+      left: 13px;
+    }
+    div:nth-of-type(2) {
+      top: 16px;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(to top left, transparent calc(50% - 1px), #222, transparent calc(50% + 1px));
+    }
+    div:nth-of-type(3) {
+      bottom: 3px;
+      right: 13px;
+      font-size: 14px;
+      color:#222;
+    }
+  }
+
+
+/*
+  .refusal-status {
+    width:60px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    div {
+      background-image:url("img/permit.png");
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+
+      &.crossed {
+        background-image:url("img/refusal.png"), url("img/permit.png");
+        background-size:contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+
+      }
+    }
+  }
+*/
+}
+
+
+.welcometo-current-player-board {
+  margin:10px;
+  padding-top:10px;
+  border-top:1px solid #aaa;
+  display:flex;
+  justify-content: space-around;
+  flex-wrap:wrap;
 
   #show-overview, #layout-settings, #show-helpsheet {
-    height:100%;
+    height:40px;
     width:50px;
 
     &:hover {
@@ -43,7 +195,7 @@
 
     svg {
       width:auto;
-      height:100%;
+      height:40px;
     }
   }
 
@@ -58,7 +210,6 @@
     }
   }
 }
-
 
 /*
  * Controls in the top bar

@@ -216,6 +216,14 @@ $cardMargin:5px;
         @media (max-width: $breakpoint) { background-image:url("img/plans_low.jpg"); }
         background-size:cover;
 
+        .plan-validation {
+          position: absolute;
+          width: 130px;
+          height: 130px;
+          top: 90px;
+          left: 40px;
+        }
+
         .plan-validation-0, .plan-validation-1 {
           position: absolute;
           width: 65px;

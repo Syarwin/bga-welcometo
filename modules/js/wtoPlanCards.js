@@ -13,7 +13,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       debug("Seting up the plan cards");
       this._selectablePlans = [];
       this._planIds = [];
-      this._validations = gamedatas.planValidations;
       this._gamedatas = gamedatas;
       this._pId = pId;
 
@@ -26,8 +25,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
         let desc = plan.desc.map(t => _(t)).join("\n");
         this.addTooltip(div.id, desc, '');
       });
-
-      this.updateValidationMarks();
     },
 
     // Clear everything
@@ -63,8 +60,8 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
     //////////////////////////////////////
     ////////  Display scored plan ////////
     //////////////////////////////////////
-    updateValidations(validations){
-      this._validations = validations;
+    updateValidations(){
+      this._validations = this._gamedatas.planValidations;
       this.updateValidationMarks();
     },
 
@@ -79,20 +76,21 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
             high.push(name);
           else
             low.push(name);
+
+          if(pId != -1)
+            $('plan-status-' + (i+1) + '-' + pId).innerHTML = validations[pId].rank + 1;
         }
 
         // If current player achieved this plan, display it
-        var val = null;
         if(validations[this._pId] !== undefined){
           this.validateCurrentPlayerPlan(this._planIds[i], validations[this._pId]);
-          val = validations[this._pId].rank;
         }
 
         // Add tooltip on highest score
         if(high.length > 0){
           var textHigh = _("Highest score: ") + high.join(",");
           this.addTooltip("plan-card-" + this._planIds[i] + "-0", textHigh, "");
-          val = (val == null)? 1 : val;
+          dojo.attr(id, "data-validation", 1);
         }
 
         // Add tooltip on lower score
@@ -101,7 +99,6 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           this.addTooltip("plan-card-" + this._planIds[i] + "-1", textLow, "");
         }
 
-        dojo.attr(id, "data-validation", val);
       })
     },
 
@@ -110,13 +107,16 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
       if($("scribble-plan-" + planId))
         return;
 
-      dojo.attr("plan-card-" + planId, "data-validation", validation.rank);
+      // Put stamp on
+      var id = "plan-card-" + planId;
+      if(dojo.attr(id, "data-validation") != 1)
+        dojo.attr(id, "data-validation", 1);
 
       var scribble = {
         turn: validation.turn,
         id: "plan-" + planId,
       };
-      dojo.place(this.format_block("jstpl_scribbleCircle", scribble), "plan-card-" + planId + "-" + validation.rank);
+      dojo.place(this.format_block("jstpl_scribbleCheckMark", scribble), "plan-card-" + planId + "-validation");
 
       if(animation){
         playSound("welcometo_scribble");

@@ -3,6 +3,7 @@ namespace WTO\States;
 
 use WTO\Game\StateMachine;
 use WTO\Game\Players;
+use WTO\Game\Notifications;
 use WTO\Game\Stats;
 use WTO\Game\Globals;
 use WTO\Houses;
@@ -43,6 +44,16 @@ trait EndOfGameTrait
    */
   function stComputeScores()
   {
+    // Notify end of game
+    $type = self::isEndOfGame(true);
+    $msgs = [
+      1 => clienttranslate("An architect has built all of the houses on his three streets, triggering end of game."),
+      2 => clienttranslate("A player achieved all three plans, triggering end of game."),
+      3 => clienttranslate("A player checked his third building permit refusal, triggering end of game."),
+      4 => clienttranslate("The deck is empty, triggering end of game in solo mode."),
+    ];
+    Notifications::message($msgs[$type]);
+
     // Compute aux
     //In case of a draw, the player with the most completed estates wins. In case of another draw, the one with the most size 1 estates wins, then size 2, etc.
     $scoresAux = [];

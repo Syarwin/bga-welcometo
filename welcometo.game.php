@@ -127,7 +127,7 @@ class welcometo extends Table
       'planValidations' => WTO\PlanCards::getCurrentValidations(),
       'options' => WTO\Game\Globals::getOptions(),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
-      'cancelMoveIds' => WTO\Game\Log::getCancelMoveIds(),
+      'canceledNotifIds' => WTO\Game\Log::getCanceledNotifIds(),
       'nextPlayerTable' => $this->getNextPlayerTable(),
       'prevPlayerTable' => $this->getPrevPlayerTable(),
     ];

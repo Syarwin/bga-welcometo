@@ -181,36 +181,161 @@ body {
 *****************************/
 .player-board {
   z-index: 100; }
+  .player-board .player-name {
+    margin-left: 50px;
+    margin-right: 65px; }
+    .player-board .player-name a {
+      word-wrap: break-word; }
+  .player-board .show-streets-button {
+    position: absolute;
+    top: 0;
+    right: 36px;
+    height: 40px;
+    width: 25px;
+    cursor: pointer; }
+    .player-board .show-streets-button:hover {
+      color: grey; }
+    .player-board .show-streets-button svg {
+      width: auto;
+      height: 100%; }
 
 .welcometo-player-board {
-  height: 40px;
-  padding: 0 10px;
+  padding: 0;
   display: flex;
-  justify-content: space-around; }
-  .welcometo-player-board .show-streets-button {
+  justify-content: space-around;
+  flex-wrap: wrap;
+  /*
+    .refusal-status {
+      width:60px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+  
+      div {
+        background-image:url("img/permit.png");
+        background-size:contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+  
+        &.crossed {
+          background-image:url("img/refusal.png"), url("img/permit.png");
+          background-size:contain;
+          background-repeat: no-repeat;
+          background-position: center center;
+  
+        }
+      }
+    }
+  */ }
+  .welcometo-player-board .plans-status {
+    width: 120px;
     height: 100%;
+    display: flex;
+    justify-content: space-around; }
+    .welcometo-player-board .plans-status div {
+      width: 30px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      font-size: 35px;
+      font-family: "Bebas";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 1px 1px 1px black; }
+      .welcometo-player-board .plans-status div.plan-status-1 {
+        background-color: #b0c2c2; }
+      .welcometo-player-board .plans-status div.plan-status-2 {
+        background-color: #ecda9c; }
+      .welcometo-player-board .plans-status div.plan-status-3 {
+        background-color: #d4afa9; }
+  .welcometo-player-board .houses-status {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    font-family: "Bebas"; }
+    .welcometo-player-board .houses-status svg {
+      position: absolute;
+      width: 45px;
+      height: 45px; }
+      .welcometo-player-board .houses-status svg path {
+        fill: rgba(0, 0, 0, 0.4);
+        stroke: black;
+        stroke-width: 10; }
+    .welcometo-player-board .houses-status div {
+      position: absolute; }
+    .welcometo-player-board .houses-status div:nth-of-type(1) {
+      top: 11px;
+      left: 9px;
+      font-size: 18px;
+      width: 15px;
+      text-align: center; }
+    .welcometo-player-board .houses-status div:nth-of-type(2) {
+      top: 21px;
+      left: 19px;
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(to top left, transparent calc(50% - 1px), #222, transparent calc(50% + 1px)); }
+    .welcometo-player-board .houses-status div:nth-of-type(3) {
+      bottom: 0px;
+      right: 7px;
+      font-size: 14px;
+      color: #222; }
+  .welcometo-player-board .refusal-status {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    font-family: "Bebas"; }
+    .welcometo-player-board .refusal-status svg {
+      position: absolute;
+      width: 45px;
+      height: 45px; }
+      .welcometo-player-board .refusal-status svg path {
+        stroke: black;
+        fill: rgba(255, 0, 0, 0.5);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round; }
+    .welcometo-player-board .refusal-status div {
+      position: absolute; }
+    .welcometo-player-board .refusal-status div:nth-of-type(1) {
+      top: 9px;
+      left: 13px; }
+    .welcometo-player-board .refusal-status div:nth-of-type(2) {
+      top: 16px;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(to top left, transparent calc(50% - 1px), #222, transparent calc(50% + 1px)); }
+    .welcometo-player-board .refusal-status div:nth-of-type(3) {
+      bottom: 3px;
+      right: 13px;
+      font-size: 14px;
+      color: #222; }
+
+.welcometo-current-player-board {
+  margin: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #aaa;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; }
+  .welcometo-current-player-board #show-overview, .welcometo-current-player-board #layout-settings, .welcometo-current-player-board #show-helpsheet {
+    height: 40px;
     width: 50px;
     cursor: pointer; }
-    .welcometo-player-board .show-streets-button:hover {
+    .welcometo-current-player-board #show-overview:hover, .welcometo-current-player-board #layout-settings:hover, .welcometo-current-player-board #show-helpsheet:hover {
       color: grey; }
-    .welcometo-player-board .show-streets-button svg {
+    .welcometo-current-player-board #show-overview:hover, .welcometo-current-player-board #layout-settings:hover, .welcometo-current-player-board #show-helpsheet:hover {
+      color: grey; }
+    .welcometo-current-player-board #show-overview svg, .welcometo-current-player-board #layout-settings svg, .welcometo-current-player-board #show-helpsheet svg {
       width: auto;
-      height: 100%; }
-  .welcometo-player-board #show-overview, .welcometo-player-board #layout-settings, .welcometo-player-board #show-helpsheet {
-    height: 100%;
-    width: 50px;
-    cursor: pointer; }
-    .welcometo-player-board #show-overview:hover, .welcometo-player-board #layout-settings:hover, .welcometo-player-board #show-helpsheet:hover {
-      color: grey; }
-    .welcometo-player-board #show-overview:hover, .welcometo-player-board #layout-settings:hover, .welcometo-player-board #show-helpsheet:hover {
-      color: grey; }
-    .welcometo-player-board #show-overview svg, .welcometo-player-board #layout-settings svg, .welcometo-player-board #show-helpsheet svg {
-      width: auto;
-      height: 100%; }
-  .welcometo-player-board #layout-settings .fa-primary {
+      height: 40px; }
+  .welcometo-current-player-board #layout-settings .fa-primary {
     transform-origin: 216px 255px;
     transition: transform 1s; }
-  .welcometo-player-board #layout-settings:hover .fa-primary {
+  .welcometo-current-player-board #layout-settings:hover .fa-primary {
     transform: rotate(180deg); }
 
 /*
@@ -493,6 +618,12 @@ body {
         @media (max-width: 1250px) {
           #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front {
             background-image: url("img/plans_low.jpg"); } }
+        #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation {
+          position: absolute;
+          width: 130px;
+          height: 130px;
+          top: 90px;
+          left: 40px; }
         #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-0, #plan-cards-container #plan-cards-container-resizable .plan-card-holder .plan-card-front .plan-validation-1 {
           position: absolute;
           width: 65px;
@@ -1932,13 +2063,13 @@ body {
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout {
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout, .scribble-checkmark {
   width: 100%;
   height: 100%; }
-  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path, .scribble-roundabout .scribble-path {
+  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path, .scribble-roundabout .scribble-path, .scribble-checkmark .scribble-path {
     stroke: black;
     stroke-linecap: round; }
-  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path, .scribble-roundabout.animate .scribble-path {
+  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path, .scribble-roundabout.animate .scribble-path, .scribble-checkmark.animate .scribble-path {
     animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards; }
 @keyframes drawScribble {
@@ -1964,6 +2095,14 @@ body {
 
 .scribble-line {
   padding-top: 12px; }
+
+.scribble-checkmark .scribble-path {
+  stroke-width: 25;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+  stroke: rgba(0, 100, 0, 0.8); }
+.scribble-checkmark.animate .scribble-path {
+  stroke-dashoffset: 400; }
 
 .scribble-roundabout {
   height: 81%; }
@@ -2198,7 +2337,7 @@ body {
       #popin_showOverview #popin_showOverview_contents table th#overview-other div {
         width: 50px;
         height: 50px;
-        background-image: url("img/refusal.png");
+        background-image: url("img/refusal.png"), url("img/permit.png");
         background-size: cover; }
       #popin_showOverview #popin_showOverview_contents table th#overview-user {
         width: auto; }

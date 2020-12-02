@@ -17,7 +17,7 @@
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout {
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout, .scribble-checkmark {
   width:100%;
   height:100%;
   .scribble-path {
@@ -73,6 +73,20 @@
 .scribble-line {
   padding-top:12px;
 }
+
+
+.scribble-checkmark {
+  .scribble-path {
+    stroke-width:25;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 0;
+    stroke:rgba(0,100,0,0.8);
+  }
+  &.animate .scribble-path {
+    stroke-dashoffset: 400;
+  }
+}
+
 
 
 .scribble-roundabout {

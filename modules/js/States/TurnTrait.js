@@ -52,8 +52,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.scoreCtrl[pId].toValue(n.args.players[pId].score);
       }
       this.gamedatas.players = n.args.players;
-      this._scoreSheet.updateScoreSheet();
-      this._planCards.updateValidations(n.args.planValidations);
+      this.gamedatas.planValidations = n.args.planValidations;
+      this.updatePlayersData();
 
       var notifDuration = 10;
       if(Object.keys(n.args.players).length > 1 && this.prefs[END_OF_TURN_ANIMATION].value == ENABLED){
