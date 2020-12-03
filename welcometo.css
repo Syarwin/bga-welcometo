@@ -315,15 +315,44 @@ body {
       color: #222; }
 
 .welcometo-current-player-board {
-  margin: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #aaa;
+  margin: 10px 0px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap; }
+  .welcometo-current-player-board #cards-count {
+    display: flex;
+    height: 40px;
+    width: 35px;
+    margin-left: 2px; }
+    .welcometo-current-player-board #cards-count div, .welcometo-current-player-board #cards-count div::after, .welcometo-current-player-board #cards-count div::before {
+      width: 27px;
+      height: 35px;
+      transform-origin: left bottom; }
+    .welcometo-current-player-board #cards-count div {
+      position: relative;
+      font-family: "Bebas";
+      font-size: 23px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center; }
+      .welcometo-current-player-board #cards-count div::after, .welcometo-current-player-board #cards-count div::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        border-radius: 6px;
+        border: 1px solid #555;
+        box-shadow: 1px 1px 1px black;
+        background-color: #8b7f73; }
+      .welcometo-current-player-board #cards-count div::before {
+        transform: translateY(1px) translateX(2px) rotate(6deg); }
   .welcometo-current-player-board #show-overview, .welcometo-current-player-board #layout-settings, .welcometo-current-player-board #show-helpsheet {
     height: 40px;
     width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     cursor: pointer; }
     .welcometo-current-player-board #show-overview:hover, .welcometo-current-player-board #layout-settings:hover, .welcometo-current-player-board #show-helpsheet:hover {
       color: grey; }
@@ -332,6 +361,8 @@ body {
     .welcometo-current-player-board #show-overview svg, .welcometo-current-player-board #layout-settings svg, .welcometo-current-player-board #show-helpsheet svg {
       width: auto;
       height: 40px; }
+  .welcometo-current-player-board #show-overview {
+    width: 40px; }
   .welcometo-current-player-board #layout-settings .fa-primary {
     transform-origin: 216px 255px;
     transition: transform 1s; }

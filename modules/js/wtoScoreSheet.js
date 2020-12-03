@@ -555,7 +555,6 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
 
       onClickConfirmEstates(){
         this._callbackEstate(this._selectedEstates);
-        this.clearPossible();
       },
 
       /*

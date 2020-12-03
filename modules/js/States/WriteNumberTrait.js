@@ -19,7 +19,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.gamedatas.gamestate.descriptionmyturn = _("You cannot write a number and must take a permit refusal");
         this.updatePageTitle();
 
-        let callback = (zone) => this.takeAction("permitRefusal");
+        let callback = (zone) => this.takeAction("permitRefusal", {}, true);
         this._scoreSheet.promptZones("permit-refusal", args.zones, callback);
         this.addDangerActionButton("btnPermitRefusal", _("Permit refusal"), callback);
       }
@@ -56,7 +56,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     onChooseNumber(number, x, y){
       debug("You chose to write", number, " at location ", x, y);
-      this.takeAction("writeNumber", { number: number, x:x, y:y});
+      this.takeAction("writeNumber", { number: number, x:x, y:y}, true);
       this.clearPossible();
     },
 

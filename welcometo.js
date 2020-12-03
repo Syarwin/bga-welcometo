@@ -91,9 +91,15 @@ dojo.destroy('debug_output'); // Speedup loading page
         "horizontal" : _("Horizontal"),
         "vertical" : _("Vertical"),
         "reset" : _("Reset"),
+        "cards" : parseInt(gamedatas.cardsLeft / (this._isStandard? 3 : 1)),
       });
 
       Object.values(gamedatas.players).forEach( player => {
+        if(player.id == this.player_id){
+          dojo.place(iconsElt, "player_board_" + player.id);
+          return;
+        }
+
         dojo.place(this.format_block("jstpl_playerBoard", player), "player_board_" + player.id);
         this.addTooltip("plan-status-1-" + player.id, _("Status of City Plan n°1"), "");
         this.addTooltip("plan-status-2-" + player.id, _("Status of City Plan n°2"), "");
@@ -101,13 +107,9 @@ dojo.destroy('debug_output'); // Speedup loading page
         this.addTooltip("houses-status-container-" + player.id, _("Number of houses built"), "");
         this.addTooltip("refusal-status-container-" + player.id, _("Number of permit refusals"), "");
 
-        if(player.id == this.player_id){
-          dojo.place(iconsElt, "player_board_" + player.id);
-        } else {
-          dojo.place(this.format_block("jstpl_spyIcon", player), "player_board_" + player.id);
-          this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
-          dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
-        }
+        dojo.place(this.format_block("jstpl_spyIcon", player), "player_board_" + player.id);
+        this.addTooltip("show-streets-" + player.id, '', _("Show player's scoresheet"));
+        dojo.connect($("show-streets-" + player.id), "onclick", () => this.showScoreSheet(player.id) );
       });
 
       // Stop here if spectator
@@ -115,6 +117,13 @@ dojo.destroy('debug_output'); // Speedup loading page
         dojo.place(iconsElt, document.querySelector(".player-board.spectator-mode"));
         dojo.query(".player-board.spectator-mode .roundedbox_main").style("display", "none");
       }
+
+      // Icon tooltip
+      this.addTooltip("show-overview", "", _("Display an overview of player's situation") );
+      this.addTooltip("show-helpsheet", "", _("Display the helpsheet"));
+      this.addTooltip("cards-count", _("Number of cards left in each stack"), "");
+      this.addTooltip("layout-settings", _("Layout settings"), "");
+
 
       // Connect icons
       dojo.connect($("show-overview"), "onclick", () => this.showOverview() );
@@ -140,6 +149,9 @@ dojo.destroy('debug_output'); // Speedup loading page
        this._planCards.updateValidations();
 
        for(var pId in this.gamedatas.players){
+         if(pId == this.player_id)
+           continue;
+
          let player = this.gamedatas.players[pId];
          var nPermit = player.scoreSheet.scribbles.reduce((n, scribble) => n + (scribble.type == "permit-refusal"? 1 : 0), 0);
          $('permit-refusal-status-' + pId).innerHTML = nPermit;

@@ -112,3 +112,6 @@
   1h - Add user option for EOT animation + add solo ending + add reset button
   1h - Fixing overview and score that did not match + improving temp majority
   4h - working on player info board
+
+03/12 :
+  2h : Fixing forced refresh when concurent action + adding deck count

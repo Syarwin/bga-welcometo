@@ -173,16 +173,51 @@
 
 
 .welcometo-current-player-board {
-  margin:10px;
-  padding-top:10px;
-  border-top:1px solid #aaa;
+  margin:10px 0px;
+//  padding-top:10px;
+//  border-top:1px solid #aaa;
   display:flex;
   justify-content: space-around;
   flex-wrap:wrap;
 
+  #cards-count {
+    display:flex;
+    height:40px;
+    width: 35px;
+    margin-left: 2px;
+
+    div, div::after, div::before {
+      width:27px;
+      height:35px;
+      transform-origin: left bottom;
+    }
+
+    div {
+      position:relative;
+      font-family: "Bebas";
+      font-size: 23px;
+      @include centered;
+
+      &::after, &::before {
+        content:"";
+        position: absolute;
+        z-index:-1;
+        border-radius:6px;
+        border:1px solid #555;
+        box-shadow:1px 1px 1px black;
+        background-color: #8b7f73;
+      }
+
+      &::before {
+        transform:translateY(1px) translateX(2px) rotate(6deg);
+      }
+    }
+  }
+
   #show-overview, #layout-settings, #show-helpsheet {
     height:40px;
     width:50px;
+    @include centered;
 
     &:hover {
       color:grey;
@@ -197,6 +232,9 @@
       width:auto;
       height:40px;
     }
+  }
+  #show-overview {
+    width:40px;
   }
 
   #layout-settings{

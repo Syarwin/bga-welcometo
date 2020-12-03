@@ -36,7 +36,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     onClickPassAction(){
-      this.takeAction("passAction");
+      this.takeAction("passAction", {}, true);
     },
 
 
@@ -57,7 +57,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
      this.addPassActionButton();
      this._scoreSheet.promptZones(type, args.zones,  (zone) => {
-       this.takeAction('scribbleZone', zone);
+       this.takeAction('scribbleZone', zone, true);
      });
    },
 
@@ -67,7 +67,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
        zone.y = zones[0][1];
 
      this._scoreSheet.clearPossible();
-     this.takeAction('scribbleZone', zone);
+     this.takeAction('scribbleZone', zone, true);
    },
 
 
@@ -107,7 +107,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     onChooseNumberBis(number, x, y){
       debug("You chose to write", number, " bis at location ", x, y);
-      this.takeAction("writeNumberBis", { number: number, x:x, y:y});
+      this.takeAction("writeNumberBis", { number: number, x:x, y:y}, true);
     },
 
   });

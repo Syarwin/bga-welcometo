@@ -103,22 +103,6 @@ class welcometo extends Table
    */
   protected function getAllDatas()
   {
-    // TODO : remove
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;");
-    }
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `log` LIKE 'move_id'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `log` ADD `move_id` INT(11);");
-    }
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
-    }
-
-
-
     $pId = self::getCurrentPId();
     return [
       'players' => WTO\Game\Players::getUiData(),
@@ -127,6 +111,7 @@ class welcometo extends Table
       'planValidations' => WTO\PlanCards::getCurrentValidations(),
       'options' => WTO\Game\Globals::getOptions(),
       'turn' => WTO\Game\Globals::getCurrentTurn(),
+      'cardsLeft' => WTO\ConstructionCards::getInLocation('deck')->count(),
       'canceledNotifIds' => WTO\Game\Log::getCanceledNotifIds(),
       'nextPlayerTable' => $this->getNextPlayerTable(),
       'prevPlayerTable' => $this->getPrevPlayerTable(),
@@ -190,20 +175,6 @@ class welcometo extends Table
    */
   public function upgradeTableDb($from_version)
   {
-    // TODO : remove
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;");
-    }
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `log` LIKE 'move_id'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `log` ADD `move_id` INT(11);");
-    }
-    $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `plan_validation` LIKE 'reshuffle'");
-    if(is_null($result)){
-      self::DbQuery("ALTER TABLE `plan_validation` ADD `reshuffle` BOOLEAN DEFAULT 0;");
-    }
-
   }
 
 

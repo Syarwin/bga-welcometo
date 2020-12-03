@@ -61,11 +61,26 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      /*
  		 * Make an AJAX call with automatic lock
  		 */
-     takeAction(action, data, callback) {
+     takeAction(action, data, reEnterStateOnError) {
        data = data || {};
        data.lock = true;
-       callback = callback || function(res){ };
-       this.ajaxcall("/" + this.game_name + "/" + this.game_name + "/" + action + ".html", data, this, callback);
+       let promise = new Promise((resolve, reject) => {
+         this.ajaxcall(
+           "/" + this.game_name + "/" + this.game_name + "/" + action + ".html",
+          data,
+          this,
+          (data) => resolve(data),
+          (isError,message,code) => {
+            if(isError)
+              reject(message, code);
+          });
+       });
+
+       if(reEnterStateOnError){
+         promise.catch(() => this.onEnteringState(this.gamedatas.gamestate.name, this.gamedatas.gamestate) );
+       }
+
+       return promise;
      },
 
 

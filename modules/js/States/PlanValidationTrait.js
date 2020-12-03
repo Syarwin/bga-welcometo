@@ -51,7 +51,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     onChooseEstates(estates){
       debug("You chose following estates for the plan :", estates);
-      this.takeAction("validatePlan", { planArg : JSON.stringify(estates) });
+      this.takeAction("validatePlan", { planArg : JSON.stringify(estates) }).then(() => this._scoreSheet.clearPossible() );
     },
   });
 });

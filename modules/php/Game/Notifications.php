@@ -32,6 +32,7 @@ class Notifications
     $data = [
       'cards' => $cards,
       'turn' => Globals::getCurrentTurn(),
+      'cardsLeft' => \WTO\ConstructionCards::getInLocation('deck')->count(),
     ];
 
     $msg = clienttranslate("New cards are drawn.");

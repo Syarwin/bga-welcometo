@@ -134,6 +134,10 @@ var jstpl_playerBoard = `
 
 var jstpl_currentPlayerBoard = `
 <div class="welcometo-current-player-board">
+  <div id="cards-count">
+    <div id="cards-count-status">\${cards}</div>
+  </div>
+
   <div id="show-overview">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <g class="fa-group">

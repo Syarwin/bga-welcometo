@@ -21,6 +21,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       debug("Notif: dealing new cards", n);
       this._constructionCards.newTurn(n.args.cards, n.args.turn);
       dojo.attr("game_play_area", "data-turn", n.args.turn);
+      $('cards-count-status').innerHTML = parseInt(n.args.cardsLeft / (this._isStandard? 3 : 1))
     },
 
 
