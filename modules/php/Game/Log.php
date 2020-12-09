@@ -18,7 +18,6 @@ class Log extends \WTO\Helpers\DB_Manager
       'pId' => (int) $row['player_id'],
       'turn' => (int) $row['turn'],
       'action' => $row['action'],
-      'moveId' => $row['move_id'],
       'arg' => json_decode($row['action_arg'], true),
     ];
   }
@@ -46,7 +45,6 @@ class Log extends \WTO\Helpers\DB_Manager
   public static function insert($player, $action, $args = [])
   {
     $pId = is_integer($player)? $player : $player->getId();
-    $moveId = self::getUniqueValueFromDB("SELECT global_value FROM global WHERE global_id = 3");
     $turn = Globals::getCurrentTurn();
     $actionArgs = json_encode($args);
     self::DB()->insert([
@@ -54,7 +52,6 @@ class Log extends \WTO\Helpers\DB_Manager
       'player_id' => $pId,
       'action' => $action,
       'action_arg' => $actionArgs,
-      'move_id' => $moveId,
     ]);
   }
 
@@ -74,6 +71,36 @@ class Log extends \WTO\Helpers\DB_Manager
     return self::getFilteredQuery($pId)->where('action', $action)->limit($limit)->get($limit == 1);
   }
 
+
+
+/////////////////////////////////
+/////////////////////////////////
+//////////   Setters   //////////
+/////////////////////////////////
+/////////////////////////////////
+  public static function clearTurn($pId)
+  {
+    // Cancel the game notifications
+    foreach(self::getFilteredQuery($pId)->get(false) as $action){
+      if($action['action'] == "changeStat"){
+        Stats::inc($action['arg']['name'], $action['pId'], -$action['arg']['value'], false);
+      }
+    }
+
+    // Clear the log
+    self::getFilteredQuery($pId)->delete()->run();
+
+    // Cancel the notifications
+    return self::cancelNotifs($pId);
+  }
+
+
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+//////////   CANCEL NOTIFICATIONS   //////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
 
   /*
    * getCancelMoveIds : get all cancelled notifs IDs from BGA gamelog, used for styling the notifications on page reload
@@ -95,36 +122,29 @@ class Log extends \WTO\Helpers\DB_Manager
 
 
 
-/////////////////////////////////
-/////////////////////////////////
-//////////   Setters   //////////
-/////////////////////////////////
-/////////////////////////////////
-  public static function clearTurn($pId)
+  /*
+   * getLastStartTurnNotif : find the packet_id of the last notifications
+   */
+  protected function getLastStartTurnNotif(){
+    $packets = self::getObjectListFromDb("SELECT `gamelog_packet_id`, `gamelog_notification` FROM gamelog WHERE `gamelog_player` IS NULL ORDER BY gamelog_packet_id DESC");
+    foreach($packets as $packet){
+      $data = \json_decode($packet['gamelog_notification'], true);
+      foreach($data as $notification){
+        if($notification['type'] == 'newCards')
+          return $packet['gamelog_packet_id'];
+      }
+    }
+    return 0;
+  }
+
+
+  protected function cancelNotifs($pId)
   {
-    $moveIds = [];
-
-    // Cancel the game notifications
-    foreach(self::getFilteredQuery($pId)->get(false) as $action){
-      if(!is_null($action["moveId"])){
-        array_push($moveIds, $action["moveId"]);
-      }
-
-      if($action['action'] == "changeStat"){
-        Stats::inc($action['arg']['name'], $action['pId'], -$action['arg']['value'], false);
-      }
-    }
-
-    $notifIds = [];
-    if (!empty($moveIds)) {
-      $whereClause = "WHERE `gamelog_move_id` IN (" . implode(',', $moveIds) . ")";
-      $notifIds = self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog $whereClause", true));
-      self::DbQuery("UPDATE gamelog SET `cancel` = 1 $whereClause");
-    }
-
-    // Clear the log
-    self::getFilteredQuery($pId)->delete()->run();
-
+    $packetId = self::getLastStartTurnNotif();
+    $whereClause = "WHERE `gamelog_current_player` = $pId AND `gamelog_packet_id` > $packetId";
+    $notifIds = self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog $whereClause", true));
+    self::DbQuery("UPDATE gamelog SET `cancel` = 1 $whereClause");
     return $notifIds;
   }
+
 }

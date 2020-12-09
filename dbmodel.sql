@@ -8,7 +8,6 @@
 
 CREATE TABLE IF NOT EXISTS `log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `move_id` int(11),
   `turn` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
   `action` varchar(16) NOT NULL,

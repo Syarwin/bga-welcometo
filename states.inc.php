@@ -63,11 +63,12 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
     "type" => "private",
     "args" => "argChooseCards",
-    "possibleactions" => ["chooseCards", "refusal", "roundabout"],
+    "possibleactions" => ["chooseCards", "refusal", "roundabout", "restart"],
     "transitions" => [
       'writeNumber' => ST_WRITE_NUMBER,
       'refusal' => ST_CHOOSE_PLAN,
       'roundabout' => ST_ROUNDABOUT,
+      'restart' => ST_CHOOSE_CARDS,
     ]
   ],
 

@@ -177,7 +177,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
        var button = $(buttonId);
        var isReadOnly = this.isReadOnly();
        if (button == null || isReadOnly || pref == 2) {
-         debug('Ignoring startActionTimer(' + buttonId + ')', 'readOnly=' + isReadOnly, 'prefValue=' + prefValue);
+         debug('Ignoring startActionTimer(' + buttonId + ')', 'readOnly=' + isReadOnly, 'prefValue=' + pref);
          return;
        }
 
@@ -200,6 +200,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
            button.click();
          }
        };
+       dojo.connect($(buttonId), "click", () => this.stopActionTimer());
        this._actionTimerFunction();
        this._actionTimerId = window.setInterval(this._actionTimerFunction, 1000);
        debug('Timer #' + this._actionTimerId + ' ' + buttonId + ' start');

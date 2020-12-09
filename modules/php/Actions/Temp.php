@@ -72,7 +72,7 @@ class Temp extends Zone
   public function getScoreSolo($player){
     $tempCounters = self::computeCounters();
     $pId = $player->getId();
-    $score =  (isset($tempCounters[$pId]) && $tempCounters[$pId] > 6)? 7 : 0 ;
+    $score =  (isset($tempCounters[$pId]) && $tempCounters[$pId] >= 6)? 7 : 0 ;
     return [ 'temp-total' => $score];
   }
 }

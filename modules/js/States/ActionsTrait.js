@@ -67,7 +67,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
        zone.y = zones[0][1];
 
      this._scoreSheet.clearPossible();
-     this.takeAction('scribbleZone', zone, true);
+     this.takeAction('scribbleZone', zone);
    },
 
 

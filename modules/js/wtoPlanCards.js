@@ -77,7 +77,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], function (dojo, decla
           else
             low.push(name);
 
-          if(pId != -1)
+          if(pId != -1 && $('plan-status-' + (i+1) + '-' + pId))
             $('plan-status-' + (i+1) + '-' + pId).innerHTML = validations[pId].rank + 1;
         }
 
