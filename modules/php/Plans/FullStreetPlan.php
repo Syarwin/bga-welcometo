@@ -12,7 +12,8 @@ class FullStreetPlan extends AbstractPlan
     parent::__construct($info, $card);
 
     $this->desc = [
-      clienttranslate("To fulfill this City Plan, all houses must be built on the required street."),
+      clienttranslate("To fulfill this City Plan, all houses must be built on the required street (roundabout also works)."),
+      clienttranslate("Warning: you cannot re-use a house already used for another city plan!"),
     ];
   }
 

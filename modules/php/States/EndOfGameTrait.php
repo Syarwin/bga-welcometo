@@ -76,7 +76,13 @@ trait EndOfGameTrait
     });
 
     // Store them
+    $i = 0;
+    $previous = [];
     foreach(array_keys($scoresAux) as $i => $pId){
+      if($scoresAux[$pId] != $previous){
+        $previous = $scoresAux[$pId];
+        $i++;
+      }
       Players::DB()->update(['player_score_aux' => $i])->run($pId);
     }
 

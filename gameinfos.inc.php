@@ -29,7 +29,7 @@ $gameinfos = [
   'medium_additional_time' => 40,
   'slow_additional_time' => 50,
 
-  'tie_breaker_description' => totranslate("In case of a draw, the player with the most completed estates wins. In case of another draw, the one with the most size 1 estates wins, then size 2, etc."),
+  'tie_breaker_description' => totranslate("In case of a draw, the player with the most completed estates wins. In case of another draw, the one with the most size 1 estates wins, then size 2, etc. The number displayed here is NOT representing any number of estates, it's just the player ordering with respect to these tie breaker rules."),
   'losers_not_ranked' => false,
 
   'is_beta' => 1,

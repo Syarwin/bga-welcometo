@@ -27,7 +27,7 @@ $stats_type = [
 
     "ending" => [
       "id" => STAT_EOG,
-      "name" => totranslate("Permit refusal ending"),
+      "name" => totranslate("End of game trigger"),
       "type" => "int"
     ],
 /*
@@ -54,9 +54,9 @@ $stats_type = [
   "value_labels" => [
   		STAT_EOG => [
   			0 => totranslate("None"),
-  			1 => totranslate("Permit refusal ending"),
-  			2 => totranslate("Three plans completed ending"),
-  			3 => totranslate("All houses built ending"),
+        1 => totranslate("All houses built ending"),
+        2 => totranslate("Three plans completed ending"),
+  			3 => totranslate("Permit refusal ending"),
   			4 => totranslate("End of deck ending (solo mode)"),
   		]
   ],

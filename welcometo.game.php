@@ -64,6 +64,9 @@ class welcometo extends Table
       'optionExpert'   => OPTION_EXPERT,
       'currentTurn' => GLOBAL_CURRENT_TURN,
     ]);
+
+    // EXPERIMENTAL to avoid deadlocks
+    $this->bIndependantMultiactiveTable = true;
   }
   public static function get()
   {
@@ -175,6 +178,23 @@ class welcometo extends Table
    */
   public function upgradeTableDb($from_version)
   {
+
+    if( $from_version <= 2012091842){
+      // ! important ! Use DBPREFIX_<table_name> for all tables
+      $sql = "CREATE TABLE `DBPREFIX_playermultiactive` (
+        `ma_player_id` int UNSIGNED NOT NULL,
+        `ma_is_multiactive` tinyint NOT NULL DEFAULT '0'
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ";
+      self::applyDbUpgradeToAllDB( $sql );
+
+      $sql = "ALTER TABLE `DBPREFIX_playermultiactive`
+      ADD PRIMARY KEY (`ma_player_id`);";
+      self::applyDbUpgradeToAllDB( $sql );
+
+      $sql = "INSERT INTO DBPREFIX_playermultiactive (ma_player_id,ma_is_multiactive)
+      (SELECT player_id, player_is_multiactive FROM DBPREFIX_player )";
+      self::applyDbUpgradeToAllDB( $sql );
+    }
   }
 
 

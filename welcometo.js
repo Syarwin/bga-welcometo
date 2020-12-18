@@ -281,7 +281,9 @@ dojo.destroy('debug_output'); // Speedup loading page
           'plan0' : scores['plan-0']? (scores['plan-0'] + '<i class="fa fa-star"></i>') : "-",
           'plan1' : scores['plan-1']? (scores['plan-1'] + '<i class="fa fa-star"></i>') : "-",
           'plan2' : scores['plan-2']? (scores['plan-2'] + '<i class="fa fa-star"></i>') : "-",
-          'park' : scores['park-total'],
+          'park1' : scores['park-0'],
+          'park2' : scores['park-1'],
+          'park3' : scores['park-2'],
           'pool' : scores['pool-total'],
           'tempNumber' : nTemp,
           'tempScore' : scores['temp-total'],
@@ -296,7 +298,7 @@ dojo.destroy('debug_output'); // Speedup loading page
       }
 
       let box = $("ebd-body").getBoundingClientRect();
-      let modalWidth = 860;
+      let modalWidth = 1000;
       let newModalWidth = box['width']*0.8;
       let modalScale = newModalWidth / modalWidth;
       if(modalScale > 1) modalScale = 1;

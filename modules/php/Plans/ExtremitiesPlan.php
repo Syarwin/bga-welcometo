@@ -12,6 +12,7 @@ class ExtremitiesPlan extends AbstractPlan
 
     $this->desc = [
       clienttranslate("To fulfill this City Plan, the first and last house of each street must be built."),
+      clienttranslate("Warning: you cannot re-use a house already used for another city plan!"),
     ];
   }
 

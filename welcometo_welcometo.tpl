@@ -217,7 +217,7 @@ var jstpl_overview = `
       <th id="overview-plan-1">n°1</th>
       <th id="overview-plan-2">n°2</th>
       <th id="overview-plan-3">n°3</th>
-      <th id="overview-park"><div></div></th>
+      <th id="overview-park" colspan="3"><div></div></th>
       <th id="overview-pool"><div></div></th>
       <th id="overview-temp"><div>*</div></th>
       <th id="overview-estates"><div></div></th>
@@ -238,7 +238,9 @@ var jstpl_overviewRow = `
   <td>\${plan0}</td>
   <td>\${plan1}</td>
   <td>\${plan2}</td>
-  <td>\${park}<i class="fa fa-star"></i></td>
+  <td>\${park1}<i class="fa fa-star"></i></td>
+  <td>\${park2}<i class="fa fa-star"></i></td>
+  <td>\${park3}<i class="fa fa-star"></i></td>
   <td>\${pool}<i class="fa fa-star"></i></td>
   <td class="overview-temp">
     <div>\${tempNumber}

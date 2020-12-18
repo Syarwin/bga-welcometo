@@ -9,7 +9,7 @@ class FiveBisPlan extends AbstractPlan
     parent::__construct($info, $card);
 
     $this->desc = [
-      clienttranslate("To fulfill this City Plan, 5 duplicate houses' numers (bis) must be built on the same street."),
+      clienttranslate("To fulfill this City Plan, 5 duplicate houses' numers (bis) must be built on the SAME street."),
     ];
   }
 

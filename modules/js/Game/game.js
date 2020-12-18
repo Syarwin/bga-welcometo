@@ -294,9 +294,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      */
     onPlaceLogOnChannel(msg){
       var currentLogId = this.notifqueue.next_log_id;
-      this.inherited(arguments);
+      var res = this.inherited(arguments);
       this._notif_uid_to_log_id[msg.uid] = currentLogId;
       this._last_notif = msg.uid;
+      return res;
     },
 
 

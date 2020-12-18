@@ -23,7 +23,8 @@ class EstatePlan extends AbstractPlan
 
     $this->desc = [
       clienttranslate("To fullfill this City Plan, the player must complete all the required housing estates."),
-      clienttranslate("The estates do not have to be in the same street. There is no restriction to the location of a Plan's estates."),
+      clienttranslate("The estates do not have to be in the same street. There is no restriction to the location of a Plan's estates.").'<br />',
+      clienttranslate("Estate sizes required: ").implode(", ", $this->conditions),
     ];
   }
 
@@ -35,7 +36,11 @@ class EstatePlan extends AbstractPlan
     // Remove estates already used
     $topFences = TopFence::getOfPlayerStructured($player);
     Utils::filter($estates, function($estate) use ($topFences){
-      return is_null($topFences[$estate['x']][$estate['y']]);
+      for($i = 0; $i < $estate['size']; $i++){
+        if(!is_null($topFences[$estate['x']][$estate['y'] + $i]))
+          return false;
+      }
+      return true;
     });
 
     return $estates;

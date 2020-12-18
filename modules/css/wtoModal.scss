@@ -111,15 +111,19 @@
 
 #popin_chooseNumber {
   width:auto;
+  max-width: 80%;
+
   #popin_chooseNumber_contents {
     min-height:200px;
     display:flex;
     justify-content: space-around;
-    margin: 30px 20px;
+    margin: 20px 20px;
+    flex-wrap: wrap;
 
     div {
+      flex-shrink: 0;
       height:200px;
-      margin:0 20px;
+      margin:10px 20px;
       width:$cardWidth * 200px / $cardHeight;
       background-image:url("img/construction_front.jpg");
       @media (max-width: $breakpoint) { background-image:url("img/construction_front_low.jpg"); }
@@ -157,7 +161,7 @@
 #popin_showOverview {
   z-index:2000;
   padding:0;
-  width:860px;
+  width:1000px;
 
   &::before, &::after {
     box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
@@ -251,6 +255,7 @@
             vertical-align: middle;
             text-align: center;
             padding:5px 8px;
+            word-wrap:anywhere;
             @include handwritten;
 
             border-right:1px solid rgba(0,0,0,0.2);
