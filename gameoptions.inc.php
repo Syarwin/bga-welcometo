@@ -26,7 +26,8 @@ $game_options = [
       ],
       ON => [
         'name' => totranslate('Yes'),
-        'tmdisplay' => totranslate('Using advanced variant'),
+        'tmdisplay' => totranslate('Advanced variant'),
+        'description' => totranslate('Additional City Plans and Roundabouts'),
         'nobeginner' => true
       ]
     ]
@@ -40,7 +41,8 @@ $game_options = [
       ],
       ON => [
         'name' => totranslate('Yes'),
-        'tmdisplay' => totranslate('Using expert rules'),
+        'tmdisplay' => totranslate('Expert rules'),
+        'description' => totranslate('Choose one card for the house number, one card for the effect, and pass the remaining card to the next player'),
         'nobeginner' => true
       ]
     ],
