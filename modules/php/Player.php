@@ -203,7 +203,13 @@ class Player extends Helpers\DB_Manager
   public function giveThirdCardToNextPlayer()
   {
       $stacks = $this->getSelectedCards();
-      $pId = Players::getNextId($this);
+      if($stacks == null || count($stacks) < 2)
+        return;
+
+      $pId = $this->id;
+      do {
+        $pId = Players::getNextId($pId);
+      } while(Players::get($pId)->isZombie());
       ConstructionCards::prepareCardsForNextTurn($this->id, $stacks, $pId);
   }
 

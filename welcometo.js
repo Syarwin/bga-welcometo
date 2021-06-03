@@ -70,8 +70,7 @@ define([
      */
     setup(gamedatas) {
       this.inherited(arguments);
-
-dojo.destroy('debug_output'); // Speedup loading page
+      dojo.destroy('debug_output'); // Speedup loading page
 
       debug('SETUP', gamedatas);
       this._isStandard = gamedatas.options.standard;
@@ -142,6 +141,8 @@ dojo.destroy('debug_output'); // Speedup loading page
 
       // Update player panel counters
       this.updatePlayersData();
+
+      g_sitecore = this;
      },
 
      updatePlayersData(){
@@ -336,7 +337,8 @@ dojo.destroy('debug_output'); // Speedup loading page
         slideshow:true,
         updateTitle:true,
       });
-
+      g_sitecore = this;
+      
 //      new welcometo.scoreSheet(this.gamedatas.players[pId], 'popin_showScoreSheet_contents');
 
       let box = $("ebd-body").getBoundingClientRect();

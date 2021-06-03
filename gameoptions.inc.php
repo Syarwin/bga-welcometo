@@ -19,7 +19,7 @@ require_once('modules/php/constants.inc.php');
 
 $game_options = [
   OPTION_ADVANCED => [
-    'name' => totranslate('Advanced variant'),
+    'name' => totranslate('Advanced variant (new city plans and roundabouts)'),
     'values' => [
       OFF => [
         'name' => totranslate('No')
@@ -27,7 +27,7 @@ $game_options = [
       ON => [
         'name' => totranslate('Yes'),
         'tmdisplay' => totranslate('Using advanced variant'),
-        'nobeginner' => true
+        'nobeginner' => true,
       ]
     ]
   ],

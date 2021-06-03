@@ -37,7 +37,7 @@ class Players extends \WTO\Helpers\DB_Manager
 
     $pIds = array_keys($players);
 
-    if(true){
+    if(false){
     Houses::add($pIds[0], 2, [0,0], false);
     Houses::add($pIds[0], 2, [0,1], false);
     Houses::add($pIds[0], 3, [0,2], false);
@@ -175,7 +175,7 @@ class Players extends \WTO\Helpers\DB_Manager
   public function getNextId($player)
   {
     $table = welcometo::get()->getNextPlayerTable();
-    return $table[$player->getId()];
+    return $table[is_int($player)? $player : $player->getId()];
   }
 
   /*
