@@ -78,7 +78,7 @@ trait EndOfGameTrait
     // Store them
     $i = 0;
     $previous = [];
-    foreach(array_keys($scoresAux) as $i => $pId){
+    foreach(array_keys($scoresAux) as $pId){
       if($scoresAux[$pId] != $previous){
         $previous = $scoresAux[$pId];
         $i++;

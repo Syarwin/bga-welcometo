@@ -23,8 +23,10 @@ class EstatePlan extends AbstractPlan
 
     $this->desc = [
       clienttranslate("To fullfill this City Plan, the player must complete all the required housing estates."),
-      clienttranslate("The estates do not have to be in the same street. There is no restriction to the location of a Plan's estates.").'<br />',
-      clienttranslate("Estate sizes required: ").implode(", ", $this->conditions),
+      clienttranslate("The estates do not have to be in the same street. There is no restriction to the location of a Plan's estates."),
+      '<br />',
+      clienttranslate("Estate sizes required: "),
+      implode(", ", $this->conditions),
     ];
   }
 

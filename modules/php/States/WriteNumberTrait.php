@@ -28,6 +28,10 @@ trait WriteNumberTrait
   ///////////////////////////////
   function argChooseCards($player)
   {
+    if($player->isZombie()){
+      return [];
+    }
+    
     $data = $this->argPrivatePlayerTurn($player);
     $data['selectableStacks'] = $player->getAvailableStacks();
     if(empty($data['selectableStacks'])){

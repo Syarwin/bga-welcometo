@@ -71,6 +71,10 @@ trait TurnTrait
    */
   function argPrivatePlayerTurn($player)
   {
+    if($player->isZombie()){
+      return [];
+    }
+
     $data = [
       'selectedCards' => $player->getSelectedCards(),
       'selectedPlans' => $player->getSelectedPlans(),
@@ -88,7 +92,9 @@ trait TurnTrait
     // In expert mode, prepare non-used cards for next player
     if(Globals::isExpert()){
       foreach(Players::getAll() as $player){
-        $player->giveThirdCardToNextPlayer();
+        if(!$player->isZombie()){
+          $player->giveThirdCardToNextPlayer();
+        }
       }
     }
 
