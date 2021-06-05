@@ -175,6 +175,9 @@ class ConstructionCards extends Helpers\Pieces
       // In expert mode, the first card was drafter by another player in prev turn
       $fromLocation = ($stackId == 0 && Globals::isExpert())? "for_{$playerId}" : "deck";
       $drawnCard = self::pickOneForLocation($fromLocation, $stack);
+      if(is_null($drawnCard)){ // No Idea why it happens but it seems sometimes there are bug in passing cards in expert mode
+        $drawnCard = self::pickOneForLocation('deck', $stack);
+      }
 
       // Drawing the solo card ? Re-draw another card immediately
       if ($drawnCard['action'] == SOLO) {
