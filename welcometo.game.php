@@ -26,14 +26,13 @@ foreach($autoloadFuncs as $unregisterFunc)
 }
 */
 
-$swdNamespaceAutoload = function ($class)
-{
+$swdNamespaceAutoload = function ($class) {
   $classParts = explode('\\', $class);
   if ($classParts[0] == 'WTO') {
     array_shift($classParts);
-    $file = dirname(__FILE__) . "/modules/php/" . implode(DIRECTORY_SEPARATOR, $classParts) . ".php";
+    $file = dirname(__FILE__) . '/modules/php/' . implode(DIRECTORY_SEPARATOR, $classParts) . '.php';
     if (file_exists($file)) {
-      require_once($file);
+      require_once $file;
     } else {
       var_dump("Impossible to load welcometo class : $class");
     }
@@ -41,8 +40,7 @@ $swdNamespaceAutoload = function ($class)
 };
 spl_autoload_register($swdNamespaceAutoload, true, true);
 
-require_once(APP_GAMEMODULE_PATH . 'module/table/table.game.php');
-
+require_once APP_GAMEMODULE_PATH . 'module/table/table.game.php';
 
 class welcometo extends Table
 {
@@ -61,7 +59,8 @@ class welcometo extends Table
 
     self::initGameStateLabels([
       'optionAdvanced' => OPTION_ADVANCED,
-      'optionExpert'   => OPTION_EXPERT,
+      'optionExpert' => OPTION_EXPERT,
+      'optionBoard' => OPTION_BOARD,
       'currentTurn' => GLOBAL_CURRENT_TURN,
     ]);
 
@@ -73,12 +72,10 @@ class welcometo extends Table
     return self::$instance;
   }
 
-
   protected function getGameName()
   {
-    return "welcometo";
+    return 'welcometo';
   }
-
 
   /*
    * setupNewGame:
@@ -97,7 +94,6 @@ class welcometo extends Table
     self::setGameStateValue('currentTurn', 1);
     $this->activeNextPlayer();
   }
-
 
   /*
    * getAllDatas:
@@ -121,7 +117,6 @@ class welcometo extends Table
     ];
   }
 
-
   /*
    * getGameProgression:
    *  Compute and return the current game progression approximation
@@ -129,11 +124,8 @@ class welcometo extends Table
    */
   public function getGameProgression()
   {
-    return 100 * self::getGameStateValue('currentTurn') / 33;
+    return (100 * self::getGameStateValue('currentTurn')) / 33;
   }
-
-
-
 
   ////////////////////////////////////
   ////////////   Zombie   ////////////
@@ -146,7 +138,7 @@ class welcometo extends Table
   public function zombieTurn($state, $activePlayer)
   {
     // Only one player active => try to zombiepass transition
-    if ($state['type'] === "activeplayer") {
+    if ($state['type'] === 'activeplayer') {
       if (array_key_exists('zombiePass', $state['transitions'])) {
         $this->gamestate->nextState('zombiePass');
         return;
@@ -154,13 +146,15 @@ class welcometo extends Table
     }
 
     // Multiactive => make player non-active
-    if ($state['type'] === "multipleactiveplayer") {
+    if ($state['type'] === 'multipleactiveplayer') {
       // Make sure player is in a non blocking status for role turn
       $this->gamestate->setPlayerNonMultiactive($activePlayer, '');
       return;
     }
 
-    throw new BgaVisibleSystemException('Zombie player ' . $activePlayer . ' stuck in unexpected state ' . $state['name']);
+    throw new BgaVisibleSystemException(
+      'Zombie player ' . $activePlayer . ' stuck in unexpected state ' . $state['name']
+    );
   }
 
   /////////////////////////////////////
@@ -178,37 +172,37 @@ class welcometo extends Table
    */
   public function upgradeTableDb($from_version)
   {
-
-    if( $from_version <= 2012091842){
+    if ($from_version <= 2012091842) {
       // ! important ! Use DBPREFIX_<table_name> for all tables
       $sql = "CREATE TABLE `DBPREFIX_playermultiactive` (
         `ma_player_id` int UNSIGNED NOT NULL,
         `ma_is_multiactive` tinyint NOT NULL DEFAULT '0'
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ";
-      self::applyDbUpgradeToAllDB( $sql );
+      self::applyDbUpgradeToAllDB($sql);
 
       $sql = "ALTER TABLE `DBPREFIX_playermultiactive`
       ADD PRIMARY KEY (`ma_player_id`);";
-      self::applyDbUpgradeToAllDB( $sql );
+      self::applyDbUpgradeToAllDB($sql);
 
       $sql = "INSERT INTO DBPREFIX_playermultiactive (ma_player_id,ma_is_multiactive)
       (SELECT player_id, player_is_multiactive FROM DBPREFIX_player )";
-      self::applyDbUpgradeToAllDB( $sql );
+      self::applyDbUpgradeToAllDB($sql);
     }
   }
-
 
   ///////////////////////////////////////////////////////////
   // Exposing proteced method, please use at your own risk //
   ///////////////////////////////////////////////////////////
 
   // Exposing protected method getCurrentPlayerId
-  public static function getCurrentPId(){
+  public static function getCurrentPId()
+  {
     return self::getCurrentPlayerId();
   }
 
   // Exposing protected method translation
-  public static function translate($text){
+  public static function translate($text)
+  {
     return self::_($text);
   }
 }

@@ -27,6 +27,11 @@ class Globals extends \APP_DbObject
     return boolval(Players::count() == 1);
   }
 
+  public static function getBoard()
+  {
+    return intval(welcometo::get()->getGameStateValue("optionBoard"));
+  }
+
   public static function isStandard()
   {
     return !self::isExpert() && !self::isSolo();
@@ -38,6 +43,7 @@ class Globals extends \APP_DbObject
     return [
       "advanced" => self::isAdvanced(),
       "expert" => self::isExpert(),
+      "board" => self::getBoard(),
 
       // Not 100% needed as this can recomputed on client side, but who cares ?
       "solo" => self::isSolo(),

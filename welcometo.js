@@ -81,6 +81,11 @@ define([
       // Add current turn data to highlight recent moves
       dojo.attr("game_play_area", "data-turn", gamedatas.turn);
 
+      // Add board info to display correct scoresheet
+      this._board = gamedatas.options.board;
+      dojo.attr("game_play_area", "data-board", this._board);
+
+
       // Create the construction and plan cards
       this._constructionCards = new welcometo.constructionCards(gamedatas);
       this._planCards = new welcometo.planCards(gamedatas, this.player_id);
@@ -165,32 +170,6 @@ define([
      },
 
      onUpdateActionButtons(){
-       /*
-       this.addPrimaryActionButton('btnTest2', "Test modal", () => {
-         this.notif_scorePlan({
-  "uid": "5fc648eeb890f",
-  "type": "scorePlan",
-  "log": "You validate plan n°${stack}",
-  "args": {
-    "validation": {
-      "rank": 0,
-      "turn": "1"
-    },
-    "planId": "16",
-    "stack": 3,
-    "moveId": "6",
-    "i18n": [
-      "moveId"
-    ]
-  },
-  "synchro": 0,
-  "channelorig": "/player/p2322021",
-  "gamenameorig": "welcometo",
-  "time": 1606830318,
-  "bIsTableMsg": false
-});
-       });
-       */
      },
 
      /*
@@ -338,7 +317,7 @@ define([
         updateTitle:true,
       });
       g_sitecore = this;
-      
+
 //      new welcometo.scoreSheet(this.gamedatas.players[pId], 'popin_showScoreSheet_contents');
 
       let box = $("ebd-body").getBoundingClientRect();

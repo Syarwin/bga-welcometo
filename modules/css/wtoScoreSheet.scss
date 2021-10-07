@@ -1,23 +1,24 @@
-
-$scoreSheetSize:1544px;
+$scoreSheetSize: 1544px;
 
 .score-sheet-container {
   width: $scoreSheetSize;
-  height:$scoreSheetSize;
-  position:relative;
+  height: $scoreSheetSize;
+  position: relative;
 
-  &[data-slideshow="0"] {
-    .slideshow-left, .slideshow-right {
-      display:none;
+  &[data-slideshow='0'] {
+    .slideshow-left,
+    .slideshow-right {
+      display: none;
     }
   }
 
-  .slideshow-left, .slideshow-right {
+  .slideshow-left,
+  .slideshow-right {
     position: absolute;
     height: 100%;
     width: 70px;
     z-index: 3;
-    top:0;
+    top: 0;
     cursor: pointer;
 
     .arrow {
@@ -35,19 +36,19 @@ $scoreSheetSize:1544px;
       z-index: 4;
 
       &:hover {
-        opacity:1;
+        opacity: 1;
         border-color: white;
       }
     }
     &:hover .arrow {
-      opacity:1;
+      opacity: 1;
       border-color: white;
     }
   }
 
   .slideshow-left {
-    left:0;
-    background: linear-gradient(90deg, rgb(40, 40, 40) 0%, rgba(255,255,255,0) 100%);
+    left: 0;
+    background: linear-gradient(90deg, rgb(40, 40, 40) 0%, rgba(255, 255, 255, 0) 100%);
     .arrow {
       left: 25px;
       transform: rotate(-135deg);
@@ -55,41 +56,43 @@ $scoreSheetSize:1544px;
   }
 
   .slideshow-right {
-    right:0;
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgb(40, 40, 40) 100%);
+    right: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(40, 40, 40) 100%);
     .arrow {
       right: 25px;
       transform: rotate(45deg);
     }
   }
 
-
   .score-sheet-holder {
     width: $scoreSheetSize;
-    height:$scoreSheetSize;
-    position:relative;
+    height: $scoreSheetSize;
+    position: relative;
     overflow: hidden;
     transform-origin: top left;
   }
 
-
   .score-sheet {
     width: $scoreSheetSize;
-    height:$scoreSheetSize;
-    background-image: url("img/board.png");
+    height: $scoreSheetSize;
+    background-image: url('img/board.jpg');
     background-size: 100%;
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
 
-  /*****************************
+    [data-board='1'] & {
+      background-image: url('img/board_icecream.jpg');
+    }
+
+    /*****************************
   ******************************
   ********* UPPER PART *********
   ******************************
   *****************************/
     /////////// CITY NAME ////////////
     .cityname {
-      position:absolute;
+      position: absolute;
       top: 253px;
       left: 92px;
       width: 207px;
@@ -97,27 +100,26 @@ $scoreSheetSize:1544px;
       word-break: break-all;
       @include handwritten;
       @include centered;
-      font-size:32px;
+      font-size: 32px;
     }
-
 
     /////////// HOUSES ////////////
     .house {
-      position:absolute;
-      width:70px;
-      height:86px;
+      position: absolute;
+      width: 70px;
+      height: 86px;
       box-sizing: border-box;
-      clip-path:polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
+      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
 
       &.built {
-        border:2px solid black;
+        border: 2px solid black;
 
         .house-number {
-          margin:auto;
+          margin: auto;
           @include handwritten;
           @include centered;
-          font-size:55px;
-          line-height:61px;
+          font-size: 55px;
+          line-height: 61px;
 
           span {
             font-size: 40px;
@@ -128,27 +130,38 @@ $scoreSheetSize:1544px;
         }
       }
 
-      @each $x, $street in $houses {
-        @each $y, $house in $street {
-          &[data-x="#{$x}"][data-y="#{$y}"] {
-            left: map-get($house, 'left');
-            top: map-get($house, 'top');
+      @each $board, $h in $houses {
+        [data-board='#{$board}'] & {
+          @each $x, $street in $h {
+            @each $y, $house in $street {
+              &[data-x='#{$x}'][data-y='#{$y}'] {
+                left: map-get($house, 'left');
+                top: map-get($house, 'top');
+              }
+            }
           }
         }
       }
 
       &.unselectable:not(.built) {
-        background-color:rgba(155, 155, 155, 0.8);
-        cursor:not-allowed;
+        background-color: rgba(155, 155, 155, 0.8);
+        cursor: not-allowed;
       }
 
       &.selectable {
-        cursor:pointer;
-        background:rgba(255,0,0,0.5);
-        background-image: url("img/truelle.png");
+        cursor: pointer;
+        background: rgba(255, 0, 0, 0.5);
+        background-image: url('img/truelle.png');
         background-size: contain;
         animation: 2s ease-in-out 0.5s infinite alternate hammerHighlight;
-        @keyframes hammerHighlight { from { opacity: 1; }  to { opacity: 0; } }
+        @keyframes hammerHighlight {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
 
         /*
         &:hover {
@@ -158,7 +171,6 @@ $scoreSheetSize:1544px;
         */
       }
     }
-
 
     /////////// FENCES ////////////
     .top-fence {
@@ -173,37 +185,40 @@ $scoreSheetSize:1544px;
       height: 180px;
       width: 12px;
       box-sizing: border-box;
-      border-radius:5px;
-      border-width:2px;
+      border-radius: 5px;
+      border-width: 2px;
       @include highlight;
       &.selectable {
-        animation:borderBlink2 0.9s infinite;
+        animation: borderBlink2 0.9s infinite;
       }
     }
 
-    @each $x, $street in $fences {
-      $left:map-get($street, 'left');
-      .estate-fence[data-x="#{$x}"][data-y="-1"] {
-        left: $left - 6px;
-        top: map-get($street, 'top') - 11px;
-      }
+    @each $board, $f in $fences {
+      [data-board='#{$board}'] & {
+        @each $x, $street in $f {
+          $left: map-get($street, 'left');
+          .estate-fence[data-x='#{$x}'][data-y='-1'] {
+            left: $left - 6px;
+            top: map-get($street, 'top') - 11px;
+          }
 
-      @for $y from 1 through length(map-get($street, 'widths')) {
-        .top-fence[data-x="#{$x}"][data-y="#{$y - 1}"] {
-          left: $left;
-          top: map-get($street, 'top');
-          width: nth(map-get($street, 'widths'), $y);
-        }
+          @for $y from 1 through length(map-get($street, 'widths')) {
+            .top-fence[data-x='#{$x}'][data-y='#{$y - 1}'] {
+              left: $left;
+              top: map-get($street, 'top');
+              width: nth(map-get($street, 'widths'), $y);
+            }
 
-        $left:$left + nth(map-get($street, 'widths'), $y);
+            $left: $left + nth(map-get($street, 'widths'), $y);
 
-        .estate-fence[data-x="#{$x}"][data-y="#{$y - 1}"] {
-          left: $left - 6px;
-          top: map-get($street, 'top') - 11px;
+            .estate-fence[data-x='#{$x}'][data-y='#{$y - 1}'] {
+              left: $left - 6px;
+              top: map-get($street, 'top') - 11px;
+            }
+          }
         }
       }
     }
-
 
     /////////// POOLS /////////////
     .pool {
@@ -212,41 +227,50 @@ $scoreSheetSize:1544px;
       width: 45px;
       box-sizing: border-box;
 
-
-      @for $i from 1 through length($pools) {
-        $p:nth($pools, $i);
-        &[data-x="#{map-get($p,'x')}"][data-y="#{map-get($p,'y')}"] {
-          left: map-get($p,'left');
-          top: map-get($p,'top');
+      @each $board, $pp in $pools {
+        [data-board='#{$board}'] & {
+          @for $i from 1 through length($pp) {
+            $p: nth($pp, $i);
+            &[data-x="#{map-get($p,'x')}"][data-y="#{map-get($p,'y')}"] {
+              left: map-get($p, 'left');
+              top: map-get($p, 'top');
+            }
+          }
         }
       }
 
       svg.ladder {
-        display:none;
+        display: none;
 
         path {
-          animation:blinkColor linear 0.9s infinite;
-          stroke:white;
-          stroke-width:2px;
+          animation: blinkColor linear 0.9s infinite;
+          stroke: white;
+          stroke-width: 2px;
         }
 
         @keyframes blinkColor {
-          0%   { fill: red; }
-          49%   { fill: red; }
-          50%   { fill: black; }
-          100%   { fill: black; }
+          0% {
+            fill: red;
+          }
+          49% {
+            fill: red;
+          }
+          50% {
+            fill: black;
+          }
+          100% {
+            fill: black;
+          }
         }
       }
 
       &.selectable {
-        cursor:pointer;
+        cursor: pointer;
         svg.ladder {
-          display:block;
+          display: block;
         }
       }
     }
-
-
 
     /////////// PARKS ////////////
     .park {
@@ -255,109 +279,115 @@ $scoreSheetSize:1544px;
       width: 50px;
       box-sizing: border-box;
 
-      @each $x, $street in $parks {
-        $left:map-get($street, 'left');
-        @for $y from 1 through map-get($street, 'n') {
-          &[data-x="#{$x}"][data-y="#{$y - 1}"] {
-            left: $left + ($y - 1)*52px;
-            top: map-get($street, 'top');
+      @each $board, $pp in $parks {
+        [data-board='#{$board}'] & {
+          @each $x, $street in $pp {
+            $left: map-get($street, 'left');
+            @for $y from 1 through map-get($street, 'n') {
+              &[data-x='#{$x}'][data-y='#{$y - 1}'] {
+                left: $left + ($y - 1) * 52px;
+                top: map-get($street, 'top');
+              }
+            }
           }
         }
       }
 
       &.selectable {
-        cursor:pointer;
+        cursor: pointer;
         svg.highlight {
-          display:block;
+          display: block;
         }
       }
 
       svg {
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
 
       svg.highlight {
-        display:none;
+        display: none;
 
         .park-black {
-          fill:rgba(255,0,0,0.4);
-          stroke:black;
-          stroke-width:2px;
+          fill: rgba(255, 0, 0, 0.4);
+          stroke: black;
+          stroke-width: 2px;
         }
         .park-white {
-          fill:none;
-          stroke:white;
-          stroke-width:2px;
-          stroke-dasharray:20;
-          animation:snake linear 0.9s infinite;
+          fill: none;
+          stroke: white;
+          stroke-width: 2px;
+          stroke-dasharray: 20;
+          animation: snake linear 0.9s infinite;
         }
 
         @keyframes snake {
-          0%   { stroke-dashoffset: 40; }
-          100% { stroke-dashoffset: 0; }
+          0% {
+            stroke-dashoffset: 40;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
         }
       }
     }
-
 
     /////////// ESTATES ////////////
     .estate {
       position: absolute;
       box-sizing: border-box;
-      background-color: rgba(255,0,0,0.4);
-      cursor:pointer;
-      display:none;
+      background-color: rgba(255, 0, 0, 0.4);
+      cursor: pointer;
+      display: none;
       svg {
-        width:100%;
-        height:100%;
-        display:none;
+        width: 100%;
+        height: 100%;
+        display: none;
       }
 
       &.selected {
-        display:block;
-        background-color: rgba(0,255,0,0.4);
+        display: block;
+        background-color: rgba(0, 255, 0, 0.4);
         border: 6px solid black;
         border-radius: 6px;
 
         &.selectable svg {
-          display:none;
+          display: none;
         }
       }
 
       &.selectable {
-        display:block;
+        display: block;
 
         svg {
-          display:block;
+          display: block;
 
           rect:first-of-type {
-            fill:none;
-            stroke:white;
-            stroke-width:10;
+            fill: none;
+            stroke: white;
+            stroke-width: 10;
           }
 
           rect:last-of-type {
-            fill:none;
-            stroke:black;
-            stroke-width:10;
-            stroke-dasharray:10;
-            animation:snake linear 0.7s infinite;
+            fill: none;
+            stroke: black;
+            stroke-width: 10;
+            stroke-dasharray: 10;
+            animation: snake linear 0.7s infinite;
           }
         }
 
         &:hover svg rect:last-of-type {
-          animation:none;
-          stroke-dasharray:0;
+          animation: none;
+          stroke-dasharray: 0;
         }
       }
     }
 
-
-  /*****************************
+    /*****************************
   ******************************
   ********* LOWER PART *********
   ******************************
@@ -371,32 +401,38 @@ $scoreSheetSize:1544px;
       border-radius: 10px;
       @include highlight;
 
-      @for $x from 1 through 9 {
-        &[data-x="#{$x - 1}"] {
-          $i:ceil($x / 2);
-          top: nth($scorePools, $i);
-          left: if($x % 2 == 1, 337px, 385px);;
+      @each $board, $s in $scorePools {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 9 {
+            &[data-x='#{$x - 1}'] {
+              $i: ceil($x / 2);
+              top: nth($s, $i);
+              left: if($x % 2 == 1, 337px, 385px);
+            }
+          }
         }
       }
     }
-
 
     /////////// TEMP ////////////
     .score-temp {
       position: absolute;
       height: 42px;
       width: 42px;
-      transform:rotate(45deg);
+      transform: rotate(45deg);
       box-sizing: border-box;
 
-      @for $x from 1 through 11 {
-        &[data-x="#{$x - 1}"] {
-          top: map-get(nth($scoreTemps, $x), 'top');
-          left: map-get(nth($scoreTemps, $x), 'left');
+      @each $board, $s in $scoreTemps {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 11 {
+            &[data-x='#{$x - 1}'] {
+              top: map-get(nth($s, $x), 'top');
+              left: map-get(nth($s, $x), 'left');
+            }
+          }
         }
       }
     }
-
 
     /////////// ESTATES ////////////
     .score-estate {
@@ -407,11 +443,15 @@ $scoreSheetSize:1544px;
       border-radius: 10px;
       @include highlight;
 
-      @for $x from 1 through 6 {
-        @for $y from 1 through map-get(nth($scoreEstates, $x), 'n') {
-          &[data-x="#{$x - 1}"][data-y="#{$y - 1}"] {
-            top: map-get(nth($scoreEstates, $x), 'top') + ($y - 1)*44px;
-            left: map-get(nth($scoreEstates, $x), 'left');
+      @each $board, $s in $scoreEstates {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 6 {
+            @for $y from 1 through map-get(nth($s, $x), 'n') {
+              &[data-x='#{$x - 1}'][data-y='#{$y - 1}'] {
+                top: map-get(nth($s, $x), 'top') + ($y - 1) * 44px;
+                left: map-get(nth($s, $x), 'left');
+              }
+            }
           }
         }
       }
@@ -424,15 +464,18 @@ $scoreSheetSize:1544px;
       width: 45px;
       box-sizing: border-box;
 
-      @for $x from 1 through 9 {
-        &[data-x="#{$x - 1}"] {
-          $i:ceil($x / 2);
-          top: nth($scoreBis, $i);
-          left: if($x % 2 == 1, 1153px, 1208px);;
+      @each $board, $s in $scoreBis {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 9 {
+            &[data-x='#{$x - 1}'] {
+              $i: ceil($x / 2);
+              top: nth($s, $i);
+              left: if($x % 2 == 1, 1153px, 1208px);
+            }
+          }
         }
       }
     }
-
 
     /////////// PERMIT REFUSAL ////////////
     .permit-refusal {
@@ -440,23 +483,24 @@ $scoreSheetSize:1544px;
       height: 53px;
       width: 50px;
       box-sizing: border-box;
-      clip-path: polygon(50% 0, 100% 25%,100% 75%,50% 100%, 0% 75%,0% 25%);
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       @include highlight;
 
       &.selectable {
-        animation:backgroundBlink 0.9s infinite;
+        animation: backgroundBlink 0.9s infinite;
       }
 
-
-
-      @for $x from 1 through 3 {
-        &[data-x="#{$x - 1}"] {
-          top: nth($permitRefusal, $x);
-          left: 1312px;
+      @each $board, $p in $permitRefusal {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 3 {
+            &[data-x='#{$x - 1}'] {
+              top: nth($p, $x);
+              left: 1312px;
+            }
+          }
         }
       }
     }
-
 
     /////////// ROUNDABOUT ////////////
     .score-roundabout {
@@ -465,10 +509,14 @@ $scoreSheetSize:1544px;
       width: 50px;
       box-sizing: border-box;
 
-      @for $x from 1 through 2 {
-        &[data-x="#{$x - 1}"] {
-          top: nth($scoreRoundabout, $x);
-          left: 1311px;
+      @each $board, $r in $scoreRoundabout {
+        [data-board='#{$board}'] & {
+          @for $x from 1 through 2 {
+            &[data-x='#{$x - 1}'] {
+              top: nth($r, $x);
+              left: 1311px;
+            }
+          }
         }
       }
     }
@@ -479,61 +527,130 @@ $scoreSheetSize:1544px;
     ******************************
     *****************************/
     .score-counter {
-      position:absolute;
-      width:68px;
-      height:68px;
+      position: absolute;
+      width: 68px;
+      height: 68px;
       @include centered;
       @include handwritten;
       font-size: 42px;
     }
 
     // PLANS //
-    .score_plan-0 {  top:1034px;  left:82px; }
-    .score_plan-1 {  top:1156px;  left:80px; }
-    .score_plan-2 {  top:1278px;  left:80px; }
-    .score_plan-total {  top:1388px;  left:82px; }
-
+    .score_plan-0 {
+      top: 1034px;
+      left: 82px;
+    }
+    .score_plan-1 {
+      top: 1156px;
+      left: 80px;
+    }
+    .score_plan-2 {
+      top: 1278px;
+      left: 80px;
+    }
+    .score_plan-total {
+      top: 1388px;
+      left: 82px;
+    }
 
     // PARKS //
-    .score_park-0 {  top:1121px;  left:206px; }
-    .score_park-1 {  top:1199px;  left:206px; }
-    .score_park-2 {  top:1272px;  left:206px; }
-    .score_park-total {  top:1388px;  left:206px; }
+    .score_park-0 {
+      top: 1121px;
+      left: 206px;
+    }
+    .score_park-1 {
+      top: 1199px;
+      left: 206px;
+    }
+    .score_park-2 {
+      top: 1272px;
+      left: 206px;
+    }
+    .score_park-total {
+      top: 1388px;
+      left: 206px;
+    }
 
     // POOLS //
-    .score_pool-total {  top:1388px;  left:347px; }
+    .score_pool-total {
+      top: 1388px;
+      left: 347px;
+    }
 
     // TEMP //
-    .score_temp-total {  top:1388px;  left:510px; }
+    .score_temp-total {
+      top: 1388px;
+      left: 510px;
+    }
 
     // ESTATES //
-    .score_estate-mult-0 {  top:1296px;  left:680px; }
-    .score_estate-mult-1 {  top:1296px;  left:748px; }
-    .score_estate-mult-2 {  top:1296px;  left:821px; }
-    .score_estate-mult-3 {  top:1296px;  left:891px; }
-    .score_estate-mult-4 {  top:1296px;  left:967px; }
-    .score_estate-mult-5 {  top:1296px;  left:1043px; }
+    .score_estate-mult-0 {
+      top: 1296px;
+      left: 680px;
+    }
+    .score_estate-mult-1 {
+      top: 1296px;
+      left: 748px;
+    }
+    .score_estate-mult-2 {
+      top: 1296px;
+      left: 821px;
+    }
+    .score_estate-mult-3 {
+      top: 1296px;
+      left: 891px;
+    }
+    .score_estate-mult-4 {
+      top: 1296px;
+      left: 967px;
+    }
+    .score_estate-mult-5 {
+      top: 1296px;
+      left: 1043px;
+    }
 
-
-    .score_estate-total-0 {  top:1388px;  left:664px; }
-    .score_estate-total-1 {  top:1388px;  left:736px; }
-    .score_estate-total-2 {  top:1388px;  left:802px; }
-    .score_estate-total-3 {  top:1388px;  left:875px; }
-    .score_estate-total-4 {  top:1388px;  left:953px; }
-    .score_estate-total-5 {  top:1388px;  left:1028px; }
-
+    .score_estate-total-0 {
+      top: 1388px;
+      left: 664px;
+    }
+    .score_estate-total-1 {
+      top: 1388px;
+      left: 736px;
+    }
+    .score_estate-total-2 {
+      top: 1388px;
+      left: 802px;
+    }
+    .score_estate-total-3 {
+      top: 1388px;
+      left: 875px;
+    }
+    .score_estate-total-4 {
+      top: 1388px;
+      left: 953px;
+    }
+    .score_estate-total-5 {
+      top: 1388px;
+      left: 1028px;
+    }
 
     // BIS //
-    .score_bis-total {  top:1388px;  left:1171px; }
-
+    .score_bis-total {
+      top: 1388px;
+      left: 1171px;
+    }
 
     // OTHER //
-    .score_other-total {  top:1388px;  left:1306px; }
+    .score_other-total {
+      top: 1388px;
+      left: 1306px;
+    }
 
     // TOTAL //
-    .score_total {  top:1388px;  left:1411px; }
-
-
+    .score_total {
+      top: 1388px;
+      left: 1411px;
+    }
 
     /*****************************
     ******************************
@@ -546,31 +663,44 @@ $scoreSheetSize:1544px;
       left: 0;
       width: 1544px;
       height: 1544px;
-      background: rgba(0,0,0,0.3);
-      opacity:0;
-      display:none;
-      z-index:2;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      display: none;
+      z-index: 2;
 
       &.fadein {
-        display:block;
+        display: block;
         animation: 0.7s ease-in-out fadeIn;
         animation-fill-mode: forwards;
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       }
       &.fadeout {
-        display:block;
+        display: block;
         animation: 1s ease-in-out fadeOut;
         animation-fill-mode: forwards;
-        @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+        @keyframes fadeOut {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
       }
     }
 
-
     .scoresheet-pin {
-      z-index:3;
-      position:absolute;
-      width:167px;
-      height:160px;
+      z-index: 3;
+      position: absolute;
+      width: 167px;
+      height: 160px;
       transform-origin: bottom center;
 
       .pin-avatar {
@@ -581,18 +711,17 @@ $scoreSheetSize:1544px;
         height: 88px;
         background-size: contain;
         background-repeat: no-repeat;
-        background-color: rgba(200,200,200,0.9);
+        background-color: rgba(200, 200, 200, 0.9);
       }
 
-
       .pin-frame {
-        position:absolute;
-        top:0;
-        left:0;
-        width:167px;
-        height:160px;
-        background:url("img/pin-more.png");
-        background-size:cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 167px;
+        height: 160px;
+        background: url('img/pin-more.png');
+        background-size: cover;
         background-repeat: no-repeat;
       }
 
@@ -604,21 +733,20 @@ $scoreSheetSize:1544px;
         height: 85px;
         color: white;
         font-size: 60px;
-        font-family: "Bebas";
+        font-family: 'Bebas';
         @include centered;
       }
 
-      &[data-n="0"]{
-        width:112px;
+      &[data-n='0'] {
+        width: 112px;
         .pin-frame {
-          background-image:url("img/pin.png");
-          width:112px;
+          background-image: url('img/pin.png');
+          width: 112px;
         }
         .pin-number {
-          display:none;
+          display: none;
         }
       }
-
 
       &.popin {
         animation: 0.7s ease-in-out popIn;
@@ -626,16 +754,16 @@ $scoreSheetSize:1544px;
         @keyframes popIn {
           0% {
             transform: translateY(0) scale(0.1);
-            opacity:0;
+            opacity: 0;
           }
           30% {
-            opacity:1;
+            opacity: 1;
           }
           70% {
             transform: translateY(-30px) scale(1.1);
           }
           100% {
-            transform:scale(1);
+            transform: scale(1);
           }
         }
       }
@@ -645,13 +773,15 @@ $scoreSheetSize:1544px;
         animation-fill-mode: forwards;
         @keyframes popOut {
           0% {
-            transform:scale(1);
+            transform: scale(1);
           }
           30% {
             transform: translateY(-30px) scale(1.1);
-            opacity:1;
+            opacity: 1;
           }
-          80% { opacity:0; }
+          80% {
+            opacity: 0;
+          }
           100% {
             transform: translateY(0) scale(0.1);
           }

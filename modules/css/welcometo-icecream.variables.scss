@@ -1,0 +1,131 @@
+$housesIceCream:(
+  0:(
+    0:("left" : 348px, "top" : 220px),
+    1:("left" : 452px, "top" : 220px),
+    2:("left" : 554px, "top" : 236px),
+    3:("left" : 659px, "top" : 221px),
+    4:("left" : 761px, "top" : 220px),
+    5:("left" : 866px, "top" : 220px),
+    6:("left" : 967px, "top" : 236px),
+    7:("left" : 1069px, "top" : 238px),
+    8:("left" : 1171px, "top" : 220px),
+    9:("left" : 1271px, "top" : 220px),
+  ),
+
+  1:(
+    0:("left" : 247px, "top" : 513px),
+    1:("left" : 348px, "top" : 497px),
+    2:("left" : 452px, "top" : 497px),
+    3:("left" : 555px, "top" : 514px),
+    4:("left" : 660px, "top" : 497px),
+    5:("left" : 762px, "top" : 497px),
+    6:("left" : 865px, "top" : 497px),
+    7:("left" : 967px, "top" : 513px),
+    8:("left" : 1067px, "top" : 497px),
+    9:("left" : 1171px, "top" : 497px),
+    10:("left" : 1271px, "top" : 497px),
+  ),
+
+  2:(
+    0:("left" : 142px, "top" : 771px),
+    1:("left" : 249px, "top" : 768px),
+    2:("left" : 348px, "top" : 771px),
+    3:("left" : 452px, "top" : 770px),
+    4:("left" : 555px, "top" : 772px),
+    5:("left" : 659px, "top" : 770px),
+    6:("left" : 764px, "top" : 785px),
+    7:("left" : 865px, "top" : 771px),
+    8:("left" : 968px, "top" : 772px),
+    9:("left" : 1066px, "top" : 771px),
+    10:("left" : 1171px, "top" : 785px),
+    11:("left" : 1271px, "top" : 771px),
+  ),
+);
+
+$poolsIceCream:(
+  ("x":0, "y":2, "left":565px, "top":174px),
+  ("x":0, "y":6, "left":982px, "top":174px),
+  ("x":0, "y":7, "left":1083px, "top":178px),
+  ("x":1, "y":0, "left":260px, "top":450px),
+  ("x":1, "y":3, "left":568px, "top":450px),
+  ("x":1, "y":7, "left":982px, "top":456px),
+
+  ("x":2, "y":1, "left":263px, "top":728px),
+  ("x":2, "y":6, "left":775px, "top":727px),
+  ("x":2, "y":10, "left":1182px, "top":721px),
+);
+
+$fencesIceCream:(
+  0:(
+    "left":332px,
+    "top":167px,
+    "widths" : (105px, 102px, 106px, 100px, 104px, 103px, 102px, 101px, 102px, 101px)
+  ),
+  1:(
+    "left":228px,
+    "top":442px,
+    "widths" : (107px, 101px, 103px, 106px, 102px, 103px, 103px, 102px, 100px, 103px, 100px)
+  ),
+  2:(
+    "left":124px,
+    "top":720px,
+    "widths" : (108px, 103px, 102px, 102px, 106px, 101px, 103px, 103px, 102px, 101px, 102px, 100px)
+  ),
+);
+
+$parksIceCream:(
+  0:(
+    "left":1191px,
+    "top":108px,
+    "n" : 3,
+  ),
+  1:(
+    "left":1138px,
+    "top":382px,
+    "n" : 4,
+  ),
+  2:(
+    "left":1084px,
+    "top":657px,
+    "n" : 5,
+  ),
+);
+
+
+$scorePoolsIceCream:(1099px, 1148px, 1198px, 1251px, 1301px);
+
+$scoreTempsIceCream:(
+  ("top":1076px, "left":496px),
+  ("top":1076px, "left":558px),
+
+  ("top":1106px, "left":527px),
+
+  ("top":1134px, "left":496px),
+  ("top":1134px, "left":558px),
+
+  ("top":1164px, "left":527px),
+
+  ("top":1192px, "left":496px),
+  ("top":1192px, "left":558px),
+
+  ("top":1222px, "left":527px),
+
+  ("top":1253px, "left":496px),
+  ("top":1253px, "left":558px),
+);
+
+$scoreEstatesIceCream:(
+  ("top":1168px, "left":687px, "n":1),
+  ("top":1145px, "left":760px, "n":2),
+  ("top":1118px, "left":825px, "n":3),
+  ("top":1094px, "left":894px, "n":4),
+  ("top":1071px, "left":966px, "n":4),
+  ("top":1048px, "left":1033px, "n":4),
+);
+
+
+$scoreBisIceCream:(1051px, 1114px, 1177px, 1240px, 1301px);
+
+$scoreRoundaboutIceCream:(948px, 1007px);
+
+$permitRefusalIceCream:(1133px, 1194px, 1254px);

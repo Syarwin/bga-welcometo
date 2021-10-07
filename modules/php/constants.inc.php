@@ -46,6 +46,10 @@ define('ON', 1);
 define('OPTION_EXPERT', 101);
 
 
+define('OPTION_BOARD', 102);
+define('OPTION_BOARD_BASE', 0);
+define('OPTION_BOARD_ICE_CREAM', 1);
+
 
 /*
  * User preference
