@@ -13,6 +13,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
   g_gamethemeurl + "modules/js/vendor/hammer.min.js",
 ], function (dojo, declare) {
   const ROUNDABOUT = 100;
+  const ICE_CREAM = 1;
 
   return declare("welcometo.scoreSheet", ebg.core.gamegui, {
 /****************************************
@@ -226,7 +227,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       };
 
       // Pools
-      var pools = [
+      const pools = [
         [0,2], [0,6], [0,7],
         [1,0], [1,3], [1,7],
         [2,1], [2,6], [2,10],
@@ -234,6 +235,19 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       pools.forEach(pool => {
         this.clickableTpl('pool', {x: pool[0], y:pool[1]}, this.onClickPool.bind(this));
       })
+
+
+      // IceCream expansion
+      if(this.gamedatas.options.board == ICE_CREAM){
+        const iceCreams = [
+          [0,0], [0,2], [0,5], [0,6], [0,8], [0, 10],
+          [1,0], [1,1], [1,3], [1,4], [1,6], [1, 8], [1,9],
+          [2,0], [2,1], [2,3], [2,4], [2,5], [2, 7], [2,9], [2, 10]
+        ];
+        iceCreams.forEach(iceCream => {
+          this.tpl('iceCream', {x: iceCream[0], y:iceCream[1]});
+        })
+      }
     },
 
 

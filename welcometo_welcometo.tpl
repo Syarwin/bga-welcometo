@@ -334,6 +334,7 @@ var jstpl_pool = `<div id="\${pId}_pool_\${x}_\${y}" data-x="\${x}" data-y="\${y
     </clipPath>
   </svg>
 </div>`;
+var jstpl_iceCream = `<div id="\${pId}_iceCream_\${x}_\${y}" data-x="\${x}" data-y="\${y}" class="iceCream"></div>`;
 
 var jstpl_houseNumber = '<div class="house-number" data-turn="${turn}">${number}${bis}</div>';
 var jstpl_estate = `

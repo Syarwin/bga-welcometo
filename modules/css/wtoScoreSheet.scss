@@ -102,8 +102,8 @@ $scoreSheetSize: 1544px;
 
       @each $board, $s in $cityName {
         [data-board='#{$board}'] & {
-          top:map-get($s, 'top');
-          left:map-get($s, 'left');
+          top: map-get($s, 'top');
+          left: map-get($s, 'left');
         }
       }
     }
@@ -392,6 +392,25 @@ $scoreSheetSize: 1544px;
       }
     }
 
+    /////////// ICE CREAMS /////////////
+    .iceCream {
+      position: absolute;
+      height: 80px;
+      width: 80px;
+      background: rgba(255, 0, 0, 0.5);
+      box-sizing: border-box;
+
+      [data-board='1'] & {
+        @for $i from 1 through length($iceCreams) {
+          $p: nth($iceCreams, $i);
+          &[data-x="#{map-get($p,'x')}"][data-y="#{map-get($p,'y')}"] {
+            left: map-get($p, 'left');
+            top: map-get($p, 'top');
+          }
+        }
+      }
+    }
+
     /*****************************
   ******************************
   ********* LOWER PART *********
@@ -407,8 +426,8 @@ $scoreSheetSize: 1544px;
       @include highlight;
 
       @each $board, $s in $scorePools {
-        $scoreTop:map-get($s, 'top');
-        $scoreLeft:map-get($s, 'left');
+        $scoreTop: map-get($s, 'top');
+        $scoreLeft: map-get($s, 'left');
 
         [data-board='#{$board}'] & {
           @for $x from 1 through 9 {
@@ -473,8 +492,8 @@ $scoreSheetSize: 1544px;
       box-sizing: border-box;
 
       @each $board, $s in $scoreBis {
-        $scoreTop:map-get($s, 'top');
-        $scoreLeft:map-get($s, 'left');
+        $scoreTop: map-get($s, 'top');
+        $scoreLeft: map-get($s, 'left');
 
         [data-board='#{$board}'] & {
           @for $x from 1 through 9 {
@@ -502,8 +521,8 @@ $scoreSheetSize: 1544px;
       }
 
       @each $board, $s in $permitRefusal {
-        $scoreTop:map-get($s, 'top');
-        $scoreLeft:map-get($s, 'left');
+        $scoreTop: map-get($s, 'top');
+        $scoreLeft: map-get($s, 'left');
 
         [data-board='#{$board}'] & {
           @for $x from 1 through 3 {
@@ -524,8 +543,8 @@ $scoreSheetSize: 1544px;
       box-sizing: border-box;
 
       @each $board, $s in $scoreRoundabout {
-        $scoreTop:map-get($s, 'top');
-        $scoreLeft:map-get($s, 'left');
+        $scoreTop: map-get($s, 'top');
+        $scoreLeft: map-get($s, 'left');
 
         [data-board='#{$board}'] & {
           @for $x from 1 through 2 {
@@ -555,15 +574,13 @@ $scoreSheetSize: 1544px;
         [data-board='#{$board}'] & {
           @each $id, $pos in $counters {
             &.score_#{$id} {
-              top:nth($pos, 1);
-              left:nth($pos, 2);
+              top: nth($pos, 1);
+              left: nth($pos, 2);
             }
           }
         }
       }
     }
-
-
 
     /*****************************
     ******************************
