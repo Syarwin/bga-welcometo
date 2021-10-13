@@ -93,14 +93,19 @@ $scoreSheetSize: 1544px;
     /////////// CITY NAME ////////////
     .cityname {
       position: absolute;
-      top: 253px;
-      left: 92px;
       width: 207px;
       height: 70px;
       word-break: break-all;
       @include handwritten;
       @include centered;
       font-size: 32px;
+
+      @each $board, $s in $cityName {
+        [data-board='#{$board}'] & {
+          top:map-get($s, 'top');
+          left:map-get($s, 'left');
+        }
+      }
     }
 
     /////////// HOUSES ////////////
@@ -402,12 +407,15 @@ $scoreSheetSize: 1544px;
       @include highlight;
 
       @each $board, $s in $scorePools {
+        $scoreTop:map-get($s, 'top');
+        $scoreLeft:map-get($s, 'left');
+
         [data-board='#{$board}'] & {
           @for $x from 1 through 9 {
             &[data-x='#{$x - 1}'] {
               $i: ceil($x / 2);
-              top: nth($s, $i);
-              left: if($x % 2 == 1, 337px, 385px);
+              top: nth($scoreTop, $i);
+              left: if($x % 2 == 1, nth($scoreLeft, 1), nth($scoreLeft, 2));
             }
           }
         }
@@ -465,12 +473,15 @@ $scoreSheetSize: 1544px;
       box-sizing: border-box;
 
       @each $board, $s in $scoreBis {
+        $scoreTop:map-get($s, 'top');
+        $scoreLeft:map-get($s, 'left');
+
         [data-board='#{$board}'] & {
           @for $x from 1 through 9 {
             &[data-x='#{$x - 1}'] {
               $i: ceil($x / 2);
-              top: nth($s, $i);
-              left: if($x % 2 == 1, 1153px, 1208px);
+              top: nth($scoreTop, $i);
+              left: if($x % 2 == 1, nth($scoreLeft, 1), nth($scoreLeft, 2));
             }
           }
         }
@@ -490,12 +501,15 @@ $scoreSheetSize: 1544px;
         animation: backgroundBlink 0.9s infinite;
       }
 
-      @each $board, $p in $permitRefusal {
+      @each $board, $s in $permitRefusal {
+        $scoreTop:map-get($s, 'top');
+        $scoreLeft:map-get($s, 'left');
+
         [data-board='#{$board}'] & {
           @for $x from 1 through 3 {
             &[data-x='#{$x - 1}'] {
-              top: nth($p, $x);
-              left: 1312px;
+              top: nth($scoreTop, $x);
+              left: $scoreLeft;
             }
           }
         }
@@ -509,12 +523,15 @@ $scoreSheetSize: 1544px;
       width: 50px;
       box-sizing: border-box;
 
-      @each $board, $r in $scoreRoundabout {
+      @each $board, $s in $scoreRoundabout {
+        $scoreTop:map-get($s, 'top');
+        $scoreLeft:map-get($s, 'left');
+
         [data-board='#{$board}'] & {
           @for $x from 1 through 2 {
             &[data-x='#{$x - 1}'] {
-              top: nth($r, $x);
-              left: 1311px;
+              top: nth($scoreTop, $x);
+              left: $scoreLeft;
             }
           }
         }
@@ -533,124 +550,20 @@ $scoreSheetSize: 1544px;
       @include centered;
       @include handwritten;
       font-size: 42px;
+
+      @each $board, $counters in $scoreCounters {
+        [data-board='#{$board}'] & {
+          @each $id, $pos in $counters {
+            &.score_#{$id} {
+              top:nth($pos, 1);
+              left:nth($pos, 2);
+            }
+          }
+        }
+      }
     }
 
-    // PLANS //
-    .score_plan-0 {
-      top: 1034px;
-      left: 82px;
-    }
-    .score_plan-1 {
-      top: 1156px;
-      left: 80px;
-    }
-    .score_plan-2 {
-      top: 1278px;
-      left: 80px;
-    }
-    .score_plan-total {
-      top: 1388px;
-      left: 82px;
-    }
 
-    // PARKS //
-    .score_park-0 {
-      top: 1121px;
-      left: 206px;
-    }
-    .score_park-1 {
-      top: 1199px;
-      left: 206px;
-    }
-    .score_park-2 {
-      top: 1272px;
-      left: 206px;
-    }
-    .score_park-total {
-      top: 1388px;
-      left: 206px;
-    }
-
-    // POOLS //
-    .score_pool-total {
-      top: 1388px;
-      left: 347px;
-    }
-
-    // TEMP //
-    .score_temp-total {
-      top: 1388px;
-      left: 510px;
-    }
-
-    // ESTATES //
-    .score_estate-mult-0 {
-      top: 1296px;
-      left: 680px;
-    }
-    .score_estate-mult-1 {
-      top: 1296px;
-      left: 748px;
-    }
-    .score_estate-mult-2 {
-      top: 1296px;
-      left: 821px;
-    }
-    .score_estate-mult-3 {
-      top: 1296px;
-      left: 891px;
-    }
-    .score_estate-mult-4 {
-      top: 1296px;
-      left: 967px;
-    }
-    .score_estate-mult-5 {
-      top: 1296px;
-      left: 1043px;
-    }
-
-    .score_estate-total-0 {
-      top: 1388px;
-      left: 664px;
-    }
-    .score_estate-total-1 {
-      top: 1388px;
-      left: 736px;
-    }
-    .score_estate-total-2 {
-      top: 1388px;
-      left: 802px;
-    }
-    .score_estate-total-3 {
-      top: 1388px;
-      left: 875px;
-    }
-    .score_estate-total-4 {
-      top: 1388px;
-      left: 953px;
-    }
-    .score_estate-total-5 {
-      top: 1388px;
-      left: 1028px;
-    }
-
-    // BIS //
-    .score_bis-total {
-      top: 1388px;
-      left: 1171px;
-    }
-
-    // OTHER //
-    .score_other-total {
-      top: 1388px;
-      left: 1306px;
-    }
-
-    // TOTAL //
-    .score_total {
-      top: 1388px;
-      left: 1411px;
-    }
 
     /*****************************
     ******************************

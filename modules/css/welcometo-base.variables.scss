@@ -1,3 +1,8 @@
+$cityNameBase:(
+  "top": 253px,
+  "left": 92px,
+);
+
 $housesBase:(
   0:(
     0:("left" : 374px, "top" : 186px),
@@ -94,7 +99,10 @@ $parksBase:(
 );
 
 
-$scorePoolsBase:(1099px, 1148px, 1198px, 1251px, 1301px);
+$scorePoolsBase:(
+  "left":(337px, 385px),
+  "top":(1099px, 1148px, 1198px, 1251px, 1301px),
+);
 
 $scoreTempsBase:(
   ("top":1076px, "left":496px),
@@ -126,8 +134,62 @@ $scoreEstatesBase:(
 );
 
 
-$scoreBisBase:(1051px, 1114px, 1177px, 1240px, 1301px);
+$scoreBisBase:(
+  "top": (1051px, 1114px, 1177px, 1240px, 1301px),
+  "left": (1153px, 1208px)
+);
 
-$scoreRoundaboutBase:(948px, 1007px);
+$scoreRoundaboutBase:(
+  "top":(948px, 1007px),
+  "left":1311px,
+);
 
-$permitRefusalBase:(1133px, 1194px, 1254px);
+$permitRefusalBase:(
+  "top":(1133px, 1194px, 1254px),
+  "left":1312px,
+);
+
+
+$scoreCountersBase:(
+  // PLANS //
+  "plan-0": (1034px, 82px),
+  "plan-1":(1156px,80px),
+  "plan-2":(1278px,80px),
+  "plan-total":(1388px,82px),
+
+  // PARKS //
+  "park-0":(1121px,206px),
+  "park-1":(1199px,206px),
+  "park-2":(1272px,206px),
+  "park-total":(1388px,206px),
+
+  // POOLS //
+  "pool-total":(1388px,347px),
+
+  // TEMP //
+  "temp-total":(1388px,510px),
+
+  // ESTATES //
+  "estate-mult-0":(1296px,680px),
+  "estate-mult-1":(1296px,748px),
+  "estate-mult-2":(1296px,821px),
+  "estate-mult-3":(1296px,891px),
+  "estate-mult-4":(1296px,967px),
+  "estate-mult-5":(1296px,1043px),
+
+  "estate-total-0":(1388px,664px),
+  "estate-total-1":(1388px,736px),
+  "estate-total-2":(1388px,802px),
+  "estate-total-3":(1388px,875px),
+  "estate-total-4":(1388px,953px),
+  "estate-total-5":(1388px,1028px),
+
+  // BIS //
+  "bis-total":(1388px,1171px),
+
+  // OTHER //
+  "other-total":(1388px,1306px),
+
+  // TOTAL //
+  "total":(1388px,1411px),
+);

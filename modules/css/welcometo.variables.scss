@@ -1,6 +1,12 @@
 @import 'welcometo-base.variables';
 @import 'welcometo-icecream.variables';
 
+$cityName: (
+  0: $cityNameBase,
+  1: $cityNameIceCream,
+);
+
+
 $houses: (
   0: $housesBase,
   1: $housesIceCream,
@@ -49,4 +55,10 @@ $scoreRoundabout: (
 $permitRefusal: (
   0: $permitRefusalBase,
   1: $permitRefusalIceCream,
+);
+
+
+$scoreCounters: (
+  0: $scoreCountersBase,
+  1: $scoreCountersIceCream,
 );
