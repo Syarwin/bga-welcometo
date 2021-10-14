@@ -69,13 +69,7 @@ trait IceCreamTrait
     }
 
     // Did we reach the end of the line
-    $endOfStreet = null;
-    $sizes = [10, 11, 12];
-    foreach($houses as $house){
-      if($house['y'] == 0 || $house['y'] == $sizes[$house['x']]){
-        $endOfStreet = $house;
-      }
-    }
+    $endOfStreet = IceTruck::getEndOfStreet($player, $houses);
 
     if(!is_null($endOfStreet)){
       $zone = IceCream::reachEndOfStreet($player, $endOfStreet);
@@ -86,6 +80,7 @@ trait IceCreamTrait
 
     // Notify all the new scribbles
     Notifications::addMultipleScribbles($player, $scribbles);
+    $player->updateScores();
 
     // Move on to next state depending on the action card
     $combination = $player->getCombination();

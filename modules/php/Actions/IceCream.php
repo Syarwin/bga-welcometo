@@ -34,6 +34,7 @@ class IceCream extends Zone
     [2, 9],
     [2, 10],
   ];
+  protected static $iceCreamBalls = [1, 2, 3, 1, 2, 1, 3, 1, 1, 2, 2, 3, 2, 2, 3, 1, 1, 2, 3, 1, 3];
 
   public function getConesToScribble($player)
   {
@@ -58,7 +59,7 @@ class IceCream extends Zone
 
     $bonuses = [0, 0, 0];
     foreach ($scribbles as $scribble) {
-      $bonuses[$scribble['x']] = $scribble['state'];
+      $bonuses[$scribble['x']] = 2 * $scribble['state'] - 1;
     }
 
     return $bonuses;
@@ -72,5 +73,38 @@ class IceCream extends Zone
     } else {
       return [$zone['x'], $zone['x'] == 2 && $zone['y'] != 0 ? -2 : -1, 'state' => 1];
     }
+  }
+
+  public function getScore($player)
+  {
+    $scribbles = self::getOfPlayer($player);
+    $res = [
+      'ice-cream-0' => 0,
+      'ice-cream-1' => 0,
+      'ice-cream-2' => 0,
+    ];
+    $nCones = [0, 0, 0];
+
+    foreach ($scribbles as $scribble) {
+      if ($scribble['y'] < 0 || $scribble['state'] == 0) {
+        continue;
+      }
+
+      $i = \array_search([$scribble['x'], $scribble['y']], self::$iceCreams);
+      $res['ice-cream-' . $scribble['x']] += self::$iceCreamBalls[$i];
+      $nCones[$scribble['x']]++;
+    }
+
+    // Apply bonus if reached
+    $bonuses = self::getStreetBonuses($player);
+    $res['ice-cream-total'] = 0;
+    for ($i = 0; $i < 3; $i++) {
+      if ($bonuses[$i] == 1) {
+        $res['ice-cream-' . $i] += $nCones[$i];
+      }
+      $res['ice-cream-total'] += $res['ice-cream-' . $i];
+    }
+
+    return $res;
   }
 }

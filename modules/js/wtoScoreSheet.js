@@ -618,6 +618,10 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
         'other-total', 'total'
       ];
 
+      if(this.gamedatas.options.board == ICE_CREAM){
+        ids.push('ice-cream-0', 'ice-cream-1', 'ice-cream-2', 'ice-cream-total');
+      }
+
       ids.forEach(id => {
         this.tpl('scoreCounter', {id : id});
         this._counters[id] = new ebg.counter();

@@ -2568,6 +2568,18 @@ body {
       [data-board='1'] .score-sheet-container .score-sheet .score-counter.score_total {
         top: 1413px;
         left: 1415px; }
+      [data-board='1'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-0 {
+        top: 1106px;
+        left: 175px; }
+      [data-board='1'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-1 {
+        top: 1181px;
+        left: 191px; }
+      [data-board='1'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-2 {
+        top: 1273px;
+        left: 176px; }
+      [data-board='1'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-total {
+        top: 1413px;
+        left: 183px; }
     .score-sheet-container .score-sheet .scoresheet-overlay {
       position: absolute;
       top: 0;
