@@ -110,5 +110,15 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.takeAction("writeNumberBis", { number: number, x:x, y:y}, true);
     },
 
+
+
+    //////////////////////////////////////
+    //////////   Ice Cream   /////////////
+    //////////////////////////////////////
+    // Choose truck direction
+    onEnteringStateIceCream(args){
+      this.addPrimaryActionButton("btnChooseLeftTruck", _("Left truck"), () => this.takeAction('chooseIceTruck', {side : 0}));
+      this.addPrimaryActionButton("btnChooseRightTruck", _("Right truck"), () => this.takeAction('chooseIceTruck', {side : 1}));
+    },
   });
 });

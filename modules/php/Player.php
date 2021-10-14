@@ -340,6 +340,8 @@ class Player extends Helpers\DB_Manager
        ST_ACTION_POOL   => "score-pool",
        ST_ACTION_PARK   => "park",
 
+       ST_ICE_CREAM     => "ice-truck",
+
        ST_ROUNDABOUT => "score-roundabout",
      ];
      $type = $type ?? $locations[$stateId];
@@ -348,7 +350,9 @@ class Player extends Helpers\DB_Manager
      $scribble = Scribbles::add($this->id, $type, $zone);
      if($scribble !== false){
        Notifications::addScribble($this, $scribble, $silent);
-       Stats::addScribble($this, $scribble, $silent);
+       if($type != 'ice-truck'){
+         Stats::addScribble($this, $scribble, $silent);
+       }
      }
 
      // If building a pool, add another scribble on the pool itself

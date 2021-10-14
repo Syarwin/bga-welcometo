@@ -251,6 +251,14 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
         iceCreams.forEach(iceCream => {
           this.tpl('iceCream', {x: iceCream[0], y:iceCream[1]});
         })
+
+        this.tpl('iceTruck', {x: 3, y : 0});
+        this.tpl('iceTruck', {x: 3, y : 1});
+
+        this.tpl('iceCream', {x: 0, y:-1});
+        this.tpl('iceCream', {x: 1, y:-1});
+        this.tpl('iceCream', {x: 2, y:-1});
+        this.tpl('iceCream', {x: 2, y:-2});
       }
     },
 
@@ -475,8 +483,12 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
        var scribbleTpl = "scribble";
        if(scribble.type == "pool") scribbleTpl = "scribbleCircle";
        if(scribble.type == "estate-fence") scribbleTpl = "scribbleLine";
-       if(scribble.type == "top-fence" || scribble.type == "ice-truck") scribbleTpl = "scribbleLineHor";
+       if(scribble.type == "top-fence") scribbleTpl = "scribbleLineHor";
+
+       // Ice cream expansion
+       if(scribble.type == "ice-truck" && scribble.x < 3) scribbleTpl = "scribbleLineHor";
        if(scribble.type == "ice-cream" && scribble.state == 1) scribbleTpl = "scribbleCircle";
+
        this.tpl(scribbleTpl, scribble, location);
 
        if(animation){

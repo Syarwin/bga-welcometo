@@ -8,7 +8,7 @@ use WTO\Houses;
 class IceTruck extends Zone
 {
   protected static $type = 'ice-truck';
-  protected static $cols = [10, 11, 12];
+  protected static $cols = [10, 11, 12, 2]; // Last row is a fake one used to cross one truck off
 
   public function getTruckPositions($player)
   {
@@ -24,8 +24,14 @@ class IceTruck extends Zone
     $positions[1] = $i - 1;
 
     // Third line : need to choose
-    // TODO
     $positions[2] = null;
+    if (!is_null($structure[3][1])) {
+      for ($i = 0; $i < 12 && !is_null($structure[2][$i]); $i++);
+      $positions[2] = $i - 1;
+    } elseif (!is_null($structure[3][0])) {
+      for ($i = 11; $i > 0 && !is_null($structure[2][$i]); $i--);
+      $positions[2] = $i + 1;
+    }
 
     return $positions;
   }

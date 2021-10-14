@@ -100,6 +100,7 @@ class Notifications
         "score-pool" => clienttranslate("You build a pool in the house."),
         "park" => clienttranslate("You build a park in the street."),
         "score-roundabout" => "",
+        "ice-truck" => $scribble['y'] == 0? clienttranslate("You chose the right ice-cream truck") : clienttranslate("You chose the left ice-cream truck"),
       ];
       $msg = $msgs[$scribble['type']];
     }

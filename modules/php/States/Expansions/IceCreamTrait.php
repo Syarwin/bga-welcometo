@@ -43,8 +43,7 @@ trait IceCreamTrait
   public function chooseIceTruck($choice)
   {
     $player = Players::getCurrent();
-    // TODO
-
+    $player->scribbleZone([3, 1 - $choice]);
     self::distributeIceCream($player);
   }
 
@@ -69,6 +68,21 @@ trait IceCreamTrait
       array_push($scribbles, Scribbles::add($player->getId(), 'ice-truck', $house) );
     }
 
+    // Did we reach the end of the line
+    $endOfStreet = null;
+    $sizes = [10, 11, 12];
+    foreach($houses as $house){
+      if($house['y'] == 0 || $house['y'] == $sizes[$house['x']]){
+        $endOfStreet = $house;
+      }
+    }
+
+    if(!is_null($endOfStreet)){
+      $zone = IceCream::reachEndOfStreet($player, $endOfStreet);
+      if(!is_null($zone)){
+        array_push($scribbles, Scribbles::add($player->getId(), 'ice-cream', $zone));
+      }
+    }
 
     // Notify all the new scribbles
     Notifications::addMultipleScribbles($player, $scribbles);

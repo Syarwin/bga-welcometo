@@ -118,6 +118,7 @@ $scoreSheetSize: 1544px;
 
       &.built {
         border: 2px solid black;
+        border-bottom: none;
 
         .house-number {
           margin: auto;
@@ -125,6 +126,7 @@ $scoreSheetSize: 1544px;
           @include centered;
           font-size: 55px;
           line-height: 61px;
+          text-indent: -10px;
 
           span {
             font-size: 40px;
@@ -178,7 +180,8 @@ $scoreSheetSize: 1544px;
     }
 
     /////////// FENCES ////////////
-    .top-fence, .ice-truck {
+    .top-fence,
+    .ice-truck {
       position: absolute;
       width: 96px;
       height: 11px;
@@ -222,7 +225,6 @@ $scoreSheetSize: 1544px;
               }
             }
 
-
             $left: $left + nth(map-get($street, 'widths'), $y);
 
             .estate-fence[data-x='#{$x}'][data-y='#{$y - 1}'] {
@@ -231,6 +233,22 @@ $scoreSheetSize: 1544px;
             }
           }
         }
+      }
+    }
+
+    // Third row ice trucks
+    [data-board='1'] & {
+      .ice-truck[data-x='3'][data-y='0'] {
+        left: 42px;
+        top: 862px;
+        width: 80px;
+        height: 80px;
+      }
+      .ice-truck[data-x='3'][data-y='1'] {
+        left: 1360px;
+        top: 862px;
+        width: 80px;
+        height: 80px;
       }
     }
 
@@ -414,6 +432,11 @@ $scoreSheetSize: 1544px;
           &[data-x="#{map-get($p,'x')}"][data-y="#{map-get($p,'y')}"] {
             left: map-get($p, 'left');
             top: map-get($p, 'top');
+
+            @if map-get($p, 'y') < 0 {
+              width: 100px;
+              height: 100px;
+            }
           }
         }
       }

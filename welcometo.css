@@ -858,7 +858,8 @@ body {
       box-sizing: border-box;
       clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px); }
       .score-sheet-container .score-sheet .house.built {
-        border: 2px solid black; }
+        border: 2px solid black;
+        border-bottom: none; }
         .score-sheet-container .score-sheet .house.built .house-number {
           margin: auto;
           font-size: x-large;
@@ -868,7 +869,8 @@ body {
           align-items: center;
           text-align: center;
           font-size: 55px;
-          line-height: 61px; }
+          line-height: 61px;
+          text-indent: -10px; }
           .score-sheet-container .score-sheet .house.built .house-number span {
             font-size: 40px;
             font-family: Times;
@@ -1092,7 +1094,8 @@ body {
     opacity: 1; }
   to {
     opacity: 0; } }
-    .score-sheet-container .score-sheet .top-fence, .score-sheet-container .score-sheet .ice-truck {
+    .score-sheet-container .score-sheet .top-fence,
+    .score-sheet-container .score-sheet .ice-truck {
       position: absolute;
       width: 96px;
       height: 11px;
@@ -1724,6 +1727,16 @@ body {
     [data-board='1'] .score-sheet-container .score-sheet .estate-fence[data-x='2'][data-y='11'] {
       left: 1351px;
       top: 709px; }
+    [data-board='1'] .score-sheet-container .score-sheet .ice-truck[data-x='3'][data-y='0'] {
+      left: 42px;
+      top: 862px;
+      width: 80px;
+      height: 80px; }
+    [data-board='1'] .score-sheet-container .score-sheet .ice-truck[data-x='3'][data-y='1'] {
+      left: 1360px;
+      top: 862px;
+      width: 80px;
+      height: 80px; }
     .score-sheet-container .score-sheet .pool {
       position: absolute;
       height: 45px;
@@ -1945,69 +1958,89 @@ body {
       height: 80px;
       width: 80px;
       box-sizing: border-box; }
+      [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="-1"] {
+        left: 224px;
+        top: 241px;
+        width: 100px;
+        height: 100px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="0"] {
         left: 375px;
-        top: 279px; }
+        top: 269px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="2"] {
         left: 577px;
-        top: 295px; }
+        top: 285px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="4"] {
         left: 783px;
-        top: 277px; }
+        top: 267px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="5"] {
         left: 891px;
-        top: 282px; }
+        top: 272px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="7"] {
         left: 1090px;
-        top: 294px; }
+        top: 284px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="0"][data-y="9"] {
         left: 1298px;
-        top: 281px; }
+        top: 271px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="0"] {
         left: 271px;
-        top: 566px; }
+        top: 556px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="1"] {
         left: 372px;
-        top: 557px; }
+        top: 547px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="3"] {
         left: 576px;
-        top: 569px; }
+        top: 559px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="4"] {
         left: 680px;
-        top: 559px; }
+        top: 549px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="6"] {
         left: 886px;
-        top: 557px; }
+        top: 547px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="8"] {
         left: 1087px;
-        top: 555px; }
+        top: 545px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="9"] {
         left: 1190px;
-        top: 559px; }
+        top: 549px; }
+      [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="1"][data-y="-1"] {
+        left: 1371px;
+        top: 514px;
+        width: 100px;
+        height: 100px; }
+      [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="-1"] {
+        left: 13px;
+        top: 781px;
+        width: 100px;
+        height: 100px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="0"] {
         left: 167px;
-        top: 830px; }
+        top: 820px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="1"] {
         left: 274px;
-        top: 838px; }
+        top: 828px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="3"] {
         left: 476px;
-        top: 829px; }
+        top: 819px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="4"] {
         left: 582px;
-        top: 830px; }
+        top: 820px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="5"] {
         left: 682px;
-        top: 830px; }
+        top: 820px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="7"] {
         left: 887px;
-        top: 825px; }
+        top: 815px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="9"] {
         left: 1091px;
-        top: 827px; }
+        top: 817px; }
       [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="10"] {
         left: 1194px;
-        top: 838px; }
+        top: 828px; }
+      [data-board='1'] .score-sheet-container .score-sheet .ice-cream[data-x="2"][data-y="-2"] {
+        left: 1369px;
+        top: 781px;
+        width: 100px;
+        height: 100px; }
     .score-sheet-container .score-sheet .score-pool {
       position: absolute;
       height: 45px;

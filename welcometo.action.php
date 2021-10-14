@@ -166,6 +166,18 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
+
+  //////////////////////
+  ///// ICE CREAM  /////
+  //////////////////////
+  public function chooseIceTruck()
+  {
+    self::setAjaxMode();
+    $side = self::getArg("side", AT_posint, true);
+    $this->game->chooseIceTruck($side);
+    self::ajaxResponse();
+  }
+
   //////////////////
   ///// UTILS  /////
   //////////////////
