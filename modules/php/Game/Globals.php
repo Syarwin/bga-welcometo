@@ -31,6 +31,10 @@ class Globals extends \APP_DbObject
   {
     return intval(welcometo::get()->getGameStateValue("optionBoard"));
   }
+  public static function isIceCream()
+  {
+    return self::getBoard() == OPTION_BOARD_ICE_CREAM;
+  }
 
   public static function isStandard()
   {

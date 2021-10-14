@@ -86,6 +86,7 @@ $machinestates = [
       POOL     => ST_ACTION_POOL,
       TEMP     => ST_ACTION_TEMP,
       BIS      => ST_ACTION_BIS,
+      'iceCream' => ST_ICE_CREAM,
       'refusal' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
@@ -284,6 +285,26 @@ $machinestates = [
 
 
 
+  /************************************
+  ********* ICE CREAM EXPANSION *******
+  ************************************/
+  ST_ICE_CREAM => [
+    "name" => "iceCream",
+    "descriptionmyturn" => clienttranslate('${you} must choose the truck you want to move'),
+    "type" => "private",
+    "action" => "stIceCream",
+    "args" => "argIceCream",
+    "possibleactions" => ["chooseIceTruck"],
+    "transitions" => [
+      SURVEYOR => ST_ACTION_SURVEYOR,
+      ESTATE   => ST_ACTION_ESTATE,
+      PARK     => ST_ACTION_PARK,
+      POOL     => ST_ACTION_POOL,
+      TEMP     => ST_ACTION_TEMP,
+      BIS      => ST_ACTION_BIS,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
 
 
 /****************************

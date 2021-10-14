@@ -51,6 +51,8 @@ class welcometo extends Table
   use WTO\States\ConfirmWaitTrait;
   use WTO\States\EndOfGameTrait;
 
+  use WTO\States\Expansions\IceCreamTrait;
+
   public static $instance = null;
   public function __construct()
   {

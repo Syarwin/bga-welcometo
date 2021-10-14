@@ -28,6 +28,8 @@ define('ST_WAIT_OTHERS', 41);
 
 define('ST_ROUNDABOUT', 50);
 
+define('ST_ICE_CREAM', 60);
+
 
 
 define('ST_COMPUTE_SCORES', 90);

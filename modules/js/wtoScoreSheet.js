@@ -220,6 +220,10 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
           this.clickableTpl('house', {x: x, y : y}, this.onClickHouse.bind(this));
           this.clickableTpl('estateFence', {x: x, y : y}, this.onClickZoneFactory('estate-fence'));
           this.tpl('topFence', {x: x, y : y});
+
+          if(this.gamedatas.options.board == ICE_CREAM){
+            this.tpl('iceTruck', {x: x, y : y});
+          }
         }
 
         for(var y = 0; y < parks[x]; y++)
@@ -240,7 +244,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
       // IceCream expansion
       if(this.gamedatas.options.board == ICE_CREAM){
         const iceCreams = [
-          [0,0], [0,2], [0,5], [0,6], [0,8], [0, 10],
+          [0,0], [0,2], [0,4], [0,5], [0,7], [0, 9],
           [1,0], [1,1], [1,3], [1,4], [1,6], [1, 8], [1,9],
           [2,0], [2,1], [2,3], [2,4], [2,5], [2, 7], [2,9], [2, 10]
         ];
@@ -471,7 +475,8 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
        var scribbleTpl = "scribble";
        if(scribble.type == "pool") scribbleTpl = "scribbleCircle";
        if(scribble.type == "estate-fence") scribbleTpl = "scribbleLine";
-       if(scribble.type == "top-fence") scribbleTpl = "scribbleLineHor";
+       if(scribble.type == "top-fence" || scribble.type == "ice-truck") scribbleTpl = "scribbleLineHor";
+       if(scribble.type == "ice-cream" && scribble.state == 1) scribbleTpl = "scribbleCircle";
        this.tpl(scribbleTpl, scribble, location);
 
        if(animation){

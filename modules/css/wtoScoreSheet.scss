@@ -178,7 +178,7 @@ $scoreSheetSize: 1544px;
     }
 
     /////////// FENCES ////////////
-    .top-fence {
+    .top-fence, .ice-truck {
       position: absolute;
       width: 96px;
       height: 11px;
@@ -213,6 +213,15 @@ $scoreSheetSize: 1544px;
               top: map-get($street, 'top');
               width: nth(map-get($street, 'widths'), $y);
             }
+
+            @if $board == 1 {
+              .ice-truck[data-x='#{$x}'][data-y='#{$y - 1}'] {
+                left: $left;
+                top: map-get($street, 'top') + 180px;
+                width: nth(map-get($street, 'widths'), $y);
+              }
+            }
+
 
             $left: $left + nth(map-get($street, 'widths'), $y);
 
@@ -393,11 +402,10 @@ $scoreSheetSize: 1544px;
     }
 
     /////////// ICE CREAMS /////////////
-    .iceCream {
+    .ice-cream {
       position: absolute;
       height: 80px;
       width: 80px;
-      background: rgba(255, 0, 0, 0.5);
       box-sizing: border-box;
 
       [data-board='1'] & {
