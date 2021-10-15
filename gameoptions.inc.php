@@ -68,9 +68,23 @@ $game_options = [
         'name' => totranslate('Base game'),
       ],
       OPTION_BOARD_ICE_CREAM => [
+        'name' => totranslate('Coming soon....'),
+      ],
+      /*
+      OPTION_BOARD_ICE_CREAM => [
         'name' => totranslate('Ice Cream Truck'),
         'tmdisplay' => totranslate('Ice Cream'),
         'nobeginner' => true,
+      ],
+      */
+    ],
+    'startcondition' => [
+      OPTION_BOARD_ICE_CREAM => [
+        [
+          'type' => 'minplayers',
+          'value' => 60,
+          'message' => totranslate('Coming soon....'),
+        ],
       ],
     ],
   ],
