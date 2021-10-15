@@ -3202,7 +3202,11 @@ body {
 #popin_showOverview {
   z-index: 2000;
   padding: 0;
-  width: 1000px; }
+  width: 1000px;
+  min-width: 1000px; }
+  [data-board="1"] #popin_showOverview {
+    width: 1250px;
+    min-width: 1250px; }
   #popin_showOverview::before, #popin_showOverview::after {
     box-shadow: 5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5); }
   #popin_showOverview::before {
@@ -3246,6 +3250,9 @@ body {
         text-align: right; }
       #popin_showOverview #popin_showOverview_contents table th#overview-bis div {
         background-position: 100% center; }
+      #popin_showOverview #popin_showOverview_contents table th#overview-ice-cream div {
+        background-image: url("img/expansions/icecream.png");
+        background-size: cover; }
       #popin_showOverview #popin_showOverview_contents table th#overview-houses div {
         width: 56px;
         height: 56px;

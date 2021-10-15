@@ -162,6 +162,11 @@
   z-index:2000;
   padding:0;
   width:1000px;
+  min-width: 1000px;
+  [data-board="1"] & {
+    width: 1250px;
+    min-width: 1250px;
+  }
 
   &::before, &::after {
     box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
@@ -216,6 +221,11 @@
         &#overview-pool div { background-position:60% center;}
         &#overview-temp div { background-position:80% center; text-align: right; }
         &#overview-bis div { background-position:100% center;}
+
+        &#overview-ice-cream div {
+          background-image:url("img/expansions/icecream.png");
+          background-size:cover;
+        }
 
         &#overview-houses div {
           width:56px;
