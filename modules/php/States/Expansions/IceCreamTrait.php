@@ -10,6 +10,7 @@ use WTO\Game\Log;
 use WTO\Game\StateMachine;
 use WTO\Game\UserException;
 use WTO\Game\Notifications;
+use WTO\Helpers\Utils;
 use WTO\Scribbles;
 
 /*
@@ -24,17 +25,15 @@ trait IceCreamTrait
   {
     $house = $player->getLastHouse();
     $truckPositions = IceTruck::getTruckPositions($player);
-    if(!is_null($truckPositions[$house['x']])){
+    if (!is_null($truckPositions[$house['x']])) {
       self::distributeIceCream($player);
       return true;
     }
   }
 
-
   // Nothing to send, the player just need to choose left or right for the truck on the last row
   public function argIceCream()
   {
-
   }
 
   /**
@@ -47,7 +46,6 @@ trait IceCreamTrait
     self::distributeIceCream($player);
   }
 
-
   /**
    * distributeIceCream: move the ice truck and check ice creams
    */
@@ -58,22 +56,22 @@ trait IceCreamTrait
 
     // Add the scribbles for iceCreams
     $cones = IceCream::getConesToScribble($player);
-    foreach($cones as $cone){
-      array_push($scribbles, Scribbles::add($player->getId(), 'ice-cream', $cone) );
+    foreach ($cones as $cone) {
+      array_push($scribbles, Scribbles::add($player->getId(), 'ice-cream', $cone));
     }
 
     // Add the scribbles for iceTruck
     $houses = IceTruck::getHousesToCross($player);
-    foreach($houses as $house){
-      array_push($scribbles, Scribbles::add($player->getId(), 'ice-truck', $house) );
+    foreach ($houses as $house) {
+      array_push($scribbles, Scribbles::add($player->getId(), 'ice-truck', $house));
     }
 
     // Did we reach the end of the line
     $endOfStreet = IceTruck::getEndOfStreet($player, $houses);
 
-    if(!is_null($endOfStreet)){
+    if (!is_null($endOfStreet)) {
       $zone = IceCream::reachEndOfStreet($player, $endOfStreet);
-      if(!is_null($zone)){
+      if (!is_null($zone)) {
         array_push($scribbles, Scribbles::add($player->getId(), 'ice-cream', $zone));
       }
     }
@@ -85,5 +83,55 @@ trait IceCreamTrait
     // Move on to next state depending on the action card
     $combination = $player->getCombination();
     StateMachine::nextState($combination['action']);
+  }
+
+  /**
+   * checkIceCreamBonuses: remove bonuses for other if someone reached a new bonus
+   */
+  public function checkIceCreamBonuses()
+  {
+    $turn = Globals::getCurrentTurn() - 1;
+
+    // Get all ice-cream scribbles of last turn
+    $scribbles = Scribbles::getInLocationQ('%_ice-cream_%_%')
+      ->where('turn', $turn)
+      ->get()
+      ->toArray();
+    // Keep the ones corresponding to a end-of-street bonus (y < 0)
+    Utils::filter($scribbles, function ($scribble) {
+      return $scribble['y'] < 0;
+    });
+
+    if (!empty($scribbles)) {
+      // Get all the lines that needs to be crossed off for other players
+      $streets = array_unique(
+        array_map(function ($scribble) {
+          return $scribble['x'];
+        }, $scribbles)
+      );
+
+      foreach ($streets as $x) {
+        $scribbles = [];
+
+        // Check for all other players if they have the bonus already or not
+        foreach (Players::getAll() as $player) {
+          $zones = IceCream::getBonusesToCross($player, $x);
+          foreach ($zones as $y) {
+            $scribbles[] = Scribbles::add(
+              $player->getId(),
+              'ice-cream',
+              [
+                'x' => $x,
+                'y' => $y,
+                'state' => 0,
+              ],
+              $turn
+            );
+          }
+        }
+
+        Notifications::crossOffIceCreamBonuses($scribbles, $x);
+      }
+    }
   }
 }

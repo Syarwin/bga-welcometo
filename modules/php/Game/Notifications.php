@@ -117,6 +117,19 @@ class Notifications
     ]);
   }
 
+  public static function crossOffIceCreamBonuses($scribbles, $x){
+    $msgs = [
+      clienttranslate('Ice-cream bonus of top street is no longer available.'),
+      clienttranslate('Ice-cream bonus of middle street is no longer available.'),
+      clienttranslate('Ice-cream bonus of bottom street is no longer available.'),
+    ];
+
+    self::notifyAll('addMultipleScribbles', $msgs[$x], [
+      'scribbles' => $scribbles,
+    ]);
+  }
+
+
   public static function planScored($player, $plan, $validations){
     $msg = clienttranslate('You validate plan n°${stack}');
     self::notify($player->getId(), "scorePlan", $msg, [

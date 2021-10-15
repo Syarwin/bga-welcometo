@@ -61,7 +61,7 @@ class Scribbles extends Helpers\Pieces
   /*
    * Add a new scribble
    */
-  public static function add($pId, $type, $zone)
+  public static function add($pId, $type, $zone, $turn = null)
   {
     $state = 0;
     if (isset($zone['state'])) {
@@ -78,7 +78,7 @@ class Scribbles extends Helpers\Pieces
     $id = self::create([
       [
         'location' => $location,
-        'turn' => Globals::getCurrentTurn(),
+        'turn' => $turn ?? Globals::getCurrentTurn(),
         'state' => $state,
       ],
     ]);

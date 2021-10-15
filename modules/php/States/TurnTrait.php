@@ -98,10 +98,14 @@ trait TurnTrait
       }
     }
 
-
     // Increase turn number
     $n = (int) self::getGamestateValue('currentTurn') + 1;
     self::setGamestateValue("currentTurn", $n);
+
+    // Icecream expansion
+    if (Globals::isIceCream()) {
+      $this->checkIceCreamBonuses();
+    }
 
     // Compute, store and notify new scores/datas
     foreach (Players::getAll() as $player) {

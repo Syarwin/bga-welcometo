@@ -36,6 +36,15 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     },
 
 
+    /**
+     * Overwrite showMessage to make sure error message get dumped into the console
+     */
+    showMessage(msg, type) {
+      if (type == 'error') {
+        console.error(msg);
+      }
+      return this.inherited(arguments);
+    },
 
 
     /*
@@ -148,20 +157,29 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
      /*
       * setupNotifications
       */
-     setupNotifications() {
-       this._notifications.forEach(notif => {
-         var functionName = "notif_" + notif[0];
+      setupNotifications() {
+        console.log(this._notifications);
+        this._notifications.forEach((notif) => {
+          var functionName = 'notif_' + notif[0];
 
-         dojo.subscribe(notif[0], this, functionName);
-         if(notif[1] != null){
-           this.notifqueue.setSynchronous(notif[0], notif[1]);
+          dojo.subscribe(notif[0], this, functionName);
+          if (notif[1] !== undefined) {
+            if (notif[1] === null) {
+              this.notifqueue.setSynchronous(notif[0]);
+            } else {
+              this.notifqueue.setSynchronous(notif[0], notif[1]);
 
-           // xxxInstant notification runs same function without delay
-           dojo.subscribe(notif[0] + 'Instant', this, functionName);
-           this.notifqueue.setSynchronous(notif[0] + 'Instant', 10);
-         }
-       });
-     },
+              // xxxInstant notification runs same function without delay
+              dojo.subscribe(notif[0] + 'Instant', this, functionName);
+              this.notifqueue.setSynchronous(notif[0] + 'Instant', 10);
+            }
+          }
+
+          if (notif[2] != undefined) {
+            this.notifqueue.setIgnoreNotificationCheck(notif[0], notif[2]);
+          }
+        });
+      },
 
 
 

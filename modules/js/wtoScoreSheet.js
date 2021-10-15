@@ -468,7 +468,7 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "ebg/core/gamegui",
      /////// Scribble ////////
      /////////////////////////
      addScribble(scribble, animation){
-      if($("scribble-" + scribble.id))
+      if($("scribble-" + scribble.id) || scribble.pId != this.pId)
         return;
 
        var location = this.pId + "_" + scribble.type + "_" + scribble.x;

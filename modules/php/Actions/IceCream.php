@@ -107,4 +107,15 @@ class IceCream extends Zone
 
     return $res;
   }
+
+
+  public function getBonusesToCross($player, $x)
+  {
+    $bonuses = self::getStreetBonuses($player);
+    if ($bonuses[$x] != 0) {
+      return [];
+    } else {
+      return $x == 2? [-1, -2] : [-1];
+    }
+  }
 }
