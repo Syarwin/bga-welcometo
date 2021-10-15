@@ -8,8 +8,7 @@ use WTO\Helpers\Utils;
 class IceCream extends Zone
 {
   protected static $type = 'ice-cream';
-  protected static $dim = 1;
-  protected static $cols = 0;
+  protected static $cols = [10, 11, 12];
 
   protected static $iceCreams = [
     [0, 0],
@@ -108,14 +107,29 @@ class IceCream extends Zone
     return $res;
   }
 
-
   public function getBonusesToCross($player, $x)
   {
     $bonuses = self::getStreetBonuses($player);
     if ($bonuses[$x] != 0) {
       return [];
     } else {
-      return $x == 2? [-1, -2] : [-1];
+      return $x == 2 ? [-1, -2] : [-1];
     }
+  }
+
+  public function getCompleted($player)
+  {
+    $cones = [0, 0, 0];
+    foreach (self::getOfPlayer($player) as $scribble) {
+      if ($scribble['y'] >= 0) {
+        $cones[$scribble['x']]++;
+      }
+    }
+    $streets = [];
+    $references = [6, 7, 8];
+    for ($i = 0; $i < 3; $i++) {
+      $streets[$i] = $cones[$i] == $references[$i];
+    }
+    return $streets;
   }
 }

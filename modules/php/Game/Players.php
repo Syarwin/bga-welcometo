@@ -159,7 +159,7 @@ class Players extends \WTO\Helpers\DB_Manager
   public function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
-    return self::DB()->where($pId)->get();
+    return self::DB()->where($pId)->getSingle();
   }
 
   public function getActive()

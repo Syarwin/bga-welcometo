@@ -3,6 +3,7 @@ namespace WTO\Plans;
 use WTO\Scribbles;
 use WTO\Actions\Park;
 use WTO\Actions\Pool;
+use WTO\Actions\IceCream;
 
 class DecorativePlan extends AbstractPlan
 {
@@ -22,6 +23,10 @@ class DecorativePlan extends AbstractPlan
 
     else if($type == 'pool&park'){
       $this->desc = [  clienttranslate("To fulfill this City Plan, all of the parks AND all of the pools on the required street must be built.") ];
+    }
+
+    else if($type == 'iceCream'){
+      $this->desc = [  clienttranslate("To fulfill this City Plan, you must sell all ice cream cones in one street.") ];
     }
   }
 
@@ -51,6 +56,10 @@ class DecorativePlan extends AbstractPlan
 
         $x = $this->conditions[1];
         return $parks[$x] && $pools[$x];
+
+      case 'iceCream':
+        $cones = IceCream::getCompleted($player);
+        return max($cones) == 1;        
 
       default:
         return false;

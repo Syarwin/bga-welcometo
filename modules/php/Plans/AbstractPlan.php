@@ -40,7 +40,8 @@ abstract class AbstractPlan extends \APP_DbObject
   public function getId(){ return $this->id; }
   public function getStack(){ return $this->stack; }
   public function isAvailable(){
-    return $this->variant == BASIC || Globals::isAdvanced();
+    return ($this->variant != ADVANCED || Globals::isAdvanced())
+    && (!Globals::isIceCream() || $this->stack != 3 || $this->variant == ICE_CREAM);
   }
 
   public function canBeScored($player)

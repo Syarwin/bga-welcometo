@@ -99,6 +99,7 @@ define('ROUNDABOUT', 100);
  */
 define('BASIC', 1);
 define('ADVANCED', 2);
+define('ICE_CREAM', 3);
 
 /*
  * Stats

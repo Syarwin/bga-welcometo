@@ -24,8 +24,8 @@ trait ConfirmWaitTrait
    */
   function stConfirmTurn($player)
   {
-    $pref = $player->getPref(AUTOMATIC);
-    if($pref == ENABLED){
+    $pref = $player->getPref(CONFIRM);
+    if($pref == CONFIRM_DISABLED){
       $this->confirmTurn();
       return true;
     }

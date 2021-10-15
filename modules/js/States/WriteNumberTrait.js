@@ -57,11 +57,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     onChooseNumber(number, x, y){
       debug("You chose to write", number, " at location ", x, y);
       this.takeAction("writeNumber", { number: number, x:x, y:y});
-      this.clearPossible();
     },
 
     notif_writeNumber(n){
       debug("Notif: writing a number on a house", n);
+      this.clearPossible();
       this._scoreSheet.addHouseNumber(n.args.house, true);
     },
 

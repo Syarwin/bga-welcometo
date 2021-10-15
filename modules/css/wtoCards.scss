@@ -276,6 +276,19 @@ $cardMargin:5px;
       @for $i from 0 through 27 {
         &[data-id="#{$i}"] .plan-card-front { background-position: $i*100%/27 center; }
       }
+
+
+      ////// ICE CREAM EXPANSION ///////
+      &[data-id="28"], &[data-id="29"], &[data-id="30"] {
+        .plan-card-front {
+          background-image:url('img/expansions/plans_icecream.jpg');
+          background-size:300% 100%;
+        }
+      }
+
+      &[data-id="28"] .plan-card-front { background-position: 0% center; }
+      &[data-id="29"] .plan-card-front { background-position: 50% center; }
+      &[data-id="30"] .plan-card-front { background-position: 100% center; }
     }
   }
 }
