@@ -74,3 +74,12 @@ CREATE TABLE IF NOT EXISTS `houses` (
 ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
 
 ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;
+
+
+CREATE TABLE IF NOT EXISTS `user_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(10) NOT NULL,
+  `pref_id` int(10) NOT NULL,
+  `pref_value` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

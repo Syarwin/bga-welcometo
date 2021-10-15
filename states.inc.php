@@ -249,6 +249,7 @@ $machinestates = [
     "descriptionmyturn" => clienttranslate('${you} must confirm or restart your turn'),
     "type" => "private",
     "args" => "argPrivatePlayerTurn",
+    "action" => "stConfirmTurn",
     "possibleactions" => ["confirm", "restart"],
     "transitions" => [
       'confirm' => ST_WAIT_OTHERS,

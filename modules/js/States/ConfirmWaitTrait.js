@@ -19,7 +19,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     ///////////////////////////////////////
     onEnteringStateConfirmTurn(args){
       this.displayBasicInfo(args);
-      this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), 'onClickConfirmTurn');
+      this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), () => this.takeAction("confirmTurn"));
 
       // Launch timer on button depending on pref
       var pref = 1;
@@ -27,10 +27,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
       debug(this.prefs, pref)
       this.startActionTimer('buttonConfirmAction', 10, pref);
-    },
-
-    onClickConfirmTurn(){
-      this.takeAction("confirmTurn");
     },
 
     onClickCancelTurn(){

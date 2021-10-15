@@ -74,6 +74,11 @@ trait ActionsTrait
       StateMachine::nextState("pass");
       return true;
     }
+
+    if($player->getPref(AUTOMATIC) == ENABLED){
+      $this->scribbleZone($zones[0]);
+      return true;
+    }
   }
 
   function argActionPark($player)
@@ -91,6 +96,12 @@ trait ActionsTrait
   {
     if(!Pool::canBuild($player)){
       StateMachine::nextState("pass");
+      return true;
+    }
+
+    $zones = Pool::getAvailableZones($player);
+    if($player->getPref(AUTOMATIC) == ENABLED){
+      $this->scribbleZone($zones[0]);
       return true;
     }
   }

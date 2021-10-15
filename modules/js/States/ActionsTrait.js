@@ -36,7 +36,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
     onClickPassAction(){
-      this.takeAction("passAction", {}, true);
+      this.takeAction("passAction");
     },
 
 
@@ -48,16 +48,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     */
    promptZones(type, args, automatic){
      this.displayBasicInfo(args);
-
-     // Automatic some action with user preference
-     if(automatic && args.zones.length == 1 && this.prefs[AUTOMATIC].value == ENABLED){
-       this.singleZoneSelect(args.zones)
-       return;
-     }
-
      this.addPassActionButton();
      this._scoreSheet.promptZones(type, args.zones,  (zone) => {
-       this.takeAction('scribbleZone', zone, true);
+       this.takeAction('scribbleZone', zone);
      });
    },
 
@@ -83,14 +76,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     // Parks
     onEnteringStateActionPark(args){
-      this.promptZones("park", args, true);
+      this.promptZones("park", args);
       this.addPrimaryActionButton("btnBuildPark", _("Build park"), () => this.singleZoneSelect(args.zones));
     },
 
     // Pools
     onEnteringStateActionPool(args){
       this._scoreSheet.promptPool(args.lastHouse);
-      this.promptZones("score-pool", args, true);
+      this.promptZones("score-pool", args);
       this.addPrimaryActionButton("btnBuildPool", _("Build pool"), () => this.singleZoneSelect(args.zones));
     },
 
@@ -107,7 +100,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     onChooseNumberBis(number, x, y){
       debug("You chose to write", number, " bis at location ", x, y);
-      this.takeAction("writeNumberBis", { number: number, x:x, y:y}, true);
+      this.takeAction("writeNumberBis", { number: number, x:x, y:y});
     },
 
 

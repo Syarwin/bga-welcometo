@@ -19,6 +19,18 @@ use \WTO\Game\UserException;
  */
 trait ConfirmWaitTrait
 {
+  /**
+   * Auto-confirm is setting is on
+   */
+  function stConfirmTurn($player)
+  {
+    $pref = $player->getPref(AUTOMATIC);
+    if($pref == ENABLED){
+      $this->confirmTurn();
+      return true;
+    }
+  }
+
   function cancelTurn()
   {
     StateMachine::checkAction("restart");

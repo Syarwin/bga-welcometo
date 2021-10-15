@@ -106,6 +106,7 @@ class welcometo extends Table
   {
     $pId = self::getCurrentPId();
     return [
+      'prefs' => WTO\Game\Preferences::getUiData($pId),
       'players' => WTO\Game\Players::getUiData(),
       'constructionCards' => WTO\ConstructionCards::getForPlayer($pId),
       'planCards' => WTO\PlanCards::getUiData(),
@@ -128,6 +129,13 @@ class welcometo extends Table
   {
     return (100 * self::getGameStateValue('currentTurn')) / 33;
   }
+
+
+  function actChangePreference($pref, $value)
+  {
+    WTO\Game\Preferences::set($this->getCurrentPId(), $pref, $value);
+  }
+
 
   ////////////////////////////////////
   ////////////   Zombie   ////////////
@@ -188,6 +196,18 @@ class welcometo extends Table
 
       $sql = "INSERT INTO DBPREFIX_playermultiactive (ma_player_id,ma_is_multiactive)
       (SELECT player_id, player_is_multiactive FROM DBPREFIX_player )";
+      self::applyDbUpgradeToAllDB($sql);
+    }
+
+    if($from_version <= 2106050919){
+      $sql = "CREATE TABLE IF NOT EXISTS `user_preferences` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `player_id` int(10) NOT NULL,
+        `pref_id` int(10) NOT NULL,
+        `pref_value` int(10) NOT NULL,
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
       self::applyDbUpgradeToAllDB($sql);
     }
   }

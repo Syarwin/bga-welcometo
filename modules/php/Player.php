@@ -46,6 +46,11 @@ class Player extends Helpers\DB_Manager
   /////////////////////////////////
   /////////////////////////////////
 
+  public function getPref($prefId)
+  {
+    return \WTO\Game\Preferences::get($this->id, $prefId);
+  }
+  
   public function getId()
   {
     return $this->id;

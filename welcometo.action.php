@@ -22,19 +22,27 @@
  *
  */
 
-
 class action_welcometo extends APP_GameAction
 {
   // Constructor: please do not modify
   public function __default()
   {
     if (self::isArg('notifwindow')) {
-      $this->view = "common_notifwindow";
-      $this->viewArgs['table'] = self::getArg("table", AT_posint, true);
+      $this->view = 'common_notifwindow';
+      $this->viewArgs['table'] = self::getArg('table', AT_posint, true);
     } else {
-      $this->view = "welcometo_welcometo";
-      self::trace("Complete reinitialization of board game");
+      $this->view = 'welcometo_welcometo';
+      self::trace('Complete reinitialization of board game');
     }
+  }
+
+  public function actChangePref()
+  {
+    self::setAjaxMode();
+    $pref = self::getArg('pref', AT_posint, false);
+    $value = self::getArg('value', AT_posint, false);
+    $this->game->actChangePreference($pref, $value);
+    self::ajaxResponse();
   }
 
   public function permitRefusal()
@@ -44,12 +52,11 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
-
   // Standard mode => one stack
   public function chooseStack()
   {
     self::setAjaxMode();
-    $stack = self::getArg("stack", AT_posint, true);
+    $stack = self::getArg('stack', AT_posint, true);
     $this->game->chooseCards($stack);
     self::ajaxResponse();
   }
@@ -58,23 +65,21 @@ class action_welcometo extends APP_GameAction
   public function chooseStacks()
   {
     self::setAjaxMode();
-    $number = self::getArg("numberStack", AT_posint, true);
-    $action = self::getArg("actionStack", AT_posint, true);
+    $number = self::getArg('numberStack', AT_posint, true);
+    $action = self::getArg('actionStack', AT_posint, true);
     $this->game->chooseCards([$number, $action]);
     self::ajaxResponse();
   }
 
-
   public function writeNumber()
   {
     self::setAjaxMode();
-    $number = self::getArg("number", AT_posint, true);
-    $x = self::getArg("x", AT_posint, true);
-    $y = self::getArg("y", AT_posint, true);
+    $number = self::getArg('number', AT_posint, true);
+    $x = self::getArg('x', AT_posint, true);
+    $y = self::getArg('y', AT_posint, true);
     $this->game->writeNumber($number, [$x, $y]);
     self::ajaxResponse();
   }
-
 
   /////////////////////////////
   /// Non-automatic actions ///
@@ -91,24 +96,23 @@ class action_welcometo extends APP_GameAction
   public function scribbleZone()
   {
     self::setAjaxMode();
-    $zone = [ (int) self::getArg("x", AT_posint, true) ];
-    if(self::isArg("y"))
-      $zone[] = (int) self::getArg("y", AT_posint, true);
+    $zone = [(int) self::getArg('x', AT_posint, true)];
+    if (self::isArg('y')) {
+      $zone[] = (int) self::getArg('y', AT_posint, true);
+    }
     $this->game->scribbleZone($zone);
     self::ajaxResponse();
   }
 
-
   public function writeNumberBis()
   {
     self::setAjaxMode();
-    $number = self::getArg("number", AT_posint, true);
-    $x = self::getArg("x", AT_posint, true);
-    $y = self::getArg("y", AT_posint, true);
+    $number = self::getArg('number', AT_posint, true);
+    $x = self::getArg('x', AT_posint, true);
+    $y = self::getArg('y', AT_posint, true);
     $this->game->writeNumberBis($number, [$x, $y]);
     self::ajaxResponse();
   }
-
 
   /////////////////////////////
   //// Confirm / pass turn ////
@@ -127,26 +131,25 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
-
   /////////////////////////////
   ///// Choose card plan  /////
   /////////////////////////////
   public function choosePlan()
   {
     self::setAjaxMode();
-    $planId = self::getArg("plan", AT_posint, true);
+    $planId = self::getArg('plan', AT_posint, true);
     $this->game->choosePlan($planId);
     self::ajaxResponse();
   }
 
-  public function validatePlan(){
+  public function validatePlan()
+  {
     self::setAjaxMode();
-    $arg = self::getArg("planArg", AT_json, true);
-    $this->validateJSonAlphaNum($arg, "planArg");
+    $arg = self::getArg('planArg', AT_json, true);
+    $this->validateJSonAlphaNum($arg, 'planArg');
     $this->game->validatePlan($arg);
     self::ajaxResponse();
   }
-
 
   public function reshuffle()
   {
@@ -166,14 +169,13 @@ class action_welcometo extends APP_GameAction
     self::ajaxResponse();
   }
 
-
   //////////////////////
   ///// ICE CREAM  /////
   //////////////////////
   public function chooseIceTruck()
   {
     self::setAjaxMode();
-    $side = self::getArg("side", AT_posint, true);
+    $side = self::getArg('side', AT_posint, true);
     $this->game->chooseIceTruck($side);
     self::ajaxResponse();
   }
@@ -181,19 +183,22 @@ class action_welcometo extends APP_GameAction
   //////////////////
   ///// UTILS  /////
   //////////////////
-  public function validateJSonAlphaNum($value, $argName = "unknown"){
-      if (is_array($value)) {
-          foreach ($value as $key => $v) {
-              $this->validateJSonAlphaNum($key);
-              $this->validateJSonAlphaNum($v);
-          }
-          return true;
+  public function validateJSonAlphaNum($value, $argName = 'unknown')
+  {
+    if (is_array($value)) {
+      foreach ($value as $key => $v) {
+        $this->validateJSonAlphaNum($key);
+        $this->validateJSonAlphaNum($v);
       }
-      if (is_int($value)) return true;
-      $bValid = ( preg_match( "/^[0-9a-zA-Z- ]*$/", $value ) === 1 );
-      if (!$bValid)
-          throw new feException( "Bad value for: $argName", true, true, FEX_bad_input_argument );
       return true;
+    }
+    if (is_int($value)) {
+      return true;
+    }
+    $bValid = preg_match("/^[0-9a-zA-Z- ]*$/", $value) === 1;
+    if (!$bValid) {
+      throw new feException("Bad value for: $argName", true, true, FEX_bad_input_argument);
+    }
+    return true;
   }
-
 }
