@@ -184,6 +184,7 @@ $machinestates = [
     "possibleactions" => ["writeNumberBis", "pass", "restart"],
     "transitions" => [
       'bis' => ST_CHOOSE_PLAN,
+      'iceCream' => ST_ICE_CREAM,
       'pass' => ST_CHOOSE_PLAN,
       'restart' => ST_CHOOSE_CARDS,
     ]
@@ -304,6 +305,7 @@ $machinestates = [
       TEMP     => ST_ACTION_TEMP,
       BIS      => ST_ACTION_BIS,
       'restart' => ST_CHOOSE_CARDS,
+      'plan' => ST_CHOOSE_PLAN,
     ]
   ],
 

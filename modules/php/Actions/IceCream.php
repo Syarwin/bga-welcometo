@@ -121,7 +121,7 @@ class IceCream extends Zone
   {
     $cones = [0, 0, 0];
     foreach (self::getOfPlayer($player) as $scribble) {
-      if ($scribble['y'] >= 0) {
+      if ($scribble['y'] >= 0 && $scribble['state'] == 1) {
         $cones[$scribble['x']]++;
       }
     }

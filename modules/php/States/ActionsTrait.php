@@ -153,6 +153,12 @@ trait ActionsTrait
     $zones = Bis::getAvailableZones($player);
     $player->scribbleZone($zones[0]);
 
+    // Icecream expansion
+    if (Globals::isIceCream()) {
+      self::distributeIceCream('bis');
+      return;
+    }
+
     // Move on to next state
     StateMachine::nextState("bis");
   }

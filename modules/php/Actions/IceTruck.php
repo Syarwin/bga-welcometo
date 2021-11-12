@@ -60,7 +60,7 @@ class IceTruck extends Zone
   public function getEndOfStreet($player, $houses)
   {
     $structure = self::getOfPlayerStructured($player);
-    $ends = [0, 10, !is_null($structure[3][1]) ? 11 : 0];
+    $ends = [0, 9, !is_null($structure[3][1]) ? 10 : 0];
     $endOfStreet = null;
     foreach ($houses as $house) {
       if ($house['y'] == $ends[$house['x']]) {

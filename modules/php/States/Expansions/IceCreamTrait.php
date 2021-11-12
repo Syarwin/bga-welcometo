@@ -26,7 +26,7 @@ trait IceCreamTrait
     $house = $player->getLastHouse();
     $truckPositions = IceTruck::getTruckPositions($player);
     if (!is_null($truckPositions[$house['x']])) {
-      self::distributeIceCream($player);
+      self::distributeIceCream();
       return true;
     }
   }
@@ -43,13 +43,13 @@ trait IceCreamTrait
   {
     $player = Players::getCurrent();
     $player->scribbleZone([3, 1 - $choice]);
-    self::distributeIceCream($player);
+    self::distributeIceCream();
   }
 
   /**
    * distributeIceCream: move the ice truck and check ice creams
    */
-  public function distributeIceCream($choice)
+  public function distributeIceCream($nextState = null)
   {
     $player = Players::getCurrent();
     $scribbles = [];
@@ -82,7 +82,7 @@ trait IceCreamTrait
 
     // Move on to next state depending on the action card
     $combination = $player->getCombination();
-    StateMachine::nextState($combination['action']);
+    StateMachine::nextState($nextState ?? $combination['action']);
   }
 
   /**
