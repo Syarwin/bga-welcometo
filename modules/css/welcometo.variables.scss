@@ -1,64 +1,77 @@
 @import 'welcometo-base.variables';
 @import 'welcometo-icecream.variables';
+@import 'welcometo-christmas.variables';
 
 $cityName: (
   0: $cityNameBase,
   1: $cityNameIceCream,
+  2: $cityNameChristmas,
 );
 
 
 $houses: (
   0: $housesBase,
   1: $housesIceCream,
+  2: $housesChristmas,
 );
 
 $pools: (
   0: $poolsBase,
   1: $poolsIceCream,
+  2: $poolsChristmas,
 );
 
 $fences: (
   0: $fencesBase,
   1: $fencesIceCream,
+  2: $fencesChristmas,
 );
 
 $parks: (
   0: $parksBase,
   1: $parksIceCream,
+  2: $parksChristmas,
 );
 
 $scorePools: (
   0: $scorePoolsBase,
   1: $scorePoolsIceCream,
+  2: $scorePoolsChristmas,
 );
 
 $scoreTemps: (
   0: $scoreTempsBase,
   1: $scoreTempsIceCream,
+  2: $scoreTempsChristmas,
 );
 
 $scoreEstates: (
   0: $scoreEstatesBase,
   1: $scoreEstatesIceCream,
+  2: $scoreEstatesChristmas,
 );
 
 $scoreBis: (
   0: $scoreBisBase,
   1: $scoreBisIceCream,
+  2: $scoreBisChristmas,
 );
 
 $scoreRoundabout: (
   0: $scoreRoundaboutBase,
   1: $scoreRoundaboutIceCream,
+  2: $scoreRoundaboutChristmas,
 );
 
 $permitRefusal: (
   0: $permitRefusalBase,
   1: $permitRefusalIceCream,
+  2: $permitRefusalChristmas,
 );
 
 
 $scoreCounters: (
   0: $scoreCountersBase,
   1: $scoreCountersIceCream,
+  2: $scoreCountersChristmas,
 );

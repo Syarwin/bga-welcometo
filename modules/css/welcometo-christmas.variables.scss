@@ -1,0 +1,236 @@
+$cityNameChristmas:(
+  "top": 261px,
+  "left": 55px,
+);
+
+
+$housesChristmas:(
+  0:(
+    0:("left" : 360px, "top" : 180px),
+    1:("left" : 466px, "top" : 180px),
+    2:("left" : 572px, "top" : 196px),
+    3:("left" : 679px, "top" : 179px),
+    4:("left" : 785px, "top" : 179px),
+    5:("left" : 893px, "top" : 180px),
+    6:("left" : 998px, "top" : 196px),
+    7:("left" : 1103px, "top" : 195px),
+    8:("left" : 1208px, "top" : 180px),
+    9:("left" : 1312px, "top" : 180px),
+  ),
+
+  1:(
+    0:("left" : 257px, "top" : 479px),
+    1:("left" : 360px, "top" : 464px),
+    2:("left" : 467px, "top" : 464px),
+    3:("left" : 572px, "top" : 480px),
+    4:("left" : 680px, "top" : 464px),
+    5:("left" : 786px, "top" : 463px),
+    6:("left" : 893px, "top" : 463px),
+    7:("left" : 998px, "top" : 480px),
+    8:("left" : 1100px, "top" : 464px),
+    9:("left" : 1208px, "top" : 464px),
+    10:("left" : 1312px, "top" : 464px),
+  ),
+
+  2:(
+    0:("left" : 148px, "top" : 745px),
+    1:("left" : 257px, "top" : 762px),
+    2:("left" : 360px, "top" : 747px),
+    3:("left" : 466px, "top" : 746px),
+    4:("left" : 573px, "top" : 746px),
+    5:("left" : 679px, "top" : 747px),
+    6:("left" : 788px, "top" : 761px),
+    7:("left" : 893px, "top" : 747px),
+    8:("left" : 999px, "top" : 746px),
+    9:("left" : 1101px, "top" : 747px),
+    10:("left" : 1208px, "top" : 760px),
+    11:("left" : 1311px, "top" : 746px),
+  ),
+);
+
+$poolsChristmas:(
+  ("x":0, "y":2, "left":584px, "top":130px),
+  ("x":0, "y":6, "left":1012px, "top":132px),
+  ("x":0, "y":7, "left":1117px, "top":137px),
+  ("x":1, "y":0, "left":270px, "top":417px),
+  ("x":1, "y":3, "left":585px, "top":414px),
+  ("x":1, "y":7, "left":1012px, "top":420px),
+
+  ("x":2, "y":1, "left":270px, "top":700px),
+  ("x":2, "y":6, "left":800px, "top":697px),
+  ("x":2, "y":10, "left":1222px, "top":695px),
+);
+
+$fencesChristmas:(
+  0:(
+    "left":342px,
+    "top":126px,
+    "widths" : (108px, 106px, 109px, 104px, 107px, 106px, 104px, 104px, 104px, 103px)
+  ),
+  1:(
+    "left":236px,
+    "top":409px,
+    "widths" : (110px, 104px, 107px, 108px, 104px, 108px, 106px, 105px, 103px, 106px, 103px)
+  ),
+  2:(
+    "left":129px,
+    "top":693px,
+    "widths" : (111px, 106px, 105px, 105px, 109px, 104px, 106px, 106px, 105px, 104px, 105px, 103px)
+  ),
+);
+
+$parksChristmas:(
+  0:(
+    "left":1249px,
+    "top":62px,
+    "margin":52px,
+    "n" : 3,
+  ),
+  1:(
+    "left":1195px,
+    "top":346px,
+    "margin":53px,
+    "n" : 4,
+  ),
+  2:(
+    "left":1139px,
+    "top":627px,
+    "margin":54px,
+    "n" : 5,
+  ),
+);
+
+
+$scorePoolsChristmas:(
+  "left":(403px, 452px),
+  "top":(1119px, 1169px, 1222px, 1278px, 1327px)
+);
+
+$scoreTempsChristmas:(
+  ("top":1096px, "left":553px),
+  ("top":1096px, "left":614px),
+
+  ("top":1126px, "left":584px),
+
+  ("top":1154px, "left":553px),
+  ("top":1154px, "left":615px),
+
+  ("top":1184px, "left":584px),
+
+  ("top":1214px, "left":553px),
+  ("top":1214px, "left":614px),
+
+  ("top":1244px, "left":584px),
+
+  ("top":1275px, "left":553px),
+  ("top":1275px, "left":615px),
+);
+
+$scoreEstatesChristmas:(
+  ("top":1190px, "left":733px, "n":1),
+  ("top":1166px, "left":807px, "n":2),
+  ("top":1138px, "left":873px, "n":3),
+  ("top":1113px, "left":945px, "n":4),
+  ("top":1089px, "left":1017px, "n":4),
+  ("top":1067px, "left":1086px, "n":4),
+);
+
+
+$scoreBisChristmas:(
+  "top": (1069px, 1133px, 1199px, 1264px, 1327px),
+  "left": (1198px, 1254px)
+);
+
+
+$scoreRoundaboutChristmas:(
+  "top":(965px, 1024px),
+  "left":1342px,
+);
+
+
+$permitRefusalChristmas:(
+  "top":(1152px, 1216px, 1278px),
+  "left":1342px,
+);
+
+
+$scoreCountersChristmas:(
+  // PLANS //
+  "plan-0": (1050px, 55px),
+  "plan-1":(1177px, 55px),
+  "plan-2":(1302px, 54px),
+  "plan-total":(1413px, 56px),
+
+  // PARKS //
+  "park-0":(1140px,278px),
+  "park-1":(1220px,278px),
+  "park-2":(1296px,278px),
+  "park-total":(1413px,278px),
+
+  // POOLS //
+  "pool-total":(1413px,410px),
+
+  // TEMP //
+  "temp-total":(1413px,565px),
+
+  // ESTATES //
+  "estate-mult-0":(1326px,726px),
+  "estate-mult-1":(1326px,799px),
+  "estate-mult-2":(1326px,875px),
+  "estate-mult-3":(1326px,945px),
+  "estate-mult-4":(1326px,1021px),
+  "estate-mult-5":(1326px,1098px),
+
+  "estate-total-0":(1413px,707px),
+  "estate-total-1":(1413px,779px),
+  "estate-total-2":(1413px,850px),
+  "estate-total-3":(1413px,922px),
+  "estate-total-4":(1413px,1000px),
+  "estate-total-5":(1413px,1077px),
+
+  // BIS //
+  "bis-total":(1413px,1211px),
+
+  // OTHER //
+  "other-total":(1413px,1331px),
+
+  // TOTAL //
+  "total":(1413px,1428px),
+
+  // ICE CREAM //
+  "ice-cream-0": (1106px, 175px),
+  "ice-cream-1":(1181px, 191px),
+  "ice-cream-2":(1273px, 176px),
+  "ice-cream-total":(1413px, 183px),
+);
+
+
+$Christmass:(
+  ("x":0, "y":-1, "left":224px, "top":241px),
+  ("x":0, "y":0, "left":375px, "top":269px),
+  ("x":0, "y":2, "left":577px, "top":285px),
+  ("x":0, "y":4, "left":783px, "top":267px),
+  ("x":0, "y":5, "left":891px, "top":272px),
+  ("x":0, "y":7, "left":1090px, "top":284px),
+  ("x":0, "y":9, "left":1298px, "top":271px),
+
+  ("x":1, "y":0, "left":271px, "top":556px),
+  ("x":1, "y":1, "left":372px, "top":547px),
+  ("x":1, "y":3, "left":576px, "top":559px),
+  ("x":1, "y":4, "left":680px, "top":549px),
+  ("x":1, "y":6, "left":886px, "top":547px),
+  ("x":1, "y":8, "left":1087px, "top":545px),
+  ("x":1, "y":9, "left":1190px, "top":549px),
+  ("x":1, "y":-1, "left":1371px, "top":514px),
+
+  ("x":2, "y":-1, "left":13px, "top":781px),
+  ("x":2, "y":0, "left":167px, "top":820px),
+  ("x":2, "y":1, "left":274px, "top":828px),
+  ("x":2, "y":3, "left":476px, "top":819px),
+  ("x":2, "y":4, "left":582px, "top":820px),
+  ("x":2, "y":5, "left":682px, "top":820px),
+  ("x":2, "y":7, "left":887px, "top":815px),
+  ("x":2, "y":9, "left":1091px, "top":817px),
+  ("x":2, "y":10, "left":1194px, "top":828px),
+  ("x":2, "y":-2, "left":1369px, "top":781px),
+);

@@ -72,9 +72,22 @@ $game_options = [
         'tmdisplay' => totranslate('Ice Cream'),
         'nobeginner' => true,
       ],
+      OPTION_BOARD_CHRISTMAS => [
+        'name' => totranslate('Christmas lights'),
+        'tmdisplay' => totranslate('Christmas'),
+        'nobeginner' => true,
+      ],
     ],
     'startcondition' => [
       OPTION_BOARD_ICE_CREAM => [
+        [
+          'type' => 'otheroption',
+          'id' => 201, // ELO OFF hardcoded framework option
+          'value' => 1, // 1 if OFF
+          'message' => totranslate('This expansion is still in testing, please switch to training mode.'),
+        ],
+      ],
+      OPTION_BOARD_CHRISTMAS => [
         [
           'type' => 'otheroption',
           'id' => 201, // ELO OFF hardcoded framework option
