@@ -870,8 +870,7 @@ body {
       width: 70px;
       height: 86px;
       box-sizing: border-box;
-      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
-      background: rgba(255, 0, 0, 0.5); }
+      clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px); }
       .score-sheet-container .score-sheet .house.built {
         border: 2px solid black;
         border-bottom: none; }
@@ -1213,16 +1212,14 @@ body {
       position: absolute;
       width: 96px;
       height: 11px;
-      box-sizing: border-box;
-      background-color: #7acc425e; }
+      box-sizing: border-box; }
     .score-sheet-container .score-sheet .estate-fence {
       position: absolute;
       height: 180px;
       width: 12px;
       box-sizing: border-box;
       border-radius: 5px;
-      border-width: 2px;
-      background-color: rgba(0, 0, 255, 0.4); }
+      border-width: 2px; }
       .score-sheet-container .score-sheet .estate-fence.selectable {
         cursor: pointer;
         background-color: rgba(255, 0, 0, 0.3);
@@ -2179,10 +2176,12 @@ body {
       [data-board='2'] .score-sheet-container .score-sheet .pool[data-x="2"][data-y="10"] {
         left: 1222px;
         top: 695px; }
-      .score-sheet-container .score-sheet .pool svg.ladder path {
-        animation: blinkColor linear 0.9s infinite;
-        stroke: white;
-        stroke-width: 2px; }
+      .score-sheet-container .score-sheet .pool svg.ladder {
+        display: none; }
+        .score-sheet-container .score-sheet .pool svg.ladder path {
+          animation: blinkColor linear 0.9s infinite;
+          stroke: white;
+          stroke-width: 2px; }
 @keyframes blinkColor {
   0% {
     fill: red; }
@@ -2319,16 +2318,18 @@ body {
         left: 0;
         width: 100%;
         height: 100%; }
-      .score-sheet-container .score-sheet .park svg.highlight .park-black {
-        fill: rgba(255, 0, 0, 0.4);
-        stroke: black;
-        stroke-width: 2px; }
-      .score-sheet-container .score-sheet .park svg.highlight .park-white {
-        fill: none;
-        stroke: white;
-        stroke-width: 2px;
-        stroke-dasharray: 20;
-        animation: snake linear 0.9s infinite; }
+      .score-sheet-container .score-sheet .park svg.highlight {
+        display: none; }
+        .score-sheet-container .score-sheet .park svg.highlight .park-black {
+          fill: rgba(255, 0, 0, 0.4);
+          stroke: black;
+          stroke-width: 2px; }
+        .score-sheet-container .score-sheet .park svg.highlight .park-white {
+          fill: none;
+          stroke: white;
+          stroke-width: 2px;
+          stroke-dasharray: 20;
+          animation: snake linear 0.9s infinite; }
 @keyframes snake {
   0% {
     stroke-dashoffset: 40; }
@@ -2461,8 +2462,7 @@ body {
       height: 45px;
       width: 45px;
       box-sizing: border-box;
-      border-radius: 10px;
-      background-color: rgba(0, 0, 255, 0.5); }
+      border-radius: 10px; }
       .score-sheet-container .score-sheet .score-pool.selectable {
         cursor: pointer;
         background-color: rgba(255, 0, 0, 0.3);
@@ -2555,8 +2555,7 @@ body {
       height: 42px;
       width: 42px;
       transform: rotate(45deg);
-      box-sizing: border-box;
-      background-color: rgba(91, 21, 51, 0.5); }
+      box-sizing: border-box; }
       [data-board='0'] .score-sheet-container .score-sheet .score-temp[data-x='0'] {
         top: 1076px;
         left: 496px; }
@@ -2661,8 +2660,7 @@ body {
       width: 40px;
       height: 40px;
       box-sizing: border-box;
-      border-radius: 10px;
-      background-color: rgba(91, 21, 51, 0.5); }
+      border-radius: 10px; }
       .score-sheet-container .score-sheet .score-estate.selectable {
         cursor: pointer;
         background-color: rgba(255, 0, 0, 0.3);
@@ -2835,8 +2833,7 @@ body {
       position: absolute;
       height: 45px;
       width: 45px;
-      box-sizing: border-box;
-      background-color: rgba(91, 21, 51, 0.5); }
+      box-sizing: border-box; }
       [data-board='0'] .score-sheet-container .score-sheet .score-bis[data-x='0'] {
         top: 1051px;
         left: 1153px; }
@@ -2923,8 +2920,7 @@ body {
       height: 53px;
       width: 50px;
       box-sizing: border-box;
-      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background-color: rgba(91, 21, 51, 0.5); }
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
       .score-sheet-container .score-sheet .permit-refusal.selectable {
         cursor: pointer;
         background-color: rgba(255, 0, 0, 0.3);
@@ -2964,8 +2960,7 @@ body {
       position: absolute;
       height: 53px;
       width: 50px;
-      box-sizing: border-box;
-      background-color: rgba(91, 21, 51, 0.5); }
+      box-sizing: border-box; }
       [data-board='0'] .score-sheet-container .score-sheet .score-roundabout[data-x='0'] {
         top: 948px;
         left: 1311px; }
@@ -3232,18 +3227,18 @@ body {
       [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_total {
         top: 1413px;
         left: 1428px; }
-      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-0 {
-        top: 1106px;
-        left: 175px; }
-      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-1 {
-        top: 1181px;
-        left: 191px; }
-      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-2 {
-        top: 1273px;
-        left: 176px; }
-      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_ice-cream-total {
+      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_christmas-0 {
+        top: 1133px;
+        left: 165px; }
+      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_christmas-1 {
+        top: 1218px;
+        left: 165px; }
+      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_christmas-2 {
+        top: 1300px;
+        left: 165px; }
+      [data-board='2'] .score-sheet-container .score-sheet .score-counter.score_christmas-total {
         top: 1413px;
-        left: 183px; }
+        left: 165px; }
     .score-sheet-container .score-sheet .scoresheet-overlay {
       position: absolute;
       top: 0;
@@ -3647,13 +3642,13 @@ body {
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout, .scribble-checkmark {
+.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout, .scribble-checkmark, .scribble-christmas {
   width: 100%;
   height: 100%; }
-  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path, .scribble-roundabout .scribble-path, .scribble-checkmark .scribble-path {
+  .scribble .scribble-path, .scribble-circle .scribble-path, .scribble-line .scribble-path, .scribble-line-hor .scribble-path, .scribble-roundabout .scribble-path, .scribble-checkmark .scribble-path, .scribble-christmas .scribble-path {
     stroke: black;
     stroke-linecap: round; }
-  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path, .scribble-roundabout.animate .scribble-path, .scribble-checkmark.animate .scribble-path {
+  .scribble.animate .scribble-path, .scribble-circle.animate .scribble-path, .scribble-line.animate .scribble-path, .scribble-line-hor.animate .scribble-path, .scribble-roundabout.animate .scribble-path, .scribble-checkmark.animate .scribble-path, .scribble-christmas.animate .scribble-path {
     animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards; }
 @keyframes drawScribble {
@@ -3687,6 +3682,15 @@ body {
   stroke: rgba(0, 100, 0, 0.8); }
 .scribble-checkmark.animate .scribble-path {
   stroke-dashoffset: 400; }
+
+.scribble-christmas {
+  width: auto;
+  height: auto; }
+  .scribble-christmas .scribble-path {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 0; }
+  .scribble-christmas.animate .scribble-path {
+    stroke-dashoffset: 150; }
 
 .scribble-roundabout {
   height: 81%; }

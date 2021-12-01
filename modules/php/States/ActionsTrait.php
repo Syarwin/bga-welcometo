@@ -158,6 +158,10 @@ trait ActionsTrait
       self::distributeIceCream('bis');
       return;
     }
+    // Christmas expansion
+    if (Globals::isChristmas()) {
+      $this->suspendChristmasDecoration($player);
+    }
 
     // Move on to next state
     StateMachine::nextState("bis");

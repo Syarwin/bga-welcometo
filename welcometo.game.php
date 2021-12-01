@@ -52,6 +52,7 @@ class welcometo extends Table
   use WTO\States\EndOfGameTrait;
 
   use WTO\States\Expansions\IceCreamTrait;
+  use WTO\States\Expansions\ChristmasTrait;
 
   public static $instance = null;
   public function __construct()

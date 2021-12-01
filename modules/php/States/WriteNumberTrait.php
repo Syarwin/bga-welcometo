@@ -128,6 +128,10 @@ trait WriteNumberTrait
       StateMachine::nextState('iceCream');
       return;
     }
+    // Christmas expansion
+    if (Globals::isChristmas()) {
+      $this->suspendChristmasDecoration($player);
+    }
 
     // Move on to next state depending on the action card
     $combination = $player->getCombination();

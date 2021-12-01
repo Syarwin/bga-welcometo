@@ -35,6 +35,10 @@ class Globals extends \APP_DbObject
   {
     return self::getBoard() == OPTION_BOARD_ICE_CREAM;
   }
+  public static function isChristmas()
+  {
+    return self::getBoard() == OPTION_BOARD_CHRISTMAS;
+  }
 
   public static function isStandard()
   {

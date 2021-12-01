@@ -15,6 +15,7 @@ use WTO\Actions\Surveyor;
 use WTO\Actions\PermitRefusal;
 use WTO\Actions\Roundabout;
 use WTO\Actions\IceCream;
+use WTO\Actions\Christmas;
 
 class Player extends Helpers\DB_Manager
 {
@@ -50,7 +51,7 @@ class Player extends Helpers\DB_Manager
   {
     return \WTO\Game\Preferences::get($this->id, $prefId);
   }
-  
+
   public function getId()
   {
     return $this->id;
@@ -119,6 +120,10 @@ class Player extends Helpers\DB_Manager
       $data = array_merge($data, IceCream::getScore($this));
     }
 
+    if (Globals::isChristmas()) {
+      $data = array_merge($data, Christmas::getScore($this));
+    }
+
     if ($computeTotal) {
       $data['total'] = $this->computeScore();
     }
@@ -134,7 +139,8 @@ class Player extends Helpers\DB_Manager
       $scores['pool-total'] +
       $scores['temp-total'] +
       $scores['estate-total'] +
-      ($scores['ice-cream-total'] ?? 0) -
+      ($scores['ice-cream-total'] ?? 0) +
+      ($scores['christmas-total'] ?? 0) -
       $scores['bis-total'] -
       $scores['permit-total'] -
       $scores['roundabout-total'];
