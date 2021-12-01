@@ -13,7 +13,7 @@ class Christmas extends Zone
 
   public function getScore($player)
   {
-    $scribbles = self::getOfPlayer($player);
+    $christmas = self::getOfPlayerStructured($player);
     $res = [
       'christmas-0' => 0,
       'christmas-1' => 0,
@@ -22,7 +22,22 @@ class Christmas extends Zone
     ];
 
     for ($i = 0; $i < 3; $i++) {
-      $res['christmas-total'] += $res['christmas-' . $i];
+      $max = 0;
+      $current = 0;
+      for($j = 0; $j < self::$cols[$i]; $j++){
+        if(is_null($christmas[$i][$j])){
+          $current = 0;
+        } else {
+          $current++;
+          $max = max($max, $current);
+        }
+      }
+
+      if($max > 0){
+        $max++;
+      }
+      $res['christmas-' . $i] = $max;
+      $res['christmas-total'] += $max;
     }
 
     return $res;

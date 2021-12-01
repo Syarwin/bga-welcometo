@@ -94,10 +94,11 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-estate', [3,0]);
 
 
-    Scribbles::add($pIds[0], 'estate-fence', [0,0]);
+//    Scribbles::add($pIds[0], 'estate-fence', [0,0]);
+//    Scribbles::add($pIds[0], 'estate-fence', [0,2]);
     Scribbles::add($pIds[0], 'estate-fence', [0,2]);
     Scribbles::add($pIds[0], 'estate-fence', [0,5]);
-    Scribbles::add($pIds[0], 'estate-fence', [1,3]);
+    Scribbles::add($pIds[0], 'estate-fence', [1,5]);
     Scribbles::add($pIds[0], 'estate-fence', [1,6]);
 //    Scribbles::add($pIds[0], 'estate-fence', [2,3]);
     Scribbles::add($pIds[0], 'estate-fence', [2,4]);
@@ -134,6 +135,25 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-bis', [1]);
     Scribbles::add($pIds[0], 'score-bis', [2]);
     Scribbles::add($pIds[0], 'score-bis', [3]);
+
+    Scribbles::add($pIds[0], 'christmas', [1,0]);
+    Scribbles::add($pIds[0], 'christmas', [1,1]);
+    Scribbles::add($pIds[0], 'christmas', [1,2]);
+    Scribbles::add($pIds[0], 'christmas', [1,3]);
+    Scribbles::add($pIds[0], 'christmas', [1,4]);
+    Scribbles::add($pIds[0], 'christmas', [1,5]);
+    Scribbles::add($pIds[0], 'christmas', [1,6]);
+    Scribbles::add($pIds[0], 'christmas', [1,7]);
+
+    Scribbles::add($pIds[0], 'christmas', [2,0]);
+    Scribbles::add($pIds[0], 'christmas', [2,1]);
+    Scribbles::add($pIds[0], 'christmas', [2,2]);
+    Scribbles::add($pIds[0], 'christmas', [2,3]);
+    Scribbles::add($pIds[0], 'christmas', [2,4]);
+    Scribbles::add($pIds[0], 'christmas', [2,5]);
+    Scribbles::add($pIds[0], 'christmas', [2,6]);
+    Scribbles::add($pIds[0], 'christmas', [2,7]);
+
 
 //    Scribbles::add($pIds[1], 'score-temp', [0]);
     }

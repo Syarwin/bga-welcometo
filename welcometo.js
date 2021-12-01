@@ -38,6 +38,7 @@ define([
   g_gamethemeurl + 'modules/js/wtoPlanCards.js',
 ], function (dojo, declare) {
   const ICE_CREAM = 1;
+  const CHRISTMAS = 2;
 
   return declare(
     'bgagame.welcometo',
@@ -273,6 +274,9 @@ define([
         if (board == ICE_CREAM) {
           iceCream = '<th id="overview-ice-cream" colspan="3"><div></div></th>';
         }
+        else if (board == CHRISTMAS) {
+          iceCream = '<th id="overview-christmas" colspan="3"><div></div></th>';
+        }
 
         return `
       <table id='players-overview'>
@@ -331,6 +335,17 @@ define([
         `;
         }
 
+        // Christmas expansion
+        let christmas = '';
+        if (this.gamedatas.options.board == CHRISTMAS) {
+          iceCream = `
+        <td>${scores['christmas-0']}<i class="fa fa-star"></i></td>
+        <td>${scores['christmas-1']}<i class="fa fa-star"></i></td>
+        <td>${scores['christmas-2']}<i class="fa fa-star"></i></td>
+        `;
+        }
+
+
         return `
         <tr>
           <td>${player.name}</td>
@@ -339,6 +354,7 @@ define([
           <td>${plan1}</td>
           <td>${plan2}</td>
           ${iceCream}
+          ${christmas}
           <td>${scores['park-0']}<i class="fa fa-star"></i></td>
           <td>${scores['park-1']}<i class="fa fa-star"></i></td>
           <td>${scores['park-2']}<i class="fa fa-star"></i></td>

@@ -4,6 +4,7 @@ use WTO\Scribbles;
 use WTO\Actions\Park;
 use WTO\Actions\Pool;
 use WTO\Actions\IceCream;
+use WTO\Actions\Christmas;
 
 class DecorativePlan extends AbstractPlan
 {
@@ -27,6 +28,11 @@ class DecorativePlan extends AbstractPlan
 
     else if($type == 'iceCream'){
       $this->desc = [  clienttranslate("To fulfill this City Plan, you must sell all ice cream cones in one street.") ];
+    }
+
+
+    else if($type == 'christmas'){
+      $this->desc = [  clienttranslate("Connect all the houses of one street with a single string of lights.") ];
     }
   }
 
@@ -59,7 +65,11 @@ class DecorativePlan extends AbstractPlan
 
       case 'iceCream':
         $cones = IceCream::getCompleted($player);
-        return max($cones) == 1;        
+        return max($cones) == 1;
+
+      case 'christmas':
+        return count(Christmas::getAvailableZones($player)) <= 2;
+
 
       default:
         return false;

@@ -101,6 +101,7 @@ const ROUNDABOUT = 100;
 const BASIC = 1;
 const ADVANCED = 2;
 const ICE_CREAM = 3;
+const CHRISTMAS = 4;
 
 /*
  * Stats

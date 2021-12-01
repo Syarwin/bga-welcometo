@@ -289,6 +289,19 @@ $cardMargin:5px;
       &[data-id="28"] .plan-card-front { background-position: 0% center; }
       &[data-id="29"] .plan-card-front { background-position: 50% center; }
       &[data-id="30"] .plan-card-front { background-position: 100% center; }
+
+
+      ////// CHRISTMAS EXPANSION ///////
+      &[data-id="31"], &[data-id="32"], &[data-id="33"] {
+        .plan-card-front {
+          background-image:url('img/expansions/plans_christmas.jpg');
+          background-size:300% 100%;
+        }
+      }
+
+      &[data-id="31"] .plan-card-front { background-position: 0% center; }
+      &[data-id="32"] .plan-card-front { background-position: 50% center; }
+      &[data-id="33"] .plan-card-front { background-position: 100% center; }
     }
   }
 }

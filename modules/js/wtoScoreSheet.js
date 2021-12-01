@@ -282,6 +282,12 @@ define([
         this.tpl('iceCream', { x: 2, y: -1 });
         this.tpl('iceCream', { x: 2, y: -2 });
       }
+
+      if (this.gamedatas.options.board == CHRISTMAS) {
+        for(let i = 0; i < 200; i++){
+          dojo.place("<div class='snow'></div>", this.container);
+        }
+      }
     },
 
     setupLowerSheet() {

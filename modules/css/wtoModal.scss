@@ -1,25 +1,24 @@
-
-
 /*************************
 **************************
 ********* MODAL  *********
 **************************
 *************************/
 .welcometo_popin {
-  width:80%;
-  position:relative;
+  width: 80%;
+  position: relative;
 
-  &::before, &::after {
-    content: "";
+  &::before,
+  &::after {
+    content: '';
     display: block;
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url("img/dialog-texture.jpg");
-    box-shadow: -5px 5px 3px 0px rgba(20,20,20,0.6);
-    z-index:-1;
+    background-image: url('img/dialog-texture.jpg');
+    box-shadow: -5px 5px 3px 0px rgba(20, 20, 20, 0.6);
+    z-index: -1;
   }
 
   &::before {
@@ -31,21 +30,22 @@
   }
 
   &::after {
-    background-image: url("img/staple.png"), url("img/dialog-texture.jpg");
+    background-image: url('img/staple.png'), url('img/dialog-texture.jpg');
     background-position: 5px 5px, top left;
     background-repeat: no-repeat, repeat;
-    background-size:58px, 60px;
+    background-size: 58px, 60px;
   }
 
   h2 {
     @include handwritten;
-    color:#b74d44;
-    font-size:30px;
-    padding:3px 90px;
+    color: #b74d44;
+    font-size: 30px;
+    padding: 3px 90px;
     text-align: center;
-    &::before, &::after {
-      content:"★";
-      margin:5px;
+    &::before,
+    &::after {
+      content: '★';
+      margin: 5px;
     }
   }
 
@@ -55,7 +55,7 @@
     width: 45px;
     height: 45px;
     @include centered;
-    position:absolute;
+    position: absolute;
     top: -15px;
     right: -15px;
     font-size: 100%;
@@ -63,91 +63,92 @@
 
     &:hover {
       text-decoration: none;
-      color:#CCC !important;
-      transform:scale(1.1);
+      color: #ccc !important;
+      transform: scale(1.1);
     }
 
     i {
-      margin-top:-2px;
+      margin-top: -2px;
     }
   }
 }
 
-
 #popin_showScoreSheet {
-  padding:10px;
-  z-index:2000;
-  width:50%;
-  margin-top:100px;
+  padding: 10px;
+  z-index: 2000;
+  width: 50%;
+  margin-top: 100px;
 
-  &::before, &::after {
-    box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
+  &::before,
+  &::after {
+    box-shadow: 5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6),
+      -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
   }
 
   &::before {
-    background-image: url("img/dialog-texture2.jpg");
-    transform:rotate(-3deg);
+    background-image: url('img/dialog-texture2.jpg');
+    transform: rotate(-3deg);
     top: 56px;
     left: -21px;
   }
 
   &::after {
-    background-image: url("img/staple.png"), url("img/dialog-texture2.jpg");
+    background-image: url('img/staple.png'), url('img/dialog-texture2.jpg');
   }
 
   h2 {
-    margin:0px;
+    margin: 0px;
   }
 
   #popin_showScoreSheet_contents {
-    margin-top:5px;
+    margin-top: 5px;
     .score-sheet {
       transform-origin: top left;
     }
   }
 }
 
-
-
 #popin_chooseNumber {
-  width:auto;
+  width: auto;
   max-width: 80%;
 
   #popin_chooseNumber_contents {
-    min-height:200px;
-    display:flex;
+    min-height: 200px;
+    display: flex;
     justify-content: space-around;
     margin: 20px 20px;
     flex-wrap: wrap;
 
     div {
       flex-shrink: 0;
-      height:200px;
-      margin:10px 20px;
-      width:$cardWidth * 200px / $cardHeight;
-      background-image:url("img/construction_front.jpg");
-      @media (max-width: $breakpoint) { background-image:url("img/construction_front_low.jpg"); }
-      background-size:cover;
-      box-shadow:-2px 2px 3px rgba(20,20,20,0.8);
-      cursor:pointer;
+      height: 200px;
+      margin: 10px 20px;
+      width: $cardWidth * 200px / $cardHeight;
+      background-image: url('img/construction_front.jpg');
+      @media (max-width: $breakpoint) {
+        background-image: url('img/construction_front_low.jpg');
+      }
+      background-size: cover;
+      box-shadow: -2px 2px 3px rgba(20, 20, 20, 0.8);
+      cursor: pointer;
 
       @for $i from 0 through 17 {
-        &[data-number="#{$i}"] { background-position: $i*100%/17 center; }
+        &[data-number='#{$i}'] {
+          background-position: $i * 100%/17 center;
+        }
       }
 
       &:hover {
-        transform:scale(1.05) rotate(2deg);
+        transform: scale(1.05) rotate(2deg);
       }
     }
   }
 }
 
-
-
 #popin_showSoloCard {
   #popin_showSoloCard_contents {
     height: 400px;
-    background-image: url("img/solo.jpg");
+    background-image: url('img/solo.jpg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
@@ -155,33 +156,32 @@
   }
 }
 
-
-
-
 #popin_showOverview {
-  z-index:2000;
-  padding:0;
-  width:1000px;
+  z-index: 2000;
+  padding: 0;
+  width: 1000px;
   min-width: 1000px;
-  [data-board="1"] & {
+  [data-board='1'] &,
+  [data-board='2'] & {
     width: 1250px;
     min-width: 1250px;
   }
 
-  &::before, &::after {
-    box-shadow:5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
+  &::before,
+  &::after {
+    box-shadow: 5px 5px 3px 0px rgba(20, 20, 20, 0.6), -5px 5px 3px 0px rgba(20, 20, 20, 0.6),
+      -5px -5px 3px 0px rgba(20, 20, 20, 0.5);
   }
 
-
   &::before {
-    background-image: url("img/dialog-texture2.jpg");
+    background-image: url('img/dialog-texture2.jpg');
     transform: rotate(-2deg);
     top: 17px;
     left: -15px;
   }
 
   &::after {
-    background-image: url("img/dialog-texture2.jpg");
+    background-image: url('img/dialog-texture2.jpg');
     background-position: top left;
     background-repeat: repeat;
     background-size: 60px;
@@ -194,94 +194,117 @@
 
   #popin_showOverview_contents {
     table {
-      width:100%;
+      width: 100%;
 
       th {
-        min-width:70px;
-        height:70px;
+        min-width: 70px;
+        height: 70px;
         vertical-align: middle;
         text-align: center;
-        border-right:1px solid rgba(0,0,0,0.2);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
         &:last-of-type {
-          border-right:none;
+          border-right: none;
         }
 
         & > div {
-          width:62px;
-          height:62px;
-          display:inline-block;
+          width: 62px;
+          height: 62px;
+          display: inline-block;
         }
 
-        &#overview-park div, &#overview-pool div, &#overview-temp div, &#overview-estates div, &#overview-bis div {
-          background-image:url("img/actions.png");
-          background-size:cover;
+        &#overview-park div,
+        &#overview-pool div,
+        &#overview-temp div,
+        &#overview-estates div,
+        &#overview-bis div {
+          background-image: url('img/actions.png');
+          background-size: cover;
         }
-        &#overview-estates div { background-position:20% center;}
-        &#overview-park div { background-position:40% center;}
-        &#overview-pool div { background-position:60% center;}
-        &#overview-temp div { background-position:80% center; text-align: right; }
-        &#overview-bis div { background-position:100% center;}
+        &#overview-estates div {
+          background-position: 20% center;
+        }
+        &#overview-park div {
+          background-position: 40% center;
+        }
+        &#overview-pool div {
+          background-position: 60% center;
+        }
+        &#overview-temp div {
+          background-position: 80% center;
+          text-align: right;
+        }
+        &#overview-bis div {
+          background-position: 100% center;
+        }
 
         &#overview-ice-cream div {
-          background-image:url("img/expansions/icecream.png");
-          background-size:cover;
+          background-image: url('img/expansions/icecream.png');
+          background-size: cover;
+        }
+
+        &#overview-christmas div {
+          background-image: url('img/expansions/christmas.png');
+          background-size: cover;
         }
 
         &#overview-houses div {
-          width:56px;
-          height:56px;
-          background-image:url("img/house.png");
-          background-size:cover;
+          width: 56px;
+          height: 56px;
+          background-image: url('img/house.png');
+          background-size: cover;
         }
 
-        &#overview-plan-1, &#overview-plan-2 , &#overview-plan-3 {
+        &#overview-plan-1,
+        &#overview-plan-2,
+        &#overview-plan-3 {
           @include handwritten;
-          color:#b74d44;
+          color: #b74d44;
           font-size: 30px;
           font-weight: bold;
         }
 
         &#overview-other div {
-          width:50px;
-          height:50px;
-          background-image:url("img/refusal.png"), url("img/permit.png");
-          background-size:cover;
+          width: 50px;
+          height: 50px;
+          background-image: url('img/refusal.png'), url('img/permit.png');
+          background-size: cover;
         }
 
         &#overview-user {
-          width:auto;
+          width: auto;
         }
 
-        &#overview-total, &#overview-user {
+        &#overview-total,
+        &#overview-user {
           font-size: 40px;
         }
       }
 
       tbody {
         tr {
-          height:50px;
+          height: 50px;
 
           td {
             vertical-align: middle;
             text-align: center;
-            padding:5px 8px;
-            word-wrap:anywhere;
+            padding: 5px 8px;
+            word-wrap: anywhere;
             @include handwritten;
 
-            border-right:1px solid rgba(0,0,0,0.2);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
             &:last-of-type {
-              border-right:none;
+              border-right: none;
             }
 
             &.overview-house {
               span:first-child {
-                position:relative;
-                top:-5px;
+                position: relative;
+                top: -5px;
               }
 
               span:last-child {
-                position:relative;
-                top:5px;
+                position: relative;
+                top: 5px;
               }
             }
 
@@ -292,10 +315,15 @@
             }
 
             &.overview-temp {
-              padding:0px;
-              display:flex;
+              padding: 0px;
+              display: flex;
               flex-flow: column;
-              background:linear-gradient(to top left, transparent calc(50% - 1px), rgba(0,0,0,0.2), transparent calc(50% + 1px) );
+              background: linear-gradient(
+                to top left,
+                transparent calc(50% - 1px),
+                rgba(0, 0, 0, 0.2),
+                transparent calc(50% + 1px)
+              );
 
               div:first-child {
                 text-align: left;
@@ -303,8 +331,8 @@
                 top: 3px;
                 left: 3px;
                 svg {
-                  width:17px;
-                  height:17px
+                  width: 17px;
+                  height: 17px;
                 }
               }
               div:last-child {
@@ -316,38 +344,36 @@
             }
           }
         }
-        tr:nth-of-type(2n+1) {
-          background-image:url("img/dialog-texture3.jpg");
+        tr:nth-of-type(2n + 1) {
+          background-image: url('img/dialog-texture3.jpg');
         }
       }
     }
   }
 }
 
-
-
 #popin_showHelpSheet {
-  max-width:730px;
+  max-width: 730px;
 
   &::before {
-    background-image: url("img/dialog-texture2.jpg");
+    background-image: url('img/dialog-texture2.jpg');
     transform: rotate(-2deg);
     top: 17px;
     left: -15px;
   }
 
   &::after {
-    background-image: url("img/dialog-texture2.jpg");
+    background-image: url('img/dialog-texture2.jpg');
     background-position: top left;
     background-repeat: repeat;
     background-size: 60px;
   }
 
   #popin_showHelpSheet_contents {
-    background:url("img/help_card.png");
+    background: url('img/help_card.png');
     height: 0;
     width: 100%;
-    padding-bottom:72%;
+    padding-bottom: 72%;
     background-size: contain;
     background-repeat: no-repeat;
   }
