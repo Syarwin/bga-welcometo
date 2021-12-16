@@ -56,7 +56,7 @@ class Christmas extends Zone
         'y' => $lastHouse['y'],
       ];
     }
-    if ($lastHouse['y'] > 1) {
+    if ($lastHouse['y'] > 0) {
       $houses[] = [
         'x' => $lastHouse['x'],
         'y' => $lastHouse['y'] - 1,
