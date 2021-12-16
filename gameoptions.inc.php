@@ -79,14 +79,6 @@ $game_options = [
       ],
     ],
     'startcondition' => [
-      OPTION_BOARD_ICE_CREAM => [
-        [
-          'type' => 'otheroption',
-          'id' => 201, // ELO OFF hardcoded framework option
-          'value' => 1, // 1 if OFF
-          'message' => totranslate('This expansion is still in testing, please switch to training mode.'),
-        ],
-      ],
       OPTION_BOARD_CHRISTMAS => [
         [
           'type' => 'otheroption',
