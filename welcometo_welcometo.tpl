@@ -369,7 +369,7 @@ var jstpl_scribbleCheckMark = `
 
 
 var jstpl_scribbleRoundabout = `
-<svg xmlns="http://www.w3.org/2000/svg" class="scribble-roundabout" id="scribble-\${id}" data-turn="\${turn}" viewBox="0 0 49.840122 49.840134">
+<svg xmlns="http://www.w3.org/2000/svg" class="scribble-roundabout" data-turn="\${turn}" viewBox="0 0 49.840122 49.840134">
   <g transform="translate(-19.397652,-93.297186)">
     <path class="scribble-path roundabout-circle" d="M 21.150113,121.27143 A 23.368044,23.368044 0 0 1 41.257231,95.050483 23.368044,23.368044 0 0 1 67.483639,115.15048 23.368044,23.368044 0 0 1 47.390764,141.38235 23.368044,23.368044 0 0 1 21.153444,121.29659" />
     <path class="scribble-path roundabout-dot" d="m 40.657065,119.22026 a 3.7417734,3.7417734 0 0 1 3.219626,-4.19859 3.7417734,3.7417734 0 0 1 4.199462,3.21849 3.7417734,3.7417734 0 0 1 -3.217354,4.20033 3.7417734,3.7417734 0 0 1 -4.201203,-3.21621" />

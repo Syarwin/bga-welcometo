@@ -56,7 +56,7 @@ abstract class AbstractPlan extends \APP_DbObject
     } elseif (Globals::isChristmas()) {
       $check = $check && ($this->stack != 3 || $this->variant == CHRISTMAS);
     } else {
-      $check = $check && $this->variant != ICE_CREAM;
+      $check = $check && $this->variant != ICE_CREAM && $this->variant != CHRISTMAS;
     }
 
     return $check;
