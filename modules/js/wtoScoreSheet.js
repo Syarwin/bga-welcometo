@@ -496,7 +496,7 @@ define([
       if (scribble.y != null) location += '_' + scribble.y;
 
       if (scribble.type == 'christmas') {
-        location = 'score-sheet-main-' + scribble.pId;
+        location =  this.container;
       }
 
       if (!$(location)) {

@@ -171,7 +171,7 @@ class Player extends Helpers\DB_Manager
    */
   public function hasSomethingToCancel()
   {
-    return !empty(Log::getLastActions($this->id)) || Scribbles::hasScribbleSomething($this->id);
+    return !Log::getLastActions($this->id)->empty() || Scribbles::hasScribbleSomething($this->id);
   }
 
   /*

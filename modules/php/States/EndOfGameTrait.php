@@ -61,7 +61,7 @@ trait EndOfGameTrait
       $estates = $player->getEstates();
       $data = [count($estates), 0,0,0,0,0,0];
       foreach($estates as $estate){
-        $data[$estate['size']]++;
+        $data[$estate['size']] = ($data[$estate['size']] ?? 0) + 1;
       }
       $scoresAux[$player->getId()] = $data;
     }

@@ -58,9 +58,18 @@ class Notifications
 
   public static function chooseCards($player){
     $combination = $player->getCombination();
+    $names = [
+      SURVEYOR => clienttranslate("Surveyor"),
+      ESTATE   => clienttranslate("Real Estate Agent"),
+      PARK     => clienttranslate("Landscaper"),
+      POOL     => clienttranslate("Pool Manufacturer"),
+      TEMP     => clienttranslate("Temp agency"),
+      BIS      => clienttranslate("Bis")
+    ];
+
     self::messageTo($player, clienttranslate('You choose the combination : ${number} & ${action}.'), [
       'i18n' => ['action'],
-      'action' => ACTION_NAMES[$combination["action"]],
+      'action' => $names[$combination["action"]],
       'number' => $combination["number"],
     ]);
   }

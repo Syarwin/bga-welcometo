@@ -24,8 +24,8 @@ class Christmas extends Zone
     for ($i = 0; $i < 3; $i++) {
       $max = 0;
       $current = 0;
-      for($j = 0; $j < self::$cols[$i]; $j++){
-        if(is_null($christmas[$i][$j])){
+      for ($j = 0; $j < self::$cols[$i]; $j++) {
+        if (is_null($christmas[$i][$j])) {
           $current = 0;
         } else {
           $current++;
@@ -33,7 +33,7 @@ class Christmas extends Zone
         }
       }
 
-      if($max > 0){
+      if ($max > 0) {
         $max++;
       }
       $res['christmas-' . $i] = $max;
@@ -71,7 +71,13 @@ class Christmas extends Zone
 
       $h1 = $streets[$h['x']][$h['y']];
       $h2 = $streets[$h['x']][$h['y'] + 1];
-      if (!is_null($h1) && !is_null($h2) && $h2['number'] <= $h1['number'] + 1) {
+      if (
+        !is_null($h1) &&
+        !is_null($h2) &&
+        $h1['number'] != \ROUNDABOUT &&
+        $h2['number'] != \ROUNDABOUT &&
+        $h2['number'] <= $h1['number'] + 1
+      ) {
         $zones[] = $h;
       }
     }

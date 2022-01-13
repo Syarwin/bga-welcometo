@@ -173,7 +173,7 @@ trait WriteNumberTrait
     $player->writeNumber(ROUNDABOUT, $pos);
     $player->scribbleZone([$pos[0], $pos[1] - 1], 'estate-fence', true);
     $player->scribbleZone($pos, 'estate-fence', true);
-    $player->scribbleZone($zones[0], 'estate-fence', true);
+    //$player->scribbleZone($zones[0], 'estate-fence', true);
     $player->scribbleZone($zones[0], null, true);
     $player->updateScores();
 

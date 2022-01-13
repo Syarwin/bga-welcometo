@@ -179,5 +179,6 @@ class StateMachine extends \APP_DbObject
       'state' => $newState,
       'args' => $args,
     ]);
+    self::getGame()->notifyAllPlayers("synchro", '', ['player_id' => $player->getId()]);
   }
 }

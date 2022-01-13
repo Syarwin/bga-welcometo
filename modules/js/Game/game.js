@@ -121,9 +121,17 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       this.onEnteringState(state.name, this.gamedatas.gamestate);
     },
 
+    ntf_newPrivateState() {},
+
     notif_newPrivateState(n) {
       this.onLeavingState(this.gamedatas.gamestate.name);
       this.setupPrivateState(n.args.state, n.args.args);
+    },
+
+    notif_synchro(n) {
+      if (this.isReadOnly && n.args.player_id != this.player_id) {
+        this.onArchiveNext({ preventDefault: () => {} });
+      }
     },
 
     /*
@@ -164,6 +172,8 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
           this.notifqueue.setIgnoreNotificationCheck(notif[0], notif[2]);
         }
       });
+
+      dojo.subscribe('synchro', this, 'notif_synchro');
     },
 
     /*

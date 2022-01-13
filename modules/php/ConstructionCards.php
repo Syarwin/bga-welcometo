@@ -88,7 +88,7 @@ class ConstructionCards extends Helpers\Pieces
 
     // Depending on its position, move it around
     $middle = 42;
-    $card = self::DB()->where('action', SOLO)->get();
+    $card = self::DB()->where('action', SOLO)->getSingle();
     if ($card['card_state'] >= $middle) {
       self::insertAt($card['card_id'], 'deck', $card['card_state'] - $middle);
     }
