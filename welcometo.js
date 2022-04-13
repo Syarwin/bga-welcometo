@@ -39,6 +39,7 @@ define([
 ], function (dojo, declare) {
   const ICE_CREAM = 1;
   const CHRISTMAS = 2;
+  const EASTER = 3;
 
   return declare(
     'bgagame.welcometo',
@@ -269,13 +270,16 @@ define([
       },
 
       tplOverview() {
-        let iceCream = '';
+        let additional = '';
         let board = this.gamedatas.options.board;
         if (board == ICE_CREAM) {
-          iceCream = '<th id="overview-ice-cream" colspan="3"><div></div></th>';
+          additional = '<th id="overview-ice-cream" colspan="3"><div></div></th>';
         }
         else if (board == CHRISTMAS) {
-          iceCream = '<th id="overview-christmas" colspan="3"><div></div></th>';
+          additional = '<th id="overview-christmas" colspan="3"><div></div></th>';
+        }
+        else if (board == EASTER) {
+          additional = '<th id="overview-easter"><div></div></th>';
         }
 
         return `
@@ -287,7 +291,7 @@ define([
             <th id="overview-plan-1">n°1</th>
             <th id="overview-plan-2">n°2</th>
             <th id="overview-plan-3">n°3</th>
-            ${iceCream}
+            ${additional}
             <th id="overview-park" colspan="3"><div></div></th>
             <th id="overview-pool"><div></div></th>
             <th id="overview-temp"><div>*</div></th>
@@ -326,9 +330,9 @@ define([
           scores['estate-total-5'];
 
         // IceCream expansion
-        let iceCream = '';
+        let additional = '';
         if (this.gamedatas.options.board == ICE_CREAM) {
-          iceCream = `
+          additional = `
         <td>${scores['ice-cream-0']}<i class="fa fa-star"></i></td>
         <td>${scores['ice-cream-1']}<i class="fa fa-star"></i></td>
         <td>${scores['ice-cream-2']}<i class="fa fa-star"></i></td>
@@ -336,12 +340,18 @@ define([
         }
 
         // Christmas expansion
-        let christmas = '';
         if (this.gamedatas.options.board == CHRISTMAS) {
-          iceCream = `
+          additional = `
         <td>${scores['christmas-0']}<i class="fa fa-star"></i></td>
         <td>${scores['christmas-1']}<i class="fa fa-star"></i></td>
         <td>${scores['christmas-2']}<i class="fa fa-star"></i></td>
+        `;
+        }
+
+        // Easter expansion
+        if (this.gamedatas.options.board == EASTER) {
+          additional = `
+        <td>${scores['easter-egg-total']}<i class="fa fa-star"></i></td>
         `;
         }
 
@@ -353,8 +363,7 @@ define([
           <td>${plan0}</td>
           <td>${plan1}</td>
           <td>${plan2}</td>
-          ${iceCream}
-          ${christmas}
+          ${additional}
           <td>${scores['park-0']}<i class="fa fa-star"></i></td>
           <td>${scores['park-1']}<i class="fa fa-star"></i></td>
           <td>${scores['park-2']}<i class="fa fa-star"></i></td>

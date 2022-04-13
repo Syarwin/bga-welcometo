@@ -15,9 +15,7 @@
  *
  */
 
-namespace WTO;
-
-require_once 'modules/php/constants.inc.php';
+require_once('modules/php/gameoptions.inc.php');
 
 $game_options = [
   OPTION_ADVANCED => [
@@ -77,9 +75,14 @@ $game_options = [
         'tmdisplay' => totranslate('Christmas'),
         'nobeginner' => true,
       ],
+      OPTION_BOARD_EASTER => [
+        'name' => totranslate('Easter Eggs'),
+        'tmdisplay' => totranslate('Easter'),
+        'nobeginner' => true,
+      ],
     ],
     'startcondition' => [
-      OPTION_BOARD_CHRISTMAS => [
+      OPTION_BOARD_EASTER => [
         [
           'type' => 'otheroption',
           'id' => 201, // ELO OFF hardcoded framework option

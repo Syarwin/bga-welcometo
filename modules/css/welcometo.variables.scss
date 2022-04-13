@@ -1,11 +1,13 @@
 @import 'welcometo-base.variables';
 @import 'welcometo-icecream.variables';
 @import 'welcometo-christmas.variables';
+@import 'welcometo-easter.variables';
 
 $cityName: (
   0: $cityNameBase,
   1: $cityNameIceCream,
   2: $cityNameChristmas,
+  3: $cityNameEaster,
 );
 
 
@@ -13,60 +15,70 @@ $houses: (
   0: $housesBase,
   1: $housesIceCream,
   2: $housesChristmas,
+  3: $housesEaster,
 );
 
 $pools: (
   0: $poolsBase,
   1: $poolsIceCream,
   2: $poolsChristmas,
+  3: $poolsEaster,
 );
 
 $fences: (
   0: $fencesBase,
   1: $fencesIceCream,
   2: $fencesChristmas,
+  3: $fencesEaster,
 );
 
 $parks: (
   0: $parksBase,
   1: $parksIceCream,
   2: $parksChristmas,
+  3: $parksEaster,
 );
 
 $scorePools: (
   0: $scorePoolsBase,
   1: $scorePoolsIceCream,
   2: $scorePoolsChristmas,
+  3: $scorePoolsEaster,
 );
 
 $scoreTemps: (
   0: $scoreTempsBase,
   1: $scoreTempsIceCream,
   2: $scoreTempsChristmas,
+  3: $scoreTempsEaster,
 );
 
 $scoreEstates: (
   0: $scoreEstatesBase,
   1: $scoreEstatesIceCream,
   2: $scoreEstatesChristmas,
+  3: $scoreEstatesEaster,
 );
 
 $scoreBis: (
   0: $scoreBisBase,
   1: $scoreBisIceCream,
   2: $scoreBisChristmas,
+  3: $scoreBisEaster,
 );
 
 $scoreRoundabout: (
   0: $scoreRoundaboutBase,
   1: $scoreRoundaboutIceCream,
   2: $scoreRoundaboutChristmas,
+  3: $scoreRoundaboutEaster,
 );
 
 $permitRefusal: (
   0: $permitRefusalBase,
   1: $permitRefusalIceCream,
   2: $permitRefusalChristmas,
+  3: $permitRefusalEaster,
 );
 
 
@@ -74,4 +86,5 @@ $scoreCounters: (
   0: $scoreCountersBase,
   1: $scoreCountersIceCream,
   2: $scoreCountersChristmas,
+  3: $scoreCountersEaster,
 );

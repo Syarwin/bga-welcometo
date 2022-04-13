@@ -16,6 +16,7 @@ use WTO\Actions\PermitRefusal;
 use WTO\Actions\Roundabout;
 use WTO\Actions\IceCream;
 use WTO\Actions\Christmas;
+use WTO\Actions\EasterEgg;
 
 class Player extends Helpers\DB_Manager
 {
@@ -124,6 +125,10 @@ class Player extends Helpers\DB_Manager
       $data = array_merge($data, Christmas::getScore($this));
     }
 
+    if (Globals::isEaster()) {
+      $data = array_merge($data, EasterEgg::getScore($this));
+    }
+
     if ($computeTotal) {
       $data['total'] = $this->computeScore();
     }
@@ -140,6 +145,7 @@ class Player extends Helpers\DB_Manager
       $scores['temp-total'] +
       $scores['estate-total'] +
       ($scores['ice-cream-total'] ?? 0) +
+      ($scores['easter-egg-total'] ?? 0) +
       ($scores['christmas-total'] ?? 0) -
       $scores['bis-total'] -
       $scores['permit-total'] -

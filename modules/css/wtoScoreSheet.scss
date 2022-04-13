@@ -89,6 +89,10 @@ $scoreSheetSize: 1544px;
       background-image: url('img/expansions/board_christmas.jpg');
     }
 
+    [data-board='3'] & {
+      background-image: url('img/expansions/board_easter.jpg');
+    }
+
     /*****************************
   ******************************
   ********* UPPER PART *********
@@ -119,7 +123,7 @@ $scoreSheetSize: 1544px;
       height: 86px;
       box-sizing: border-box;
       clip-path: polygon(0 0, 100% 0, 100% 70px, 45px 70px, 45px 86px, 11px 86px, 11px 70px, 0 70px);
-//background:rgba(255,0,0,0.5); // DEBUG
+// background:rgba(255,0,0,0.5); // DEBUG
 
       &.built {
         border: 2px solid black;
@@ -191,7 +195,7 @@ $scoreSheetSize: 1544px;
       width: 96px;
       height: 11px;
       box-sizing: border-box;
-//background-color: #7acc425e; // DEBUG
+// background-color: #7acc425e; // DEBUG
     }
 
     .estate-fence {
@@ -462,7 +466,7 @@ $scoreSheetSize: 1544px;
       box-sizing: border-box;
       border-radius: 10px;
       @include highlight;
-      //background-color: rgba(0,0,255,0.5); // DEBUG
+//      background-color: rgba(0,0,255,0.5); // DEBUG
 
       @each $board, $s in $scorePools {
         $scoreTop: map-get($s, 'top');
@@ -487,7 +491,7 @@ $scoreSheetSize: 1544px;
       width: 42px;
       transform: rotate(45deg);
       box-sizing: border-box;
-      //background-color: rgba(91, 21, 51, 0.5); // DEBUG
+//      background-color: rgba(91, 21, 51, 0.5); // DEBUG
 
       @each $board, $s in $scoreTemps {
         [data-board='#{$board}'] & {
@@ -508,7 +512,7 @@ $scoreSheetSize: 1544px;
       height: 40px;
       box-sizing: border-box;
       border-radius: 10px;
-      //background-color: rgba(91, 21, 51, 0.5); // DEBUG
+//      background-color: rgba(91, 21, 51, 0.5); // DEBUG
       @include highlight;
 
       @each $board, $s in $scoreEstates {
@@ -531,7 +535,7 @@ $scoreSheetSize: 1544px;
       height: 45px;
       width: 45px;
       box-sizing: border-box;
-      //background-color: rgba(91, 21, 51, 0.5); // DEBUG
+//      background-color: rgba(91, 21, 51, 0.5); // DEBUG
 
       @each $board, $s in $scoreBis {
         $scoreTop: map-get($s, 'top');
@@ -557,7 +561,7 @@ $scoreSheetSize: 1544px;
       box-sizing: border-box;
       clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       @include highlight;
-      //background-color: rgba(91, 21, 51, 0.5); // DEBUG
+//      background-color: rgba(91, 21, 51, 0.5); // DEBUG
 
       &.selectable {
         animation: backgroundBlink 0.9s infinite;
@@ -584,7 +588,7 @@ $scoreSheetSize: 1544px;
       height: 53px;
       width: 50px;
       box-sizing: border-box;
-      //background-color: rgba(91, 21, 51, 0.5); // DEBUG
+//      background-color: rgba(91, 21, 51, 0.5); // DEBUG
 
       @each $board, $s in $scoreRoundabout {
         $scoreTop: map-get($s, 'top');

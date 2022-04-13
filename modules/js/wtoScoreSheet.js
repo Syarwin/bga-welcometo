@@ -16,6 +16,7 @@ define([
   const ROUNDABOUT = 100;
   const ICE_CREAM = 1;
   const CHRISTMAS = 2;
+  const EASTER = 3;
 
   return declare('welcometo.scoreSheet', ebg.core.gamegui, {
     /****************************************
@@ -284,7 +285,7 @@ define([
       }
 
       if (this.gamedatas.options.board == CHRISTMAS) {
-        for(let i = 0; i < 200; i++){
+        for (let i = 0; i < 200; i++) {
           dojo.place("<div class='snow'></div>", this.container);
         }
       }
@@ -496,7 +497,7 @@ define([
       if (scribble.y != null) location += '_' + scribble.y;
 
       if (scribble.type == 'christmas') {
-        location =  this.container;
+        location = this.container;
       }
 
       if (!$(location)) {
@@ -692,6 +693,10 @@ define([
 
       if (this.gamedatas.options.board == CHRISTMAS) {
         ids.push('christmas-0', 'christmas-1', 'christmas-2', 'christmas-total');
+      }
+
+      if (this.gamedatas.options.board == EASTER) {
+        ids.push('easter-egg-total');
       }
 
       ids.forEach((id) => {

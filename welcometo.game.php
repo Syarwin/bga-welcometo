@@ -53,6 +53,7 @@ class welcometo extends Table
 
   use WTO\States\Expansions\IceCreamTrait;
   use WTO\States\Expansions\ChristmasTrait;
+  use WTO\States\Expansions\EasterTrait;
 
   public static $instance = null;
   public function __construct()

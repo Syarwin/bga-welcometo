@@ -129,8 +129,8 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
     },
 
     notif_synchro(n) {
-      if (this.isReadOnly && n.args.player_id != this.player_id) {
-        this.onArchiveNext({ preventDefault: () => {} });
+      if (this.isReadOnly() && n.args.player_id != this.player_id) {
+        //        this.onArchiveNext({ preventDefault: () => {} });
       }
     },
 

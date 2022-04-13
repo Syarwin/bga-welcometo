@@ -1,0 +1,202 @@
+$cityNameEaster:(
+  "top": 209px,
+  "left": 55px,
+);
+
+
+$housesEaster:(
+  0:(
+    0:("left" : 346px, "top" : 186px),
+    1:("left" : 452px, "top" : 187px),
+    2:("left" : 557px, "top" : 202px),
+    3:("left" : 665px, "top" : 186px),
+    4:("left" : 771px, "top" : 186px),
+    5:("left" : 879px, "top" : 187px),
+    6:("left" : 982px, "top" : 203px),
+    7:("left" : 1087px, "top" : 202px),
+    8:("left" : 1191px, "top" : 187px),
+    9:("left" : 1295px, "top" : 187px),
+  ),
+
+  1:(
+    0:("left" : 242px, "top" : 486px),
+    1:("left" : 346px, "top" : 469px),
+    2:("left" : 453px, "top" : 469px),
+    3:("left" : 558px, "top" : 485px),
+    4:("left" : 666px, "top" : 469px),
+    5:("left" : 771px, "top" : 468px),
+    6:("left" : 879px, "top" : 468px),
+    7:("left" : 984px, "top" : 485px),
+    8:("left" : 1086px, "top" : 469px),
+    9:("left" : 1192px, "top" : 469px),
+    10:("left" : 1296px, "top" : 469px),
+  ),
+
+  2:(
+    0:("left" : 134px, "top" : 750px),
+    1:("left" : 243px, "top" : 767px),
+    2:("left" : 346px, "top" : 752px),
+    3:("left" : 452px, "top" : 751px),
+    4:("left" : 559px, "top" : 751px),
+    5:("left" : 665px, "top" : 752px),
+    6:("left" : 773px, "top" : 766px),
+    7:("left" : 879px, "top" : 752px),
+    8:("left" : 985px, "top" : 751px),
+    9:("left" : 1085px, "top" : 752px),
+    10:("left" : 1192px, "top" : 765px),
+    11:("left" : 1294px, "top" : 751px),
+  ),
+);
+
+$poolsEaster:(
+  ("x":0, "y":2, "left":568px, "top":134px),
+  ("x":0, "y":6, "left":996px, "top":134px),
+  ("x":0, "y":7, "left":1100px, "top":140px),
+  ("x":1, "y":0, "left":256px, "top":420px),
+  ("x":1, "y":3, "left":572px, "top":417px),
+  ("x":1, "y":7, "left":993px, "top":425px),
+
+  ("x":2, "y":1, "left":256px, "top":705px),
+  ("x":2, "y":6, "left":784px, "top":703px),
+  ("x":2, "y":10, "left":1205px, "top":698px),
+);
+
+$fencesEaster:(
+  0:(
+    "left":329px,
+    "top":134px,
+    "widths" : (108px, 106px, 109px, 104px, 107px, 106px, 104px, 104px, 104px, 103px)
+  ),
+  1:(
+    "left":223px,
+    "top":417px,
+    "widths" : (110px, 104px, 107px, 108px, 104px, 106px, 106px, 105px, 103px, 106px, 103px)
+  ),
+  2:(
+    "left":116px,
+    "top":701px,
+    "widths" : (111px, 106px, 105px, 105px, 109px, 104px, 106px, 106px, 105px, 104px, 105px, 103px)
+  ),
+);
+
+$parksEaster:(
+  0:(
+    "left":1232px,
+    "top":70px,
+    "margin":52px,
+    "n" : 3,
+  ),
+  1:(
+    "left":1179px,
+    "top":352px,
+    "margin":53px,
+    "n" : 4,
+  ),
+  2:(
+    "left":1124px,
+    "top":634px,
+    "margin":54px,
+    "n" : 5,
+  ),
+);
+
+
+$scorePoolsEaster:(
+  "left":(410px, 460px),
+  "top":(1115px, 1165px, 1218px, 1274px, 1323px)
+);
+
+$scoreTempsEaster:(
+  ("top":1096px, "left":553px),
+  ("top":1096px, "left":614px),
+
+  ("top":1126px, "left":584px),
+
+  ("top":1154px, "left":553px),
+  ("top":1154px, "left":615px),
+
+  ("top":1184px, "left":584px),
+
+  ("top":1214px, "left":553px),
+  ("top":1214px, "left":614px),
+
+  ("top":1244px, "left":584px),
+
+  ("top":1275px, "left":553px),
+  ("top":1275px, "left":615px),
+);
+
+$scoreEstatesEaster:(
+  ("top":1188px, "left":733px, "n":1),
+  ("top":1165px, "left":807px, "n":2),
+  ("top":1138px, "left":873px, "n":3),
+  ("top":1113px, "left":945px, "n":4),
+  ("top":1089px, "left":1017px, "n":4),
+  ("top":1067px, "left":1086px, "n":4),
+);
+
+
+$scoreBisEaster:(
+  "top": (1066px, 1130px, 1196px, 1261px, 1324px),
+  "left": (1185px, 1241px)
+);
+
+
+$scoreRoundaboutEaster:(
+  "top":(964px, 1022px),
+  "left":1326px,
+);
+
+
+$permitRefusalEaster:(
+  "top":(1151px, 1214px, 1275px),
+  "left":1327px,
+);
+
+
+$scoreCountersEaster:(
+  // PLANS //
+  "plan-0": (1047px, 51px),
+  "plan-1":(1174px, 51px),
+  "plan-2":(1300px, 51px),
+  "plan-total":(1412px, 53px),
+
+  // PARKS //
+  "park-0":(1140px,305px),
+  "park-1":(1220px,305px),
+  "park-2":(1296px,305px),
+  "park-total":(1412px,305px),
+
+  // POOLS //
+  "pool-total":(1412px,420px),
+
+  // TEMP //
+  "temp-total":(1412px,565px),
+
+  // ESTATES //
+  "estate-mult-0":(1320px,726px),
+  "estate-mult-1":(1320px,798px),
+  "estate-mult-2":(1320px,870px),
+  "estate-mult-3":(1320px,942px),
+  "estate-mult-4":(1320px,1017px),
+  "estate-mult-5":(1320px,1093px),
+
+  "estate-total-0":(1412px,707px),
+  "estate-total-1":(1412px,779px),
+  "estate-total-2":(1412px,851px),
+  "estate-total-3":(1412px,923px),
+  "estate-total-4":(1412px,1000px),
+  "estate-total-5":(1412px,1077px),
+
+  // BIS //
+  "bis-total":(1412px,1199px),
+
+  // OTHER //
+  "other-total":(1412px,1318px),
+
+  // TOTAL //
+  "total":(1412px,1428px),
+
+  // EASTER //
+  "easter-egg-total":(1412px, 177px),
+);

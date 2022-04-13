@@ -52,6 +52,7 @@ const OPTION_BOARD = 102;
 const OPTION_BOARD_BASE = 0;
 const OPTION_BOARD_ICE_CREAM = 1;
 const OPTION_BOARD_CHRISTMAS = 2;
+const OPTION_BOARD_EASTER = 3;
 
 
 /*
@@ -92,6 +93,7 @@ const BASIC = 1;
 const ADVANCED = 2;
 const ICE_CREAM = 3;
 const CHRISTMAS = 4;
+const EASTER = 5;
 
 /*
  * Stats
