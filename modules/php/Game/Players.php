@@ -37,7 +37,7 @@ class Players extends \WTO\Helpers\DB_Manager
 
     $pIds = array_keys($players);
 
-    if(false){
+    if(true){
     Houses::add($pIds[0], 2, [0,0], false);
     Houses::add($pIds[0], 2, [0,1], false);
     Houses::add($pIds[0], 3, [0,2], false);
@@ -136,6 +136,9 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'score-bis', [2]);
     Scribbles::add($pIds[0], 'score-bis', [3]);
 
+    Scribbles::add($pIds[0], 'egg', [1,0]);
+
+/*
     Scribbles::add($pIds[0], 'christmas', [1,0]);
     Scribbles::add($pIds[0], 'christmas', [1,1]);
     Scribbles::add($pIds[0], 'christmas', [1,2]);
@@ -153,7 +156,7 @@ class Players extends \WTO\Helpers\DB_Manager
     Scribbles::add($pIds[0], 'christmas', [2,5]);
     Scribbles::add($pIds[0], 'christmas', [2,6]);
     Scribbles::add($pIds[0], 'christmas', [2,7]);
-
+*/
 
 //    Scribbles::add($pIds[1], 'score-temp', [0]);
     }

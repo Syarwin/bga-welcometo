@@ -78,4 +78,14 @@ class EasterEgg extends Zone
     $res['easter-egg-total'] = $score;
     return $res;
   }
+
+  public function isCompleted($player)
+  {
+    $nEggs = 0;
+    foreach (self::getOfPlayer($player) as $scribble) {
+      $nEggs += $scribble['x'] == 2 ? $scribble['state'] : 0;
+    }
+
+    return $nEggs == 7;
+  }
 }

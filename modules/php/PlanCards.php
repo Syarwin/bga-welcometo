@@ -70,6 +70,10 @@ class PlanCards extends Helpers\Pieces
     [CHRISTMAS, 3, [10, 5], 'EstateChristmas', ['with', 6, 6] ],
     [CHRISTMAS, 3, [14, 7], 'Decorative', ['christmas'] ],
     [CHRISTMAS, 3, [10, 5], 'EstateChristmas', ['without', 3, 3] ],
+
+    [EASTER, 3, [7, 3], 'Decorative', ['easterEgg'] ],
+    [EASTER, 3, [10, 5], 'EstateEasterEgg', ['without', 2, 3, 4] ],
+    [EASTER, 3, [8, 4], 'EstateEasterEgg', ['with', 3, 3, 3] ],
   ];
 
 
