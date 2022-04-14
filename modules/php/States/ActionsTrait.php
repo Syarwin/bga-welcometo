@@ -1,18 +1,18 @@
 <?php
 namespace WTO\States;
 
-use \WTO\Actions\RealEstate;
-use \WTO\Actions\Park;
-use \WTO\Actions\Temp;
-use \WTO\Actions\Bis;
-use \WTO\Actions\Pool;
-use \WTO\Actions\Surveyor;
+use WTO\Actions\RealEstate;
+use WTO\Actions\Park;
+use WTO\Actions\Temp;
+use WTO\Actions\Bis;
+use WTO\Actions\Pool;
+use WTO\Actions\Surveyor;
 
-use \WTO\Game\Players;
-use \WTO\Game\Globals;
-use \WTO\Game\Log;
-use \WTO\Game\StateMachine;
-use \WTO\Game\UserException;
+use WTO\Game\Players;
+use WTO\Game\Globals;
+use WTO\Game\Log;
+use WTO\Game\StateMachine;
+use WTO\Game\UserException;
 
 /*
  * Handle everything related to actions
@@ -21,9 +21,9 @@ trait ActionsTrait
 {
   function passAction()
   {
-    StateMachine::checkAction("pass");
+    StateMachine::checkAction('pass');
     // TODO : Log the passing ?
-    StateMachine::nextState("pass");
+    StateMachine::nextState('pass');
   }
 
   /*
@@ -31,15 +31,16 @@ trait ActionsTrait
    */
   function scribbleZone($zone)
   {
-    StateMachine::checkAction("scribbleZone");
+    StateMachine::checkAction('scribbleZone');
     $player = Players::getCurrent();
     $args = StateMachine::getArgsOfPlayer($player);
-    if(!in_array($zone, $args['zones']))
-      throw new UserException(totranslate("You cannot scribble this zone"));
+    if (!in_array($zone, $args['zones'])) {
+      throw new UserException(totranslate('You cannot scribble this zone'));
+    }
 
     $player->scribbleZone($zone);
     $player->updateScores();
-    StateMachine::nextState("scribbleZone");
+    StateMachine::nextState('scribbleZone');
   }
 
   ///////////////////////////
@@ -52,7 +53,6 @@ trait ActionsTrait
     return $data;
   }
 
-
   ///////////////////////////
   ///////// ESTATE //////////
   ///////////////////////////
@@ -63,19 +63,18 @@ trait ActionsTrait
     return $data;
   }
 
-
   ///////////////////////////
   ///////// PARKS ///////////
   ///////////////////////////
   function stActionPark($player)
   {
     $zones = Park::getAvailableZones($player);
-    if(empty($zones)){
-      StateMachine::nextState("pass");
+    if (empty($zones)) {
+      StateMachine::nextState('pass');
       return true;
     }
 
-    if($player->getPref(AUTOMATIC) == ENABLED){
+    if ($player->getPref(AUTOMATIC) == ENABLED) {
       $this->scribbleZone($zones[0]);
       return true;
     }
@@ -88,19 +87,18 @@ trait ActionsTrait
     return $data;
   }
 
-
   ///////////////////////////
   ///////// POOL ///////////
   ///////////////////////////
   function stActionPool($player)
   {
-    if(!Pool::canBuild($player)){
-      StateMachine::nextState("pass");
+    if (!Pool::canBuild($player)) {
+      StateMachine::nextState('pass');
       return true;
     }
 
     $zones = Pool::getAvailableZones($player);
-    if($player->getPref(AUTOMATIC) == ENABLED){
+    if ($player->getPref(AUTOMATIC) == ENABLED) {
       $this->scribbleZone($zones[0]);
       return true;
     }
@@ -114,7 +112,6 @@ trait ActionsTrait
     return $data;
   }
 
-
   //////////////////////////
   ///////// TEMP ///////////
   //////////////////////////
@@ -122,9 +119,10 @@ trait ActionsTrait
   {
     // Write the next available spot in the score sheet
     $zones = Temp::getAvailableZones($player);
-    if(!empty($zones))
+    if (!empty($zones)) {
       $player->scribbleZone($zones[0]);
-    StateMachine::nextState("scribbleZone");
+    }
+    StateMachine::nextState('scribbleZone');
     return true; // Skip this state
   }
 
@@ -134,18 +132,19 @@ trait ActionsTrait
   function argActionBis($player)
   {
     $data = $this->argPrivatePlayerTurn($player);
-    $data["numbers"] = $player->getAvailableNumbersForBis();
+    $data['numbers'] = $player->getAvailableNumbersForBis();
     return $data;
   }
 
   function writeNumberBis($number, $pos)
   {
     // Sanity checks
-    StateMachine::checkAction("writeNumberBis");
+    StateMachine::checkAction('writeNumberBis');
     $player = Players::getCurrent();
     $args = self::argActionBis($player);
-    if(!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number]))
-      throw new UserException(totranslate("You cannot write this number bis in this house"));
+    if (!isset($args['numbers'][$number]) || !in_array($pos, $args['numbers'][$number])) {
+      throw new UserException(totranslate('You cannot write this number bis in this house'));
+    }
 
     // Write the number
     $player->writeNumber($number, $pos, true);
@@ -162,8 +161,12 @@ trait ActionsTrait
     if (Globals::isChristmas()) {
       $this->suspendChristmasDecoration($player);
     }
+    // Easter expansion
+    if (Globals::isEaster()) {
+      $this->cicleEasterEggs($player);
+    }
 
     // Move on to next state
-    StateMachine::nextState("bis");
+    StateMachine::nextState('bis');
   }
 }

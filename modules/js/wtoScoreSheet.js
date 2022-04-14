@@ -496,7 +496,7 @@ define([
       var location = this.pId + '_' + scribble.type + '_' + scribble.x;
       if (scribble.y != null) location += '_' + scribble.y;
 
-      if (scribble.type == 'christmas') {
+      if (scribble.type == 'christmas' || scribble.type == 'egg') {
         location = this.container;
       }
 
@@ -518,6 +518,11 @@ define([
       if (scribble.type == 'christmas') {
         scribbleTpl = 'scribbleChristmas';
         this.computeChristmasLightPosition(scribble);
+      }
+      // Easter expansion
+      if (scribble.type == 'egg') {
+        scribbleTpl = 'scribbleEgg';
+        this.computeEasterEggPosition(scribble);
       }
 
       this.tpl(scribbleTpl, scribble, location);
@@ -547,6 +552,19 @@ define([
       scribble.end = y2 - y1;
       scribble.rotation = (y2 - y1) / 2;
     },
+
+
+    /*** Christmas light expansion **/
+    computeEasterEggPosition(scribble) {
+      let leftHouse = this.pId + '_house_' + scribble.x + '_' + scribble.y;
+      let x1 = dojo.style(leftHouse, 'left') + 16;
+      let y1 = dojo.style(leftHouse, 'top') + 90;
+
+      scribble.left = x1;
+      scribble.top = y1;
+      scribble.n = scribble.state;
+    },
+
 
     /******************************
      *******************************

@@ -162,7 +162,8 @@
   width: 1000px;
   min-width: 1000px;
   [data-board='1'] &,
-  [data-board='2'] & {
+  [data-board='2'] &,
+  [data-board='3'] & {
     width: 1250px;
     min-width: 1250px;
   }
@@ -319,7 +320,7 @@
               margin-left: 7px;
             }
 
-            &.overview-temp {
+            &.overview-temp, &.overview-egg {
               padding: 0px;
               display: flex;
               flex-flow: column;

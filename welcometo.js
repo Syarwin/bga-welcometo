@@ -252,7 +252,7 @@ define([
           openAnimationTarget: 'show-overview',
           contents: this.tplOverview(),
           breakpoint: 0.9 * width,
-          scale:0.8,
+          scale: 0.8,
         });
 
         this.addTooltip(
@@ -274,11 +274,9 @@ define([
         let board = this.gamedatas.options.board;
         if (board == ICE_CREAM) {
           additional = '<th id="overview-ice-cream" colspan="3"><div></div></th>';
-        }
-        else if (board == CHRISTMAS) {
+        } else if (board == CHRISTMAS) {
           additional = '<th id="overview-christmas" colspan="3"><div></div></th>';
-        }
-        else if (board == EASTER) {
+        } else if (board == EASTER) {
           additional = '<th id="overview-easter"><div></div></th>';
         }
 
@@ -309,6 +307,10 @@ define([
       tplOverviewRow(player) {
         let scores = player.scoreSheet.scores;
         let nTemp = player.scoreSheet.scribbles.reduce((n, scribble) => n + (scribble.type == 'score-temp' ? 1 : 0), 0);
+        let nEggs = player.scoreSheet.scribbles.reduce(
+          (n, scribble) => n + (scribble.type == 'egg' ? parseInt(scribble.state) : 0),
+          0,
+        );
         let nPermit = player.scoreSheet.scribbles.reduce(
           (n, scribble) => n + (scribble.type == 'permit-refusal' ? 1 : 0),
           0,
@@ -351,10 +353,14 @@ define([
         // Easter expansion
         if (this.gamedatas.options.board == EASTER) {
           additional = `
-        <td>${scores['easter-egg-total']}<i class="fa fa-star"></i></td>
+          <td class="overview-egg">
+            <div>${nEggs}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M192 16c-106 0-192 182-192 288c0 106 85.1 192 192 192c105.1 0 192-85.1 192-192C384 198 297.1 16 192 16zM160.1 138C128.6 177.1 96 249.8 96 304C96 312.8 88.84 320 80 320S64 312.8 64 304c0-63.56 36.7-143.3 71.22-186c5.562-6.906 15.64-7.969 22.5-2.406C164.6 121.1 165.7 131.2 160.1 138z"/></svg>
+            </div>
+            <div>${scores['easter-egg-total']}<i class="fa fa-star"></i></div>
+          </td>
         `;
         }
-
 
         return `
         <tr>

@@ -382,7 +382,14 @@ var jstpl_scribbleChristmas = `
 <svg id="scribble-\${id}" style="left:\${left}px; top:\${top}px; position:absolute; width:\${width}px; height:\${height}px" width="\${width}" height="\${height}" class="scribble-christmas" data-turn="\${turn}" viewBox="0 0 \${width} \${height}" xmlns="http://www.w3.org/2000/svg">
   <path class="scribble-path" d="M 10 \${start} a 2 1 \${rotation} 0 0 \${arcWidth} \${end}" stroke="black" fill="transparent" stroke-width="5" />
 </svg>
-`
-</script>
+`;
 
+var jstpl_scribbleEgg = `
+<svg id="scribble-\${id}" style="left:\${left}px; top:\${top}px;" class="scribble-egg" data-turn="\${turn}" data-n="\${n}" viewBox="0 0 834.16949 480" xmlns="http://www.w3.org/2000/svg">
+  <path class="scribble-path" d="M 192,0 C 86,0 0,182 0,288 0,394 85.1,480 192,480 297.1,480 384,394.9 384,288 384,182 297.1,0 192,0 Z M 160.1,122 C 128.6,161.1 96,233.8 96,288 c 0,8.8 -7.16,16 -16,16 -8.84,0 -16,-7.2 -16,-16 0,-63.56 36.7,-143.3 71.22,-186 5.562,-6.906003 15.64,-7.969003 22.5,-2.406003 C 164.6,105.1 165.7,115.2 160.1,122 Z" />
+  <path class="scribble-path" d="m 642.16949,3e-6 c -106,0 -192,181.999997 -192,287.999997 0,106 85.1,192 192,192 105.1,0 192,-85.1 192,-192 0,-106 -86.9,-287.999997 -192,-287.999997 z m -31.9,122.000007 c -31.5,39.1 -64.1,111.79999 -64.1,165.99999 0,8.8 -7.16,16 -16,16 -8.84,0 -16,-7.2 -16,-16 0,-63.56 36.7,-143.29999 71.22,-185.99999 5.562,-6.906003 15.64,-7.969003 22.5,-2.406003 6.88,5.506003 7.98,15.606003 2.38,22.406003 z" />
+</svg>
+`;
+
+</script>
 {OVERALL_GAME_FOOTER}

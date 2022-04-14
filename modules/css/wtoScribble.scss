@@ -2,32 +2,40 @@
 *** Hightlight recent actions ***
 ********************************/
 @for $t from 1 through 33 {
-  #game_play_area[data-turn="#{$t}"] .house-number[data-turn="#{$t}"] {
-    color:red;
+  #game_play_area[data-turn='#{$t}'] .house-number[data-turn='#{$t}'] {
+    color: red;
   }
 
-  #game_play_area[data-turn="#{$t}"] [data-turn="#{$t}"] .scribble-path  { stroke:red; }
-  #game_play_area[data-turn="#{$t}"] [data-turn="#{$t}"] .roundabout-dot  { fill:red; }
+  #game_play_area[data-turn='#{$t}'] [data-turn='#{$t}'] .scribble-path {
+    stroke: red;
+  }
+  #game_play_area[data-turn='#{$t}'] [data-turn='#{$t}'] .roundabout-dot,
+  #game_play_area[data-turn='#{$t}'] .scribble-egg[data-turn='#{$t}'] .scribble-path {
+    fill: red;
+  }
 }
-
-
 
 /****************************
 *****************************
 ********* SCRIBBLE  *********
 *****************************
 ****************************/
-.scribble, .scribble-circle, .scribble-line, .scribble-line-hor, .scribble-roundabout, .scribble-checkmark, .scribble-christmas {
-  width:100%;
-  height:100%;
+.scribble,
+.scribble-circle,
+.scribble-line,
+.scribble-line-hor,
+.scribble-roundabout,
+.scribble-checkmark,
+.scribble-christmas {
+  width: 100%;
+  height: 100%;
   .scribble-path {
-    stroke:black;
-    stroke-linecap:round;
+    stroke: black;
+    stroke-linecap: round;
   }
 
-
   &.animate .scribble-path {
-    animation: drawScribble 2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards;
   }
   @keyframes drawScribble {
@@ -36,7 +44,6 @@
     }
   }
 }
-
 
 .scribble {
   .scribble-path {
@@ -48,7 +55,6 @@
   }
 }
 
-
 .scribble-circle {
   .scribble-path {
     stroke-dasharray: 1500;
@@ -59,8 +65,8 @@
   }
 }
 
-
-.scribble-line, .scribble-line-hor {
+.scribble-line,
+.scribble-line-hor {
   .scribble-path {
     stroke-dasharray: 300;
     stroke-dashoffset: 0;
@@ -71,16 +77,15 @@
 }
 
 .scribble-line {
-  padding-top:12px;
+  padding-top: 12px;
 }
-
 
 .scribble-checkmark {
   .scribble-path {
-    stroke-width:25;
+    stroke-width: 25;
     stroke-dasharray: 400;
     stroke-dashoffset: 0;
-    stroke:rgba(0,100,0,0.8);
+    stroke: rgba(0, 100, 0, 0.8);
   }
   &.animate .scribble-path {
     stroke-dashoffset: 400;
@@ -88,8 +93,8 @@
 }
 
 .scribble-christmas {
-  width:auto;
-  height:auto;
+  width: auto;
+  height: auto;
 
   .scribble-path {
     stroke-dasharray: 150;
@@ -100,13 +105,22 @@
   }
 }
 
+.scribble-egg {
+  position: absolute;
+  width: 50px;
+  height: 33px;
+
+  &[data-n="1"] .scribble-path:last-of-type {
+    display: none;
+  }
+}
 
 .scribble-roundabout {
-  height:81%;
+  height: 81%;
 
   .roundabout-circle {
-    fill:none;
-    stroke-width:3;
+    fill: none;
+    stroke-width: 3;
     stroke-dasharray: 150;
     stroke-dashoffset: 0;
   }
@@ -115,27 +129,27 @@
   }
 
   .roundabout-dot {
-    stroke:none !important;
-    fill:black;
+    stroke: none !important;
+    fill: black;
   }
 
   &.animate .roundabout-dot {
-    animation: drawDot 3s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation: drawDot 3s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards;
-    transform-origin: 44.3px 118.5px;;
+    transform-origin: 44.3px 118.5px;
   }
 
   @keyframes drawDot {
     0% {
-      opacity:0;
+      opacity: 0;
     }
     50% {
-      opacity:0;
-      transform:scale(2.5);
+      opacity: 0;
+      transform: scale(2.5);
     }
     100% {
-      opacity:100%;
-      transform:none;
+      opacity: 100%;
+      transform: none;
     }
   }
 }

@@ -132,6 +132,10 @@ trait WriteNumberTrait
     if (Globals::isChristmas()) {
       $this->suspendChristmasDecoration($player);
     }
+    // Easter expansion
+    if (Globals::isEaster()) {
+      $this->cicleEasterEggs($player);
+    }
 
     // Move on to next state depending on the action card
     $combination = $player->getCombination();
