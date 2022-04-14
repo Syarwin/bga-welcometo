@@ -15,6 +15,8 @@
  *
  */
 
+namespace WTO;
+
 require_once('modules/php/gameoptions.inc.php');
 
 $game_options = [
