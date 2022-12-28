@@ -1,86 +1,97 @@
 <?php
 namespace WTO\Game;
 use welcometo;
-use \WTO\PlanCards;
+use WTO\PlanCards;
 
 class Notifications
 {
-  protected static function notifyAll($name, $msg, $data){
+  protected static function notifyAll($name, $msg, $data)
+  {
     welcometo::get()->notifyAllPlayers($name, $msg, $data);
   }
 
-  protected static function notify($pId, $name, $msg, $data){
+  protected static function notify($pId, $name, $msg, $data)
+  {
     welcometo::get()->notifyPlayer($pId, $name, $msg, $data);
   }
 
-  public static function message($txt, $args = []){
+  public static function message($txt, $args = [])
+  {
     self::notifyAll('message', $txt, $args);
   }
 
-  public static function messageTo($player, $txt, $args = []){
-    $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
+  public static function messageTo($player, $txt, $args = [])
+  {
+    $pId = $player instanceof \WTO\Player ? $player->getId() : $player;
     self::notify($pId, 'message', $txt, $args);
   }
 
-
-
-  public static function soloCard(){
+  public static function soloCard()
+  {
     self::notifyAll('soloCard', clienttranslate('The solo card was drawn'), []);
   }
 
-  public static function newCards($pId, $cards){
+  public static function newCards($pId, $cards)
+  {
     $data = [
       'cards' => $cards,
       'turn' => Globals::getCurrentTurn(),
       'cardsLeft' => \WTO\ConstructionCards::getInLocation('deck')->count(),
     ];
 
-    $msg = clienttranslate("New cards are drawn.");
-    if(is_null($pId)){
+    $msg = clienttranslate('New cards are drawn.');
+    if (is_null($pId)) {
       self::notifyAll('newCards', $msg, $data);
     } else {
       self::notify($pId, 'newCards', $msg, $data);
     }
   }
 
-  public static function reshuffle(){
-    self::notifyAll('reshuffle', clienttranslate("First player who completed a goal asked for reshuffling the cards."), []);
+  public static function reshuffle()
+  {
+    self::notifyAll(
+      'reshuffle',
+      clienttranslate('First player who completed a goal asked for reshuffling the cards.'),
+      []
+    );
   }
 
-
-  public static function giveThirdCardToNextPlayer($pId, $stackId, $nextPId){
-    $msg = clienttranslate("Giving remeaning card to next player");
+  public static function giveThirdCardToNextPlayer($pId, $stackId, $nextPId)
+  {
+    $msg = clienttranslate('Giving remeaning card to next player');
     self::notify($pId, 'giveCard', $msg, [
       'stack' => $stackId,
       'pId' => $nextPId,
     ]);
   }
 
-  public static function chooseCards($player){
+  public static function chooseCards($player)
+  {
     $combination = $player->getCombination();
     $names = [
-      SURVEYOR => clienttranslate("Surveyor"),
-      ESTATE   => clienttranslate("Real Estate Agent"),
-      PARK     => clienttranslate("Landscaper"),
-      POOL     => clienttranslate("Pool Manufacturer"),
-      TEMP     => clienttranslate("Temp agency"),
-      BIS      => clienttranslate("Bis")
+      SURVEYOR => clienttranslate('Surveyor'),
+      ESTATE => clienttranslate('Real Estate Agent'),
+      PARK => clienttranslate('Landscaper'),
+      POOL => clienttranslate('Pool Manufacturer'),
+      TEMP => clienttranslate('Temp agency'),
+      BIS => clienttranslate('Bis'),
     ];
 
     self::messageTo($player, clienttranslate('You choose the combination : ${number} & ${action}.'), [
       'i18n' => ['action'],
-      'action' => $names[$combination["action"]],
-      'number' => $combination["number"],
+      'action' => $names[$combination['action']],
+      'number' => $combination['number'],
     ]);
   }
 
-  public static function writeNumber($player, $house){
+  public static function writeNumber($player, $house)
+  {
     $msgs = [];
-    if($house['number'] == ROUNDABOUT){
+    if ($house['number'] == ROUNDABOUT) {
       $msgs = [
-        clienttranslate("You build a roundabout in the top street."),
-        clienttranslate("You build a roundabout in the middle street."),
-        clienttranslate("You build a roundabout in the bottom street."),
+        clienttranslate('You build a roundabout in the top street.'),
+        clienttranslate('You build a roundabout in the middle street.'),
+        clienttranslate('You build a roundabout in the bottom street.'),
       ];
     } else {
       $msgs = [
@@ -93,40 +104,46 @@ class Notifications
 
     self::notify($player->getId(), 'writeNumber', $msg, [
       'house' => $house,
-      'number'=> $house['number'] . ($house['isBis']? "bis" : ""),
+      'number' => $house['number'] . ($house['isBis'] ? 'bis' : ''),
     ]);
   }
 
-  public static function addScribble($player, $scribble, $silent){
+  public static function addScribble($player, $scribble, $silent)
+  {
     $msg = '';
-    if(!$silent){
+    if (!$silent) {
       $msgs = [
-        "permit-refusal" => clienttranslate("You cannot build and hence get a building permit refusal."),
-        "estate-fence" => clienttranslate("You build a fence."),
-        "score-estate" => clienttranslate('You increase the value of completed estates of size ${size}'),
-        "score-temp" => clienttranslate("You hire a temp worker."),
-        "score-bis" => "",
-        "score-pool" => clienttranslate("You build a pool in the house."),
-        "park" => clienttranslate("You build a park in the street."),
-        "score-roundabout" => "",
-        "ice-truck" => $scribble['y'] == 0? clienttranslate("You chose the right ice-cream truck") : clienttranslate("You chose the left ice-cream truck"),
+        'permit-refusal' => clienttranslate('You cannot build and hence get a building permit refusal.'),
+        'estate-fence' => clienttranslate('You build a fence.'),
+        'score-estate' => clienttranslate('You increase the value of completed estates of size ${size}'),
+        'score-temp' => clienttranslate('You hire a temp worker.'),
+        'score-bis' => '',
+        'score-pool' => clienttranslate('You build a pool in the house.'),
+        'park' => clienttranslate('You build a park in the street.'),
+        'score-roundabout' => '',
+        'ice-truck' =>
+          $scribble['y'] == 0
+            ? clienttranslate('You chose the right ice-cream truck')
+            : clienttranslate('You chose the left ice-cream truck'),
       ];
       $msg = $msgs[$scribble['type']];
     }
 
     self::notify($player->getId(), 'addScribble', $msg, [
       'scribble' => $scribble,
-      'size' => $scribble['type'] == "score-estate"? ($scribble['x'] + 1) : null,
+      'size' => $scribble['type'] == 'score-estate' ? $scribble['x'] + 1 : null,
     ]);
   }
 
-  public static function addMultipleScribbles($player, $scribbles){
+  public static function addMultipleScribbles($player, $scribbles)
+  {
     self::notify($player->getId(), 'addMultipleScribbles', '', [
       'scribbles' => $scribbles,
     ]);
   }
 
-  public static function crossOffIceCreamBonuses($scribbles, $x){
+  public static function crossOffIceCreamBonuses($scribbles, $x)
+  {
     $msgs = [
       clienttranslate('Ice-cream bonus of top street is no longer available.'),
       clienttranslate('Ice-cream bonus of middle street is no longer available.'),
@@ -138,32 +155,33 @@ class Notifications
     ]);
   }
 
-
-  public static function planScored($player, $plan, $validations){
+  public static function planScored($player, $plan, $validations)
+  {
     $msg = clienttranslate('You validate plan n°${stack}');
-    self::notify($player->getId(), "scorePlan", $msg, [
+    self::notify($player->getId(), 'scorePlan', $msg, [
       'validation' => $validations[$player->getId()],
       'planId' => $plan->getId(),
       'stack' => $plan->getStack(),
     ]);
   }
 
-
-  public static function clearTurn($player, $notifIds){
+  public static function clearTurn($player, $notifIds)
+  {
     self::notify($player->getId(), 'clearTurn', clienttranslate('You restart your turn'), [
       'turn' => Globals::getCurrentTurn(),
       'notifIds' => $notifIds,
     ]);
   }
 
-
-  public static function updateScores($player){
+  public static function updateScores($player)
+  {
     self::notify($player->getId(), 'updateScores', '', [
       'scores' => $player->getScores(),
     ]);
   }
 
-  public static function updatePlayersData(){
+  public static function updatePlayersData()
+  {
     self::notifyAll('updatePlayersData', '', [
       'players' => Players::getUiData(),
       'planValidations' => PlanCards::getCurrentValidations(),
