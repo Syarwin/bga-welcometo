@@ -17,7 +17,7 @@
 
 namespace WTO;
 
-require_once('modules/php/gameoptions.inc.php');
+require_once 'modules/php/gameoptions.inc.php';
 
 $game_options = [
   OPTION_ADVANCED => [
@@ -83,16 +83,16 @@ $game_options = [
         'nobeginner' => true,
       ],
     ],
-    'startcondition' => [
-      OPTION_BOARD_EASTER => [
-        [
-          'type' => 'otheroption',
-          'id' => 201, // ELO OFF hardcoded framework option
-          'value' => 1, // 1 if OFF
-          'message' => totranslate('This expansion is still in testing, please switch to training mode.'),
-        ],
-      ],
-    ],
+    // 'startcondition' => [
+    //   OPTION_BOARD_EASTER => [
+    //     [
+    //       'type' => 'otheroption',
+    //       'id' => 201, // ELO OFF hardcoded framework option
+    //       'value' => 1, // 1 if OFF
+    //       'message' => totranslate('This expansion is still in testing, please switch to training mode.'),
+    //     ],
+    //   ],
+    // ],
   ],
 ];
 
