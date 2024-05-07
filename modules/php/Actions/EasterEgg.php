@@ -30,7 +30,7 @@ class EasterEgg extends Zone
     [2, 9, 1],
   ];
 
-  public function getEggsToScribble($player)
+  public static function getEggsToScribble($player)
   {
     $house = $player->getLastHouse();
     $eggs = [];
@@ -56,7 +56,7 @@ class EasterEgg extends Zone
     return $eggs;
   }
 
-  public function getScore($player)
+  public static function getScore($player)
   {
     $res = [];
     $nEggs = 0;
@@ -79,7 +79,7 @@ class EasterEgg extends Zone
     return $res;
   }
 
-  public function isCompleted($player)
+  public static function isCompleted($player)
   {
     $nEggs = 0;
     foreach (self::getOfPlayer($player) as $scribble) {

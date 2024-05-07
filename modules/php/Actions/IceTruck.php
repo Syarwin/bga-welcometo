@@ -10,7 +10,7 @@ class IceTruck extends Zone
   protected static $type = 'ice-truck';
   protected static $cols = [10, 11, 12, 2]; // Last row is a fake one used to cross one truck off
 
-  public function getTruckPositions($player)
+  public static function getTruckPositions($player)
   {
     $structure = self::getOfPlayerStructured($player);
     $positions = [];
@@ -36,7 +36,7 @@ class IceTruck extends Zone
     return $positions;
   }
 
-  public function getHousesToCross($player)
+  public static function getHousesToCross($player)
   {
     $structure = self::getOfPlayerStructured($player);
     $house = $player->getLastHouse();
@@ -57,7 +57,7 @@ class IceTruck extends Zone
     return $houses;
   }
 
-  public function getEndOfStreet($player, $houses)
+  public static function getEndOfStreet($player, $houses)
   {
     $structure = self::getOfPlayerStructured($player);
     $ends = [0, 9, !is_null($structure[3][1]) ? 10 : 0];

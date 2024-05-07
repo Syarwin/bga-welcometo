@@ -11,7 +11,7 @@ class Christmas extends Zone
   protected static $type = 'christmas';
   protected static $cols = [9, 10, 11];
 
-  public function getScore($player)
+  public static function getScore($player)
   {
     $christmas = self::getOfPlayerStructured($player);
     $res = [
@@ -43,7 +43,7 @@ class Christmas extends Zone
     return $res;
   }
 
-  public function getChristmasToScribble($player)
+  public static function getChristmasToScribble($player)
   {
     $christmas = self::getOfPlayerStructured($player);
     $streets = Houses::getStreets($player->getId());

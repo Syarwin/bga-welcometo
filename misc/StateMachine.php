@@ -40,7 +40,7 @@ class StateMachine extends \APP_DbObject
    *   - with the private state id, and $fetch = false
    * and will return corresponding data from state machine
    */
-  public function getPrivateState($mixed, $fetch = true)
+  public static function getPrivateState($mixed, $fetch = true)
   {
     $stateId = $fetch ? self::getUniqueValueFromDB("SELECT ".self::$stateField." FROM player WHERE player_id = $mixed") : $mixed;
     $states = self::getGameState()->states;
@@ -53,7 +53,7 @@ class StateMachine extends \APP_DbObject
   /*
    * Set the private state of a player(s)
    */
-  public function setPrivateState($ids, $stateId)
+  public static function setPrivateState($ids, $stateId)
   {
     $whereIds = is_array($ids)? ("IN (".implode(",", $ids) .")") : " = $ids";
     $states = self::getGameState()->states;
@@ -70,7 +70,7 @@ class StateMachine extends \APP_DbObject
   /*
    * Sanity check: private state are only enabled in a multiactive state with the flag "parallel" set to true
    */
-  public function checkParallel($stateId = null)
+  public static function checkParallel($stateId = null)
   {
     $stateId = $stateId ?? self::getGamestate()->state_id();
     $state = self::getGamestate()->states[$stateId];
@@ -84,7 +84,7 @@ class StateMachine extends \APP_DbObject
   /*
    * Initialize parallel flow using the parallel flag of global state
    */
-  public function initPrivateStates($stateId)
+  public static function initPrivateStates($stateId)
   {
     $privateStateId = self::checkParallel($stateId);
     $ids = self::getObjectListFromDB("SELECT player_id FROM player", true);
@@ -95,7 +95,7 @@ class StateMachine extends \APP_DbObject
   /*
    * Get corresponding args for each player depending on its private state
    */
-  public function getArgs()
+  public static function getArgs()
   {
     self::checkParallel();
     $states = self::getCollectionFromDB("SELECT player_id, ". self::$stateField . " FROM player", true);
@@ -115,7 +115,7 @@ class StateMachine extends \APP_DbObject
   /*
    * Check if current action is possible for given player
    */
-  public function checkAction($action, $throwException = true)
+  public static function checkAction($action, $throwException = true)
   {
     $pId = self::getGame()->getCurrentPId();
     $state = self::getPrivateState($pId);

@@ -12,7 +12,7 @@ class RealEstate extends Zone
 
   // Return a list of the estates of the player, in the following format :
   //  [ street x,  starting house y, size ]
-  public function getEstates($player)
+  public static function getEstates($player)
   {
     $streets = Houses::getStreets($player->getId());
     $fences = Surveyor::getOfPlayerStructured($player);
@@ -46,7 +46,7 @@ class RealEstate extends Zone
     return $estates;
   }
 
-  public function getAssocSizeNumber($player)
+  public static function getAssocSizeNumber($player)
   {
     $mult = [0,0,0,0,0,0];
     foreach(self::getEstates($player) as $estate){
@@ -67,7 +67,7 @@ class RealEstate extends Zone
     [5, 6, 7, 8, 10],
     [6, 7, 8, 10, 12],
   ];
-  public function getScore($player)
+  public static function getScore($player)
   {
     // Compute the score of each estate size
     $free = [1, 2, 3, 4, 4, 4]; // Index position if no zone is available

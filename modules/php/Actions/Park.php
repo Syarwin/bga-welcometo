@@ -10,7 +10,7 @@ class Park extends Zone
   protected static $type = "park";
   protected static $cols = [3,4,5];
 
-  public function getAvailableZones($player, $filter = true)
+  public static function getAvailableZones($player, $filter = true)
   {
     // Keep only the park on the same street as the house we just built
     $zones = parent::getAvailableZones($player);
@@ -30,7 +30,7 @@ class Park extends Zone
     [0, 2, 4, 6, 14],
     [0, 2, 4, 6, 8, 18],
   ];
-  public function getScore($player)
+  public static function getScore($player)
   {
     $free = [3, 4, 5];
     foreach(parent::getAvailableZones($player) as $zone)

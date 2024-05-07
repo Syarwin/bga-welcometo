@@ -26,7 +26,7 @@ class Houses extends Helpers\DB_Manager
 
   protected static $streetSizes = [10, 11, 12];
 
-  public function getLast($pId)
+  public static function getLast($pId)
   {
     return self::DB()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->orderBy("id","DESC")->limit(1)->get(true);
   }
@@ -34,7 +34,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * clearTurn : remove all houses written by player during this turn
    */
-  public function clearTurn($pId)
+  public static function clearTurn($pId)
   {
     self::DB()->delete()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->run();
   }
@@ -43,7 +43,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * concert a boolean locations arrays in "shape" of streets to a list of possible location
    */
-  protected function convertBooleansToArray($locations)
+  protected static function convertBooleansToArray($locations)
   {
     $result = [];
     for($x = 0; $x < 3; $x++){
@@ -60,7 +60,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * 2D array of null matching the structure of the streets
    */
-  protected function getBlankStreets($value = null)
+  protected static function getBlankStreets($value = null)
   {
     $streets = [];
     foreach(self::$streetSizes as $size){
@@ -77,7 +77,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * getOfPlayer : returns the houses of given player id
    */
-  public function getOfPlayer($player)
+  public static function getOfPlayer($player)
   {
     $pId = ($player instanceof \WTO\Player)? $player->getId() : $player;
     $query = self::DB()->where('player_id', $pId);
@@ -97,7 +97,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * getStreets : 2D array of houses/null
    */
-  public function getStreets($player)
+  public static function getStreets($player)
   {
     $streets = self::getBlankStreets();
     foreach(self::getOfPlayer($player) as $house){
@@ -115,7 +115,7 @@ class Houses extends Helpers\DB_Manager
   /*
    * getAvailableLocations of a given number
    */
-  public function getAvailableLocations($player, $number = null)
+  public static function getAvailableLocations($player, $number = null)
   {
     // Init all locations to be available
     $locations = self::getBlankStreets(true);
@@ -152,7 +152,7 @@ class Houses extends Helpers\DB_Manager
     return self::convertBooleansToArray($locations);
   }
 
-  public function getAvailableLocationsForBis($player, $number)
+  public static function getAvailableLocationsForBis($player, $number)
   {
     // Init all locations to be unavailable
     $locations = self::getBlankStreets(false);

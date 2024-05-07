@@ -17,7 +17,7 @@ class Pool extends Zone
     [2,1], [2,6], [2,10],
   ];
 
-  public function canBuild($player)
+  public static function canBuild($player)
   {
     $house = $player->getLastHouse();
     $pos = [$house['x'], $house['y']];
@@ -26,7 +26,7 @@ class Pool extends Zone
 
 
   protected static $scores = [0, 3, 6, 9, 13, 17, 21, 26, 31, 36];
-  public function getScore($player)
+  public static function getScore($player)
   {
     $free = count(self::$scores) - 1;
     foreach(self::getAvailableZones($player) as $zone)
@@ -36,7 +36,7 @@ class Pool extends Zone
   }
 
 
-  public function getCompleted($player)
+  public static function getCompleted($player)
   {
     $pools = [0, 0, 0];
     foreach(Scribbles::getOfPlayer($player) as $scribble){

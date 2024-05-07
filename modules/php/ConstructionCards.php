@@ -47,7 +47,7 @@ class ConstructionCards extends Helpers\Pieces
   //////////////////////////////////
   //////////////////////////////////
 
-  public function setupNewGame($players){
+  public static function setupNewGame($players){
     $cards = [];
     foreach(self::$deck as $number => $nActions){
       foreach(self::$actions as $index => $action){
@@ -80,7 +80,7 @@ class ConstructionCards extends Helpers\Pieces
   }
 
 
-  public function soloSetupNewGame()
+  public static function soloSetupNewGame()
   {
     // Add the solo cards in the deck
     self::create([ ['number' => null, 'action' => SOLO, 'location' => 'deck'] ]);
@@ -104,7 +104,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Return the stacks depending on whether we are playing in expert mode or not
    */
-  public function getStacks($playerId)
+  public static function getStacks($playerId)
   {
     if(Globals::isExpert())
       return ["{$playerId}_stack_0", "{$playerId}_stack_1", "{$playerId}_stack_2"];
@@ -118,7 +118,7 @@ class ConstructionCards extends Helpers\Pieces
    *   - without arg is standard mode
    *   - once by player if non-standard mode
    */
-  protected function callWithRightArguments($method){
+  protected static function callWithRightArguments($method){
     // Standard mode => draw 3 cards that are the same for all player
     if(Globals::isStandard())
       self::$method();
@@ -135,12 +135,12 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Discard previous cards
    */
-  public function discard()
+  public static function discard()
   {
     self::callWithRightArguments("discardAux");
   }
 
-  protected function discardAux($playerId = null, $discardAll = false)
+  protected static function discardAux($playerId = null, $discardAll = false)
   {
     foreach (self::getStacks($playerId) as $stackId => $stack) {
       if(Globals::isStandard()){
@@ -162,12 +162,12 @@ class ConstructionCards extends Helpers\Pieces
    *   - only once with $playerId = null if in standard or solo mode
    *   - once per player's id in expert mode
    */
-  public function draw()
+  public static function draw()
   {
      return self::callWithRightArguments("drawAux");
   }
 
-  protected function drawAux($playerId = null)
+  protected static function drawAux($playerId = null)
   {
     $drawnCards = [];
     foreach (self::getStacks($playerId) as $stackId => $stack) {
@@ -197,7 +197,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Triggered when the solo card is drawn
    */
-  public function soloCardDrawn(){
+  public static function soloCardDrawn(){
     Notifications::soloCard();
 
     // Validate all plans with a mock id of -1
@@ -217,7 +217,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * In expert mode, put the non-used card on a custom location for next player
    */
-  public function prepareCardsForNextTurn($pId, $stacks, $nextPId){
+  public static function prepareCardsForNextTurn($pId, $stacks, $nextPId){
     foreach (self::getStacks($pId) as $stackId => $stack) {
       if(in_array($stackId, $stacks))
         continue;
@@ -230,7 +230,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Allow to reshuffle cards once someone finish a plan
    */
-  public function reshuffle(){
+  public static function reshuffle(){
     self::callWithRightArguments("reshuffleAux");
     Notifications::reshuffle();
     self::reformDeckFromDiscard("deck");
@@ -255,7 +255,7 @@ class ConstructionCards extends Helpers\Pieces
     welcometo::get()->setGamestateValue("currentTurn", $n);
   }
 
-  protected function reshuffleAux($playerId = null){
+  protected static function reshuffleAux($playerId = null){
     self::discardAux($playerId, true);
   }
 
@@ -268,7 +268,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Get the content of the three stacks
    */
-  public function getForPlayer($pId)
+  public static function getForPlayer($pId)
   {
     $cards = [];
     foreach (self::getStacks($pId) as $stackId => $stack) {
@@ -281,7 +281,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Get all the possible combinations
    */
-  public function getPossibleCombinations($pId)
+  public static function getPossibleCombinations($pId)
   {
     $stacks = self::getForPlayer($pId);
     $result = [];
@@ -315,7 +315,7 @@ class ConstructionCards extends Helpers\Pieces
   /*
    * Get the combination corresponding to the stack(s) selection
    */
-  public function getCombination($pId, $stack)
+  public static function getCombination($pId, $stack)
   {
     $stacks = self::getForPlayer($pId);
     $data = [];

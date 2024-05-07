@@ -18,7 +18,7 @@ class Players extends \WTO\Helpers\DB_Manager
   }
 
 
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     // Create players
     self::DB()->delete();
@@ -162,40 +162,40 @@ class Players extends \WTO\Helpers\DB_Manager
     }
   }
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     return welcometo::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public static function getCurrentId()
   {
     return welcometo::get()->getCurrentPId();
   }
 
-  public function getAll(){
+  public static function getAll(){
     return self::DB()->get(false);
   }
 
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()->where($pId)->getSingle();
   }
 
-  public function getActive()
+  public static function getActive()
   {
     return self::get();
   }
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::get(self::getCurrentId());
   }
 
-  public function getNextId($player)
+  public static function getNextId($player)
   {
     $table = welcometo::get()->getNextPlayerTable();
     return $table[is_int($player)? $player : $player->getId()];
@@ -204,7 +204,7 @@ class Players extends \WTO\Helpers\DB_Manager
   /*
    * Return the number of players
    */
-  public function count()
+  public static function count()
   {
     return self::DB()->count();
   }
@@ -213,7 +213,7 @@ class Players extends \WTO\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players : id, no, name, team, color, powers list, farmers
    */
-  public function getUiData()
+  public static function getUiData()
   {
     return self::getAll()->assocMap(function($player){ return $player->getUiData(); });
   }

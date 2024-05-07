@@ -10,7 +10,7 @@ class Surveyor extends Zone
   protected static $type = "estate-fence";
   protected static $cols = [9,10,11];
 
-  public function getAvailableZones($player)
+  public static function getAvailableZones($player)
   {
     $fences = parent::getOfPlayerStructured($player);
     $topFences = TopFence::getOfPlayerStructured($player);

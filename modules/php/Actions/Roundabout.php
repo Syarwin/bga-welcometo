@@ -11,7 +11,7 @@ class Roundabout extends Zone
   protected static $cols = 2;
 
   protected static $scores = [0, 3, 8];
-  public function getScore($player)
+  public static function getScore($player)
   {
     $free = count(self::$scores) - 1;
     foreach(self::getAvailableZones($player) as $zone)

@@ -21,7 +21,7 @@ class Zone
   /*
    * Get all the scribbles of given player corresponding to this type
    */
-  public function getOfPlayer($player)
+  public static function getOfPlayer($player)
   {
     return Scribbles::getOfPlayer($player, static::$type."_%");
   }
@@ -29,7 +29,7 @@ class Zone
   /*
    * Construct a (1D or 2D) array corresponding with the zones structure with null values
    */
-  protected function getBlankStructure()
+  protected static function getBlankStructure()
   {
     $structure = [];
     if(static::$dim == 1){
@@ -50,7 +50,7 @@ class Zone
   /*
    * Get all the scribbles of given player structured in a (1D or 2D) array that match the zones layout
    */
-  public function getOfPlayerStructured($player){
+  public static function getOfPlayerStructured($player){
     $zones = self::getBlankStructure();
     $scribbles = self::getOfPlayer($player);
 
@@ -68,7 +68,7 @@ class Zone
     return $zones;
   }
 
-  public function getAvailableZones($player){
+  public static function getAvailableZones($player){
     $zones = self::getOfPlayerStructured($player);
     $result = [];
 

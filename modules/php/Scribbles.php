@@ -25,7 +25,7 @@ class Scribbles extends Helpers\Pieces
     ];
   }
 
-  public function getOfPlayer($player, $location = '%')
+  public static function getOfPlayer($player, $location = '%')
   {
     $pId = $player instanceof \WTO\Player ? $player->getId() : $player;
     $query = self::getInLocationQ([$pId, $location]);
@@ -40,7 +40,7 @@ class Scribbles extends Helpers\Pieces
     }
   }
 
-  public function hasScribbleSomething($pId)
+  public static function hasScribbleSomething($pId)
   {
     return self::getInLocationQ([$pId, '%'])
       ->where('turn', Globals::getCurrentTurn())
@@ -50,7 +50,7 @@ class Scribbles extends Helpers\Pieces
   /*
    * clearTurn : remove all houses written by player during this turn
    */
-  public function clearTurn($pId)
+  public static function clearTurn($pId)
   {
     self::getInLocationQ([$pId, '%'])
       ->where('turn', Globals::getCurrentTurn())

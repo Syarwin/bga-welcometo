@@ -35,7 +35,7 @@ class IceCream extends Zone
   ];
   protected static $iceCreamBalls = [1, 2, 3, 1, 2, 1, 3, 1, 1, 2, 2, 3, 2, 2, 3, 1, 1, 2, 3, 1, 3];
 
-  public function getConesToScribble($player)
+  public static function getConesToScribble($player)
   {
     $lastHouse = $player->getLastHouse();
     $cones = [];
@@ -49,7 +49,7 @@ class IceCream extends Zone
     return $cones;
   }
 
-  public function getStreetBonuses($player)
+  public static function getStreetBonuses($player)
   {
     $scribbles = self::getOfPlayer($player);
     Utils::filter($scribbles, function ($scribble) {
@@ -64,7 +64,7 @@ class IceCream extends Zone
     return $bonuses;
   }
 
-  public function reachEndOfStreet($player, $zone)
+  public static function reachEndOfStreet($player, $zone)
   {
     $bonuses = self::getStreetBonuses($player);
     if ($bonuses[$zone['x']] != 0) {
@@ -74,7 +74,7 @@ class IceCream extends Zone
     }
   }
 
-  public function getScore($player)
+  public static function getScore($player)
   {
     $scribbles = self::getOfPlayer($player);
     $res = [
@@ -107,7 +107,7 @@ class IceCream extends Zone
     return $res;
   }
 
-  public function getBonusesToCross($player, $x)
+  public static function getBonusesToCross($player, $x)
   {
     $bonuses = self::getStreetBonuses($player);
     if ($bonuses[$x] != 0) {
@@ -117,7 +117,7 @@ class IceCream extends Zone
     }
   }
 
-  public function getCompleted($player)
+  public static function getCompleted($player)
   {
     $cones = [0, 0, 0];
     foreach (self::getOfPlayer($player) as $scribble) {

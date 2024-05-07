@@ -57,13 +57,13 @@ class Temp extends Zone
     self::$ordering = $order;
   }
 
-  public function getScores()
+  public static function getScores()
   {
     self::computeOrdering(true);
     return self::$ordering;
   }
 
-  public function getScore($player)
+  public static function getScore($player)
   {
     if (Globals::isSolo()) {
       return self::getScoreSolo($player);
@@ -80,7 +80,7 @@ class Temp extends Zone
     return ['temp-total' => $score];
   }
 
-  public function getScoreSolo($player)
+  public static function getScoreSolo($player)
   {
     $tempCounters = self::computeCounters();
     $pId = $player->getId();

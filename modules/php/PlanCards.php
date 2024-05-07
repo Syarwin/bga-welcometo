@@ -89,12 +89,12 @@ class PlanCards extends Helpers\Pieces
   }
 
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::getInLocationQ(['stack', '%'])->orderBy('location')->get(false);
   }
 
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     // Create the available cards, depending on variant/expansions
     $cards = [];
@@ -116,14 +116,14 @@ class PlanCards extends Helpers\Pieces
   }
 
 
-  public function getUiData()
+  public static function getUiData()
   {
     return self::getCurrent()->map(function($plan){
       return $plan->getUiData();
     });
   }
 
-  public function getCurrentValidations()
+  public static function getCurrentValidations()
   {
     return self::getCurrent()->map(function($plan){
       return $plan->getValidations();
@@ -131,14 +131,14 @@ class PlanCards extends Helpers\Pieces
   }
 
 
-  public function getCurrentScores()
+  public static function getCurrentScores()
   {
     return self::getCurrent()->map(function($plan){
       return $plan->getScores();
     });
   }
 
-  public function getScore($player)
+  public static function getScore($player)
   {
     $res = [];
     foreach(self::getCurrentScores() as $stack => $scores){
@@ -148,20 +148,20 @@ class PlanCards extends Helpers\Pieces
     return $res;
   }
 
-  public function areAllPlansScored($player)
+  public static function areAllPlansScored($player)
   {
     $scores = self::getScore($player);
     return $scores['plan-0'] > 0 && $scores['plan-1'] > 0 && $scores['plan-2'] > 0;
   }
 
-  public function clearTurn($pId)
+  public static function clearTurn($pId)
   {
     $query = new Helpers\QueryBuilder('plan_validation');
     $query->delete()->where('player_id', $pId)->where('turn', Globals::getCurrentTurn() )->run();
   }
 
 
-  public function askedForReshuffle($getPlayerId = false)
+  public static function askedForReshuffle($getPlayerId = false)
   {
     $query = new QueryBuilder('plan_validation');
     $reshuffle = $query->where('turn', '=', Globals::getCurrentTurn() - 1)->where('reshuffle', 1)->get(false);
