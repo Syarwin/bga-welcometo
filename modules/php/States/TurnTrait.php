@@ -1,4 +1,5 @@
 <?php
+
 namespace WTO\States;
 
 use WTO\Game\Globals;
@@ -26,7 +27,7 @@ trait TurnTrait
 
 
     // Reshuffle if asked
-    if(PlanCards::askedForReshuffle()){
+    if (PlanCards::askedForReshuffle()) {
       ConstructionCards::reshuffle();
     }
 
@@ -71,7 +72,7 @@ trait TurnTrait
    */
   function argPrivatePlayerTurn($player)
   {
-    if($player->isZombie()){
+    if ($player->isZombie()) {
       return [];
     }
 
@@ -90,9 +91,9 @@ trait TurnTrait
   function stApplyTurn()
   {
     // In expert mode, prepare non-used cards for next player
-    if(Globals::isExpert()){
-      foreach(Players::getAll() as $player){
-        if(!$player->isZombie()){
+    if (Globals::isExpert()) {
+      foreach (Players::getAll() as $player) {
+        if (!$player->isZombie()) {
           $player->giveThirdCardToNextPlayer();
         }
       }
@@ -112,10 +113,13 @@ trait TurnTrait
       $player->storeScore();
     }
 
+    // Try to avoid hitting the limit too much
+    $this->sendNotifications();
     Notifications::updatePlayersData();
     Stats::updatePlayersData();
+    $this->sendNotifications();
 
-    $newState = $this->isEndOfGame()? "endGame" : "newTurn";
+    $newState = $this->isEndOfGame() ? "endGame" : "newTurn";
     $this->gamestate->nextState($newState);
   }
 }
