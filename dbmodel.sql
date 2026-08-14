@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `log` (
 
 CREATE TABLE IF NOT EXISTS `construction_cards` (
   `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `card_location` varchar(16) NOT NULL,
+  `card_location` varchar(20) NOT NULL,
   `card_state` int(11) NOT NULL,
   `number` int(11) NOT NULL,
   `action` int(11) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `construction_cards` (
 
 CREATE TABLE IF NOT EXISTS `plan_cards` (
   `card_id` int(10) unsigned NOT NULL,
-  `card_location` varchar(16) NOT NULL,
+  `card_location` varchar(20) NOT NULL,
   `card_state` int(11) NOT NULL,
   PRIMARY KEY (`card_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 AUTO_INCREMENT = 1;
